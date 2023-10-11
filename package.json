@@ -9,7 +9,6 @@
   "description": "",
   "version": "1.0.0",
   "main": "index.js",
-  "dependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,5 +21,6 @@
   "bugs": {
     "url": "https://github.com/w2tong/auto-battler/issues"
   },
-  "homepage": "https://github.com/w2tong/auto-battler#readme"
+  "homepage": "https://github.com/w2tong/auto-battler#readme",
+  "dependencies": {}
 }
