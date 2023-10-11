@@ -5,22 +5,21 @@
     "eslint": "^8.51.0",
     "typescript": "^5.2.2"
   },
-  "name": "auto-battler",
-  "description": "",
+  "name": "@wholesome-sisters/auto-battler",
+  "description": "classes and types for auto-battler server and client",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/w2tong/auto-battler.git"
+    "url": "git+https://github.com/wholesome-sisters/auto-battler.git"
   },
-  "author": "",
+  "author": "w2tong",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/w2tong/auto-battler/issues"
+    "url": "https://github.com/wholesome-sisters/auto-battler/issues"
   },
-  "homepage": "https://github.com/w2tong/auto-battler#readme",
-  "dependencies": {}
+  "homepage": "https://github.com/wholesome-sisters/auto-battler#readme"
 }
