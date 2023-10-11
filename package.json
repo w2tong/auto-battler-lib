@@ -3,13 +3,15 @@
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "eslint": "^8.51.0",
+    "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   },
   "name": "@wholesome-sisters/auto-battler",
   "description": "classes and types for auto-battler server and client",
   "version": "1.0.4",
-  "types": "lib/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
+    "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +25,6 @@
   },
   "homepage": "https://github.com/wholesome-sisters/auto-battler#readme",
   "exports": {
-    ".": "./lib/index.js"
+    ".": "./dist/index.js"
   }
 }
