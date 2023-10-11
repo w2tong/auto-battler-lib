@@ -6,8 +6,6 @@ import { CharacterStatTemplate } from './statTemplates';
 import { RangeType, Weapon } from './Equipment/Weapons';
 import { Shield } from './Equipment/Shield';
 import { Equipment } from './Equipment/Equipment';
-import { userUpgrades } from '../upgrades/upgradeManager';
-import { upgrades } from '../upgrades/upgrades';
 import { WeaponStyle } from './Equipment/Hands';
 import { Ring } from './Equipment/Ring';
 import DamageType from './DamageType';
@@ -188,12 +186,12 @@ class Character {
             const userId = options.userId;
             this.userId = userId;
             // Add user upgrades
-            if (userUpgrades[userId]) {
-                this.mainHand.attackBonus += upgrades.attackBonus.levels[userUpgrades[userId].attackBonus];
-                if (this.offHandWeapon) this.offHandWeapon.attackBonus += upgrades.attackBonus.levels[userUpgrades[userId].attackBonus];
-                this._armourClass += upgrades.armourClass.levels[userUpgrades[userId].armourClass];
-                this.maxHealth += upgrades.health.levels[userUpgrades[userId].health];
-            }
+            // if (userUpgrades[userId]) {
+            //     this.mainHand.attackBonus += upgrades.attackBonus.levels[userUpgrades[userId].attackBonus];
+            //     if (this.offHandWeapon) this.offHandWeapon.attackBonus += upgrades.attackBonus.levels[userUpgrades[userId].attackBonus];
+            //     this._armourClass += upgrades.armourClass.levels[userUpgrades[userId].armourClass];
+            //     this.maxHealth += upgrades.health.levels[userUpgrades[userId].health];
+            // }
         }
 
         this.currHealth = options?.currHealthPc ? Math.ceil(this.maxHealth * options.currHealthPc) : this.maxHealth;
@@ -255,7 +253,7 @@ class Character {
     
     getName(): string {
         let name = this.name;
-        if (this.userId) name += ` (${userMention(this.userId)})`;
+        if (this.userId) name += ` (${this.userId})`;
         return name;
     }
 
@@ -282,7 +280,7 @@ class Character {
     getCharString(): string {
         const lines = [
             // Name
-            `${bold(this.getName())}${this.isDead() ? ' 💀' : ''}`,
+            `${this.getName()}${this.isDead() ? ' 💀' : ''}`,
             // Level and Class
             `Lvl. ${this.level} ${this.className}`,
             // HP
@@ -338,7 +336,7 @@ class Character {
             const potionHeal = Math.round((rollDice(this.potion.dice) + this.potion.bonus) * this.potionEffectiveness);
             this.addHealth(potionHeal);
             this.potion.charges -= 1;
-            if (this.battle) this.battle.ref.combatLog.add(`${bold(this.name)} used ${bold(this.potion.name)} and healed for ${bold(potionHeal.toLocaleString())}.`);
+            if (this.battle) this.battle.ref.combatLog.add(`${this.name} used ${this.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
         }
         if (this.maxMana !== 0 && this.currMana >= this.maxMana - this.manaCostReduction) {
             this.specialAbility();
@@ -440,10 +438,10 @@ class Character {
         }
         damage -= damageResisted;
         this.currHealth -= damage;
-        this.battle.ref.combatLog.add(`${bold(this.name)} took ${bold(damage.toString())} ${type}${damageResisted > 0 ? ` (${damageResisted} resisted)` : ''} from ${bold(source)}.`);
+        this.battle.ref.combatLog.add(`${this.name} took ${damage.toString()} ${type}${damageResisted > 0 ? ` (${damageResisted} resisted)` : ''} from ${source}.`);
         if (this.isDead()) {
             this.battle.ref.setCharDead(this.battle.side, this.battle.index);
-            this.battle.ref.combatLog.add(`${bold(this.name)} died.`);
+            this.battle.ref.combatLog.add(`${this.name} died.`);
         }
     }
 
