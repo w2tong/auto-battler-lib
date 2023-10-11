@@ -8,8 +8,7 @@
   "name": "@wholesome-sisters/auto-battler",
   "description": "classes and types for auto-battler server and client",
   "version": "1.0.3",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/wholesome-sisters/auto-battler/issues"
   },
-  "homepage": "https://github.com/wholesome-sisters/auto-battler#readme"
+  "homepage": "https://github.com/wholesome-sisters/auto-battler#readme",
+  "exports": {
+    ".": "./lib/index.js"
+  }
 }
