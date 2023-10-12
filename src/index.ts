@@ -18,6 +18,7 @@ export { WeaponType, RangeType, Weapon, WeaponId, weapons } from './Equipment/We
 
 import Battle from './Battle';
 export { Battle };
+export { Side } from './Battle';
 
 import Character from './Character';
 export { Character };
