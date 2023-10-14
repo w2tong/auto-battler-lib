@@ -16,7 +16,7 @@ type TurnRes = {
 type BattleJSON = {
     left: CharacterJSON[];
     right: CharacterJSON[];
-    turnOrder: {char: Character, init: number}[];
+    turnOrder: {name: string, init: number}[];
     turnIndex: number;
     log: string[];
 }
@@ -139,7 +139,7 @@ class Battle {
             right: [
                 ...this.right.map(char => char.json())
             ],
-            turnOrder: this.turnOrder,
+            turnOrder: this.turnOrder.map(charInit => {return {name: charInit.char.name, init: charInit.init};}),
             turnIndex: this.turnIndex,
             log: this._combatLog.log
         };
@@ -147,4 +147,4 @@ class Battle {
 }
 
 export default Battle;
-export { Side };
+export { BattleJSON, Side };
