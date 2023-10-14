@@ -18,10 +18,11 @@ export { WeaponType, RangeType, Weapon, WeaponId, weapons } from './Equipment/We
 
 import Battle from './Battle';
 export { Battle };
-export { Side } from './Battle';
+export { Side, BattleJSON } from './Battle';
 
 import Character from './Character';
 export { Character };
+export { CharacterInfo, CharacterJSON } from './Character';
 
 import CombatLog from './CombatLog';
 export { CombatLog };
