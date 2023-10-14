@@ -2,7 +2,11 @@ import HitType from './HitType';
 
 class CombatLog {
     
-    private log: string[] = [];
+    private _log: string[] = [];
+
+    get log() {
+        return this._log;
+    }
 
     add(line: string) {
         this.log.push(line);
