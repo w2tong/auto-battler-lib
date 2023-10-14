@@ -1,4 +1,4 @@
-import Character from './Character';
+import Character, { CharacterJSON } from './Character';
 import CombatLog from './CombatLog';
 import { rollDice, dice } from './dice';
 
@@ -13,6 +13,14 @@ type TurnRes = {
     winner?: Side;
 }
 
+type BattleJSON = {
+    left: CharacterJSON[];
+    right: CharacterJSON[];
+    turnOrder: {char: Character, init: number}[];
+    turnIndex: number;
+    log: string[];
+}
+
 class Battle {
     private _left: Character[] = [];
     private leftAlive: Set<number> = new Set();
@@ -23,7 +31,7 @@ class Battle {
     private _turnIndex = -1;
     private _turnOrder: {char: Character, init: number}[] = [];
 
-    private _combatLog;
+    private _combatLog: CombatLog;
 
     private winner?: Side; 
 
@@ -121,6 +129,20 @@ class Battle {
         }
 
         return res;
+    }
+
+    json(): BattleJSON {
+        return {
+            left: [
+                ...this.left.map(char => char.json())
+            ],
+            right: [
+                ...this.right.map(char => char.json())
+            ],
+            turnOrder: this.turnOrder,
+            turnIndex: this.turnIndex,
+            log: this._combatLog.log
+        };
     }
 }
 

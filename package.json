@@ -8,13 +8,12 @@
   },
   "name": "@wholesome-sisters/auto-battler",
   "description": "classes and types for auto-battler server and client",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run build",
-    "publish": "npm publish --access public"
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",

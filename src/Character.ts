@@ -37,6 +37,16 @@ function calcStatValue(stat:{base: number, perLvl: number}, level: number) {
     return stat.base + Math.floor(stat.perLvl * (level - 1));
 }
 
+type CharacterJSON = {
+    name: string;
+    className: string;
+    level: number;
+    currHealth: number;
+    maxHealth: number;
+    currMana: number;
+    maxMana: number;
+}
+
 class Character {
     static healthBarLength = 10;
     static manaBarLength = 10;
@@ -533,7 +543,19 @@ class Character {
         // Other
         this._initiativeBonus += ring.initiativeBonus ?? 0;
     }
+
+    json(): CharacterJSON {
+        return {
+            name: this._name,
+            className: this.className,
+            level: this.level,
+            currHealth: this.currHealth,
+            maxHealth: this.maxHealth,
+            currMana: this.currMana,
+            maxMana: this.maxMana
+        };
+    }
 }
 
 export default Character;
-export { CharacterInfo };
+export { CharacterInfo, CharacterJSON };
