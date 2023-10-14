@@ -3,23 +3,30 @@
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "eslint": "^8.51.0",
+    "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   },
   "name": "@wholesome-sisters/auto-battler",
   "description": "classes and types for auto-battler server and client",
-  "version": "1.0.0",
-  "main": "src/index.ts",
+  "version": "1.0.10",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsup",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build",
+    "publish": "npm publish --access public"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wholesome-sisters/auto-battler.git"
   },
   "author": "w2tong",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/wholesome-sisters/auto-battler/issues"
   },
-  "homepage": "https://github.com/wholesome-sisters/auto-battler#readme"
+  "homepage": "https://github.com/wholesome-sisters/auto-battler#readme",
+  "exports": {
+    ".": "./dist/index.js"
+  }
 }

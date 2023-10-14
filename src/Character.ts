@@ -14,6 +14,25 @@ import { rollDice } from './dice';
 import { generateCombatAttack } from './CombatLog';
 import { Potion } from './Equipment/Potion';
 
+type CharacterInfo = {
+    name: string,
+    className: string,
+    level: number,
+    mainHand: Weapon,
+    offHandWeapon?: Weapon,
+    armourClass: number,
+    physDR: number,
+    magicDR: number,
+    physResist: number,
+    magicResist: number,
+    thorns: number,
+    health: number,
+    mana: number,
+    manaRegen: number,
+    manaCostReduction: number,
+    initiativeBonus: number
+}
+
 function calcStatValue(stat:{base: number, perLvl: number}, level: number) {
     return stat.base + Math.floor(stat.perLvl * (level - 1));
 }
@@ -471,13 +490,13 @@ class Character {
         return this.buffTracker.getBuff(BuffId.Invisible) > 0;
     }
 
-    info() {
-        return {
+    info(): CharacterInfo {
+        const info: CharacterInfo = {
             name: this.name,
             className: this.className,
             level: this.level,
             mainHand: this.mainHand,
-            offHandWeapon: this.offHandWeapon,
+            
             armourClass: this.armourClass,
             physDR: this.physDR,
             magicDR: this.magicDR,
@@ -490,6 +509,10 @@ class Character {
             manaCostReduction: this.manaCostReduction,
             initiativeBonus: this.initiativeBonus
         };
+        if (this.offHandWeapon) {
+            info.offHandWeapon = this.offHandWeapon;
+        }
+        return info;
     }
 
     // Helper functions
@@ -535,4 +558,4 @@ class Character {
 }
 
 export default Character;
-export { CharacterJSON };
+export { CharacterInfo, CharacterJSON };

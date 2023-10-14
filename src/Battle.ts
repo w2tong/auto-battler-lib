@@ -22,37 +22,50 @@ type BattleJSON = {
 }
 
 class Battle {
-    private left: Character[] = [];
+    private _left: Character[] = [];
     private leftAlive: Set<number> = new Set();
 
-    private right: Character[] = [];
+    private _right: Character[] = [];
     private rightAlive: Set<number> = new Set();
 
-    private turnIndex = -1;
-    private turnOrder: {char: Character, init: number}[] = [];
+    private _turnIndex = -1;
+    private _turnOrder: {char: Character, init: number}[] = [];
 
     private _combatLog: CombatLog;
 
     private winner?: Side; 
 
-    get combatLog() {
-        return this._combatLog;
-    }
-
     constructor(left: Character[], right: Character[]) {
-        this.left = left;
+        this._left = left;
         this.leftAlive = new Set(Array(left.length).keys());
         for (let i = 0; i < this.left.length; i++) {
             this.left[i].setBattle(this, Side.Left, i);
         }
 
-        this.right = right;
+        this._right = right;
         this.rightAlive = new Set(Array(right.length).keys());
         for (let i = 0; i < this.right.length; i++) {
             this.right[i].setBattle(this, Side.Right, i);
         }
 
         this._combatLog = new CombatLog();
+    }
+
+    get combatLog() {
+        return this._combatLog;
+    }
+
+    get left() {
+        return this._left;
+    }
+    get right() {
+        return this._right;
+    }
+    get turnIndex() {
+        return this._turnIndex;
+    }
+    get turnOrder() {
+        return this._turnOrder;
     }
 
     getTargets(side: Side) {
@@ -70,7 +83,7 @@ class Battle {
             char = this.right[index];
             this.rightAlive.delete(index);
         }
-        this.turnOrder = this.turnOrder.filter(c => c.char !== char);
+        this._turnOrder = this.turnOrder.filter(c => c.char !== char);
     }
 
     startCombat() {
@@ -107,8 +120,8 @@ class Battle {
             this.combatLog.add(`${'Left'} wins!`);
         }
         else {
-            this.turnIndex++;
-            if (this.turnIndex >= this.turnOrder.length) this.turnIndex = 0;
+            this._turnIndex++;
+            if (this.turnIndex >= this.turnOrder.length) this._turnIndex = 0;
             const char = this.turnOrder[this.turnIndex].char;
             char.doTurn();
 
