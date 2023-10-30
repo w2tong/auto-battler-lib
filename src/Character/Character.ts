@@ -45,6 +45,8 @@ type CharacterJSON = {
     maxHealth: number;
     currMana: number;
     maxMana: number;
+    buffs: string;
+    debuffs: string;
 }
 
 export default class Character {
@@ -542,7 +544,9 @@ export default class Character {
             currHealth: this.currHealth,
             maxHealth: this.maxHealth,
             currMana: this.currMana,
-            maxMana: this.maxMana
+            maxMana: this.maxMana,
+            buffs: this.buffTracker.getBuffString(),
+            debuffs: this.buffTracker.getDebuffString()
         };
     }
 }
