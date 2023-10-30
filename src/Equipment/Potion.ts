@@ -1,6 +1,6 @@
 import { Item, ItemType } from './Item';
 import { Dice } from '../dice';
-import Character from '../Character';
+import Character from '../Character/Character';
 
 interface Potion extends Item {
     itemType: ItemType.Potion;

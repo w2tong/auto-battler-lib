@@ -3,7 +3,7 @@ export { Buff, BuffId, Debuff, DebuffId } from './Buffs/buffs';
 import BuffTracker from './Buffs/BuffTracker';
 export { BuffTracker };
 
-export { ClassName, Classes } from './Classes/classes';
+export { ClassName, Classes, ClassDescriptions } from './Character/Classes/classes';
 
 export { Equip, Equipment, equips, defaultEquipment, getItemTooltip, getItemDescription } from './Equipment/Equipment';
 export { Item, ItemType } from './Equipment/Item';
@@ -20,9 +20,9 @@ import Battle from './Battle';
 export { Battle };
 export { Side, BattleJSON } from './Battle';
 
-import Character from './Character';
+import Character from './Character/Character';
 export { Character };
-export { CharacterInfo, CharacterJSON } from './Character';
+export { CharacterInfo, CharacterJSON } from './Character/Character';
 
 import CombatLog from './CombatLog';
 export { CombatLog };

@@ -1,4 +1,4 @@
-import { ClassName } from '../Classes/classes';
+import { ClassName } from '../Character/Classes/classes';
 import { Armour, armour, getArmourDescription, getArmourTooltip } from './Armour';
 import { Belt, belts, getBeltDescription, getBeltTooltip } from './Belt';
 import { Hands, getHandsDescription, getHandsTooltip, hands } from './Hands';

@@ -1,4 +1,4 @@
-import Character from '../Character';
+import Character from '../Character/Character';
 import { Buff, BuffId, Debuff, DebuffId } from './buffs';
 import DamageType from '../DamageType';
 import { dice, rollDice } from '../dice';

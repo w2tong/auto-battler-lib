@@ -1,4 +1,4 @@
-import Character, { CharacterJSON } from './Character';
+import Character, { CharacterJSON } from './Character/Character';
 import CombatLog from './CombatLog';
 import { rollDice, dice } from './dice';
 

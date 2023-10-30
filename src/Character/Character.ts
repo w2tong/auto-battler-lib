@@ -1,18 +1,18 @@
-import { getRandomRange } from './util';
-import Battle, { Side } from './Battle';
-import BuffTracker from './Buffs/BuffTracker';
-import { BuffId } from './Buffs/buffs';
-import { CharacterStatTemplate } from './statTemplates';
-import { RangeType, Weapon } from './Equipment/Weapons';
-import { Shield } from './Equipment/Shield';
-import { Equipment } from './Equipment/Equipment';
-import { WeaponStyle } from './Equipment/Hands';
-import { Ring } from './Equipment/Ring';
-import DamageType from './DamageType';
-import HitType from './HitType';
-import { rollDice } from './dice';
-import { generateCombatAttack } from './CombatLog';
-import { Potion } from './Equipment/Potion';
+import { getRandomRange } from '../util';
+import Battle, { Side } from '../Battle';
+import BuffTracker from '../Buffs/BuffTracker';
+import { BuffId } from '../Buffs/buffs';
+import { CharacterStatTemplate } from '../statTemplates';
+import { RangeType, Weapon } from '../Equipment/Weapons';
+import { Shield } from '../Equipment/Shield';
+import { Equipment } from '../Equipment/Equipment';
+import { WeaponStyle } from '../Equipment/Hands';
+import { Ring } from '../Equipment/Ring';
+import DamageType from '../DamageType';
+import HitType from '../HitType';
+import { rollDice } from '../dice';
+import { generateCombatAttack } from '../CombatLog';
+import { Potion } from '../Equipment/Potion';
 
 type CharacterInfo = {
     name: string,
@@ -47,7 +47,7 @@ type CharacterJSON = {
     maxMana: number;
 }
 
-class Character {
+export default class Character {
     static healthBarLength = 10;
     static manaBarLength = 10;
     static dualWieldPenalty = -2;
@@ -367,13 +367,9 @@ class Character {
             this.potion.charges -= 1;
             if (this.battle) this.battle.ref.combatLog.add(`${this.name} used ${this.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
         }
-        if (this.maxMana !== 0 && this.currMana >= this.maxMana - this.manaCostReduction) {
-            this.specialAbility();
-        }
         else {
             this.attack();
         }
-        this.addMana(this.manaRegen);
         this.buffTracker.tick();
     }
 
@@ -448,12 +444,6 @@ class Character {
             }
             
         }
-    }
-
-    // Default special ability
-    specialAbility() {
-        this.currMana -= (this.maxMana - this.manaCostReduction);
-        this.attack();        
     }
 
     takeDamage(source: string, damage: number, type: DamageType): void {
@@ -557,5 +547,4 @@ class Character {
     }
 }
 
-export default Character;
 export { CharacterInfo, CharacterJSON };

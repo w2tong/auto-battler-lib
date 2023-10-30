@@ -1,12 +1,16 @@
-import Character from '../Character';
-import { DebuffId } from '../Buffs/buffs';
-import DamageType from '../DamageType';
-import HitType from '../HitType';
-import { rollDice } from '../dice';
-import { generateCombatAttack } from '../CombatLog';
+import { DebuffId } from '../../Buffs/buffs';
+import DamageType from '../../DamageType';
+import HitType from '../../HitType';
+import { rollDice } from '../../dice';
+import { generateCombatAttack } from '../../CombatLog';
+import ManaCharacter from '../ManaCharacter';
 
-class Wizard extends Character {
-    specialAbility(): void {
+class Wizard extends ManaCharacter {
+    static description: string = 'Wizard Class description here.';
+    static specialName: string = 'Firebolt';
+    static specialDescription: string = 'Attack your target and apply Burn.';
+
+    special(): void {
         if (!this.battle) return;
         this.setTarget();
         if (this.target) {

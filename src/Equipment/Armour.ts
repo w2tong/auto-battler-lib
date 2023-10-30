@@ -1,4 +1,4 @@
-import Character from '../Character';
+import Character from '../Character/Character';
 import { Item, ItemType } from './Item';
 
 // enum Price {

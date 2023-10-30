@@ -1,4 +1,4 @@
-import { ClassName } from './Classes/classes';
+import { ClassName } from './Character/Classes/classes';
 
 type CharacterStatTemplate = {
     className: string;

@@ -1,8 +1,8 @@
 import { getRandomRange } from './util';
-import Character from './Character';
-import Fighter from './Classes/Fighter';
-import Rogue from './Classes/Rogue';
-import Wizard from './Classes/Wizard';
+import Character from './Character/Character';
+import Fighter from './Character/Classes/Fighter';
+import Rogue from './Character/Classes/Rogue';
+import Wizard from './Character/Classes/Wizard';
 import { Equipment, defaultEquipment } from './Equipment/Equipment';
 import { weapons } from './Equipment/Weapons';
 import { CharacterStatTemplate, NPCStats } from './statTemplates';
