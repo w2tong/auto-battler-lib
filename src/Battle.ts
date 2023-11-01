@@ -18,7 +18,6 @@ type BattleJSON = {
     right: CharacterJSON[];
     turnOrder: {name: string, init: number}[];
     turnIndex: number;
-    log: string[];
 }
 
 class Battle {
@@ -100,6 +99,7 @@ class Battle {
     }
 
     nextTurn(): TurnRes {
+        this.combatLog.nextTurn();
         const res: TurnRes = {combatEnded: false};
         if (this.leftAlive.size === 0 && this.rightAlive.size === 0) {
             this.winner = Side.Tie;
@@ -133,15 +133,10 @@ class Battle {
 
     json(): BattleJSON {
         return {
-            left: [
-                ...this.left.map(char => char.json())
-            ],
-            right: [
-                ...this.right.map(char => char.json())
-            ],
+            left: [...this.left.map(char => char.json())],
+            right: [...this.right.map(char => char.json())],
             turnOrder: this.turnOrder.map(charInit => {return {name: charInit.char.name, init: charInit.init};}),
             turnIndex: this.turnIndex,
-            log: this._combatLog.log
         };
     }
 }

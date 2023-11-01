@@ -2,25 +2,31 @@ import HitType from './HitType';
 
 class CombatLog {
     
-    private _log: string[] = [];
+    private _log: string[][] = [];
 
     get log() {
         return this._log;
     }
 
+    get flatLog() {
+        return this._log.flat();
+    }
+
+    get last() {
+        return this.log[this.log.length-1];
+    }
+
+    nextTurn() {
+        this.log.push([]);
+    }
+
     add(line: string) {
-        this.log.push(line);
+        this.last.push(line);
     }
 
-    getLog() {
-        if (!this.log.length) return 'None';
-        return this.log.join('\n');
+    addAttack(charName: string, tarName: string, attackDetails: string, hitType: HitType, sneak: boolean) {
+        this.last.push(`${charName} ⚔️ ${tarName} (${attackDetails}). ${hitType.toString()}${sneak ? ' (Sneak Attack)' : ''}.`);
     }
-}
-
-function generateCombatAttack(charName: string, tarName: string, attackDetails: string, hitType: HitType, sneak: boolean) {
-    return `${charName} ⚔️ ${tarName} (${attackDetails}). ${hitType.toString()}${sneak ? ' (Sneak Attack)' : ''}.`;
 }
 
 export default CombatLog;
-export { generateCombatAttack };

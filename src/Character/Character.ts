@@ -11,7 +11,6 @@ import { Ring } from '../Equipment/Ring';
 import DamageType from '../DamageType';
 import HitType from '../HitType';
 import { rollDice } from '../dice';
-import { generateCombatAttack } from '../CombatLog';
 import { Potion } from '../Equipment/Potion';
 
 type CharacterInfo = {
@@ -411,14 +410,14 @@ export default class Character {
                 const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.mainHand.damageBonus/2), sides: 4}) : 0;
                 let damage = damageRoll + this.mainHand.damageBonus + sneakDamage;
                 if (attack.hitType === HitType.Crit) damage = Math.floor(damage * this.mainHand.critMult);
-                this.battle.ref.combatLog.add(generateCombatAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0));
+                this.battle.ref.combatLog.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
                 this.target.takeDamage(this.name, damage, this.mainHand.damageType);
                 if (this.mainHand.onHit) this.mainHand.onHit.func(this, this.target);
                 this.addMana(this.mainHand.manaPerAtk);
                 
             }
             else {
-                this.battle.ref.combatLog.add(generateCombatAttack(this.name, this.target.name, attack.details, attack.hitType, false));
+                this.battle.ref.combatLog.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
             }
 
             // Off hand attack
@@ -430,13 +429,13 @@ export default class Character {
                     const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.offHandWeapon.damageBonus/2), sides: 4}) : 0;
                     let damage = damageRoll + this.offHandWeapon.damageBonus + sneakDamage;
                     if (attack.hitType === HitType.Crit) damage = Math.floor(damage * this.mainHand.critMult);
-                    this.battle.ref.combatLog.add(generateCombatAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0));
+                    this.battle.ref.combatLog.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
                     this.target.takeDamage(this.name, damage, this.offHandWeapon.damageType);
                     if (this.offHandWeapon.onHit) this.offHandWeapon.onHit.func(this, this.target);
                     this.addMana(this.offHandWeapon.manaPerAtk);
                 }
                 else {
-                    this.battle.ref.combatLog.add(generateCombatAttack(this.name, this.target.name, attack.details, attack.hitType, false));
+                    this.battle.ref.combatLog.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
                 }
             }
 
