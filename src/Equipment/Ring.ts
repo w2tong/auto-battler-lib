@@ -39,156 +39,182 @@ const rings: {[id in RingId]: Ring} = {
         id: 'abRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Attack',
+        tier: 0,
         attackBonus: 1
     },
     abRing1: {
         id: 'abRing1',
         itemType: ItemType.Ring,
         name: 'Ring of Attack',
+        tier: 3,
         attackBonus: 2
     },
     abRing2: {
         id: 'abRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater Attack',
+        tier: 0,
         attackBonus: 3
     },
     dbRing0: {
         id: 'dbRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Damage',
-        attackBonus: 1
+        tier: 0,
+        damageBonus: 1
     },
     dbRing1: {
         id: 'dbRing1',
         itemType: ItemType.Ring,
         name: 'Ring of Damage',
-        attackBonus: 2
+        tier: 3,
+        damageBonus: 2
     },
     dbRing2: {
         id: 'dbRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater Damage',
-        attackBonus: 3
+        tier: 5,
+        damageBonus: 3
     },
     crRing0: {
         id: 'crRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Crit Chance',
+        tier: 3,
         critRangeBonus: 1
     },
     crRing1: {
         id: 'crRing1',
         itemType: ItemType.Ring,
         name: 'Ring of Pog Clazy Crit Chance',
+        tier: 5,
         critRangeBonus: 2
     },
     cmRing0: {
         id: 'cmRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Crit Damage',
+        tier: 1,
         critMultBonus: 0.2
     },
     cmRing1: {
         id: 'cmRing1',
         itemType: ItemType.Ring,
         name: 'Ring of Crit Damage',
+        tier: 3,
         critMultBonus: 0.35
     },
     cmRing2: {
         id: 'cmRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater Crit Damage',
+        tier: 5,
         critMultBonus: 0.5
     },
     acRing0: {
         id: 'acRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Armour',
+        tier: 0,
         armourClass: 1
     },
     acRing1: {
         id: 'acRing1',
         itemType: ItemType.Ring,
         name: 'Ring of Armour',
+        tier: 3,
         armourClass: 2
     },
     acRing2: {
         id: 'acRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater Armour',
+        tier: 5,
         armourClass: 3
     },
     thrRing0: {
         id: 'thrRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Thorns',
+        tier: 1,
         thorns: 1
     },
     thrRing1: {
         id: 'thrRing1',
         itemType: ItemType.Ring,
         name: 'Ring of Thorns',
+        tier: 3,
         thorns: 2
     },
     thrRing2: {
         id: 'thrRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater Thorns',
+        tier: 5,
         thorns: 3
     },
     mpatkRing0: {
         id: 'mpatkRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser M.Atk Ring',
+        tier: 1,
         manaPerAtk: 2.5
     },
     mpatkRing1: {
         id: 'mpatkRing1',
         itemType: ItemType.Ring,
         name: 'Ring of M.Atk Ring',
+        tier: 3,
         manaPerAtk: 5.0
     },
     mpatkRing2: {
         id: 'mpatkRing3',
         itemType: ItemType.Ring,
         name: 'Ring of Greater M.Atk Ring',
+        tier: 5,
         manaPerAtk: 7.5
     },
     mrgnRing0: {
         id: 'mrgnRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser M.Regen Ring',
+        tier: 1,
         manaRegen: 4
     },
     mrgnRing1: {
         id: 'mrgnRing1',
         itemType: ItemType.Ring,
         name: 'Ring of M.Regen Ring',
+        tier: 3,
         manaRegen: 7
     },
     mrgnRing2: {
         id: 'mrgnRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater M.Regen Ring',
+        tier: 5,
         manaRegen: 11
     },
     mcostRing0: {
         id: 'mcostRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser M.Cost Ring',
+        tier: 1,
         manaCostReduction: 5
     },
     mcostRing1: {
         id: 'mcostRing1',
         itemType: ItemType.Ring,
         name: 'Ring of M.Cost Ring',
+        tier: 3,
         manaCostReduction: 7.5
     },
     mcostRing2: {
         id: 'mcostRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater M.Cost Ring',
+        tier: 5,
         manaCostReduction: 10
     }
 

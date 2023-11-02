@@ -6,7 +6,7 @@ export { BuffTracker };
 export { ClassName, Classes, ClassDescriptions } from './Character/Classes/classes';
 
 export { Equip, Equipment, equips, defaultEquipment, getItemTooltip, getItemDescription } from './Equipment/Equipment';
-export { Item, ItemType } from './Equipment/Item';
+export { Item, ItemType, Tier } from './Equipment/Item';
 export { Armour, ArmourId, armour } from './Equipment/Armour';
 export { Belt, BeltId, belts } from './Equipment/Belt';
 export { WeaponStyle, Hands, HandsId, hands } from './Equipment/Hands';

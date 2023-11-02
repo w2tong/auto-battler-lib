@@ -19,36 +19,42 @@ const heads: {[id in HeadId]: Head} = {
         id: 'helmet0',
         itemType: ItemType.Head,
         name: 'Leather Helmet',
+        tier: 0,
         armourClass: 1
     },
     helmet1: {
         id: 'helmet1',
         itemType: ItemType.Head,
         name: 'Mail Coif',
+        tier: 3,
         armourClass: 2
     },
     helmet2: {
         id: 'helmet2',
         itemType: ItemType.Head,
         name: 'Plate Helmet',
+        tier: 5,
         armourClass: 3
     },
     clothHood0: {
         id: 'clothhood0',
         itemType: ItemType.Head,
         name: 'Cloth Hood',
+        tier: 0,
         manaCostReduction: 10
     },
     clothHood1: {
         id: 'clothhood1',
         itemType: ItemType.Head,
         name: 'Cloth Hood +1',
+        tier: 3,
         manaCostReduction: 15
     },
     clothHood2: {
         id: 'clothhood2',
         itemType: ItemType.Head,
         name: 'Cloth Hood +2',
+        tier: 5,
         manaCostReduction: 20
     }
 } as const;
