@@ -178,19 +178,19 @@ const rings: {[id in RingId]: Ring} = {
         id: 'mcostRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser M.Cost Ring',
-        manaRegen: 5
+        manaCostReduction: 5
     },
     mcostRing1: {
         id: 'mcostRing1',
         itemType: ItemType.Ring,
         name: 'Ring of M.Cost Ring',
-        manaRegen: 7.5
+        manaCostReduction: 7.5
     },
     mcostRing2: {
         id: 'mcostRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater M.Cost Ring',
-        manaRegen: 10
+        manaCostReduction: 10
     }
 
 };
