@@ -34,7 +34,6 @@ type RingId =
 | 'mcostRing0' | 'mcostRing1' | 'mcostRing2'
 ;
 
-// TODO: add rings and add rings to loot table
 const rings: {[id in RingId]: Ring} = {
     abRing0: {
         id: 'abRing0',

@@ -7,7 +7,6 @@ interface Belt extends Item {
     healing?: number;
 }
 
-// TODO: add belts
 type BeltId = 
 'chargesBelt0' | 'chargesBelt1'
 | 'effBelt0' | 'effBelt1' | 'effBelt2' | 'effBelt3'
