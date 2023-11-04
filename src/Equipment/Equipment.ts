@@ -1,16 +1,16 @@
 import { ClassName } from '../Character/Classes/classes';
-import { Armour, armour, getArmourDescription, getArmourTooltip } from './Armour';
-import { Belt, belts, getBeltDescription, getBeltTooltip } from './Belt';
-import { Hands, getHandsDescription, getHandsTooltip, hands } from './Hands';
-import { Head, getHeadDescription, getHeadTooltip, heads } from './Head';
+import { Armour, ArmourId, armour, getArmourDescription, getArmourTooltip } from './Armour';
+import { Belt, BeltId, belts, getBeltDescription, getBeltTooltip } from './Belt';
+import { Hands, HandsId, getHandsDescription, getHandsTooltip, hands } from './Hands';
+import { Head, HeadId, getHeadDescription, getHeadTooltip, heads } from './Head';
 import { ItemType } from './Item';
-import { Potion, getPotionDescription, getPotionTooltip, potions } from './Potion';
-import { Ring, getRingDescription, getRingTooltip, rings } from './Ring';
-import { Shield, getShieldDescription, getShieldTooltip, shields } from './Shield';
-import { Weapon, getWeaponDescription, getWeaponTooltip, weapons } from './Weapons';
+import { Potion, PotionId, getPotionDescription, getPotionTooltip, potions } from './Potion';
+import { Ring, RingId, getRingDescription, getRingTooltip, rings } from './Ring';
+import { Shield, ShieldId, getShieldDescription, getShieldTooltip, shields } from './Shield';
+import { Weapon, WeaponId, getWeaponDescription, getWeaponTooltip, weapons } from './Weapons';
 
 type Equip = Weapon|Shield|Armour|Head|Hands|Ring|Potion|Belt;
-const equips: {[key: string]: Equip} = {...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts} as const;
+const equips: {[key in WeaponId|ShieldId|ArmourId|HeadId|HandsId|RingId|PotionId|BeltId]: Equip} = {...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts} as const;
 
 type Equipment = {
     mainHand?: Weapon;
@@ -23,6 +23,19 @@ type Equipment = {
     ring2?: Ring;
     potion?: Potion;
     belt?: Belt;
+}
+
+enum EquipSlot {
+    MainHand = 'Main Hand',
+    OffHand = 'Off Hand',
+    Head = 'Head',
+    Amulet = 'Amulet',
+    Armour = 'Armour',
+    Hands = 'Hands',
+    Belt = 'Belt',
+    Ring1 = 'Ring 1',
+    Ring2 = 'Ring 2',
+    Potion = 'Potion'
 }
 
 const defaultEquipment: {[name in ClassName]: Equipment} = {
@@ -67,4 +80,4 @@ function getItemDescription(item: Equip) {
     }
 }
 
-export { Equip, equips, Equipment, defaultEquipment, getItemTooltip, getItemDescription };
+export { Equip, equips, Equipment, EquipSlot, defaultEquipment, getItemTooltip, getItemDescription };
