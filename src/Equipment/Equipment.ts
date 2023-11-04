@@ -1,16 +1,16 @@
 import { ClassName } from '../Character/Classes/classes';
-import { Armour, ArmourId, armour, getArmourDescription, getArmourTooltip } from './Armour';
-import { Belt, BeltId, belts, getBeltDescription, getBeltTooltip } from './Belt';
-import { Hands, HandsId, getHandsDescription, getHandsTooltip, hands } from './Hands';
-import { Head, HeadId, getHeadDescription, getHeadTooltip, heads } from './Head';
+import { Armour, armour, getArmourDescription, getArmourTooltip } from './Armour';
+import { Belt, belts, getBeltDescription, getBeltTooltip } from './Belt';
+import { Hands, getHandsDescription, getHandsTooltip, hands } from './Hands';
+import { Head, getHeadDescription, getHeadTooltip, heads } from './Head';
 import { ItemType } from './Item';
-import { Potion, PotionId, getPotionDescription, getPotionTooltip, potions } from './Potion';
-import { Ring, RingId, getRingDescription, getRingTooltip, rings } from './Ring';
-import { Shield, ShieldId, getShieldDescription, getShieldTooltip, shields } from './Shield';
-import { Weapon, WeaponId, getWeaponDescription, getWeaponTooltip, weapons } from './Weapons';
+import { Potion, getPotionDescription, getPotionTooltip, potions } from './Potion';
+import { Ring, getRingDescription, getRingTooltip, rings } from './Ring';
+import { Shield, getShieldDescription, getShieldTooltip, shields } from './Shield';
+import { Weapon, getWeaponDescription, getWeaponTooltip, weapons } from './Weapons';
 
 type Equip = Weapon|Shield|Armour|Head|Hands|Ring|Potion|Belt;
-const equips: {[key in WeaponId|ShieldId|ArmourId|HeadId|HandsId|RingId|PotionId|BeltId]: Equip} = {...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts} as const;
+const equips: {[key: string]: Equip} = {...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts} as const;
 
 type Equipment = {
     mainHand?: Weapon;
