@@ -84,4 +84,38 @@ function getItemDescription(item: Equip) {
     }
 }
 
-export { Equip, equips, Equipment, EquipSlot, defaultEquipment, getItemTooltip, getItemDescription };
+function isValidEquip(itemId: string, slot: EquipSlot): boolean {
+    const item = equips[itemId];
+    if (!item) return false;
+
+    if (slot === EquipSlot.MainHand) {
+        return item.itemType === ItemType.Weapon;
+    }
+    else if (slot === EquipSlot.OffHand) {
+        return (item.itemType === ItemType.Weapon && !item.twoHanded && item.light) || item.itemType === ItemType.Shield;
+    }
+    else if (slot === EquipSlot.Armour) {
+        return item.itemType === ItemType.Armour;
+    }
+    else if (slot === EquipSlot.Head) {
+        return item.itemType === ItemType.Head;
+    }
+    else if (slot === EquipSlot.Hands) {
+        return item.itemType === ItemType.Hands;
+    }
+    else if (slot === EquipSlot.Ring1 || slot === EquipSlot.Ring2) {
+        return item.itemType === ItemType.Ring;
+    }
+    else if (slot === EquipSlot.Potion) {
+        return item.itemType === ItemType.Potion;
+    }
+    else if (slot === EquipSlot.Belt) {
+        return item.itemType === ItemType.Belt;
+    }
+    else if (slot === EquipSlot.Amulet) {
+        return item.itemType === ItemType.Amulet;
+    }
+    else return false;
+}
+
+export { Equip, equips, Equipment, EquipSlot, defaultEquipment, getItemTooltip, getItemDescription, isValidEquip };
