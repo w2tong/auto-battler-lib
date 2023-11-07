@@ -46,7 +46,7 @@ const armour: {[id in ArmourId]: Armour} = {
         itemType: ItemType.Armour,
         name: 'Robe',
         tier: 0,
-        img: 'robe.png',
+        img: 'armour-robe.png',
         type: ArmourType.Unarmoured,
         armourClass: 0,
         manaRegen: 10
@@ -56,7 +56,7 @@ const armour: {[id in ArmourId]: Armour} = {
         itemType: ItemType.Armour,
         name: 'Robe +1',
         tier: 1,
-        img: 'robe.png',
+        img: 'armour-robe.png',
         type: ArmourType.Unarmoured,
         armourClass: 1,
         manaRegen: 11
@@ -66,7 +66,7 @@ const armour: {[id in ArmourId]: Armour} = {
         itemType: ItemType.Armour,
         name: 'Robe +2',
         tier: 2,
-        img: 'robe.png',
+        img: 'armour-robe.png',
         type: ArmourType.Unarmoured,
         armourClass: 2,
         manaRegen: 12
@@ -76,7 +76,7 @@ const armour: {[id in ArmourId]: Armour} = {
         itemType: ItemType.Armour,
         name: 'Robe +3',
         tier: 3,
-        img: 'robe.png',
+        img: 'armour-robe.png',
         type: ArmourType.Unarmoured,
         armourClass: 3,
         manaRegen: 13
@@ -86,7 +86,7 @@ const armour: {[id in ArmourId]: Armour} = {
         itemType: ItemType.Armour,
         name: 'Robe +4',
         tier: 4,
-        img: 'robe.png',
+        img: 'armour-robe.png',
         type: ArmourType.Unarmoured,
         armourClass: 4,
         manaRegen: 14
@@ -96,7 +96,7 @@ const armour: {[id in ArmourId]: Armour} = {
         itemType: ItemType.Armour,
         name: 'Robe +5',
         tier: 5,
-        img: 'robe.png',
+        img: 'armour-robe.png',
         type: ArmourType.Unarmoured,
         armourClass: 5,
         manaRegen: 15
