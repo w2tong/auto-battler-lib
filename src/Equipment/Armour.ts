@@ -12,9 +12,9 @@ import { Item, ItemType } from './Item';
 
 enum ArmourType {
     Unarmoured = 'Unarmoured',
-    Light = 'Light',
-    Medium = 'Medium',
-    Heavy = 'Heavy',
+    Light = 'Light Armour',
+    Medium = 'Medium Armour',
+    Heavy = 'Heavy Armour',
 }
 
 interface Armour extends Item {
@@ -35,9 +35,9 @@ interface Armour extends Item {
 
 type ArmourId = 
 'robe0' | 'robe1' | 'robe2' | 'robe3' | 'robe4' | 'robe5' |
-'lightarmour0' | 'lightarmour1' | 'lightarmour2' | 'lightarmour3' | 'lightarmour4' | 'lightarmour5' |
-'mediumarmour0' | 'mediumarmour1' | 'mediumarmour2' | 'mediumarmour3' | 'mediumarmour4' | 'mediumarmour5' |
-'heavyarmour0' | 'heavyarmour1' |  'heavyarmour2' |  'heavyarmour3' |  'heavyarmour4' |  'heavyarmour5'
+'leatherArmour0' | 'leatherArmour1' | 'leatherArmour2' | 'leatherArmour3' | 'leatherArmour4' | 'leatherArmour5' |
+'mailArmour0' | 'mailArmour1' | 'mailArmour2' | 'mailArmour3' | 'mailArmour4' | 'mailArmour5' |
+'plateArmour0' | 'plateArmour1' |  'plateArmour2' |  'plateArmour3' |  'plateArmour4' |  'plateArmour5'
 ;
 
 const armour: {[id in ArmourId]: Armour} = {
@@ -101,192 +101,192 @@ const armour: {[id in ArmourId]: Armour} = {
         armourClass: 5,
         manaRegen: 15
     },
-    lightarmour0: {
-        id: 'lightarmour0',
+    leatherArmour0: {
+        id: 'leatherArmour0',
         itemType: ItemType.Armour,
         name: 'Leather Armour',
         tier: 0,
-        img: 'leatherArmour.png',
+        img: 'armour-leather.png',
         type: ArmourType.Light,
         armourClass: 1,
         manaRegen: 5
     },
-    lightarmour1: {
-        id: 'lightarmour1',
+    leatherArmour1: {
+        id: 'leatherArmour1',
         itemType: ItemType.Armour,
         name: 'Leather Armour +1',
         tier: 1,
-        img: 'leatherArmour.png',
+        img: 'armour-leather.png',
         type: ArmourType.Light,
         armourClass: 2,
         manaRegen: 6
     },
-    lightarmour2: {
-        id: 'lightarmour2',
+    leatherArmour2: {
+        id: 'leatherArmour2',
         itemType: ItemType.Armour,
         name: 'Leather Armour +2',
         tier: 2,
-        img: 'leatherArmour.png',
+        img: 'armour-leather.png',
         type: ArmourType.Light,
         armourClass: 3,
         manaRegen: 7
     },
-    lightarmour3: {
-        id: 'lightarmour3',
+    leatherArmour3: {
+        id: 'leatherArmour3',
         itemType: ItemType.Armour,
         name: 'Leather Armour +3',
         tier: 3,
-        img: 'leatherArmour.png',
+        img: 'armour-leather.png',
         type: ArmourType.Light,
         armourClass: 4,
         manaRegen: 8
     },
-    lightarmour4: {
-        id: 'lightarmour4',
+    leatherArmour4: {
+        id: 'leatherArmour4',
         itemType: ItemType.Armour,
         name: 'Leather Armour +4',
         tier: 4,
-        img: 'leatherArmour.png',
+        img: 'armour-leather.png',
         type: ArmourType.Light,
         armourClass: 5,
         manaRegen: 9
     },
-    lightarmour5: {
-        id: 'lightarmour5',
+    leatherArmour5: {
+        id: 'leatherArmour5',
         itemType: ItemType.Armour,
         name: 'Leather Armour +5',
         tier: 5,
-        img: 'leatherArmour.png',
+        img: 'armour-leather.png',
         type: ArmourType.Light,
         armourClass: 6,
         manaRegen: 10
     },
-    mediumarmour0: {
-        id: 'mediumarmour0',
+    mailArmour0: {
+        id: 'mailArmour0',
         itemType: ItemType.Armour,
         name: 'Chainmail',
         tier: 0,
-        img: 'chainmail.png',
+        img: 'armour-chainmail.png',
         type: ArmourType.Medium,
         armourClass: 2,
         physResist: 5,
         manaRegen: 1
     },
-    mediumarmour1: {
-        id: 'mediumarmour1',
+    mailArmour1: {
+        id: 'mailArmour1',
         itemType: ItemType.Armour,
         name: 'Chainmail +1',
         tier: 1,
-        img: 'chainmail.png',
+        img: 'armour-chainmail.png',
         type: ArmourType.Medium,
         armourClass: 3,
         physResist: 6,
         manaRegen: 1
     },
-    mediumarmour2: {
-        id: 'mediumarmour2',
+    mailArmour2: {
+        id: 'mailArmour2',
         itemType: ItemType.Armour,
         name: 'Chainmail +2',
         tier: 2,
-        img: 'chainmail.png',
+        img: 'armour-chainmail.png',
         type: ArmourType.Medium,
         armourClass: 4,
         physResist: 7,
         manaRegen: 2
     },
-    mediumarmour3: {
-        id: 'mediumarmour3',
+    mailArmour3: {
+        id: 'mailArmour3',
         itemType: ItemType.Armour,
         name: 'Chainmail +3',
         tier: 3,
-        img: 'chainmail.png',
+        img: 'armour-chainmail.png',
         type: ArmourType.Medium,
         armourClass: 5,
         physResist: 8,
         manaRegen: 3
     },
-    mediumarmour4: {
-        id: 'mediumarmour4',
+    mailArmour4: {
+        id: 'mailArmour4',
         itemType: ItemType.Armour,
         name: 'Chainmail +4',
         tier: 4,
-        img: 'chainmail.png',
+        img: 'armour-chainmail.png',
         type: ArmourType.Medium,
         armourClass: 6,
         physResist: 9,
         manaRegen: 4
     },
-    mediumarmour5: {
-        id: 'mediumarmour5',
+    mailArmour5: {
+        id: 'mailArmour5',
         itemType: ItemType.Armour,
         name: 'Chainmail +5',
         tier: 5,
-        img: 'chainmail.png',
+        img: 'armour-chainmail.png',
         type: ArmourType.Medium,
         armourClass: 7,
         physResist: 10,
         manaRegen: 5
     },
-    heavyarmour0: {
-        id: 'heavyarmour0',
+    plateArmour0: {
+        id: 'plateArmour0',
         itemType: ItemType.Armour,
         name: 'Plate Armour',
         tier: 0,
-        img: 'plateArmour.png',
+        img: 'armour-plate.png',
         type: ArmourType.Heavy,
         armourClass: 3,
         physResist: 5,
     },
-    heavyarmour1: {
-        id: 'heavyarmour1',
+    plateArmour1: {
+        id: 'plateArmour1',
         itemType: ItemType.Armour,
         name: 'Plate Armour +1',
         tier: 1,
-        img: 'plateArmour.png',
+        img: 'armour-plate.png',
         type: ArmourType.Heavy,
         armourClass: 4,
         physResist: 6,
         physDR: 1,
     },
-    heavyarmour2: {
-        id: 'heavyarmour2',
+    plateArmour2: {
+        id: 'plateArmour2',
         itemType: ItemType.Armour,
         name: 'Plate Armour +2',
         tier: 2,
-        img: 'plateArmour.png',
+        img: 'armour-plate.png',
         type: ArmourType.Heavy,
         armourClass: 5,
         physResist: 7,
         physDR: 2,
     },
-    heavyarmour3: {
-        id: 'heavyarmour3',
+    plateArmour3: {
+        id: 'plateArmour3',
         itemType: ItemType.Armour,
         name: 'Plate Armour +3',
         tier: 3,
-        img: 'plateArmour.png',
+        img: 'armour-plate.png',
         type: ArmourType.Heavy,
         armourClass: 6,
         physResist: 8,
         physDR: 3,
     },
-    heavyarmour4: {
-        id: 'heavyarmour4',
+    plateArmour4: {
+        id: 'plateArmour4',
         itemType: ItemType.Armour,
         name: 'Plate Armour +4',
         tier: 4,
-        img: 'plateArmour.png',
+        img: 'armour-plate.png',
         type: ArmourType.Heavy,
         armourClass: 7,
         physResist: 9,
         physDR: 4,
     },
-    heavyarmour5: {
-        id: 'heavyarmour5',
+    plateArmour5: {
+        id: 'plateArmour5',
         itemType: ItemType.Armour,
         name: 'Plate Armour +5',
         tier: 5,
-        img: 'plateArmour.png',
+        img: 'armour-plate.png',
         type: ArmourType.Heavy,
         armourClass: 8,
         physResist: 10,

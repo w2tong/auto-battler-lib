@@ -15,7 +15,7 @@ const lootTiers: {[tier: number]: LootTable} = {
         // Shields
         'buckler0', 'spikedShield0', 'towerShield0',
         // Armour
-        'robe0', 'lightarmour0', 'mediumarmour0', 'heavyarmour0',
+        'robe0', 'leatherArmour0', 'mailArmour0', 'plateArmour0',
         // Heads
         'helmet0', 'clothHood0',
         // Hands
@@ -30,7 +30,7 @@ const lootTiers: {[tier: number]: LootTable} = {
         // Shields
         'buckler1', 'spikedShield1', 'towerShield1',
         // Armour
-        'robe1', 'lightarmour1', 'mediumarmour1', 'heavyarmour1', 
+        'robe1', 'leatherArmour1', 'mailArmour1', 'plateArmour1', 
         // Heads
         'helmet0', 'clothHood0',
         // Hands
@@ -46,7 +46,7 @@ const lootTiers: {[tier: number]: LootTable} = {
         // Shields
         'buckler2', 'spikedShield2', 'towerShield2',
         // Armour
-        'robe2', 'lightarmour2', 'mediumarmour2', 'heavyarmour2',
+        'robe2', 'leatherArmour2', 'mailArmour2', 'plateArmour2',
         // Heads
         'helmet0', 'clothHood0',
         // Hands
@@ -64,7 +64,7 @@ const lootTiers: {[tier: number]: LootTable} = {
         // Shields
         'buckler3', 'spikedShield3', 'towerShield3',
         // Armour
-        'robe3', 'lightarmour3', 'mediumarmour3', 'heavyarmour3',
+        'robe3', 'leatherArmour3', 'mailArmour3', 'plateArmour3',
         // Heads
         'helmet1', 'clothHood1',
         // Hands
@@ -82,7 +82,7 @@ const lootTiers: {[tier: number]: LootTable} = {
         // Shields
         'buckler4', 'spikedShield4', 'towerShield4',
         // Armour
-        'robe4', 'lightarmour4', 'mediumarmour4', 'heavyarmour4',
+        'robe4', 'leatherArmour4', 'mailArmour4', 'plateArmour4',
         // Heads
         'helmet1', 'clothHood1',
         // Hands
@@ -101,7 +101,7 @@ const lootTiers: {[tier: number]: LootTable} = {
         // Shields
         'buckler5', 'spikedShield5', 'towerShield5',
         // Armour
-        'robe5', 'lightarmour5', 'mediumarmour5', 'heavyarmour5',
+        'robe5', 'leatherArmour5', 'mailArmour5', 'plateArmour5',
         // Heads
         'helmet2', 'clothHood2',
         // Hands

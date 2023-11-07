@@ -19,7 +19,7 @@ const belts: {[id in BeltId]: Belt} = {
         itemType: ItemType.Belt,
         name: 'Belt of Charges',
         tier: 4,
-        img: 'chargesBelt.png',
+        img: 'belt-multi.png',
         charges: 1
     },
     chargesBelt1: {
@@ -27,7 +27,7 @@ const belts: {[id in BeltId]: Belt} = {
         itemType: ItemType.Belt,
         name: 'Belt of Greater Charges',
         tier: 5,
-        img: 'chargesBelt.png',
+        img: 'belt-multi.png',
         charges: 2
     },
     effBelt0: {
@@ -35,7 +35,7 @@ const belts: {[id in BeltId]: Belt} = {
         itemType: ItemType.Belt,
         name: 'Belt of Effectiveness',
         tier: 2,
-        img: 'effBelt.png',
+        img: 'belt-red-pot.png',
         effectiveness: 0.25
     },
     effBelt1: {
@@ -43,7 +43,7 @@ const belts: {[id in BeltId]: Belt} = {
         itemType: ItemType.Belt,
         name: 'Belt of Greater Effectiveness',
         tier: 3,
-        img: 'effBelt.png',
+        img: 'belt-red-pot.png',
         effectiveness: 0.50
     },
     effBelt2: {
@@ -51,7 +51,7 @@ const belts: {[id in BeltId]: Belt} = {
         itemType: ItemType.Belt,
         name: 'Belt of Superior Effectiveness',
         tier: 4,
-        img: 'effBelt.png',
+        img: 'belt-red-pot.png',
         effectiveness: 0.75
     },
     effBelt3: {
@@ -59,7 +59,7 @@ const belts: {[id in BeltId]: Belt} = {
         itemType: ItemType.Belt,
         name: 'Belt of Supreme Effectiveness',
         tier: 5,
-        img: 'effBelt.png',
+        img: 'belt-red-pot.png',
         effectiveness: 1
     },
     healBelt0: {
@@ -67,7 +67,7 @@ const belts: {[id in BeltId]: Belt} = {
         itemType: ItemType.Belt,
         name: 'Belt of Healing',
         tier: 2,
-        img: 'healBelt.png',
+        img: 'belt-green-pot.png',
         healing: 5
     },
     healBelt1: {
@@ -75,7 +75,7 @@ const belts: {[id in BeltId]: Belt} = {
         itemType: ItemType.Belt,
         name: 'Belt of Greater Healing',
         tier: 3,
-        img: 'healBelt.png',
+        img: 'belt-green-pot.png',
         healing: 10
     },
     healBelt2: {
@@ -83,7 +83,7 @@ const belts: {[id in BeltId]: Belt} = {
         itemType: ItemType.Belt,
         name: 'Belt of Superior Healing',
         tier: 4,
-        img: 'healBelt.png',
+        img: 'belt-green-pot.png',
         healing: 20
     },
     healBelt3: {
@@ -91,7 +91,7 @@ const belts: {[id in BeltId]: Belt} = {
         itemType: ItemType.Belt,
         name: 'Belt of Supreme Healing',
         tier: 5,
-        img: 'healBelt.png',
+        img: 'belt-green-pot.png',
         healing: 40
     },
 

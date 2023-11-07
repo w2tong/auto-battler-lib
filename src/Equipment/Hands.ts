@@ -29,7 +29,7 @@ const hands: {[id in HandsId]: Hands} = {
         itemType: ItemType.Hands,
         name: 'Gloves of Lesser Dual Wielding',
         tier: 0,
-        img: 'dwGloves.png',
+        img: 'gloves-dual-wield.png',
         weaponStyle: WeaponStyle.DualWield,
         attackBonus: 2
     },
@@ -38,7 +38,7 @@ const hands: {[id in HandsId]: Hands} = {
         itemType: ItemType.Hands,
         name: 'Gloves of Dual Wielding',
         tier: 3,
-        img: 'dwGloves.png',
+        img: 'gloves-dual-wield.png',
         weaponStyle: WeaponStyle.DualWield,
         attackBonus: 4
     },
@@ -47,7 +47,7 @@ const hands: {[id in HandsId]: Hands} = {
         itemType: ItemType.Hands,
         name: 'Gloves of Greater Dual Wielding',
         tier: 5,
-        img: 'dwGloves.png',
+        img: 'gloves-dual-wield.png',
         weaponStyle: WeaponStyle.DualWield,
         attackBonus: 6
     },
@@ -56,7 +56,7 @@ const hands: {[id in HandsId]: Hands} = {
         itemType: ItemType.Hands,
         name: 'Gloves of Lesser Two Handing',
         tier: 0,
-        img: 'thGloves.png',
+        img: 'gloves-two-hand.png',
         weaponStyle: WeaponStyle.TwoHanded,
         damageBonus: 2
     },
@@ -65,7 +65,7 @@ const hands: {[id in HandsId]: Hands} = {
         itemType: ItemType.Hands,
         name: 'Gloves of Two Handing',
         tier: 3,
-        img: 'thGloves.png',
+        img: 'gloves-two-hand.png',
         weaponStyle: WeaponStyle.TwoHanded,
         damageBonus: 4
     },
@@ -74,7 +74,7 @@ const hands: {[id in HandsId]: Hands} = {
         itemType: ItemType.Hands,
         name: 'Gloves of Greater Two Handing',
         tier: 5,
-        img: 'thGloves.png',
+        img: 'gloves-two-hand.png',
         weaponStyle: WeaponStyle.TwoHanded,
         damageBonus: 6
     },
@@ -83,7 +83,7 @@ const hands: {[id in HandsId]: Hands} = {
         itemType: ItemType.Hands,
         name: 'Gloves of the Lesser Duelist',
         tier: 0,
-        img: 'ohGloves.png',
+        img: 'gloves-one-hand.png',
         weaponStyle: WeaponStyle.OneHanded,
         attackBonus: 1,
         damageBonus: 1
@@ -93,7 +93,7 @@ const hands: {[id in HandsId]: Hands} = {
         itemType: ItemType.Hands,
         name: 'Gloves of the Duelist',
         tier: 3,
-        img: 'ohGloves.png',
+        img: 'gloves-one-hand.png',
         weaponStyle: WeaponStyle.OneHanded,
         attackBonus: 2,
         damageBonus: 2
@@ -103,7 +103,7 @@ const hands: {[id in HandsId]: Hands} = {
         itemType: ItemType.Hands,
         name: 'Gloves of the Greater Duelist',
         tier: 5,
-        img: 'ohGloves.png',
+        img: 'gloves-one-hand.png',
         weaponStyle: WeaponStyle.OneHanded,
         attackBonus: 3,
         damageBonus: 3

@@ -40,7 +40,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Attack',
         tier: 0,
-        img: 'abRing.png',
+        img: 'ring-red.png',
         attackBonus: 1
     },
     abRing1: {
@@ -48,7 +48,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Attack',
         tier: 3,
-        img: 'abRing.png',
+        img: 'ring-red.png',
         attackBonus: 2
     },
     abRing2: {
@@ -56,7 +56,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Greater Attack',
         tier: 0,
-        img: 'abRing.png',
+        img: 'ring-red.png',
         attackBonus: 3
     },
     dbRing0: {
@@ -64,7 +64,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Damage',
         tier: 0,
-        img: 'dbRing.png',
+        img: 'ring-orange.png',
         damageBonus: 1
     },
     dbRing1: {
@@ -72,7 +72,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Damage',
         tier: 3,
-        img: 'dbRing.png',
+        img: 'ring-orange.png',
         damageBonus: 2
     },
     dbRing2: {
@@ -80,7 +80,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Greater Damage',
         tier: 5,
-        img: 'dbRing.png',
+        img: 'ring-orange.png',
         damageBonus: 3
     },
     crRing0: {
@@ -88,7 +88,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Crit Chance',
         tier: 3,
-        img: 'crRing.png',
+        img: 'ring-black.png',
         critRangeBonus: 1
     },
     crRing1: {
@@ -96,7 +96,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Pog Clazy Crit Chance',
         tier: 5,
-        img: 'crRing.png',
+        img: 'ring-black.png',
         critRangeBonus: 2
     },
     cmRing0: {
@@ -104,7 +104,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Crit Damage',
         tier: 1,
-        img: 'cmRing.png',
+        img: 'ring-grey.png',
         critMultBonus: 0.2
     },
     cmRing1: {
@@ -112,7 +112,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Crit Damage',
         tier: 3,
-        img: 'cmRing.png',
+        img: 'ring-grey.png',
         critMultBonus: 0.35
     },
     cmRing2: {
@@ -120,7 +120,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Greater Crit Damage',
         tier: 5,
-        img: 'cmRing.png',
+        img: 'ring-grey.png',
         critMultBonus: 0.5
     },
     acRing0: {
@@ -128,7 +128,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Armour',
         tier: 0,
-        img: 'acRing.png',
+        img: 'ring-shield.png',
         armourClass: 1
     },
     acRing1: {
@@ -136,7 +136,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Armour',
         tier: 3,
-        img: 'acRing.png',
+        img: 'ring-shield.png',
         armourClass: 2
     },
     acRing2: {
@@ -144,7 +144,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Greater Armour',
         tier: 5,
-        img: 'acRing.png',
+        img: 'ring-shield.png',
         armourClass: 3
     },
     thornsRing0: {
@@ -152,7 +152,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Thorns',
         tier: 1,
-        img: 'thornsRing.png',
+        img: 'ring-thorns.png',
         thorns: 1
     },
     thornsRing1: {
@@ -160,7 +160,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Thorns',
         tier: 3,
-        img: 'thornsRing.png',
+        img: 'ring-thorns.png',
         thorns: 2
     },
     thornsRing2: {
@@ -168,7 +168,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Greater Thorns',
         tier: 5,
-        img: 'thornsRing.png',
+        img: 'ring-thorns.png',
         thorns: 3
     },
     mpAtkRing0: {
@@ -176,7 +176,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Lesser M.Atk Ring',
         tier: 1,
-        img: 'mpAtkRing.png',
+        img: 'ring-purple.png',
         manaPerAtk: 2.5
     },
     mpAtkRing1: {
@@ -184,7 +184,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of M.Atk Ring',
         tier: 3,
-        img: 'mpAtkRing.png',
+        img: 'ring-purple.png',
         manaPerAtk: 5.0
     },
     mpAtkRing2: {
@@ -192,7 +192,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Greater M.Atk Ring',
         tier: 5,
-        img: 'mpAtkRing.png',
+        img: 'ring-purple.png',
         manaPerAtk: 7.5
     },
     mpRegenRing0: {
@@ -200,7 +200,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Lesser M.Regen Ring',
         tier: 1,
-        img: 'mpRegenRing.png',
+        img: 'ring-blue.png',
         manaRegen: 4
     },
     mpRegenRing1: {
@@ -208,7 +208,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of M.Regen Ring',
         tier: 3,
-        img: 'mpRegenRing.png',
+        img: 'ring-blue.png',
         manaRegen: 7
     },
     mpRegenRing2: {
@@ -216,7 +216,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Greater M.Regen Ring',
         tier: 5,
-        img: 'mpRegenRing.png',
+        img: 'ring-blue.png',
         manaRegen: 11
     },
     mpCostRing0: {
@@ -224,7 +224,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Lesser M.Cost Ring',
         tier: 1,
-        img: 'mpCostRing.png',
+        img: 'ring-teal.png',
         manaCostReduction: 5
     },
     mpCostRing1: {
@@ -232,7 +232,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of M.Cost Ring',
         tier: 3,
-        img: 'mpCostRing.png',
+        img: 'ring-teal.png',
         manaCostReduction: 7.5
     },
     mpCostRing2: {
@@ -240,7 +240,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Greater M.Cost Ring',
         tier: 5,
-        img: 'mpCostRing.png',
+        img: 'ring-teal.png',
         manaCostReduction: 10
     }
 
