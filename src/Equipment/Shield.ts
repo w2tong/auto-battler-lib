@@ -27,6 +27,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Buckler',
         itemType: ItemType.Shield,
         tier: 0,
+        img: 'buckler.png',
         type: ShieldType.Light,
         armourClass: 1
     },
@@ -35,6 +36,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Buckler +1',
         itemType: ItemType.Shield,
         tier: 1,
+        img: 'buckler.png',
         type: ShieldType.Light,
         armourClass: 2
     },
@@ -43,6 +45,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Buckler +2',
         itemType: ItemType.Shield,
         tier: 2,
+        img: 'buckler.png',
         type: ShieldType.Light,
         armourClass: 3
     },
@@ -51,6 +54,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Buckler +3',
         itemType: ItemType.Shield,
         tier: 3,
+        img: 'buckler.png',
         type: ShieldType.Light,
         armourClass: 4
     },
@@ -59,6 +63,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Buckler +4',
         itemType: ItemType.Shield,
         tier: 4,
+        img: 'buckler.png',
         type: ShieldType.Light,
         armourClass: 5
     },
@@ -67,6 +72,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Buckler +5',
         itemType: ItemType.Shield,
         tier: 5,
+        img: 'buckler.png',
         type: ShieldType.Light,
         armourClass: 6
     },
@@ -75,6 +81,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Spiked Shield',
         itemType: ItemType.Shield,
         tier: 0,
+        img: 'spikedShield.png',
         type: ShieldType.Medium,
         armourClass: 1,
         thorns: 1
@@ -84,6 +91,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Spiked Shield +1',
         itemType: ItemType.Shield,
         tier: 1,
+        img: 'spikedShield.png',
         type: ShieldType.Medium,
         armourClass: 2,
         thorns: 2
@@ -93,6 +101,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Spiked Shield +2',
         itemType: ItemType.Shield,
         tier: 2,
+        img: 'spikedShield.png',
         type: ShieldType.Medium,
         armourClass: 3,
         thorns: 3
@@ -102,6 +111,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Spiked Shield +3',
         itemType: ItemType.Shield,
         tier: 3,
+        img: 'spikedShield.png',
         type: ShieldType.Medium,
         armourClass: 4,
         thorns: 4
@@ -111,6 +121,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Spiked Shield +4',
         itemType: ItemType.Shield,
         tier: 4,
+        img: 'spikedShield.png',
         type: ShieldType.Medium,
         armourClass: 5,
         thorns: 5
@@ -120,6 +131,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Spiked Shield +5',
         itemType: ItemType.Shield,
         tier: 5,
+        img: 'spikedShield.png',
         type: ShieldType.Medium,
         armourClass: 6,
         thorns: 6
@@ -129,6 +141,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Tower Shield',
         itemType: ItemType.Shield,
         tier: 0,
+        img: 'towerShield.png',
         type: ShieldType.Heavy,
         armourClass: 3,
         attackBonus: -2
@@ -138,6 +151,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Tower Shield +1',
         itemType: ItemType.Shield,
         tier: 1,
+        img: 'towerShield.png',
         type: ShieldType.Heavy,
         armourClass: 4,
         attackBonus: -2
@@ -147,6 +161,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Tower Shield +2',
         itemType: ItemType.Shield,
         tier: 2,
+        img: 'towerShield.png',
         type: ShieldType.Heavy,
         armourClass: 5,
         attackBonus: -2
@@ -156,6 +171,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Tower Shield +3',
         itemType: ItemType.Shield,
         tier: 3,
+        img: 'towerShield.png',
         type: ShieldType.Heavy,
         armourClass: 6,
         attackBonus: -2
@@ -165,6 +181,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Tower Shield +4',
         itemType: ItemType.Shield,
         tier: 4,
+        img: 'towerShield.png',
         type: ShieldType.Heavy,
         armourClass: 7,
         attackBonus: -2
@@ -174,6 +191,7 @@ const shields: {[id in ShieldId]: Shield} = {
         name: 'Tower Shield +5',
         itemType: ItemType.Shield,
         tier: 5,
+        img: 'towerShield.png',
         type: ShieldType.Heavy,
         armourClass: 8,
         attackBonus: -2

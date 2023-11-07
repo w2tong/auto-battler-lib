@@ -20,6 +20,7 @@ const heads: {[id in HeadId]: Head} = {
         itemType: ItemType.Head,
         name: 'Leather Helmet',
         tier: 0,
+        img: 'leatherHelmet.png',
         armourClass: 1
     },
     helmet1: {
@@ -27,6 +28,7 @@ const heads: {[id in HeadId]: Head} = {
         itemType: ItemType.Head,
         name: 'Mail Coif',
         tier: 3,
+        img: 'leatherHelmet.png',
         armourClass: 2
     },
     helmet2: {
@@ -34,6 +36,7 @@ const heads: {[id in HeadId]: Head} = {
         itemType: ItemType.Head,
         name: 'Plate Helmet',
         tier: 5,
+        img: 'leatherHelmet.png',
         armourClass: 3
     },
     clothHood0: {
@@ -41,6 +44,7 @@ const heads: {[id in HeadId]: Head} = {
         itemType: ItemType.Head,
         name: 'Cloth Hood',
         tier: 0,
+        img: 'clothHood.png',
         manaCostReduction: 10
     },
     clothHood1: {
@@ -48,6 +52,7 @@ const heads: {[id in HeadId]: Head} = {
         itemType: ItemType.Head,
         name: 'Cloth Hood +1',
         tier: 3,
+        img: 'clothHood.png',
         manaCostReduction: 15
     },
     clothHood2: {
@@ -55,6 +60,7 @@ const heads: {[id in HeadId]: Head} = {
         itemType: ItemType.Head,
         name: 'Cloth Hood +2',
         tier: 5,
+        img: 'clothHood.png',
         manaCostReduction: 20
     }
 } as const;

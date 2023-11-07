@@ -14,6 +14,7 @@ const amulets: {[id in AmuletId]: Amulet} = {
         itemType: ItemType.Amulet,
         name: 'Amulet',
         tier: 0,
+        img: ''
     }
 } as const;
 

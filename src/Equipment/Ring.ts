@@ -28,10 +28,10 @@ type RingId =
 | 'crRing0' | 'crRing1' 
 | 'cmRing0' | 'cmRing1' | 'cmRing2' 
 | 'acRing0' | 'acRing1' | 'acRing2'
-| 'thrRing0' | 'thrRing1' | 'thrRing2'
-| 'mpatkRing0' | 'mpatkRing1' | 'mpatkRing2'
-| 'mrgnRing0' | 'mrgnRing1' | 'mrgnRing2'
-| 'mcostRing0' | 'mcostRing1' | 'mcostRing2'
+| 'thornsRing0' | 'thornsRing1' | 'thornsRing2'
+| 'mpAtkRing0' | 'mpAtkRing1' | 'mpAtkRing2'
+| 'mpRegenRing0' | 'mpRegenRing1' | 'mpRegenRing2'
+| 'mpCostRing0' | 'mpCostRing1' | 'mpCostRing2'
 ;
 
 const rings: {[id in RingId]: Ring} = {
@@ -40,6 +40,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Attack',
         tier: 0,
+        img: 'abRing.png',
         attackBonus: 1
     },
     abRing1: {
@@ -47,6 +48,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Attack',
         tier: 3,
+        img: 'abRing.png',
         attackBonus: 2
     },
     abRing2: {
@@ -54,6 +56,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Greater Attack',
         tier: 0,
+        img: 'abRing.png',
         attackBonus: 3
     },
     dbRing0: {
@@ -61,6 +64,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Damage',
         tier: 0,
+        img: 'dbRing.png',
         damageBonus: 1
     },
     dbRing1: {
@@ -68,6 +72,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Damage',
         tier: 3,
+        img: 'dbRing.png',
         damageBonus: 2
     },
     dbRing2: {
@@ -75,6 +80,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Greater Damage',
         tier: 5,
+        img: 'dbRing.png',
         damageBonus: 3
     },
     crRing0: {
@@ -82,6 +88,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Crit Chance',
         tier: 3,
+        img: 'crRing.png',
         critRangeBonus: 1
     },
     crRing1: {
@@ -89,6 +96,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Pog Clazy Crit Chance',
         tier: 5,
+        img: 'crRing.png',
         critRangeBonus: 2
     },
     cmRing0: {
@@ -96,6 +104,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Crit Damage',
         tier: 1,
+        img: 'cmRing.png',
         critMultBonus: 0.2
     },
     cmRing1: {
@@ -103,6 +112,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Crit Damage',
         tier: 3,
+        img: 'cmRing.png',
         critMultBonus: 0.35
     },
     cmRing2: {
@@ -110,6 +120,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Greater Crit Damage',
         tier: 5,
+        img: 'cmRing.png',
         critMultBonus: 0.5
     },
     acRing0: {
@@ -117,6 +128,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Armour',
         tier: 0,
+        img: 'acRing.png',
         armourClass: 1
     },
     acRing1: {
@@ -124,6 +136,7 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Armour',
         tier: 3,
+        img: 'acRing.png',
         armourClass: 2
     },
     acRing2: {
@@ -131,90 +144,103 @@ const rings: {[id in RingId]: Ring} = {
         itemType: ItemType.Ring,
         name: 'Ring of Greater Armour',
         tier: 5,
+        img: 'acRing.png',
         armourClass: 3
     },
-    thrRing0: {
-        id: 'thrRing0',
+    thornsRing0: {
+        id: 'thornsRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Thorns',
         tier: 1,
+        img: 'thornsRing.png',
         thorns: 1
     },
-    thrRing1: {
-        id: 'thrRing1',
+    thornsRing1: {
+        id: 'thornsRing1',
         itemType: ItemType.Ring,
         name: 'Ring of Thorns',
         tier: 3,
+        img: 'thornsRing.png',
         thorns: 2
     },
-    thrRing2: {
-        id: 'thrRing2',
+    thornsRing2: {
+        id: 'thornsRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater Thorns',
         tier: 5,
+        img: 'thornsRing.png',
         thorns: 3
     },
-    mpatkRing0: {
-        id: 'mpatkRing0',
+    mpAtkRing0: {
+        id: 'mpAtkRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser M.Atk Ring',
         tier: 1,
+        img: 'mpAtkRing.png',
         manaPerAtk: 2.5
     },
-    mpatkRing1: {
-        id: 'mpatkRing1',
+    mpAtkRing1: {
+        id: 'mpAtkRing1',
         itemType: ItemType.Ring,
         name: 'Ring of M.Atk Ring',
         tier: 3,
+        img: 'mpAtkRing.png',
         manaPerAtk: 5.0
     },
-    mpatkRing2: {
-        id: 'mpatkRing3',
+    mpAtkRing2: {
+        id: 'mpAtkRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater M.Atk Ring',
         tier: 5,
+        img: 'mpAtkRing.png',
         manaPerAtk: 7.5
     },
-    mrgnRing0: {
-        id: 'mrgnRing0',
+    mpRegenRing0: {
+        id: 'mpRegenRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser M.Regen Ring',
         tier: 1,
+        img: 'mpRegenRing.png',
         manaRegen: 4
     },
-    mrgnRing1: {
-        id: 'mrgnRing1',
+    mpRegenRing1: {
+        id: 'mpRegenRing1',
         itemType: ItemType.Ring,
         name: 'Ring of M.Regen Ring',
         tier: 3,
+        img: 'mpRegenRing.png',
         manaRegen: 7
     },
-    mrgnRing2: {
-        id: 'mrgnRing2',
+    mpRegenRing2: {
+        id: 'mpRegenRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater M.Regen Ring',
         tier: 5,
+        img: 'mpRegenRing.png',
         manaRegen: 11
     },
-    mcostRing0: {
-        id: 'mcostRing0',
+    mpCostRing0: {
+        id: 'mpCostRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser M.Cost Ring',
         tier: 1,
+        img: 'mpCostRing.png',
         manaCostReduction: 5
     },
-    mcostRing1: {
-        id: 'mcostRing1',
+    mpCostRing1: {
+        id: 'mpCostRing1',
         itemType: ItemType.Ring,
         name: 'Ring of M.Cost Ring',
         tier: 3,
+        img: 'mpCostRing.png',
         manaCostReduction: 7.5
     },
-    mcostRing2: {
-        id: 'mcostRing2',
+    mpCostRing2: {
+        id: 'mpCostRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater M.Cost Ring',
         tier: 5,
+        img: 'mpCostRing.png',
         manaCostReduction: 10
     }
 

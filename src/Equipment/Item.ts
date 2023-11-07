@@ -17,6 +17,7 @@ interface Item {
     itemType: ItemType;
     name: string;
     tier: Tier;
+    img: string;
 }
 
 export { Item, ItemType };
