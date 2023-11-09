@@ -1,14 +1,14 @@
 import { ClassName } from '../Character/Classes/classes';
 import { Amulet, amulets, getAmuletDescription, getAmuletTooltip } from './Amulet';
-import { Armour, armour, getArmourDescription, getArmourTooltip } from './Armour';
-import { Belt, belts, getBeltDescription, getBeltTooltip } from './Belt';
-import { Hands, getHandsDescription, getHandsTooltip, hands } from './Hands';
-import { Head, getHeadDescription, getHeadTooltip, heads } from './Head';
+import { Armour, ArmourId, armour, getArmourDescription, getArmourTooltip } from './Armour';
+import { Belt, BeltId, belts, getBeltDescription, getBeltTooltip } from './Belt';
+import { Hands, HandsId, getHandsDescription, getHandsTooltip, hands } from './Hands';
+import { Head, HeadId, getHeadDescription, getHeadTooltip, heads } from './Head';
 import { ItemType } from './Item';
-import { Potion, getPotionDescription, getPotionTooltip, potions } from './Potion';
-import { Ring, getRingDescription, getRingTooltip, rings } from './Ring';
-import { Shield, getShieldDescription, getShieldTooltip, shields } from './Shield';
-import { Weapon, getWeaponDescription, getWeaponTooltip, weapons } from './Weapons';
+import { Potion, PotionId, getPotionDescription, getPotionTooltip, potions } from './Potion';
+import { Ring, RingId, getRingDescription, getRingTooltip, rings } from './Ring';
+import { Shield, ShieldId, getShieldDescription, getShieldTooltip, shields } from './Shield';
+import { Weapon, WeaponId, getWeaponDescription, getWeaponTooltip, weapons } from './Weapons';
 
 type Equip = Weapon|Shield|Armour|Head|Hands|Ring|Potion|Belt|Amulet;
 const equips: {[key: string]: Equip} = {...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts, ...amulets} as const;
@@ -25,6 +25,19 @@ type Equipment = {
     potion?: Potion;
     belt?: Belt;
     amulet?: Amulet;
+}
+
+type EquipmentItemIds = {
+    mainHand: string | null
+    offHand: string | null
+    head: string | null
+    amulet: string | null
+    armour: string | null
+    hands: string | null
+    belt: string | null
+    ring1: string | null
+    ring2: string | null
+    potion: string | null
 }
 
 enum EquipSlot {
@@ -118,4 +131,53 @@ function isValidEquip(itemId: string, slot: EquipSlot): boolean {
     else return false;
 }
 
-export { Equip, equips, Equipment, EquipSlot, defaultEquipment, getItemTooltip, getItemDescription, isValidEquip };
+function createEquipment(equipmentItemIds: EquipmentItemIds): Equipment {
+    const equipment: Equipment = {};
+    // Main Hand
+    if (equipmentItemIds.mainHand && equipmentItemIds.mainHand in weapons) {
+        equipment.mainHand = weapons[equipmentItemIds.mainHand as WeaponId];
+    }
+    // Off Hand
+    if (equipmentItemIds.offHand) {
+        if (equipmentItemIds.offHand in weapons) {
+            equipment.offHandWeapon = weapons[equipmentItemIds.offHand as WeaponId];
+        }
+        else if (equipmentItemIds.offHand in shields) {
+            equipment.offHandShield = shields[equipmentItemIds.offHand as ShieldId];
+        }
+    }
+    // Armour
+    if (equipmentItemIds.armour && equipmentItemIds.armour in armour) {
+        equipment.armour = armour[equipmentItemIds.armour as ArmourId];
+    }
+
+    // Head
+    if (equipmentItemIds.head && equipmentItemIds.head in heads) {
+        equipment.head = heads[equipmentItemIds.head as HeadId];
+    }
+
+    // Hands
+    if (equipmentItemIds.hands && equipmentItemIds.hands in hands) {
+        equipment.hands = hands[equipmentItemIds.hands as HandsId];
+    }
+
+    // Rings
+    if (equipmentItemIds.ring1 && equipmentItemIds.ring1 in rings) {
+        equipment.ring1 = rings[equipmentItemIds.ring1 as RingId];
+    }
+    if (equipmentItemIds.ring2 && equipmentItemIds.ring2 in rings) {
+        equipment.ring2 = rings[equipmentItemIds.ring2 as RingId];
+    }
+
+    if (equipmentItemIds.potion && equipmentItemIds.potion in potions) {
+        equipment.potion = potions[equipmentItemIds.potion as PotionId];
+    }
+
+    if (equipmentItemIds.belt && equipmentItemIds.belt in belts) {
+        equipment.belt = belts[equipmentItemIds.belt as BeltId];
+    }
+    
+    return equipment;
+}
+
+export { Equip, EquipmentItemIds, equips, Equipment, EquipSlot, defaultEquipment, getItemTooltip, getItemDescription, isValidEquip, createEquipment };
