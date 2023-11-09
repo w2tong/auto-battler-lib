@@ -2,16 +2,17 @@ import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle';
 import BuffTracker from '../Buffs/BuffTracker';
 import { BuffId } from '../Buffs/buffs';
-import { CharacterStatTemplate } from '../statTemplates';
-import { RangeType, Weapon } from '../Equipment/Weapons';
+import { CharacterStatTemplate, PlayerStats } from '../statTemplates';
+import { RangeType, Weapon, weapons } from '../Equipment/Weapons';
 import { Shield } from '../Equipment/Shield';
-import { Equipment } from '../Equipment/Equipment';
+import { Equipment, defaultEquipment } from '../Equipment/Equipment';
 import { WeaponStyle } from '../Equipment/Hands';
 import { Ring } from '../Equipment/Ring';
 import DamageType from '../DamageType';
 import HitType from '../HitType';
 import { rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
+import { ClassName, Classes } from './Classes/classes';
 
 type CharacterInfo = {
     name: string,
@@ -550,4 +551,23 @@ export default class Character {
     }
 }
 
-export { CharacterInfo, CharacterJSON };
+async function newPlayerChar(userId: string, character: {name: string, level: number; class: ClassName}, equipment: Equipment) {
+    const classDefault = defaultEquipment[character.class];
+    // Set main hand to class default weapon if missing
+    if (classDefault.mainHand && !equipment.mainHand) {
+        if ((classDefault.mainHand.twoHanded && !equipment.offHandWeapon && !equipment.offHandShield) || !classDefault.mainHand.twoHanded) {
+            equipment.mainHand = classDefault.mainHand;
+        }
+        else {
+            equipment.mainHand = weapons.unarmed0;
+        }
+    }
+    // Set off hand to class default weapon/shield if missing and main hand is not two-handed
+    if ((classDefault.offHandWeapon || classDefault.offHandShield) && !equipment.offHandWeapon && !equipment.offHandShield && equipment.mainHand && !equipment.mainHand.twoHanded) {
+        equipment.offHandWeapon = classDefault.offHandWeapon;
+        equipment.offHandShield = classDefault.offHandShield;
+    }
+    return new Classes[character.class](character.level, PlayerStats[character.class], equipment, character.name, {userId});
+}
+
+export { CharacterInfo, CharacterJSON, newPlayerChar };
