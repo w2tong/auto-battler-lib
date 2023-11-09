@@ -22,7 +22,7 @@ export { Side, BattleJSON } from './Battle';
 
 import Character from './Character/Character';
 export { Character };
-export { CharacterInfo, CharacterJSON } from './Character/Character';
+export { CharacterInfo, CharacterJSON, newPlayerChar } from './Character/Character';
 
 import CombatLog from './CombatLog';
 export { CombatLog };
