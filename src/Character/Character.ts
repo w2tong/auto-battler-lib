@@ -551,7 +551,7 @@ export default class Character {
     }
 }
 
-async function newPlayerChar(userId: string, character: {name: string, level: number; class: ClassName}, equipment: Equipment) {
+function newPlayerChar(userId: string, character: {name: string, level: number; class: ClassName}, equipment: Equipment) {
     const classDefault = defaultEquipment[character.class];
     // Set main hand to class default weapon if missing
     if (classDefault.mainHand && !equipment.mainHand) {
