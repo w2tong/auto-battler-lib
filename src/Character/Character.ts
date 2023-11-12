@@ -30,7 +30,9 @@ type CharacterInfo = {
     mana: number,
     manaRegen: number,
     manaCostReduction: number,
-    initiativeBonus: number
+    initiativeBonus: number,
+    potion?: Potion,
+    potionEffectiveness: number
 }
 
 function calcStatValue(stat:{base: number, perLvl: number}, level: number) {
@@ -90,7 +92,7 @@ export default class Character {
 
     // Potion
     protected potion?: Potion;
-    protected potionEffectiveness: number = 1;
+    protected potionEffectiveness: number = 0;
 
     // Buffs/Debuffs
     protected _buffTracker: BuffTracker = new BuffTracker(this);
@@ -364,7 +366,7 @@ export default class Character {
 
     doTurn(): void {
         if (this.potion && this.potion.charges > 0 && this.currHealth <= this.maxHealth/2) {
-            const potionHeal = Math.round((rollDice(this.potion.dice) + this.potion.bonus) * this.potionEffectiveness);
+            const potionHeal = Math.round((rollDice(this.potion.dice) + this.potion.bonus) * (1 + this.potionEffectiveness));
             this.addHealth(potionHeal);
             this.potion.charges -= 1;
             if (this.battle) this.battle.ref.combatLog.add(`${this.name} used ${this.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
@@ -499,7 +501,10 @@ export default class Character {
             mana: this.maxMana,
             manaRegen: this.manaRegen,
             manaCostReduction: this.manaCostReduction,
-            initiativeBonus: this.initiativeBonus
+            initiativeBonus: this.initiativeBonus,
+
+            potion: this.potion,
+            potionEffectiveness: this.potionEffectiveness
         };
         if (this.offHandWeapon) {
             info.offHandWeapon = this.offHandWeapon;
