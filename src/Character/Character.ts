@@ -190,9 +190,10 @@ export default class Character {
                     Character.addHandsBonus(this.mainHand, handsBonuses);
                     if (this.offHandWeapon) Character.addHandsBonus(this.offHandWeapon, handsBonuses);
                 }
-                else if ((equipment.hands.weaponStyle === WeaponStyle.TwoHanded && this.mainHand.twoHanded)
-                        || equipment.hands.weaponStyle === WeaponStyle.OneHanded && !this.mainHand.twoHanded
-                        || equipment.hands.weaponStyle === WeaponStyle.Ranged && this.mainHand.range === RangeType.LongRange
+                else if (
+                    (equipment.hands.weaponStyle === WeaponStyle.TwoHanded && this.mainHand.twoHanded) ||
+                    (equipment.hands.weaponStyle === WeaponStyle.OneHanded && !this.mainHand.twoHanded && !this.offHandWeapon) ||
+                    (equipment.hands.weaponStyle === WeaponStyle.Ranged && this.mainHand.range === RangeType.LongRange)
                 ) {
                     Character.addHandsBonus(this.mainHand, handsBonuses);
                 }
