@@ -148,6 +148,7 @@ export default class Character {
         else if (equipment.offHandShield) {
             const shield = equipment.offHandShield;
             this._armourClass += shield.armourClass;
+            this.mainHand.attackBonus += shield.attackBonus ?? 0;
             this.physDR += shield.physDR ?? 0;
             this.magicDR += shield.magicDR ?? 0;
             this.physResist += shield.physResist ?? 0;
