@@ -14,9 +14,9 @@ class Wizard extends ManaCharacter {
         this.setTarget();
         if (this.target) {
             this.currMana -= (this.maxMana - this.manaCostReduction);
-            this.battle.ref.combatLog.add(`${this.name} casted ${'Firebolt'}.`);
+            this.battle.ref.log.add(`${this.name} casted ${'Firebolt'}.`);
             const attack = this.attackRoll(this.mainHand);
-            this.battle.ref.combatLog.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
+            this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
             if (attack.hitType === HitType.Hit || attack.hitType === HitType.Crit) {
                 let damage = rollDice(this.mainHand.damage) + this.mainHand.damageBonus;
                 if (attack.hitType === HitType.Crit) damage *= this.mainHand.critMult;

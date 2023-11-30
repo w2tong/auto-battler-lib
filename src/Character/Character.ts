@@ -371,7 +371,7 @@ export default class Character {
             const potionHeal = Math.round((rollDice(this.potion.dice) + this.potion.bonus) * (1 + this.potionEffectiveness));
             this.addHealth(potionHeal);
             this.potion.charges -= 1;
-            if (this.battle) this.battle.ref.combatLog.add(`${this.name} used ${this.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
+            if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
         }
         else {
             this.attack();
@@ -415,14 +415,14 @@ export default class Character {
                 const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.mainHand.damageBonus/2), sides: 4}) : 0;
                 let damage = damageRoll + this.mainHand.damageBonus + sneakDamage;
                 if (attack.hitType === HitType.Crit) damage = Math.floor(damage * this.mainHand.critMult);
-                this.battle.ref.combatLog.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
+                this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
                 this.target.takeDamage(this.name, damage, this.mainHand.damageType);
                 if (this.mainHand.onHit) this.mainHand.onHit.func(this, this.target);
                 this.addMana(this.mainHand.manaPerAtk);
                 
             }
             else {
-                this.battle.ref.combatLog.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
+                this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
             }
 
             // Off hand attack
@@ -434,13 +434,13 @@ export default class Character {
                     const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.offHandWeapon.damageBonus/2), sides: 4}) : 0;
                     let damage = damageRoll + this.offHandWeapon.damageBonus + sneakDamage;
                     if (attack.hitType === HitType.Crit) damage = Math.floor(damage * this.mainHand.critMult);
-                    this.battle.ref.combatLog.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
+                    this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
                     this.target.takeDamage(this.name, damage, this.offHandWeapon.damageType);
                     if (this.offHandWeapon.onHit) this.offHandWeapon.onHit.func(this, this.target);
                     this.addMana(this.offHandWeapon.manaPerAtk);
                 }
                 else {
-                    this.battle.ref.combatLog.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
+                    this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
                 }
             }
 
@@ -463,10 +463,10 @@ export default class Character {
         }
         damage -= damageResisted;
         this.currHealth -= damage;
-        this.battle.ref.combatLog.add(`${this.name} took ${damage.toString()} ${type}${damageResisted > 0 ? ` (${damageResisted} resisted)` : ''} from ${source}.`);
+        this.battle.ref.log.add(`${this.name} took ${damage.toString()} ${type}${damageResisted > 0 ? ` (${damageResisted} resisted)` : ''} from ${source}.`);
         if (this.isDead()) {
             this.battle.ref.setCharDead(this.battle.side, this.battle.index);
-            this.battle.ref.combatLog.add(`${this.name} died.`);
+            this.battle.ref.log.add(`${this.name} died.`);
         }
     }
 

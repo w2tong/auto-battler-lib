@@ -66,7 +66,7 @@ class BuffTracker {
             this.buffs[id]![sideId].duration += duration;
             this.buffs[id]![sideId].new = true;
         }
-        this.char.battle.ref.combatLog.add(`${this.char.name} gained buff ${id}(${duration}).`);
+        this.char.battle.ref.log.add(`${this.char.name} gained buff ${id}(${duration}).`);
     }
 
     addDebuff(id: DebuffId, duration: number, source: Character) {
@@ -80,7 +80,7 @@ class BuffTracker {
             this.debuffs[id]![sideId].duration += duration;
             this.debuffs[id]![sideId].new = true;
         }
-        this.char.battle.ref.combatLog.add(`${this.char.name} gained debuff ${`${id}(${duration})`}.`);
+        this.char.battle.ref.log.add(`${this.char.name} gained debuff ${`${id}(${duration})`}.`);
     }
 
     tick() {
@@ -94,7 +94,7 @@ class BuffTracker {
 
                 if (charBuff.duration <= 0) {
                     delete this.buffs[id as BuffId]![sideId];
-                    this.char.battle.ref.combatLog.add(`${this.char.name} lost buff ${id}.`);
+                    this.char.battle.ref.log.add(`${this.char.name} lost buff ${id}.`);
                 }
             }
         }
@@ -113,7 +113,7 @@ class BuffTracker {
 
                 if (charDebuff.duration <= 0) {
                     delete this.debuffs[id as DebuffId]![sideId];
-                    this.char.battle.ref.combatLog.add(`${this.char.name} lost debuff ${id}.`);
+                    this.char.battle.ref.log.add(`${this.char.name} lost debuff ${id}.`);
                 }
             }
         }

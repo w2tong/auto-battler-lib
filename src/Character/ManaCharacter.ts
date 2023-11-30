@@ -9,7 +9,7 @@ export default abstract class ManaCharacter extends Character {
             const potionHeal = Math.round((rollDice(this.potion.dice) + this.potion.bonus) * this.potionEffectiveness);
             this.addHealth(potionHeal);
             this.potion.charges -= 1;
-            if (this.battle) this.battle.ref.combatLog.add(`${this.name} used ${this.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
+            if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
         }
         if (this.maxMana !== 0 && this.currMana >= this.maxMana - this.manaCostReduction) {
             this.special();
