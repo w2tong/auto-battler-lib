@@ -70,4 +70,4 @@ class Log {
 }
 
 export default Log;
-export { LogLine };
+export { LogLine, LineType };

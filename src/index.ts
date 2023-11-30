@@ -22,8 +22,8 @@ export { Battle, Side, BattleJSON };
 import Character, { CharacterInfo, CharacterJSON, newPlayerChar } from './Character/Character';
 export { Character, CharacterInfo, CharacterJSON, newPlayerChar };
 
-import Log, { LogLine } from './Log';
-export { Log, LogLine };
+import Log, { LogLine, LineType } from './Log';
+export { Log, LogLine, LineType };
 
 import DamageType from './DamageType';
 export { DamageType };
