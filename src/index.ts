@@ -16,13 +16,11 @@ export { Ring, RingId, rings } from './Equipment/Ring';
 export { Shield, ShieldId, shields } from './Equipment/Shield';
 export { WeaponType, RangeType, Weapon, WeaponId, weapons } from './Equipment/Weapons';
 
-import Battle from './Battle';
-export { Battle };
-export { Side, BattleJSON } from './Battle';
+import Battle, { Side, BattleJSON } from './Battle';
+export { Battle, Side, BattleJSON };
 
-import Character from './Character/Character';
-export { Character };
-export { CharacterInfo, CharacterJSON, newPlayerChar } from './Character/Character';
+import Character, { CharacterInfo, CharacterJSON, newPlayerChar } from './Character/Character';
+export { Character, CharacterInfo, CharacterJSON, newPlayerChar };
 
 import Log, { LogLine } from './Log';
 export { Log, LogLine };
