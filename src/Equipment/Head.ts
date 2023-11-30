@@ -40,7 +40,7 @@ const heads: {[id in HeadId]: Head} = {
         armourClass: 3
     },
     clothHood0: {
-        id: 'clothhood0',
+        id: 'clothHood0',
         itemType: ItemType.Head,
         name: 'Cloth Hood',
         tier: 0,
@@ -48,7 +48,7 @@ const heads: {[id in HeadId]: Head} = {
         manaCostReduction: 10
     },
     clothHood1: {
-        id: 'clothhood1',
+        id: 'clothHood1',
         itemType: ItemType.Head,
         name: 'Cloth Hood +1',
         tier: 3,
@@ -56,7 +56,7 @@ const heads: {[id in HeadId]: Head} = {
         manaCostReduction: 15
     },
     clothHood2: {
-        id: 'clothhood2',
+        id: 'clothHood2',
         itemType: ItemType.Head,
         name: 'Cloth Hood +2',
         tier: 5,
