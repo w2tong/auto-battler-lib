@@ -27,11 +27,11 @@ interface LootLine extends BaseLine {
     itemId: string;
 }
 
-type Line = TextLine | LootLine;
+type LogLine = TextLine | LootLine;
 
 class Log {
     
-    private _log: Line[][] = [];
+    private _log: LogLine[][] = [];
 
     get log() {
         return this._log;
@@ -70,3 +70,4 @@ class Log {
 }
 
 export default Log;
+export { LogLine };

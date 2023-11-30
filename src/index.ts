@@ -24,8 +24,8 @@ import Character from './Character/Character';
 export { Character };
 export { CharacterInfo, CharacterJSON, newPlayerChar } from './Character/Character';
 
-import Log from './Log';
-export { Log };
+import Log, { LogLine } from './Log';
+export { Log, LogLine };
 
 import DamageType from './DamageType';
 export { DamageType };
