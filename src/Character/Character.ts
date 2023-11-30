@@ -463,7 +463,7 @@ export default class Character {
         }
         damage -= damageResisted;
         this.currHealth -= damage;
-        this.battle.ref.log.add(`${this.name} took ${damage.toString()} ${type}${damageResisted > 0 ? ` (${damageResisted} resisted)` : ''} from ${source}.`);
+        this.battle.ref.log.addDamage(this.name, source, damage, type, damageResisted);
         if (this.isDead()) {
             this.battle.ref.setCharDead(this.battle.side, this.battle.index);
             this.battle.ref.log.add(`${this.name} died.`);

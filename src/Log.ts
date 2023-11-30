@@ -1,3 +1,4 @@
+import DamageType from './DamageType';
 import HitType from './HitType';
 
 enum LineType {
@@ -27,7 +28,19 @@ interface LootLine extends BaseLine {
     itemId: string;
 }
 
-type LogLine = TextLine | LootLine;
+interface ExpLine extends BaseLine {
+    type: LineType.Exp;
+    name: string;
+    exp: number;
+}
+
+interface LevelLine extends BaseLine {
+    type: LineType.LevelUp;
+    name: string;
+    level: number;
+}
+
+type LogLine = TextLine | LootLine | ExpLine | LevelLine;
 
 class Log {
     
@@ -56,6 +69,14 @@ class Log {
         });
     }
 
+    addAttack(charName: string, tarName: string, attackDetails: string, hitType: HitType, sneak: boolean) {
+        this.add(`${charName} ⚔️ ${tarName} (${attackDetails}). ${hitType.toString()}${sneak ? ' (Sneak Attack)' : ''}.`);
+    }
+
+    addDamage(name: string, source: string, damage: number, type: DamageType, damageResisted: number) {
+        `${name} took ${damage.toLocaleString()} ${type}${damageResisted > 0 ? ` (${damageResisted} resisted)` : ''} from ${source}.`;
+    }
+
     addLoot(name: string, itemId: string) {
         this.last.push({
             type: LineType.Loot,
@@ -64,8 +85,20 @@ class Log {
         });
     }
 
-    addAttack(charName: string, tarName: string, attackDetails: string, hitType: HitType, sneak: boolean) {
-        this.add(`${charName} ⚔️ ${tarName} (${attackDetails}). ${hitType.toString()}${sneak ? ' (Sneak Attack)' : ''}.`);
+    addExp(name: string, exp: number) {
+        this.last.push({
+            type: LineType.Exp,
+            name,
+            exp
+        });
+    }
+
+    addLevelUp(name: string, level: number) {
+        this.last.push({
+            type: LineType.LevelUp,
+            name,
+            level
+        });
     }
 }
 
