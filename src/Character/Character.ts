@@ -20,6 +20,7 @@ type CharacterInfo = {
     level: number,
     mainHand: Weapon,
     offHandWeapon?: Weapon,
+
     armourClass: number,
     physDR: number,
     magicDR: number,
@@ -52,8 +53,6 @@ type CharacterJSON = {
 }
 
 export default class Character {
-    static healthBarLength = 10;
-    static manaBarLength = 10;
     static dualWieldPenalty = -2;
     static offHandPenalty = -4;
     static twoHandedMult = 1.5;
@@ -298,50 +297,6 @@ export default class Character {
 
     getManaString(): string {
         return `${this.currMana}/${this.maxMana}`;
-    }
-
-    getHealthBar(): string {
-        const numGreen = Math.ceil((this.currHealth >= 0 ? this.currHealth : 0)/this.maxHealth*Character.healthBarLength);
-        const numRed = Character.healthBarLength - numGreen;
-        return '🟩'.repeat(numGreen) + '🟥'.repeat(numRed);
-    }
-
-    getManaBar(): string {
-        const numBlue = Math.ceil(this.currMana/this.maxMana*Character.manaBarLength);
-        const numWhite = Character.manaBarLength - numBlue;
-        return '🟦'.repeat(numBlue) + '⬜'.repeat(numWhite);
-    }
-
-    getCharString(): string {
-        const lines = [
-            // Name
-            `${this.getName()}${this.isDead() ? ' 💀' : ''}`,
-            // Level and Class
-            `Lvl. ${this.level} ${this.className}`,
-            // HP
-            `${this.getHealthBar()} ${this.getHealthString()}`
-        ];
-
-        // MP
-        if (this.maxMana > 0) {
-            lines.push(`${this.getManaBar()} ${this.getManaString()}`);
-        }
-        // Buffs
-        if (this.buffTracker.getBuffCount() > 0) {
-            lines.push(`Buffs: ${this.buffTracker.getBuffString()}`);
-        }
-        // else {
-        //     lines.push('');
-        // }
-        // Debuffs
-        if (this.buffTracker.getDebuffCount() > 0) {
-            lines.push(`Debuffs: ${this.buffTracker.getDebuffString()}`);
-        }
-        // else {
-        //     lines.push('');
-        // }
-
-        return lines.join('\n');
     }
 
     setRandomTarget(chars: Character[]): void {
