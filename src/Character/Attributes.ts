@@ -21,27 +21,34 @@ const AttributeStatScaling = {
         [StatType.RangedHitChance]: 1
     },
     [AttributeType.Strength]: {
-        [StatType.MeleeDamage]: 1,
-        [StatType.BlockPower]: 1
+        [StatType.MeleeDamage]: 0.5,
+        [StatType.BlockPower]: 0.2,
+        [StatType.Health]: 0.2
     },
     [AttributeType.Dexterity]: {
         [StatType.Dodge]: 1,
-        [StatType.RangedDamage]: 1,
-        [StatType.MeleeDamage]: 0.5,
+        [StatType.RangedDamage]: 0.5,
+        [StatType.MeleeDamage]: 0.2,
     },
     [AttributeType.Perception]: {
-        [StatType.CriticalChance]: 1
+        [StatType.Dodge]: 1,
+        [StatType.CriticalDamage]: 0.2,
+        [StatType.ArmourPenetration]: 0.2
     },
     [AttributeType.Constitution]: {
         [StatType.Health]: 1,
-        [StatType.StatusResistance]: 1
+        [StatType.StatusResistance]: 0.2,
+        [StatType.Armour]: 0.1
     },
     [AttributeType.Intelligence]: {
-        [StatType.SpellPower]: 1
+        [StatType.SpellPower]: 1,
+        [StatType.Armour]: 0.2,
+        [StatType.ManaOnHit]: 0.1
+
     },
     [AttributeType.Wisdom]: {
-        [StatType.ManaRegen]: 1,
-        [StatType.ManaOnHit]: 1
+        [StatType.ManaRegen]: 0.5,
+        [StatType.ManaOnHit]: 0.5
     },
 };
 
