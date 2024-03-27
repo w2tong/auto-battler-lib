@@ -4,7 +4,7 @@ interface Stat {
 }
 
 enum StatType {
-    // Defensive
+    // Defensive Stats
     Health = 'Health',
     Armour = 'Armour',
     Deflection = 'Deflection',
@@ -12,21 +12,21 @@ enum StatType {
     StatusResistance = 'StatusResistance',
     Thorns = 'Thorns',
 
-    // Block
     BlockChance = 'BlockChance',
     BlockPower = 'BlockPower',
 
-    // Critical
+    // Offensive Stats
     CriticalChance = 'CriticalChance',
     CriticalDamage = 'CriticalDamage',
 
-    // Melee
     MeleeHitChance = 'MeleeHitChance',
     MeleeDamage = 'MeleeDamage',
 
-    // Ranged
     RangedHitChance = 'RangedHitChance',
     RangedDamage = 'RangedDamage',
+
+    ArmourPenetration = 'ArmourPenetration',
+    DodgeReduction = 'DodgeReduction',
 
     // Spell
     SpellPower = 'SpellPower',
