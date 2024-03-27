@@ -38,7 +38,7 @@ enum StatType {
     ManaCostReduction = 'ManaCostReduction',
 
     // Initiative
-    InitiativeBonus = 'InitiativeBonus',
+    Initiative = 'Initiative',
 
     // Potion
     PotionCharges = 'PotionCharges',

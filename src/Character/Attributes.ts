@@ -15,7 +15,7 @@ enum AttributeType {
     Wisdom = 'Wisdom'
 }
 
-const AttributeStatScaling = {
+const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number}} = {
     [AttributeType.WeaponSkill]: {
         [StatType.MeleeHitChance]: 1,
         [StatType.RangedHitChance]: 1
@@ -29,6 +29,7 @@ const AttributeStatScaling = {
         [StatType.Dodge]: 1,
         [StatType.RangedDamage]: 0.5,
         [StatType.MeleeDamage]: 0.2,
+        [StatType.Initiative]: 0.2
     },
     [AttributeType.Perception]: {
         [StatType.DodgeReduction]: 1,
@@ -44,11 +45,11 @@ const AttributeStatScaling = {
         [StatType.SpellPower]: 1,
         [StatType.Armour]: 0.2,
         [StatType.ManaOnHit]: 0.1
-
     },
     [AttributeType.Wisdom]: {
         [StatType.ManaRegen]: 0.5,
-        [StatType.ManaOnHit]: 0.5
+        [StatType.ManaOnHit]: 0.5,
+        [StatType.Initiative]: 0.5
     },
 };
 
