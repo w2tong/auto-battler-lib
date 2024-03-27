@@ -31,7 +31,7 @@ const AttributeStatScaling = {
         [StatType.MeleeDamage]: 0.2,
     },
     [AttributeType.Perception]: {
-        [StatType.Dodge]: 1,
+        [StatType.DodgeReduction]: 1,
         [StatType.CriticalDamage]: 0.2,
         [StatType.ArmourPenetration]: 0.2
     },
