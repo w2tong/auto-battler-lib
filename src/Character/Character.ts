@@ -38,6 +38,19 @@ type CharacterJSON = {
     debuffs: string;
 }
 
+// TODO: add default (aas static vars) vals for 
+// enum ManaOnHit {
+//     OneHanded = 10,
+//     TwoHanded = 20
+// }
+// enum ManaRegen {
+//     OneHanded = 5,
+//     TwoHanded = 10
+// }
+// const critRange = 20;
+// const critMult = 2;
+
+// Crit chance, crit dmg, hit chance, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
 export default class Character {
     static dualWieldPenalty = -2;
     static offHandPenalty = -4;
@@ -125,6 +138,10 @@ export default class Character {
 
     get mainHand() {
         return this._mainHand;
+    }
+
+    get initiative() {
+        return this.stats.initiative;
     }
 
     get target() {
