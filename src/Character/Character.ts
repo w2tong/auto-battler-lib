@@ -229,6 +229,7 @@ export default class Character {
                 const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.mainHand.damageBonus/2), sides: 4}) : 0;
                 let damage = damageRoll + this.mainHand.damageBonus + sneakDamage;
                 if (attack.hitType === HitType.Crit) damage = Math.floor(damage * this.mainHand.critMult);
+                // TODO: add calculations for block chance and block power
                 this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
                 this.target.takeDamage(this.name, damage, this.mainHand.damageType);
                 if (this.mainHand.onHit) this.mainHand.onHit.func(this, this.target);

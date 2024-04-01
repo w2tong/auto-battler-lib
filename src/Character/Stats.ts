@@ -24,14 +24,16 @@ enum StatType {
     BlockPower = 'Block Power',
 
     // Offensive Stats
+    HitChance = 'Hit Chance',
+    MeleeHitChance = 'Melee Hit Chance',
+    RangedHitChance = 'Ranged Hit Chance',
+
+    Damage = 'Damage',
+    MeleeDamage = 'Melee Damage',
+    RangedDamage = 'Ranged Damage',
+
     CriticalChance = 'Critical Chance',
     CriticalDamage = 'Critical Damage',
-
-    MeleeHitChance = 'Melee Hit Chance',
-    MeleeDamage = 'Melee Damage',
-
-    RangedHitChance = 'Ranged Hit Chance',
-    RangedDamage = 'Ranged Damage',
 
     ArmourPenetration = 'Armour Penetration',
     DodgeReduction = 'Dodge Reduction',
@@ -69,14 +71,16 @@ class Stats {
     [StatType.BlockPower]: Stat = {base: 0, bonus: 0};
     
     // Offensive Stats
+    [StatType.HitChance]: Stat = {base: 0, bonus: 0};
+    [StatType.MeleeHitChance]: Stat = {base: 0, bonus: 0};
+    [StatType.RangedHitChance]: Stat = {base: 0, bonus: 0};
+
+    [StatType.Damage]: Stat = {base: 0, bonus: 0};
+    [StatType.MeleeDamage]: Stat = {base: 0, bonus: 0};
+    [StatType.RangedDamage]: Stat = {base: 0, bonus: 0};
+
     [StatType.CriticalChance]: Stat = {base: 0, bonus: 0};
     [StatType.CriticalDamage]: Stat = {base: 0, bonus: 0};
-
-    [StatType.MeleeHitChance]: Stat = {base: 0, bonus: 0};
-    [StatType.MeleeDamage]: Stat = {base: 0, bonus: 0};
-
-    [StatType.RangedHitChance]: Stat = {base: 0, bonus: 0};
-    [StatType.RangedDamage]: Stat = {base: 0, bonus: 0};
 
     [StatType.ArmourPenetration]: Stat = {base: 0, bonus: 0};
     [StatType.DodgeReduction]: Stat = {base: 0, bonus: 0};
@@ -210,11 +214,11 @@ class Stats {
         // if (equipment.ring1) this.addRingBonuses(equipment.ring1);
         // if (equipment.ring2) this.addRingBonuses(equipment.ring2);
 
-        if (equipment.belt) {
-            if (equipment.belt.charges) this[StatType.PotionCharges].bonus += equipment.belt.charges;
-            if (equipment.belt.effectiveness) this[StatType.PotionEffectiveness].bonus += equipment.belt.effectiveness;
-            if (equipment.belt.healing) this[StatType.PotionHealing].bonus += equipment.belt.healing;
-        }
+        // if (equipment.belt) {
+        //     if (equipment.belt.charges) this[StatType.PotionCharges].bonus += equipment.belt.charges;
+        //     if (equipment.belt.effectiveness) this[StatType.PotionEffectiveness].bonus += equipment.belt.effectiveness;
+        //     if (equipment.belt.healing) this[StatType.PotionHealing].bonus += equipment.belt.healing;
+        // }
 
         // Add stats from talents
     }

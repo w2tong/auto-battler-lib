@@ -1,7 +1,7 @@
 import { AttributeType } from '../Character/Attributes';
 import Character from '../Character/Character';
 import { StatType } from '../Character/Stats';
-import { Item, ItemType } from './Item';
+import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 enum ArmourType {
     Unarmoured = 'Unarmoured',
@@ -20,19 +20,8 @@ const ArmourTypeDodgePenalty: {[type in ArmourType]: number} = {
 interface Armour extends Item {
     itemType: ItemType.Armour;
     type: ArmourType;
-
-    // Attributes
-    attributes?: {[type in AttributeType]?: number}
-
-    // Stats
-    stats?: {
-        [StatType.Armour]?: number;
-        [StatType.Dodge]?: number;
-        [StatType.Deflection]?: number;
-        [StatType.Thorns]?: number;
-        [StatType.ManaRegen]?: number;
-    }
-
+    attributes?: ItemAttributes;
+    stats?: ItemStats;
     onHit?: {
         func: (self: Character, target: Character) => void;
         description: string;

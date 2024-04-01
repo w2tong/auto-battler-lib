@@ -1,3 +1,6 @@
+import { AttributeType } from '../Character/Attributes';
+import { StatType } from '../Character/Stats';
+
 enum ItemType {
     Weapon = 'Weapon',
     Shield = 'Shield',
@@ -20,5 +23,8 @@ interface Item {
     img: string;
 }
 
+type ItemAttributes = {[type in AttributeType]?: number}
+type ItemStats = {[type in StatType]?: number}
+
 export { Item, ItemType };
-export type { Tier };
+export type { Tier, ItemAttributes, ItemStats };

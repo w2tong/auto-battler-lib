@@ -1,12 +1,11 @@
-import { Item, ItemType } from './Item';
+import { StatType } from '../Character/Stats';
+import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Head extends Item {
     itemType: ItemType.Head
     armourClass?: number
-    manaPerAtk?: number;
-    manaRegen?: number;
-    manaCostReduction?: number;
-    initiativeBonus?: number;
+    attributes?: ItemAttributes;
+    stats: ItemStats;
 }
 
 type HeadId = 
@@ -21,7 +20,10 @@ const heads: {[id in HeadId]: Head} = {
         name: 'Leather Helmet',
         tier: 0,
         img: 'head-leather.png',
-        armourClass: 1
+
+        stats: {
+            [StatType.Armour]: 3
+        }
     },
     helmet1: {
         id: 'helmet1',
@@ -29,7 +31,10 @@ const heads: {[id in HeadId]: Head} = {
         name: 'Mail Coif',
         tier: 3,
         img: 'head-mail.png',
-        armourClass: 2
+
+        stats: {
+            [StatType.Armour]: 6
+        }
     },
     helmet2: {
         id: 'helmet2',
@@ -37,7 +42,10 @@ const heads: {[id in HeadId]: Head} = {
         name: 'Plate Helmet',
         tier: 5,
         img: 'head-plate.png',
-        armourClass: 3
+
+        stats: {
+            [StatType.Armour]: 10
+        }
     },
     clothHood0: {
         id: 'clothHood0',
@@ -45,7 +53,10 @@ const heads: {[id in HeadId]: Head} = {
         name: 'Cloth Hood',
         tier: 0,
         img: 'head-cloth.png',
-        manaCostReduction: 10
+
+        stats: {
+            [StatType.ManaCostReduction]: 5
+        }
     },
     clothHood1: {
         id: 'clothHood1',
@@ -53,7 +64,10 @@ const heads: {[id in HeadId]: Head} = {
         name: 'Cloth Hood +1',
         tier: 3,
         img: 'head-cloth.png',
-        manaCostReduction: 15
+
+        stats: {
+            [StatType.ManaCostReduction]: 10
+        }
     },
     clothHood2: {
         id: 'clothHood2',
@@ -61,7 +75,10 @@ const heads: {[id in HeadId]: Head} = {
         name: 'Cloth Hood +2',
         tier: 5,
         img: 'head-cloth.png',
-        manaCostReduction: 20
+
+        stats: {
+            [StatType.ManaCostReduction]: 15
+        }
     }
 } as const;
 

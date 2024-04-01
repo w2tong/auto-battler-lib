@@ -1,4 +1,5 @@
-import { Item, ItemType } from './Item';
+import { StatType } from '../Character/Stats';
+import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 enum WeaponStyle {
     DualWield = 'Dual Wield',
@@ -10,10 +11,9 @@ enum WeaponStyle {
 interface Hands extends Item {
     itemType: ItemType.Hands
     weaponStyle?: WeaponStyle;
-    attackBonus?: number;
-    damageBonus?: number;
-    critRangeBonus?: number;
-    critMultBonus?: number;
+
+    attributes?: ItemAttributes;
+    stats?: ItemStats;
 }
 
 type HandsId = 
@@ -30,8 +30,11 @@ const hands: {[id in HandsId]: Hands} = {
         name: 'Gloves of Lesser Dual Wielding',
         tier: 0,
         img: 'gloves-dual-wield.png',
+
         weaponStyle: WeaponStyle.DualWield,
-        attackBonus: 2
+        stats: {
+            [StatType.HitChance]: 5,
+        }
     },
     dwGloves1: {
         id: 'dwGloves1',
@@ -39,8 +42,11 @@ const hands: {[id in HandsId]: Hands} = {
         name: 'Gloves of Dual Wielding',
         tier: 3,
         img: 'gloves-dual-wield.png',
+
         weaponStyle: WeaponStyle.DualWield,
-        attackBonus: 4
+        stats: {
+            [StatType.HitChance]: 10,
+        }
     },
     dwGloves2: {
         id: 'dwGloves2',
@@ -48,8 +54,11 @@ const hands: {[id in HandsId]: Hands} = {
         name: 'Gloves of Greater Dual Wielding',
         tier: 5,
         img: 'gloves-dual-wield.png',
+
         weaponStyle: WeaponStyle.DualWield,
-        attackBonus: 6
+        stats: {
+            [StatType.HitChance]: 15,
+        }
     },
     thGloves0: {
         id: 'thGloves0',
@@ -57,8 +66,11 @@ const hands: {[id in HandsId]: Hands} = {
         name: 'Gloves of Lesser Two Handing',
         tier: 0,
         img: 'gloves-two-hand.png',
+
         weaponStyle: WeaponStyle.TwoHanded,
-        damageBonus: 2
+        stats: {
+            [StatType.Damage]: 2,
+        }
     },
     thGloves1: {
         id: 'thGloves1',
@@ -67,7 +79,9 @@ const hands: {[id in HandsId]: Hands} = {
         tier: 3,
         img: 'gloves-two-hand.png',
         weaponStyle: WeaponStyle.TwoHanded,
-        damageBonus: 4
+        stats: {
+            [StatType.Damage]: 4,
+        }
     },
     thGloves2: {
         id: 'thGloves2',
@@ -75,8 +89,11 @@ const hands: {[id in HandsId]: Hands} = {
         name: 'Gloves of Greater Two Handing',
         tier: 5,
         img: 'gloves-two-hand.png',
+
         weaponStyle: WeaponStyle.TwoHanded,
-        damageBonus: 6
+        stats: {
+            [StatType.Damage]: 6,
+        }
     },
     ohGloves0: {
         id: 'ohGloves0',
@@ -84,9 +101,12 @@ const hands: {[id in HandsId]: Hands} = {
         name: 'Gloves of the Lesser Duelist',
         tier: 0,
         img: 'gloves-one-hand.png',
+
         weaponStyle: WeaponStyle.OneHanded,
-        attackBonus: 1,
-        damageBonus: 1
+        stats: {
+            [StatType.HitChance]: 3,
+            [StatType.Damage]: 1,
+        }
     },
     ohGloves1: {
         id: 'ohGloves1',
@@ -94,9 +114,12 @@ const hands: {[id in HandsId]: Hands} = {
         name: 'Gloves of the Duelist',
         tier: 3,
         img: 'gloves-one-hand.png',
+
         weaponStyle: WeaponStyle.OneHanded,
-        attackBonus: 2,
-        damageBonus: 2
+        stats: {
+            [StatType.HitChance]: 6,
+            [StatType.Damage]: 2,
+        }
     },
     ohGloves2: {
         id: 'ohGloves2',
@@ -104,9 +127,12 @@ const hands: {[id in HandsId]: Hands} = {
         name: 'Gloves of the Greater Duelist',
         tier: 5,
         img: 'gloves-one-hand.png',
+
         weaponStyle: WeaponStyle.OneHanded,
-        attackBonus: 3,
-        damageBonus: 3
+        stats: {
+            [StatType.HitChance]: 9,
+            [StatType.Damage]: 3,
+        }
     },
 } as const;
 

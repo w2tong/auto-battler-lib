@@ -17,8 +17,7 @@ enum AttributeType {
 
 const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number}} = {
     [AttributeType.WeaponSkill]: {
-        [StatType.MeleeHitChance]: 1,
-        [StatType.RangedHitChance]: 1
+        [StatType.HitChance]: 1,
     },
     [AttributeType.Strength]: {
         [StatType.MeleeDamage]: 0.5,
