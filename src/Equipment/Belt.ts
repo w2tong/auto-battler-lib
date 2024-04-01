@@ -36,7 +36,7 @@ const belts: {[id in BeltId]: Belt} = {
         name: 'Belt of Effectiveness',
         tier: 2,
         img: 'belt-red-pot.png',
-        effectiveness: 0.25
+        effectiveness: 25
     },
     effBelt1: {
         id: 'effBelt1',
@@ -44,7 +44,7 @@ const belts: {[id in BeltId]: Belt} = {
         name: 'Belt of Greater Effectiveness',
         tier: 3,
         img: 'belt-red-pot.png',
-        effectiveness: 0.50
+        effectiveness: 50
     },
     effBelt2: {
         id: 'effBelt2',
@@ -52,7 +52,7 @@ const belts: {[id in BeltId]: Belt} = {
         name: 'Belt of Superior Effectiveness',
         tier: 4,
         img: 'belt-red-pot.png',
-        effectiveness: 0.75
+        effectiveness: 75
     },
     effBelt3: {
         id: 'effBelt3',
