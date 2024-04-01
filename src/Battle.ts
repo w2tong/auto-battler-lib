@@ -88,11 +88,11 @@ class Battle {
     startCombat() {
         // Assign turn order for characters
         for (const char of this.left) {
-            const init = rollDice(dice['1d20']) + char.initiativeBonus;
+            const init = rollDice(dice['1d20']) + char.initiative;
             this.turnOrder.push({char, init});
         }
         for (const char of this.right) {
-            const init = rollDice(dice['1d20']) + char.initiativeBonus;
+            const init = rollDice(dice['1d20']) + char.initiative;
             this.turnOrder.push({char, init});
         }
         this.turnOrder.sort((a, b) => b.init - a.init);
