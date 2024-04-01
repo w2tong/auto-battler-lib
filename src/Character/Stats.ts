@@ -13,7 +13,7 @@ function calcTotalStat(stat: Stat) {
 enum StatType {
     // Defensive Stats
     MaxHealth = 'Max Health',
-    HealthPercent = 'Health %',
+    HealthPercent = '% Health',
     Armour = 'Armour',
     Deflection = 'Deflection',
     Dodge = 'Dodge',
@@ -31,6 +31,8 @@ enum StatType {
     Damage = 'Damage',
     MeleeDamage = 'Melee Damage',
     RangedDamage = 'Ranged Damage',
+    MeleeDamagePercent = '% Melee Damage',
+    RangedDamagePercent = '% Ranged Damage',
 
     CriticalChance = 'Critical Chance',
     CriticalDamage = 'Critical Damage',
@@ -78,6 +80,8 @@ class Stats {
     [StatType.Damage]: Stat = {base: 0, bonus: 0};
     [StatType.MeleeDamage]: Stat = {base: 0, bonus: 0};
     [StatType.RangedDamage]: Stat = {base: 0, bonus: 0};
+    [StatType.MeleeDamagePercent]: Stat = {base: 0, bonus: 0};
+    [StatType.RangedDamagePercent]: Stat = {base: 0, bonus: 0};
 
     [StatType.CriticalChance]: Stat = {base: 0, bonus: 0};
     [StatType.CriticalDamage]: Stat = {base: 0, bonus: 0};
@@ -251,7 +255,7 @@ class Stats {
         return calcTotalStat(this[StatType.Thorns]);
     }
 
-    get initiativeBonus() {
+    get initiative() {
         return calcTotalStat(this[StatType.Initiative]);
     }
 }

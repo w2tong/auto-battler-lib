@@ -20,20 +20,21 @@ const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number
         [StatType.HitChance]: 1,
     },
     [AttributeType.Strength]: {
-        [StatType.MeleeDamage]: 0.5,
+        [StatType.MeleeDamagePercent]: 1,
         [StatType.BlockPower]: 0.2,
-        [StatType.MaxHealth]: 0.2
+        [StatType.MaxHealth]: 0.5
     },
     [AttributeType.Dexterity]: {
         [StatType.Dodge]: 1,
-        [StatType.RangedDamage]: 0.5,
-        [StatType.MeleeDamage]: 0.2,
+        [StatType.RangedDamagePercent]: 1,
+        [StatType.MeleeDamagePercent]: 0.5,
         [StatType.Initiative]: 0.2
     },
     [AttributeType.Perception]: {
         [StatType.DodgeReduction]: 1,
-        [StatType.CriticalDamage]: 0.2,
-        [StatType.ArmourPenetration]: 0.2
+        [StatType.RangedDamage]: 0.5,
+        [StatType.CriticalDamage]: 0.5,
+        [StatType.ArmourPenetration]: 0.5
     },
     [AttributeType.Constitution]: {
         [StatType.HealthPercent]: 1,
