@@ -1,3 +1,5 @@
+import { Equipment } from '../Equipment/Equipment';
+import { ItemAttributes } from '../Equipment/Item';
 import { StatType } from './Stats';
 
 interface Attribute {
@@ -81,7 +83,8 @@ class Attributes {
             [AttributeType.Constitution]: constitution = 0,
             [AttributeType.Intelligence]: intelligence = 0,
             [AttributeType.Wisdom]: wisdom = 0,
-        }: BaseAttributes
+        }: BaseAttributes,
+        equipment: Equipment
     ) {
         this[AttributeType.WeaponSkill] = { base: weaponSkill, bonus: 0 };
         this[AttributeType.Strength] = { base: strength, bonus: 0 };
@@ -90,6 +93,23 @@ class Attributes {
         this[AttributeType.Constitution] = { base: constitution, bonus: 0 };
         this[AttributeType.Intelligence] = { base: intelligence, bonus: 0 };
         this[AttributeType.Wisdom] = { base: wisdom, bonus: 0 };
+
+        if (equipment.armour) this.addItemAttributes(equipment.armour.attributes);
+        if (equipment.belt) this.addItemAttributes(equipment.belt.attributes);
+        if (equipment.hands) this.addItemAttributes(equipment.hands.attributes);
+        if (equipment.head) this.addItemAttributes(equipment.head.attributes);
+        if (equipment.ring1) this.addItemAttributes(equipment.ring1.attributes);
+        if (equipment.ring2) this.addItemAttributes(equipment.ring2.attributes);
+        if (equipment.offHandShield) this.addItemAttributes(equipment.offHandShield.attributes);
+        if (equipment.mainHand) this.addItemAttributes(equipment.mainHand.attributes);
+        if (equipment.offHandWeapon) this.addItemAttributes(equipment.offHandWeapon.attributes);
+    }
+
+    addItemAttributes(itemAttributes?: ItemAttributes) {
+        if (!itemAttributes) return;
+        for (const [type, val] of Object.entries(itemAttributes)) {
+            this[type as AttributeType].bonus += val;
+        }
     }
 }
 
