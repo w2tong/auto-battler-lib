@@ -38,22 +38,8 @@ type CharacterJSON = {
     debuffs: string;
 }
 
-// TODO: add default (aas static vars) vals for 
-// enum ManaOnHit {
-//     OneHanded = 10,
-//     TwoHanded = 20
-// }
-// enum ManaRegen {
-//     OneHanded = 5,
-//     TwoHanded = 10
-// }
-// const critRange = 20;
-// const critMult = 2;
-
 // Crit chance, crit dmg, hit chance, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
 export default class Character {
-    static dualWieldPenalty = -2;
-    static offHandPenalty = -4;
     static twoHandedMult = 1.5;
 
     private userId?: string;
@@ -93,27 +79,13 @@ export default class Character {
         this.potion = Object.assign({}, equipment.potion);
 
         // Attributes
-        this.attributes = new Attributes(attributes);
+        this.attributes = new Attributes(attributes, equipment);
         // TODO: Add attributes from equipment
         this.stats = new Stats(this.attributes, equipment);
-        this.currentHealth = 
+        this.currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this.currentMana = calcTotalStat(this.stats[StatType.StartingMana]);
 
-        if (options?.userId) {
-            const userId = options.userId;
-            this.userId = userId;
-            // Add user upgrades
-            // if (userUpgrades[userId]) {
-            //     this.mainHand.attackBonus += upgrades.attackBonus.levels[userUpgrades[userId].attackBonus];
-            //     if (this.offHandWeapon) this.offHandWeapon.attackBonus += upgrades.attackBonus.levels[userUpgrades[userId].attackBonus];
-            //     this._armourClass += upgrades.armourClass.levels[userUpgrades[userId].armourClass];
-            //     this.maxHealth += upgrades.health.levels[userUpgrades[userId].health];
-            // }
-        }
-
-        this.currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
-        this._mainHand.damageBonus = Math.floor(this._mainHand.damageBonus);
-        if (this.offHandWeapon) this.offHandWeapon.damageBonus = Math.floor(this.offHandWeapon.damageBonus);
+        if (options?.userId) this.userId = options.userId;
     }
 
     setBattle(ref: Battle, side: Side, index: number) {
@@ -122,14 +94,6 @@ export default class Character {
             side,
             index
         };
-    }
-    
-
-    static addHandsBonus(weapon: Weapon, bonuses: {attack: number, damage: number, critRange: number, critMult: number}) {
-        weapon.attackBonus += bonuses.attack;
-        weapon.damageBonus += bonuses.damage * (weapon.twoHanded ? Character.twoHandedMult : 1);
-        weapon.critRange -= bonuses.critRange;
-        weapon.critMult += bonuses.critMult;
     }
 
     get name() {
