@@ -2,17 +2,17 @@ import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle';
 import BuffTracker from '../Buffs/BuffTracker';
 import { BuffId } from '../Buffs/buffs';
-import { CharacterStatTemplate, PlayerStats } from '../statTemplates';
-import { RangeType, Weapon, weapons } from '../Equipment/Weapons';
+import { PlayerStats } from '../statTemplates';
+import { Weapon, weapons } from '../Equipment/Weapons';
 import { Shield } from '../Equipment/Shield';
 import { Equipment, defaultEquipment } from '../Equipment/Equipment';
-import { WeaponStyle } from '../Equipment/Hands';
-import { Ring } from '../Equipment/Ring';
 import DamageType from '../DamageType';
 import HitType from '../HitType';
 import { rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
 import { ClassName, Classes } from './Classes/classes';
+import { Attributes, BaseAttributes } from './Attributes';
+import { StatType, Stats, calcTotalStat } from './Stats';
 
 type CharacterInfo = {
     name: string,
@@ -20,24 +20,21 @@ type CharacterInfo = {
     level: number,
     mainHand: Weapon,
     offHandWeapon?: Weapon,
-
-    armourClass: number,
-    physDR: number,
-    magicDR: number,
-    physResist: number,
-    magicResist: number,
-    thorns: number,
-    health: number,
-    mana: number,
-    manaRegen: number,
-    manaCostReduction: number,
-    initiativeBonus: number,
     potion?: Potion,
-    potionEffectiveness: number
-}
 
-function calcStatValue(stat:{base: number, perLvl: number}, level: number) {
-    return stat.base + Math.floor(stat.perLvl * (level - 1));
+    // TODO: replace with StatType
+    // armourClass: number,
+    // physDR: number,
+    // magicDR: number,
+    // physResist: number,
+    // magicResist: number,
+    // thorns: number,
+    // health: number,
+    // mana: number,
+    // manaRegen: number,
+    // manaCostReduction: number,
+    // initiativeBonus: number,
+    // potionEffectiveness: number
 }
 
 type CharacterJSON = {
@@ -64,34 +61,17 @@ export default class Character {
 
     protected level: number;
 
-    // Main Hand and Off Hand
+    // Attributes and Stats
+    protected attributes: Attributes;
+    protected stats: Stats;
+    protected currentHealth: number;
+    protected currentMana: number;
+
+    // Equipment
     protected _mainHand: Weapon;
     protected offHandWeapon?: Weapon;
     protected offHandShield?: Shield;
-
-    // Defense stats
-    protected _armourClass: number;
-    protected physDR: number;
-    protected magicDR: number;
-    protected physResist: number;
-    protected magicResist: number;
-    protected _thorns: number;
-    
-    // Health
-    protected maxHealth: number;
-    protected currHealth: number;
-
-    // Mana
-    protected maxMana: number;
-    protected currMana: number;
-    protected manaRegen: number;
-    protected manaCostReduction: number;
-
-    protected _initiativeBonus: number;
-
-    // Potion
-    protected potion?: Potion;
-    protected potionEffectiveness: number = 0;
+    protected potion: Potion;
 
     // Buffs/Debuffs
     protected _buffTracker: BuffTracker = new BuffTracker(this);
@@ -100,121 +80,22 @@ export default class Character {
     protected _target: Character|null = null;
     protected _battle : {ref: Battle, side: Side, index: number} | null = null;
 
-    constructor(level: number, stats: CharacterStatTemplate, equipment: Equipment, name: string, options?: {userId?: string, currHealthPc?: number, currManaPc?: number}) {
+    constructor(level: number, className: string, attributes: BaseAttributes, equipment: Equipment, name: string, options?: {userId?: string, currHealthPc?: number, currManaPc?: number}) {
         this._name = name;
-        this.className = stats.className;
-
         this.level = level;
+        this.className = className;
 
-        const lvlAttackBonus = calcStatValue(stats.attackBonus, level);
-        const lvlDamageBonus = calcStatValue(stats.damageBonus, level);
-        const lvlManaPerAtk = stats.manaPerAtk ? calcStatValue(stats.manaPerAtk, level) : 0;
-
-        // Main hand weapon
+        // Weapons and Potion
         this._mainHand = Object.assign({}, equipment.mainHand);
-        this._mainHand.attackBonus += lvlAttackBonus;
-        this._mainHand.damageBonus += lvlDamageBonus * (this._mainHand.twoHanded ? Character.twoHandedMult : 1);
-        this._mainHand.manaPerAtk += lvlManaPerAtk;
+        this.offHandWeapon = Object.assign({}, equipment.offHandWeapon);
+        this.potion = Object.assign({}, equipment.potion);
 
-        this._armourClass = calcStatValue(stats.armourClass, level);
-        this.physDR = stats.physDR ? calcStatValue(stats.physDR, level) : 0;
-        this.magicDR = stats.magicDR ? calcStatValue(stats.magicDR, level) : 0;
-        this.physResist = stats.physResist ? calcStatValue(stats.physResist, level) : 0;
-        this.magicResist = stats.magicResist ? calcStatValue(stats.magicResist, level) : 0;
-        this._thorns = stats.thorns ? calcStatValue(stats.thorns, level) : 0;
-
-        this.maxHealth = calcStatValue(stats.health, level);
-
-        this.maxMana = stats.mana ?? 0;
-        this.currMana = options?.currManaPc ? Math.ceil(this.maxMana * options.currManaPc) : 0;
-        this.manaCostReduction = 0;
-
-        this.manaRegen = stats.manaRegen ? calcStatValue(stats.manaRegen, level) + (this._mainHand.manaRegen ?? 0) : 0;
-        this._initiativeBonus = calcStatValue(stats.initiativeBonus, level);
-
-        // Off hand weapon/shield
-        if (equipment.offHandWeapon && equipment.offHandShield) {
-            throw Error('cannot have both weapon and shield in offhand');
-        }
-        if (equipment.offHandWeapon) {
-            this.mainHand.attackBonus += Character.dualWieldPenalty;
-            this.offHandWeapon = Object.assign({}, equipment.offHandWeapon);
-            this.offHandWeapon.attackBonus += lvlAttackBonus + Character.dualWieldPenalty + Character.offHandPenalty;
-            this.offHandWeapon.damageBonus += lvlDamageBonus;
-            this.offHandWeapon.manaPerAtk += lvlManaPerAtk;
-            this.manaRegen += this.offHandWeapon.manaRegen ?? 0;
-        }
-        else if (equipment.offHandShield) {
-            const shield = equipment.offHandShield;
-            this._armourClass += shield.armourClass;
-            this.mainHand.attackBonus += shield.attackBonus ?? 0;
-            this.physDR += shield.physDR ?? 0;
-            this.magicDR += shield.magicDR ?? 0;
-            this.physResist += shield.physResist ?? 0;
-            this.magicResist += shield.magicResist ?? 0;
-            this._thorns += shield.thorns ?? 0;
-        }
-
-        // Armour
-        if (equipment.armour) {
-            this._armourClass += equipment.armour.armourClass;
-            this.physDR += equipment.armour.physDR ?? 0;
-            this.magicDR += equipment.armour.magicDR ?? 0;
-            this.physResist += equipment.armour.physResist ?? 0;
-            this.magicResist += equipment.armour.magicResist ?? 0;
-            this.manaRegen += equipment.armour.manaRegen ?? 0;
-            this._thorns += equipment.armour.thorns ?? 0;
-        }
-
-        // Head
-        if (equipment.head) {
-            this._armourClass += equipment.head.armourClass ?? 0;
-            this.mainHand.manaPerAtk += equipment.head.manaPerAtk ?? 0;
-            if (this.offHandWeapon) this.offHandWeapon.manaPerAtk += equipment.head.manaPerAtk ?? 0;
-            this.manaRegen += equipment.head.manaRegen ?? 0;
-            this.manaCostReduction += equipment.head.manaCostReduction ?? 0;
-            this._initiativeBonus += equipment.head.initiativeBonus ?? 0;
-        }
-
-        //Hands
-        if (equipment.hands) {
-            const handsBonuses = {
-                attack: equipment.hands.attackBonus ?? 0,
-                damage: equipment.hands.damageBonus ?? 0,
-                critRange: equipment.hands.critRangeBonus ?? 0,
-                critMult: equipment.hands.critMultBonus ?? 0
-            };
-            if (equipment.hands.weaponStyle) {
-                if (equipment.hands.weaponStyle === WeaponStyle.DualWield && this.mainHand && this.offHandWeapon) {
-                    Character.addHandsBonus(this.mainHand, handsBonuses);
-                    if (this.offHandWeapon) Character.addHandsBonus(this.offHandWeapon, handsBonuses);
-                }
-                else if (
-                    (equipment.hands.weaponStyle === WeaponStyle.TwoHanded && this.mainHand.twoHanded) ||
-                    (equipment.hands.weaponStyle === WeaponStyle.OneHanded && !this.mainHand.twoHanded && !this.offHandWeapon) ||
-                    (equipment.hands.weaponStyle === WeaponStyle.Ranged && this.mainHand.range === RangeType.LongRange)
-                ) {
-                    Character.addHandsBonus(this.mainHand, handsBonuses);
-                }
-            }
-            else {
-                Character.addHandsBonus(this.mainHand, handsBonuses);
-                if (this.offHandWeapon) Character.addHandsBonus(this.offHandWeapon, handsBonuses);
-            }
-        }
-
-        // Rings
-        if (equipment.ring1) this.addRingBonuses(equipment.ring1);
-        if (equipment.ring2) this.addRingBonuses(equipment.ring2);
-
-        if (equipment.potion) {
-            this.potion = Object.assign({}, equipment.potion);
-            if (equipment.belt) {
-                if (equipment.belt.charges) this.potion.charges += equipment.belt.charges;
-                if (equipment.belt.effectiveness) this.potionEffectiveness += equipment.belt.effectiveness;
-                if (equipment.belt.healing) this.potion.bonus += equipment.belt.healing;
-            }
-        } 
+        // Attributes
+        this.attributes = new Attributes(attributes);
+        // TODO: Add attributes from equipment
+        this.stats = new Stats(this.attributes, equipment);
+        this.currentHealth = 
+        this.currentMana = calcTotalStat(this.stats[StatType.StartingMana]);
 
         if (options?.userId) {
             const userId = options.userId;
@@ -228,7 +109,7 @@ export default class Character {
             // }
         }
 
-        this.currHealth = options?.currHealthPc ? Math.ceil(this.maxHealth * options.currHealthPc) : this.maxHealth;
+        this.currentHealth = options?.currHealthPc ? Math.ceil(this.maxHealth * options.currHealthPc) : this.maxHealth;
         this._mainHand.damageBonus = Math.floor(this._mainHand.damageBonus);
         if (this.offHandWeapon) this.offHandWeapon.damageBonus = Math.floor(this.offHandWeapon.damageBonus);
     }
@@ -257,16 +138,20 @@ export default class Character {
         return this._mainHand;
     }
 
-    get armourClass() {
-        return this._armourClass;
+    get maxHealth() {
+        return calcTotalStat(this.stats[StatType.MaxHealth]) * (1 + calcTotalStat(this.stats[StatType.HealthPercent])/100);
+    }
+
+    get maxMana() {
+        return calcTotalStat(this.stats[StatType.MaxMana]);
     }
 
     get thorns() {
-        return this._thorns;
+        return calcTotalStat(this.stats[StatType.Thorns]);
     }
 
     get initiativeBonus() {
-        return this._initiativeBonus;
+        return calcTotalStat(this.stats[StatType.Initiative]);
     }
 
     get target() {
@@ -292,11 +177,11 @@ export default class Character {
     }
 
     getHealthString(): string {
-        return `${Math.round(this.currHealth)}/${this.maxHealth}`;
+        return `${Math.round(this.currentHealth)}/${calcTotalStat(this.stats[StatType.MaxHealth])}`;
     }
 
     getManaString(): string {
-        return `${this.currMana}/${this.maxMana}`;
+        return `${this.currentMana}/${calcTotalStat(this.stats[StatType.MaxMana])}`;
     }
 
     setRandomTarget(chars: Character[]): void {
@@ -322,8 +207,8 @@ export default class Character {
     }
 
     doTurn(): void {
-        if (this.potion && this.potion.charges > 0 && this.currHealth <= this.maxHealth/2) {
-            const potionHeal = Math.round((rollDice(this.potion.dice) + this.potion.bonus) * (1 + this.potionEffectiveness));
+        if (this.potion && this.potion.charges > 0 && this.currentHealth <= this.maxHealth/2) {
+            const potionHeal = Math.round((rollDice(this.potion.dice) + this.potion.bonus) * (1 + calcTotalStat(this.stats[StatType.PotionEffectiveness])/100));
             this.addHealth(potionHeal);
             this.potion.charges -= 1;
             if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
@@ -334,6 +219,7 @@ export default class Character {
         this.buffTracker.tick();
     }
 
+    // TODO: redo with hit chance, dodge chance, and dodge reduction
     attackRoll(weapon: Weapon): {hitType: HitType, details: string} {
         if (!this.target) return {hitType: HitType.Miss, details: 'No Target'};
         const attackRoll = rollDice({num: 1, sides: 20});
@@ -409,16 +295,13 @@ export default class Character {
 
     takeDamage(source: string, damage: number, type: DamageType): void {
         if (!this.battle) return;
-        let damageResisted = 0;
-        if (type === DamageType.Physical) {
-            damageResisted = Math.round(damage * this.physResist/100);
-        }
-        else if (type === DamageType.Magic) {
-            damageResisted = Math.round(damage * this.magicResist/100);
-        }
-        damage -= damageResisted;
-        this.currHealth -= damage;
-        this.battle.ref.log.addDamage(this.name, source, damage, type, damageResisted);
+        let damageTaken = damage;
+        // Apply deflection
+        damageTaken = Math.max(damageTaken - calcTotalStat(this.stats[StatType.Deflection]), 0);
+        // Apply armour
+        damageTaken = Math.max(Math.round(damageTaken * calcTotalStat(this.stats[StatType.Armour])/100), 0);
+        this.currentHealth -= damageTaken;
+        this.battle.ref.log.addDamage(this.name, source, damage, type);
         if (this.isDead()) {
             this.battle.ref.setCharDead(this.battle.side, this.battle.index);
             this.battle.ref.log.add(`${this.name} died.`);
@@ -426,15 +309,15 @@ export default class Character {
     }
 
     addMana(mana: number): void {
-        this.currMana = Math.min(this.currMana + mana, this.maxMana);
+        this.currentMana = Math.min(this.currentMana + mana, this.maxMana);
     }
 
     addHealth(health: number): void {
-        this.currHealth = Math.min(this.currHealth + health, this.maxHealth);
+        this.currentHealth = Math.min(this.currentHealth + health, this.maxHealth);
     }
 
     isDead(): boolean {
-        return this.currHealth <= 0;
+        return this.currentHealth <= 0;
     }
 
     isInvisible(): boolean {
@@ -447,21 +330,21 @@ export default class Character {
             className: this.className,
             level: this.level,
             mainHand: this.mainHand,
-            
-            armourClass: this.armourClass,
-            physDR: this.physDR,
-            magicDR: this.magicDR,
-            physResist: this.physResist,
-            magicResist: this.magicResist,
-            thorns: this.thorns,
-            health: this.maxHealth,
-            mana: this.maxMana,
-            manaRegen: this.manaRegen,
-            manaCostReduction: this.manaCostReduction,
-            initiativeBonus: this.initiativeBonus,
-
             potion: this.potion,
-            potionEffectiveness: this.potionEffectiveness
+            
+            // TODO: replace
+            // armourClass: this.armourClass,
+            // physDR: this.physDR,
+            // magicDR: this.magicDR,
+            // physResist: this.physResist,
+            // magicResist: this.magicResist,
+            // thorns: this.thorns,
+            // health: this.maxHealth,
+            // mana: this.maxMana,
+            // manaRegen: this.manaRegen,
+            // manaCostReduction: this.manaCostReduction,
+            // initiativeBonus: this.initiativeBonus,
+            // potionEffectiveness: this.potionEffectiveness
         };
         if (this.offHandWeapon) {
             info.offHandWeapon = this.offHandWeapon;
@@ -470,43 +353,15 @@ export default class Character {
     }
 
     // Helper functions
-    addRingBonuses(ring: Ring) {
-        this.mainHand.attackBonus += ring.attackBonus ?? 0;
-        this.mainHand.damageBonus += (ring.damageBonus ?? 0) * (this._mainHand.twoHanded ? Character.twoHandedMult : 1);
-        this.mainHand.critRange -= ring.critRangeBonus ?? 0;
-        this.mainHand.critMult += ring.critMultBonus ?? 0;
-        this.mainHand.manaPerAtk += ring.manaPerAtk ?? 0;
-
-        if (this.offHandWeapon) {
-            this.offHandWeapon.attackBonus += ring.attackBonus ?? 0;
-            this.offHandWeapon.damageBonus += ring.damageBonus ?? 0;
-            this.offHandWeapon.critRange -= ring.critRangeBonus ?? 0;
-            this.offHandWeapon.critMult += ring.critMultBonus ?? 0;
-            this.offHandWeapon.manaPerAtk += ring.manaPerAtk ?? 0;
-        }
-        // Defense
-        this._armourClass += ring.armourClass ?? 0;
-        this.physDR += ring.physDR ?? 0;
-        this.magicDR += ring.magicDR ?? 0;
-        this.physResist += ring.physResist ?? 0;
-        this.magicResist += ring.magicResist ?? 0;
-        this._thorns += ring.thorns ?? 0;
-        // Mana
-        this.manaRegen += ring.manaRegen ?? 0;
-        this.manaCostReduction += ring.manaCostReduction ?? 0;
-        // Other
-        this._initiativeBonus += ring.initiativeBonus ?? 0;
-    }
-
     json(): CharacterJSON {
         return {
             name: this._name,
             className: this.className,
             level: this.level,
-            currHealth: this.currHealth,
-            maxHealth: this.maxHealth,
-            currMana: this.currMana,
-            maxMana: this.maxMana,
+            currHealth: this.currentHealth,
+            maxHealth: this.stats[StatType.MaxHealth].base + this.stats[StatType.MaxHealth].bonus,
+            currMana: this.currentHealth,
+            maxMana: this.stats[StatType.MaxMana].base + this.stats[StatType.MaxMana].bonus,
             buffs: this.buffTracker.getBuffString(),
             debuffs: this.buffTracker.getDebuffString()
         };

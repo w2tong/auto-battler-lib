@@ -73,8 +73,8 @@ class Log {
         this.add(`${charName} ⚔️ ${tarName} (${attackDetails}). ${hitType.toString()}${sneak ? ' (Sneak Attack)' : ''}.`);
     }
 
-    addDamage(name: string, source: string, damage: number, type: DamageType, damageResisted: number) {
-        `${name} took ${damage.toLocaleString()} ${type}${damageResisted > 0 ? ` (${damageResisted} resisted)` : ''} from ${source}.`;
+    addDamage(name: string, source: string, damage: number, type: DamageType) {
+        `${name} took ${damage.toLocaleString()} ${type} from ${source}.`;
     }
 
     addLoot(name: string, itemId: string) {

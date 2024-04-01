@@ -23,7 +23,7 @@ const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number
     [AttributeType.Strength]: {
         [StatType.MeleeDamage]: 0.5,
         [StatType.BlockPower]: 0.2,
-        [StatType.Health]: 0.2
+        [StatType.MaxHealth]: 0.2
     },
     [AttributeType.Dexterity]: {
         [StatType.Dodge]: 1,
@@ -37,7 +37,7 @@ const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number
         [StatType.ArmourPenetration]: 0.2
     },
     [AttributeType.Constitution]: {
-        [StatType.Health]: 1,
+        [StatType.HealthPercent]: 1,
         [StatType.StatusResistance]: 0.2,
         [StatType.Armour]: 0.1
     },
@@ -49,7 +49,7 @@ const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number
     [AttributeType.Wisdom]: {
         [StatType.ManaRegen]: 0.5,
         [StatType.ManaOnHit]: 0.5,
-        [StatType.Initiative]: 0.5
+        [StatType.StartingMana]: 1
     },
 };
 
@@ -93,5 +93,5 @@ class Attributes {
     }
 }
 
-export type { AttributeType, BaseAttributes };
+export type { Attribute, AttributeType, BaseAttributes };
 export { AttributeStatScaling, Attributes };
