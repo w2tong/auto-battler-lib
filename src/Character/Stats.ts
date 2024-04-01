@@ -218,6 +218,38 @@ class Stats {
 
         // Add stats from talents
     }
+
+    get maxHealth() {
+        return calcTotalStat(this[StatType.MaxHealth]) * (1 + calcTotalStat(this[StatType.HealthPercent])/100);
+    }
+
+    get maxMana() {
+        return calcTotalStat(this[StatType.MaxMana]);
+    }
+
+    get meleeHitChance() {
+        return calcTotalStat(this[StatType.MeleeHitChance]);
+    }
+
+    get rangedHitChance() {
+        return calcTotalStat(this[StatType.RangedHitChance]);
+    }
+
+    get dodge() {
+        return calcTotalStat(this[StatType.Dodge]);
+    }
+
+    get dodgeReduction() {
+        return calcTotalStat(this[StatType.Dodge]);
+    }
+
+    get thorns() {
+        return calcTotalStat(this[StatType.Thorns]);
+    }
+
+    get initiativeBonus() {
+        return calcTotalStat(this[StatType.Initiative]);
+    }
 }
 
 // addRingBonuses(ring: Ring) {

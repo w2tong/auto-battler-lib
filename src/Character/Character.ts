@@ -3,7 +3,7 @@ import Battle, { Side } from '../Battle';
 import BuffTracker from '../Buffs/BuffTracker';
 import { BuffId } from '../Buffs/buffs';
 import { PlayerStats } from '../statTemplates';
-import { Weapon, weapons } from '../Equipment/Weapons';
+import { RangeType, Weapon, weapons } from '../Equipment/Weapons';
 import { Shield } from '../Equipment/Shield';
 import { Equipment, defaultEquipment } from '../Equipment/Equipment';
 import DamageType from '../DamageType';
@@ -22,19 +22,8 @@ type CharacterInfo = {
     offHandWeapon?: Weapon,
     potion?: Potion,
 
-    // TODO: replace with StatType
-    // armourClass: number,
-    // physDR: number,
-    // magicDR: number,
-    // physResist: number,
-    // magicResist: number,
-    // thorns: number,
-    // health: number,
-    // mana: number,
-    // manaRegen: number,
-    // manaCostReduction: number,
-    // initiativeBonus: number,
-    // potionEffectiveness: number
+    attributes: Attributes,
+    stats: Stats
 }
 
 type CharacterJSON = {
@@ -109,7 +98,7 @@ export default class Character {
             // }
         }
 
-        this.currentHealth = options?.currHealthPc ? Math.ceil(this.maxHealth * options.currHealthPc) : this.maxHealth;
+        this.currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._mainHand.damageBonus = Math.floor(this._mainHand.damageBonus);
         if (this.offHandWeapon) this.offHandWeapon.damageBonus = Math.floor(this.offHandWeapon.damageBonus);
     }
@@ -136,22 +125,6 @@ export default class Character {
 
     get mainHand() {
         return this._mainHand;
-    }
-
-    get maxHealth() {
-        return calcTotalStat(this.stats[StatType.MaxHealth]) * (1 + calcTotalStat(this.stats[StatType.HealthPercent])/100);
-    }
-
-    get maxMana() {
-        return calcTotalStat(this.stats[StatType.MaxMana]);
-    }
-
-    get thorns() {
-        return calcTotalStat(this.stats[StatType.Thorns]);
-    }
-
-    get initiativeBonus() {
-        return calcTotalStat(this.stats[StatType.Initiative]);
     }
 
     get target() {
@@ -207,7 +180,7 @@ export default class Character {
     }
 
     doTurn(): void {
-        if (this.potion && this.potion.charges > 0 && this.currentHealth <= this.maxHealth/2) {
+        if (this.potion && this.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth/2) {
             const potionHeal = Math.round((rollDice(this.potion.dice) + this.potion.bonus) * (1 + calcTotalStat(this.stats[StatType.PotionEffectiveness])/100));
             this.addHealth(potionHeal);
             this.potion.charges -= 1;
@@ -223,7 +196,7 @@ export default class Character {
     attackRoll(weapon: Weapon): {hitType: HitType, details: string} {
         if (!this.target) return {hitType: HitType.Miss, details: 'No Target'};
         const attackRoll = rollDice({num: 1, sides: 20});
-        const rollToHitTaget = this.target.armourClass - weapon.attackBonus;
+        const rollToHitTaget = this.target.stats.dodge - (weapon.range === RangeType.Melee ? this.stats.meleeHitChance : this.stats.rangedHitChance) - this.stats.dodgeReduction;
         const details = `${attackRoll} vs. ${rollToHitTaget <= 2 ? 2 : rollToHitTaget <= 20 ? rollToHitTaget : 20}`;
         if (attackRoll === 1) {
             return {hitType: HitType.CritMiss, details};
@@ -286,8 +259,8 @@ export default class Character {
             }
 
             // Apply thorns damage if target was hit
-            if (hitTarget && this.target.thorns > 0) {
-                this.takeDamage('Thorns', this.target.thorns, DamageType.Physical);
+            if (hitTarget && this.target.stats.thorns > 0) {
+                this.takeDamage('Thorns', this.target.stats.thorns, DamageType.Physical);
             }
             
         }
@@ -309,11 +282,11 @@ export default class Character {
     }
 
     addMana(mana: number): void {
-        this.currentMana = Math.min(this.currentMana + mana, this.maxMana);
+        this.currentMana = Math.min(this.currentMana + mana, this.stats.maxMana);
     }
 
     addHealth(health: number): void {
-        this.currentHealth = Math.min(this.currentHealth + health, this.maxHealth);
+        this.currentHealth = Math.min(this.currentHealth + health, this.stats.maxHealth);
     }
 
     isDead(): boolean {
@@ -331,20 +304,8 @@ export default class Character {
             level: this.level,
             mainHand: this.mainHand,
             potion: this.potion,
-            
-            // TODO: replace
-            // armourClass: this.armourClass,
-            // physDR: this.physDR,
-            // magicDR: this.magicDR,
-            // physResist: this.physResist,
-            // magicResist: this.magicResist,
-            // thorns: this.thorns,
-            // health: this.maxHealth,
-            // mana: this.maxMana,
-            // manaRegen: this.manaRegen,
-            // manaCostReduction: this.manaCostReduction,
-            // initiativeBonus: this.initiativeBonus,
-            // potionEffectiveness: this.potionEffectiveness
+            attributes: this.attributes,
+            stats: this.stats
         };
         if (this.offHandWeapon) {
             info.offHandWeapon = this.offHandWeapon;
