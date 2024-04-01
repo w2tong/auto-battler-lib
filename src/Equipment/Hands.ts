@@ -110,24 +110,4 @@ const hands: {[id in HandsId]: Hands} = {
     },
 } as const;
 
-function getHandsTooltip(hands: Hands) {
-    const tooltip = [];
-    if (hands.weaponStyle) tooltip.push(`Weapon Style: ${hands.weaponStyle}`);
-    if (hands.attackBonus) tooltip.push(`Attack Bonus: ${hands.attackBonus}`);
-    if (hands.damageBonus) tooltip.push(`Damage Bonus: ${hands.damageBonus}`);
-    if (hands.critRangeBonus) tooltip.push(`Crit Range Bonus: ${hands.critRangeBonus}`);
-    if (hands.critMultBonus) tooltip.push(`Crit Mult Bonus: ${hands.critMultBonus*100}%`);
-    return tooltip.join('\n');
-}
-
-function getHandsDescription(hands: Hands) {
-    const descriptions = [];
-    if (hands.weaponStyle) descriptions.push(`Style: ${hands.weaponStyle}`);
-    if (hands.attackBonus) descriptions.push(`ATK: ${hands.attackBonus}`);
-    if (hands.damageBonus) descriptions.push(`DMG: ${hands.damageBonus}`);
-    if (hands.critRangeBonus) descriptions.push(`Crit Range: ${hands.critRangeBonus}`);
-    if (hands.critMultBonus) descriptions.push(`Crit Mult: ${hands.critMultBonus*100}%`);
-    return descriptions.join(', ');
-}
-
-export { WeaponStyle, Hands, HandsId, hands, getHandsTooltip, getHandsDescription };
+export { WeaponStyle, Hands, HandsId, hands };

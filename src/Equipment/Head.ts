@@ -65,24 +65,4 @@ const heads: {[id in HeadId]: Head} = {
     }
 } as const;
 
-function getHeadTooltip(head: Head) {
-    const tooltip = [];
-    if (head.armourClass) tooltip.push(`Armour Class: ${head.armourClass}`);
-    if (head.manaPerAtk) tooltip.push(`Mana/Attack: ${head.manaPerAtk}`);
-    if (head.manaRegen) tooltip.push(`Mana Regen: ${head.manaRegen}`);
-    if (head.manaCostReduction) tooltip.push(`Mana Cost Reduction: ${head.manaCostReduction}`);
-    if (head.initiativeBonus) tooltip.push(`Initiative Bonus: ${head.initiativeBonus}`);
-    return tooltip.join('\n');
-}
-
-function getHeadDescription(head: Head) {
-    const descriptions = [];
-    if (head.armourClass) descriptions.push(`AC: ${head.armourClass}`);
-    if (head.manaPerAtk) descriptions.push(`MP/ATK: ${head.manaPerAtk}`);
-    if (head.manaRegen) descriptions.push(`MP Regen: ${head.manaRegen}`);
-    if (head.manaCostReduction) descriptions.push(`MCR: ${head.manaCostReduction}`);
-    if (head.initiativeBonus) descriptions.push(`IB: ${head.initiativeBonus}`);
-    return descriptions.join(', ');
-}
-
-export { Head, HeadId, heads, getHeadTooltip, getHeadDescription };
+export { Head, HeadId, heads };

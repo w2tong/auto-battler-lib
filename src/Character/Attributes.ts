@@ -93,5 +93,4 @@ class Attributes {
     }
 }
 
-export type { Attribute, AttributeType, BaseAttributes };
-export { AttributeStatScaling, Attributes };
+export { Attribute, AttributeType, BaseAttributes, AttributeStatScaling, Attributes };

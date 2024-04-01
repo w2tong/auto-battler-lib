@@ -684,27 +684,4 @@ const weapons: {[id in WeaponId]: Weapon} = {
     }
 } as const;
 
-function getWeaponTooltip(weapon: Weapon) {
-    const tooltip = [
-        `${weapon.type}, ${weapon.range}`,
-        `Damage: ${weapon.damage.num + weapon.damageBonus} - ${weapon.damage.num * weapon.damage.sides + weapon.damageBonus} ${weapon.damageType}`,
-        `Crit: ${weapon.critRange < 20 ? `${weapon.critRange}-` : ''}20 (x${weapon.critMult})`, `Mana/Atk: ${weapon.manaPerAtk}`
-    ];
-    if (weapon.attackBonus) tooltip.push(`Attack Bonus: ${weapon.attackBonus}`);
-    if (weapon.onHit) tooltip.push(weapon.onHit.description);
-    return tooltip.join('\n');
-}
-
-function getWeaponDescription(weapon: Weapon) {
-    const descriptions = [];
-    if (weapon.twoHanded) {
-        descriptions.push('Two-Handed');
-    }
-    descriptions.push(`Damage: ${weapon.damage.num + weapon.damageBonus} - ${weapon.damage.num * weapon.damage.sides + weapon.damageBonus}`);
-    descriptions.push(`Crit: ${weapon.critRange < 20 ? `${weapon.critRange}-` : ''}20 (x${weapon.critMult})`);
-    descriptions.push(`MP/ATK: ${weapon.manaPerAtk}`);
-    if (weapon.manaRegen) descriptions.push(`MP Regen: ${weapon.manaRegen}`);
-    return descriptions.join(', ');
-}
-
-export { WeaponType, RangeType, Weapon, WeaponId, weapons, getWeaponTooltip, getWeaponDescription };
+export { WeaponType, RangeType, Weapon, WeaponId, weapons };

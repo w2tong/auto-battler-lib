@@ -246,48 +246,4 @@ const rings: {[id in RingId]: Ring} = {
 
 };
 
-function getRingTooltip(ring: Ring) {
-    const tooltip = [];
-    if (ring.attackBonus) tooltip.push(`Attack Bonus: ${ring.attackBonus}`);
-    if (ring.damageBonus) tooltip.push(`Damage Bonus: ${ring.damageBonus}`);
-    if (ring.critRangeBonus) tooltip.push(`Crit Range Bonus: ${ring.critRangeBonus}`);
-    if (ring.critMultBonus) tooltip.push(`Crit Mult Bonus: ${ring.critMultBonus*100}%`);
-
-    if (ring.armourClass) tooltip.push(`Armour Class: ${ring.armourClass}`);
-    if (ring.physDR) tooltip.push(`Physical DR: ${ring.physDR}`);
-    if (ring.magicDR) tooltip.push(`Magic DR: ${ring.magicDR}`);
-    if (ring.physResist) tooltip.push(`Physical Resist: ${ring.physResist}%`);
-    if (ring.magicResist) tooltip.push(`Magic Resist: ${ring.magicResist}%`);
-    if (ring.thorns) tooltip.push(`Thorns: ${ring.thorns}`);
-
-    if (ring.manaPerAtk) tooltip.push(`Mana/Attack: ${ring.manaPerAtk}`);
-    if (ring.manaRegen) tooltip.push(`Mana Regen: ${ring.manaRegen}`);
-    if (ring.manaCostReduction) tooltip.push(`Mana Cost Reduction: ${ring.manaCostReduction}`);
-
-    if (ring.initiativeBonus) tooltip.push(`Initiative Bonus: ${ring.initiativeBonus}`);
-    return tooltip.join('\n');
-}
-
-function getRingDescription(ring: Ring) {
-    const descriptions = [];
-    if (ring.attackBonus) descriptions.push(`ATK: ${ring.attackBonus}`);
-    if (ring.damageBonus) descriptions.push(`DMG: ${ring.damageBonus}`);
-    if (ring.critRangeBonus) descriptions.push(`Crit Range: ${ring.critRangeBonus}`);
-    if (ring.critMultBonus) descriptions.push(`Crit Mult: ${ring.critMultBonus*100}%`);
-
-    if (ring.armourClass) descriptions.push(`AC: ${ring.armourClass}`);
-    if (ring.physDR) descriptions.push(`Phys DR: ${ring.physDR}`);
-    if (ring.magicDR) descriptions.push(`Mag DR: ${ring.magicDR}`);
-    if (ring.physResist) descriptions.push(`Phys Res: ${ring.physResist}%`);
-    if (ring.magicResist) descriptions.push(`Mag Res: ${ring.magicResist}%`);
-    if (ring.thorns) descriptions.push(`Thorns: ${ring.thorns}`);
-
-    if (ring.manaPerAtk) descriptions.push(`MP/ATK: ${ring.manaPerAtk}`);
-    if (ring.manaRegen) descriptions.push(`MP Regen: ${ring.manaRegen}`);
-    if (ring.manaCostReduction) descriptions.push(`MCR: ${ring.manaCostReduction}`);
-
-    if (ring.initiativeBonus) descriptions.push(`IB: ${ring.initiativeBonus}`);
-    return descriptions.join(', ');
-}
-
-export { Ring, RingId, rings, getRingTooltip, getRingDescription };
+export { Ring, RingId, rings };

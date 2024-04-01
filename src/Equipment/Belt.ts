@@ -97,20 +97,4 @@ const belts: {[id in BeltId]: Belt} = {
 
 } as const;
 
-function getBeltTooltip(belt: Belt) {
-    const tooltip = [];
-    if (belt.charges) tooltip.push(`Potion Charges: +${belt.charges}`);
-    if (belt.effectiveness) tooltip.push(`Potion Effectiveness: +${belt.effectiveness*100}%`);
-    if (belt.healing) tooltip.push(`Potion Healing: +${belt.healing}`);
-    return tooltip.join('\n');
-}
-
-function getBeltDescription(belt: Belt) {
-    const descriptions = [];
-    if (belt.charges) descriptions.push(`Pot Charges: +${belt.charges}`);
-    if (belt.effectiveness) descriptions.push(`Pot Eff: +${belt.effectiveness*100}%`);
-    if (belt.healing) descriptions.push(`Pot Heal: +${belt.healing}`);
-    return descriptions.join(', ');
-}
-
-export { Belt, BeltId, belts, getBeltTooltip, getBeltDescription };
+export { Belt, BeltId, belts };

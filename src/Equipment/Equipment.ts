@@ -1,14 +1,14 @@
 import { ClassName } from '../Character/Classes/classes';
-import { Amulet, amulets, getAmuletDescription, getAmuletTooltip } from './Amulet';
-import { Armour, ArmourId, armour, getArmourDescription, getArmourTooltip } from './Armour';
-import { Belt, BeltId, belts, getBeltDescription, getBeltTooltip } from './Belt';
-import { Hands, HandsId, getHandsDescription, getHandsTooltip, hands } from './Hands';
-import { Head, HeadId, getHeadDescription, getHeadTooltip, heads } from './Head';
+import { Amulet, amulets } from './Amulet';
+import { Armour, ArmourId, armour } from './Armour';
+import { Belt, BeltId, belts } from './Belt';
+import { Hands, HandsId, hands } from './Hands';
+import { Head, HeadId, heads } from './Head';
 import { ItemType } from './Item';
-import { Potion, PotionId, getPotionDescription, getPotionTooltip, potions } from './Potion';
-import { Ring, RingId, getRingDescription, getRingTooltip, rings } from './Ring';
-import { Shield, ShieldId, getShieldDescription, getShieldTooltip, shields } from './Shield';
-import { Weapon, WeaponId, getWeaponDescription, getWeaponTooltip, weapons } from './Weapons';
+import { Potion, PotionId, potions } from './Potion';
+import { Ring, RingId, rings } from './Ring';
+import { Shield, ShieldId, shields } from './Shield';
+import { Weapon, WeaponId, weapons } from './Weapons';
 
 type Equip = Weapon|Shield|Armour|Head|Hands|Ring|Potion|Belt|Amulet;
 const equips: {[key: string]: Equip} = {...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts, ...amulets} as const;
@@ -66,36 +66,6 @@ const defaultEquipment: {[name in ClassName]: Equipment} = {
         mainHand: weapons.quarterstaff0
     }
 };
-
-function getItemTooltip(item: Equip): string {
-    switch(item.itemType) {
-        case ItemType.Weapon: return getWeaponTooltip(item);
-        case ItemType.Shield: return getShieldTooltip(item);
-        case ItemType.Armour: return getArmourTooltip(item);
-        case ItemType.Head: return getHeadTooltip(item);
-        case ItemType.Hands: return getHandsTooltip(item);
-        case ItemType.Ring: return getRingTooltip(item);
-        case ItemType.Potion: return getPotionTooltip(item);
-        case ItemType.Belt: return getBeltTooltip(item);
-        case ItemType.Amulet: return getAmuletTooltip(item);
-        default: return 'Missing item tooltip.';
-    }
-}
-
-function getItemDescription(item: Equip) {
-    switch(item.itemType) {
-        case ItemType.Weapon: return getWeaponDescription(item);
-        case ItemType.Shield: return getShieldDescription(item);
-        case ItemType.Armour: return getArmourDescription(item);
-        case ItemType.Head: return getHeadDescription(item);
-        case ItemType.Hands: return getHandsDescription(item);
-        case ItemType.Ring: return getRingDescription(item);
-        case ItemType.Potion: return getPotionDescription(item);
-        case ItemType.Belt: return getBeltDescription(item);
-        case ItemType.Amulet: return getAmuletDescription(item);
-        default: return 'Missing item description.';
-    }
-}
 
 function isValidEquip(itemId: string, slot: EquipSlot): boolean {
     const item = equips[itemId];
@@ -180,4 +150,4 @@ function createEquipment(equipmentItemIds: EquipmentItemIds): Equipment {
     return equipment;
 }
 
-export { Equip, EquipmentItemIds, equips, Equipment, EquipSlot, defaultEquipment, getItemTooltip, getItemDescription, isValidEquip, createEquipment };
+export { Equip, EquipmentItemIds, equips, Equipment, EquipSlot, defaultEquipment, isValidEquip, createEquipment };
