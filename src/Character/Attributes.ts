@@ -100,9 +100,9 @@ class Attributes {
         if (equipment.head) this.addItemAttributes(equipment.head.attributes);
         if (equipment.ring1) this.addItemAttributes(equipment.ring1.attributes);
         if (equipment.ring2) this.addItemAttributes(equipment.ring2.attributes);
-        if (equipment.offHandShield) this.addItemAttributes(equipment.offHandShield.attributes);
         if (equipment.mainHand) this.addItemAttributes(equipment.mainHand.attributes);
         if (equipment.offHandWeapon) this.addItemAttributes(equipment.offHandWeapon.attributes);
+        else if (equipment.offHandShield) this.addItemAttributes(equipment.offHandShield.attributes);
     }
 
     addItemAttributes(itemAttributes?: ItemAttributes) {
