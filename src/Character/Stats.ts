@@ -1,4 +1,7 @@
 import { Equipment } from '../Equipment/Equipment';
+import { WeaponStyle } from '../Equipment/Hands';
+import { ItemStats } from '../Equipment/Item';
+import { RangeType } from '../Equipment/Weapon';
 import { AttributeStatScaling, AttributeType, Attributes } from './Attributes';
 
 interface Stat {
@@ -25,12 +28,15 @@ enum StatType {
 
     // Offensive Stats
     HitChance = 'Hit Chance',
+    OffHandHitChance = 'Off-Hand Hit Chance',
     MeleeHitChance = 'Melee Hit Chance',
     RangedHitChance = 'Ranged Hit Chance',
 
     Damage = 'Damage',
+    OffHandDamage = 'Off-Hand Damage',
     MeleeDamage = 'Melee Damage',
     RangedDamage = 'Ranged Damage',
+    DamagePercent = '% Damage',
     MeleeDamagePercent = '% Melee Damage',
     RangedDamagePercent = '% Ranged Damage',
 
@@ -60,6 +66,18 @@ enum StatType {
 }
 
 class Stats {
+
+    static ManaOnHit = {
+        OneHand: 5,
+        TwoHand: 10
+    };
+    static ManaRegen = 5;
+    static CriticalChance = 5;
+    static CriticalDamage = 5;
+
+    static DualWieldPenalty = -2;
+    static OffHandPenalty = -4;
+
     // Defensive Stats
     [StatType.MaxHealth]: Stat = {base: 0, bonus: 0};
     [StatType.HealthPercent]: Stat = {base: 0, bonus: 0};
@@ -74,12 +92,16 @@ class Stats {
     
     // Offensive Stats
     [StatType.HitChance]: Stat = {base: 0, bonus: 0};
+    [StatType.OffHandHitChance]: Stat = {base: 0, bonus: 0};
     [StatType.MeleeHitChance]: Stat = {base: 0, bonus: 0};
     [StatType.RangedHitChance]: Stat = {base: 0, bonus: 0};
 
     [StatType.Damage]: Stat = {base: 0, bonus: 0};
+    [StatType.OffHandDamage]: Stat = {base: 0, bonus: 0};
     [StatType.MeleeDamage]: Stat = {base: 0, bonus: 0};
     [StatType.RangedDamage]: Stat = {base: 0, bonus: 0};
+
+    [StatType.DamagePercent]: Stat = {base: 0, bonus: 0};
     [StatType.MeleeDamagePercent]: Stat = {base: 0, bonus: 0};
     [StatType.RangedDamagePercent]: Stat = {base: 0, bonus: 0};
 
@@ -116,115 +138,45 @@ class Stats {
         }
 
         // Add stats from equipment
-        // DEPRECATED
-        // const lvlAttackBonus = calcStatValue(stats.attackBonus, level);
-        // const lvlDamageBonus = calcStatValue(stats.damageBonus, level);
-        // const lvlManaPerAtk = stats.manaPerAtk ? calcStatValue(stats.manaPerAtk, level) : 0;
 
-        // // Main hand weapon
-        // this._mainHand = Object.assign({}, equipment.mainHand);
-        // this._mainHand.attackBonus += lvlAttackBonus;
-        // this._mainHand.damageBonus += lvlDamageBonus * (this._mainHand.twoHanded ? Character.twoHandedMult : 1);
-        // this._mainHand.manaPerAtk += lvlManaPerAtk;
+        // Set conditional weapon stats
+        this[StatType.ManaOnHit].base += equipment.mainHand?.twoHanded ? Stats.ManaOnHit.TwoHand : Stats.ManaOnHit.OneHand;
+        if (equipment.offHandWeapon) {
+            this[StatType.HitChance].bonus += Stats.DualWieldPenalty;
+            this[StatType.OffHandHitChance].bonus += Stats.OffHandPenalty;
+        }
 
-        // this._armourClass = calcStatValue(stats.armourClass, level);
-        // this.physDR = stats.physDR ? calcStatValue(stats.physDR, level) : 0;
-        // this.magicDR = stats.magicDR ? calcStatValue(stats.magicDR, level) : 0;
-        // this.physResist = stats.physResist ? calcStatValue(stats.physResist, level) : 0;
-        // this.magicResist = stats.magicResist ? calcStatValue(stats.magicResist, level) : 0;
-        // this._thorns = stats.thorns ? calcStatValue(stats.thorns, level) : 0;
-
-        // this.maxHealth = calcStatValue(stats.health, level);
-
-        // this.maxMana = stats.mana ?? 0;
-        // this.currMana = options?.currManaPc ? Math.ceil(this.maxMana * options.currManaPc) : 0;
-        // this.manaCostReduction = 0;
-
-        // this.manaRegen = stats.manaRegen ? calcStatValue(stats.manaRegen, level) + (this._mainHand.manaRegen ?? 0) : 0;
-        // this._initiativeBonus = calcStatValue(stats.initiativeBonus, level);
-
-        // // Off hand weapon/shield
-        // if (equipment.offHandWeapon && equipment.offHandShield) {
-        //     throw Error('cannot have both weapon and shield in offhand');
-        // }
-        // if (equipment.offHandWeapon) {
-        //     this.mainHand.attackBonus += Character.dualWieldPenalty;
-        //     this.offHandWeapon = Object.assign({}, equipment.offHandWeapon);
-        //     this.offHandWeapon.attackBonus += lvlAttackBonus + Character.dualWieldPenalty + Character.offHandPenalty;
-        //     this.offHandWeapon.damageBonus += lvlDamageBonus;
-        //     this.offHandWeapon.manaPerAtk += lvlManaPerAtk;
-        //     this.manaRegen += this.offHandWeapon.manaRegen ?? 0;
-        // }
-        // else if (equipment.offHandShield) {
-        //     const shield = equipment.offHandShield;
-        //     this._armourClass += shield.armourClass;
-        //     this.mainHand.attackBonus += shield.attackBonus ?? 0;
-        //     this.physDR += shield.physDR ?? 0;
-        //     this.magicDR += shield.magicDR ?? 0;
-        //     this.physResist += shield.physResist ?? 0;
-        //     this.magicResist += shield.magicResist ?? 0;
-        //     this._thorns += shield.thorns ?? 0;
-        // }
-
-        // // Armour
-        // if (equipment.armour) {
-        //     this._armourClass += equipment.armour.armourClass;
-        //     this.physDR += equipment.armour.physDR ?? 0;
-        //     this.magicDR += equipment.armour.magicDR ?? 0;
-        //     this.physResist += equipment.armour.physResist ?? 0;
-        //     this.magicResist += equipment.armour.magicResist ?? 0;
-        //     this.manaRegen += equipment.armour.manaRegen ?? 0;
-        //     this._thorns += equipment.armour.thorns ?? 0;
-        // }
-
-        // // Head
-        // if (equipment.head) {
-        //     this._armourClass += equipment.head.armourClass ?? 0;
-        //     this.mainHand.manaPerAtk += equipment.head.manaPerAtk ?? 0;
-        //     if (this.offHandWeapon) this.offHandWeapon.manaPerAtk += equipment.head.manaPerAtk ?? 0;
-        //     this.manaRegen += equipment.head.manaRegen ?? 0;
-        //     this.manaCostReduction += equipment.head.manaCostReduction ?? 0;
-        //     this._initiativeBonus += equipment.head.initiativeBonus ?? 0;
-        // }
-
-        // //Hands
-        // if (equipment.hands) {
-        //     const handsBonuses = {
-        //         attack: equipment.hands.attackBonus ?? 0,
-        //         damage: equipment.hands.damageBonus ?? 0,
-        //         critRange: equipment.hands.critRangeBonus ?? 0,
-        //         critMult: equipment.hands.critMultBonus ?? 0
-        //     };
-        //     if (equipment.hands.weaponStyle) {
-        //         if (equipment.hands.weaponStyle === WeaponStyle.DualWield && this.mainHand && this.offHandWeapon) {
-        //             Character.addHandsBonus(this.mainHand, handsBonuses);
-        //             if (this.offHandWeapon) Character.addHandsBonus(this.offHandWeapon, handsBonuses);
-        //         }
-        //         else if (
-        //             (equipment.hands.weaponStyle === WeaponStyle.TwoHanded && this.mainHand.twoHanded) ||
-        //             (equipment.hands.weaponStyle === WeaponStyle.OneHanded && !this.mainHand.twoHanded && !this.offHandWeapon) ||
-        //             (equipment.hands.weaponStyle === WeaponStyle.Ranged && this.mainHand.range === RangeType.LongRange)
-        //         ) {
-        //             Character.addHandsBonus(this.mainHand, handsBonuses);
-        //         }
-        //     }
-        //     else {
-        //         Character.addHandsBonus(this.mainHand, handsBonuses);
-        //         if (this.offHandWeapon) Character.addHandsBonus(this.offHandWeapon, handsBonuses);
-        //     }
-        // }
-
-        // // Rings
-        // if (equipment.ring1) this.addRingBonuses(equipment.ring1);
-        // if (equipment.ring2) this.addRingBonuses(equipment.ring2);
-
-        // if (equipment.belt) {
-        //     if (equipment.belt.charges) this[StatType.PotionCharges].bonus += equipment.belt.charges;
-        //     if (equipment.belt.effectiveness) this[StatType.PotionEffectiveness].bonus += equipment.belt.effectiveness;
-        //     if (equipment.belt.healing) this[StatType.PotionHealing].bonus += equipment.belt.healing;
-        // }
+        if (equipment.armour) this.addItemStats(equipment.armour.stats);
+        if (equipment.belt) this.addItemStats(equipment.belt.stats);
+        if (equipment.hands && 
+            // If gloves have Weapon Style, check if character is using correct weapon to add stats
+            ((equipment.hands.weaponStyle && (
+                (equipment.hands.weaponStyle === WeaponStyle.DualWield && equipment.mainHand && equipment.offHandWeapon) ||
+                (equipment.hands.weaponStyle === WeaponStyle.TwoHanded && equipment.mainHand?.twoHanded) ||
+                (equipment.hands.weaponStyle === WeaponStyle.OneHanded && !equipment.mainHand?.twoHanded && !equipment.offHandWeapon) ||
+                (equipment.hands.weaponStyle === WeaponStyle.Ranged && equipment.mainHand?.range === RangeType.LongRange)
+            )
+            // If gloves have no Weapon Style, add stats
+            ) || !equipment.hands.weaponStyle)) {
+            this.addItemStats(equipment.hands.stats);
+        }
+        if (equipment.head) this.addItemStats(equipment.head.stats);
+        if (equipment.ring1) this.addItemStats(equipment.ring1.stats);
+        if (equipment.ring2) this.addItemStats(equipment.ring2.stats);
+        if (equipment.mainHand) this.addItemStats(equipment.mainHand.stats);
+        if (equipment.offHandWeapon) this.addItemStats(equipment.offHandWeapon.stats);
+        else if (equipment.offHandShield) this.addItemStats(equipment.offHandShield.stats);
 
         // Add stats from talents
+
+        // TODO: Math.floor stats that are needed
+    }
+
+    addItemStats(itemStats?: ItemStats) {
+        if (!itemStats) return;
+        for (const [type, val] of Object.entries(itemStats)) {
+            this[type as StatType].bonus += val;
+        }
     }
 
     get maxHealth() {
