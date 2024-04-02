@@ -5,7 +5,7 @@ export { BuffTracker };
 
 export { ClassName, Classes, ClassDescriptions } from './Character/Classes/classes';
 
-export { Equip, Equipment, EquipmentItemIds, EquipSlot, equips, defaultEquipment, getItemTooltip, getItemDescription, isValidEquip, createEquipment } from './Equipment/Equipment';
+export { Equip, Equipment, EquipmentItemIds, EquipSlot, equips, defaultEquipment, isValidEquip, createEquipment } from './Equipment/Equipment';
 export { Item, ItemType, Tier } from './Equipment/Item';
 export { Armour, ArmourId, armour } from './Equipment/Armour';
 export { Belt, BeltId, belts } from './Equipment/Belt';
@@ -14,7 +14,7 @@ export { Head, HeadId, heads } from './Equipment/Head';
 export { Potion, PotionId, potions } from './Equipment/Potion';
 export { Ring, RingId, rings } from './Equipment/Ring';
 export { Shield, ShieldId, shields } from './Equipment/Shield';
-export { WeaponType, RangeType, Weapon, WeaponId, weapons } from './Equipment/Weapons';
+export { WeaponType, RangeType, Weapon, WeaponId, weapons } from './Equipment/Weapon';
 
 import Battle, { Side, BattleJSON } from './Battle';
 export { Battle, Side, BattleJSON };
