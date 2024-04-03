@@ -17,6 +17,9 @@ enum AttributeType {
     Wisdom = 'Wisdom'
 }
 
+const StartingAttributePoints = 10;
+const AttributePointsPerLevel = 2;
+
 const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number}} = {
     [AttributeType.WeaponSkill]: {
         [StatType.HitChance]: 1,
@@ -114,4 +117,4 @@ class Attributes {
     }
 }
 
-export { Attribute, AttributeType, BaseAttributes, AttributeStatScaling, Attributes };
+export { Attribute, AttributeType, BaseAttributes, AttributeStatScaling, Attributes, StartingAttributePoints, AttributePointsPerLevel };
