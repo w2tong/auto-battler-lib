@@ -51,7 +51,8 @@ const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number
     [AttributeType.Wisdom]: {
         [StatType.ManaRegen]: 0.5,
         [StatType.ManaOnHit]: 0.5,
-        [StatType.StartingMana]: 1
+        [StatType.StartingMana]: 2,
+        [StatType.Initiative]: 0.2
     },
 };
 
