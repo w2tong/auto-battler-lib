@@ -55,7 +55,7 @@ const heads: {[id in HeadId]: Head} = {
         img: 'head-cloth.png',
 
         stats: {
-            [StatType.ManaCostReduction]: 5
+            [StatType.MaxMana]: -5
         }
     },
     clothHood1: {
@@ -66,7 +66,7 @@ const heads: {[id in HeadId]: Head} = {
         img: 'head-cloth.png',
 
         stats: {
-            [StatType.ManaCostReduction]: 10
+            [StatType.MaxMana]: -10
         }
     },
     clothHood2: {
@@ -77,7 +77,7 @@ const heads: {[id in HeadId]: Head} = {
         img: 'head-cloth.png',
 
         stats: {
-            [StatType.ManaCostReduction]: 15
+            [StatType.MaxMana]: -15
         }
     }
 } as const;

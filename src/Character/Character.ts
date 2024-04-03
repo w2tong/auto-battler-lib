@@ -3,12 +3,12 @@ import Battle, { Side } from '../Battle';
 import BuffTracker from '../Buffs/BuffTracker';
 import { BuffId } from '../Buffs/buffs';
 import { PlayerStats } from '../statTemplates';
-import { RangeType, Weapon, weapons } from '../Equipment/Weapons';
+import { RangeType, Weapon, weapons } from '../Equipment/Weapon';
 import { Shield } from '../Equipment/Shield';
 import { Equipment, defaultEquipment } from '../Equipment/Equipment';
 import DamageType from '../DamageType';
 import HitType from '../HitType';
-import { rollDice } from '../dice';
+import { dice, rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
 import { ClassName, Classes } from './Classes/classes';
 import { Attributes, BaseAttributes } from './Attributes';
@@ -80,7 +80,6 @@ export default class Character {
 
         // Attributes
         this.attributes = new Attributes(attributes, equipment);
-        // TODO: Add attributes from equipment
         this.stats = new Stats(this.attributes, equipment);
         this.currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this.currentMana = calcTotalStat(this.stats[StatType.StartingMana]);
@@ -160,23 +159,25 @@ export default class Character {
         }
     }
 
-    doTurn(): void {
+    usePotion(): void {
         if (this.potion && this.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth/2) {
             const potionHeal = Math.round((rollDice(this.potion.dice) + this.potion.bonus) * (1 + calcTotalStat(this.stats[StatType.PotionEffectiveness])/100));
             this.addHealth(potionHeal);
             this.potion.charges -= 1;
             if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
         }
-        else {
-            this.attack();
-        }
+    }
+
+    doTurn(): void {
+        this.usePotion();
+        this.attack();
         this.buffTracker.tick();
     }
 
-    // TODO: redo with hit chance, dodge chance, and dodge reduction
+    // TODO: redo with hit chance, dodge chance, dodge reduction, crit chance
     attackRoll(weapon: Weapon): {hitType: HitType, details: string} {
         if (!this.target) return {hitType: HitType.Miss, details: 'No Target'};
-        const attackRoll = rollDice({num: 1, sides: 20});
+        const attackRoll = rollDice(dice['1d100']);
         const rollToHitTaget = this.target.stats.dodge - (weapon.range === RangeType.Melee ? this.stats.meleeHitChance : this.stats.rangedHitChance) - this.stats.dodgeReduction;
         const details = `${attackRoll} vs. ${rollToHitTaget <= 2 ? 2 : rollToHitTaget <= 20 ? rollToHitTaget : 20}`;
         if (attackRoll === 1) {
@@ -196,6 +197,7 @@ export default class Character {
         }
     }
 
+    // TODO: redo damage calculations
     attack(): void {
         if (!this.battle) return;
         this.setTarget();
@@ -264,7 +266,7 @@ export default class Character {
     }
 
     addMana(mana: number): void {
-        this.currentMana = Math.min(this.currentMana + mana, this.stats.maxMana);
+        this.currentMana += mana;
     }
 
     addHealth(health: number): void {

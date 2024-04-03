@@ -221,7 +221,7 @@ const rings: {[id in RingId]: Ring} = {
     mpHitRing0: {
         id: 'mpHitRing0',
         itemType: ItemType.Ring,
-        name: 'Ring of Lesser M.Atk Ring',
+        name: 'Ring of Lesser Mana Hit',
         tier: 1,
         img: 'ring-purple.png',
                 
@@ -232,7 +232,7 @@ const rings: {[id in RingId]: Ring} = {
     mpHitRing1: {
         id: 'mpHitRing1',
         itemType: ItemType.Ring,
-        name: 'Ring of M.Atk Ring',
+        name: 'Ring of Mana Hit',
         tier: 3,
         img: 'ring-purple.png',
 
@@ -243,7 +243,7 @@ const rings: {[id in RingId]: Ring} = {
     mpHitRing2: {
         id: 'mpHitRing2',
         itemType: ItemType.Ring,
-        name: 'Ring of Greater M.Atk Ring',
+        name: 'Ring of Greater Mana Hit',
         tier: 5,
         img: 'ring-purple.png',
 
@@ -254,7 +254,7 @@ const rings: {[id in RingId]: Ring} = {
     mpRegenRing0: {
         id: 'mpRegenRing0',
         itemType: ItemType.Ring,
-        name: 'Ring of Lesser M.Regen Ring',
+        name: 'Ring of Lesser Mana Regen',
         tier: 1,
         img: 'ring-blue.png',
 
@@ -265,7 +265,7 @@ const rings: {[id in RingId]: Ring} = {
     mpRegenRing1: {
         id: 'mpRegenRing1',
         itemType: ItemType.Ring,
-        name: 'Ring of M.Regen Ring',
+        name: 'Ring of Mana Regen',
         tier: 3,
         img: 'ring-blue.png',
 
@@ -276,7 +276,7 @@ const rings: {[id in RingId]: Ring} = {
     mpRegenRing2: {
         id: 'mpRegenRing2',
         itemType: ItemType.Ring,
-        name: 'Ring of Greater M.Regen Ring',
+        name: 'Ring of Greater Mana Regen',
         tier: 5,
         img: 'ring-blue.png',
 
@@ -287,34 +287,34 @@ const rings: {[id in RingId]: Ring} = {
     mpCostRing0: {
         id: 'mpCostRing0',
         itemType: ItemType.Ring,
-        name: 'Ring of Lesser M.Cost Ring',
+        name: 'Ring of Lesser Mana Cost',
         tier: 1,
         img: 'ring-teal.png',
 
         stats: {
-            [StatType.ManaCostReduction]: 4
+            [StatType.MaxMana]: -4
         }
     },
     mpCostRing1: {
         id: 'mpCostRing1',
         itemType: ItemType.Ring,
-        name: 'Ring of M.Cost Ring',
+        name: 'Ring of Mana Cost',
         tier: 3,
         img: 'ring-teal.png',
 
         stats: {
-            [StatType.ManaCostReduction]: 7
+            [StatType.MaxMana]: -7
         }
     },
     mpCostRing2: {
         id: 'mpCostRing2',
         itemType: ItemType.Ring,
-        name: 'Ring of Greater M.Cost Ring',
+        name: 'Ring of Greater Mana Cost',
         tier: 5,
         img: 'ring-teal.png',
 
         stats: {
-            [StatType.ManaCostReduction]: 10
+            [StatType.MaxMana]: -10
         }
     }
 

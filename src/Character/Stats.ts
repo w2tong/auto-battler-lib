@@ -54,7 +54,6 @@ enum StatType {
     StartingMana = 'Starting Mana',
     ManaRegen = 'Mana Regen',
     ManaOnHit = 'Mana On Hit',
-    ManaCostReduction = 'Mana Cost Reduction',
 
     // Initiative
     Initiative = 'Initiative',
@@ -119,7 +118,6 @@ class Stats {
     [StatType.StartingMana]: Stat = {base: 0, bonus: 0};
     [StatType.ManaRegen]: Stat = {base: 0, bonus: 0};
     [StatType.ManaOnHit]: Stat = {base: 0, bonus: 0};
-    [StatType.ManaCostReduction]: Stat = {base: 0, bonus: 0};
     
     // Initiative
     [StatType.Initiative]: Stat = {base: 0, bonus: 0};
@@ -183,10 +181,6 @@ class Stats {
         return calcTotalStat(this[StatType.MaxHealth]) * (1 + calcTotalStat(this[StatType.HealthPercent])/100);
     }
 
-    get maxMana() {
-        return calcTotalStat(this[StatType.MaxMana]);
-    }
-
     get meleeHitChance() {
         return calcTotalStat(this[StatType.MeleeHitChance]);
     }
@@ -209,6 +203,14 @@ class Stats {
 
     get initiative() {
         return calcTotalStat(this[StatType.Initiative]);
+    }
+
+    get maxMana() {
+        return calcTotalStat(this[StatType.MaxMana]);
+    }
+
+    get manaRegen() {
+        return calcTotalStat(this[StatType.ManaRegen]);
     }
 }
 
