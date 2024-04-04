@@ -13,6 +13,8 @@ import { Potion } from '../Equipment/Potion';
 import { ClassName, Classes } from './Classes/classes';
 import { Attributes, BaseAttributes } from './Attributes';
 import { StatType, Stats, calcTotalStat } from './Stats';
+import DamageRange, { damageRoll } from '../DamageRange';
+import { WeaponStyle } from '../Equipment/Hands';
 
 type CharacterInfo = {
     name: string,
@@ -60,6 +62,7 @@ export default class Character {
     protected offHandWeapon?: Weapon;
     protected offHandShield?: Shield;
     protected potion: Potion;
+    protected weaponStyle: WeaponStyle;
 
     // Buffs/Debuffs
     protected _buffTracker: BuffTracker = new BuffTracker(this);
@@ -76,11 +79,19 @@ export default class Character {
         // Weapons and Potion
         this._mainHand = Object.assign({}, equipment.mainHand);
         this.offHandWeapon = Object.assign({}, equipment.offHandWeapon);
+        this.weaponStyle = 
+            // If dual-wielding
+            this._mainHand && this.offHandWeapon ? WeaponStyle.DualWield :
+            // If two-handing
+            this._mainHand.twoHanded ? WeaponStyle.TwoHanded :
+            // Else one-handing
+            WeaponStyle.OneHanded
+
         this.potion = Object.assign({}, equipment.potion);
 
         // Attributes
         this.attributes = new Attributes(attributes, equipment);
-        this.stats = new Stats(this.attributes, equipment);
+        this.stats = new Stats(this.attributes, equipment, this.weaponStyle);
         this.currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this.currentMana = calcTotalStat(this.stats[StatType.StartingMana]);
 
@@ -174,51 +185,55 @@ export default class Character {
         this.buffTracker.tick();
     }
 
-    // TODO: redo with hit chance, dodge chance, dodge reduction, crit chance
-    attackRoll(weapon: Weapon): {hitType: HitType, details: string} {
-        if (!this.target) return {hitType: HitType.Miss, details: 'No Target'};
-        const attackRoll = rollDice(dice['1d100']);
-        const rollToHitTaget = this.target.stats.dodge - (weapon.range === RangeType.Melee ? this.stats.meleeHitChance : this.stats.rangedHitChance) - this.stats.dodgeReduction;
-        const details = `${attackRoll} vs. ${rollToHitTaget <= 2 ? 2 : rollToHitTaget <= 20 ? rollToHitTaget : 20}`;
-        if (attackRoll === 1) {
-            return {hitType: HitType.CritMiss, details};
-        }
-        else if (attackRoll === 20) {
-            return {hitType: HitType.Crit, details};
-        }
-        else if (attackRoll >= rollToHitTaget) {
-            if (attackRoll >= weapon.critRange) {
-                return {hitType: HitType.Crit, details};
-            }
-            return {hitType: HitType.Hit, details};
-        }
-        else {
-            return {hitType: HitType.Miss, details};
-        }
+    hitRoll(target: Character, rangeType: RangeType, offHand: boolean): boolean {
+        if (offHand && !this.offHandWeapon) return false;
+        const roll = rollDice(dice['1d100']);
+        const hitChance = this.stats.hitChance + 
+        // Off-hand hit chance
+        (offHand ? this.stats.offHandHitChance : 0) + 
+        // Melee/Ranged hit chance
+        (rangeType === RangeType.Melee ? this.stats.meleeHitChance : this.stats.rangedHitChance);
+        const targetDodgeChance = target.stats.dodge - this.stats.dodgeReduction;
+
+        return roll + hitChance >= targetDodgeChance;
+    }
+
+    critRoll(): boolean {
+        const roll = rollDice(dice['1d100']);
+        return roll <= this.stats.criticalChance;
+    }
+
+    damage(damageRange: DamageRange, crit: boolean): number {
+        let damage = damageRoll(damageRange);
+        if (crit) damage *= 1 + this.stats.criticalDamage/100;
+        // TODO: add sneak daamge
+        // const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.mainHand.damageBonus/2), sides: 4}) : 0;
+        return Math.floor(damage);
     }
 
     // TODO: redo damage calculations
     attack(): void {
         if (!this.battle) return;
         this.setTarget();
+        if (!this.target) {
+            this.battle.ref.log.add(`${this._name} has no target.`);
+            return;
+        }
         if (this.target) { 
             let hitTarget = false;
             
             // Main hand attack
-            let attack = this.attackRoll(this.mainHand);
-            if (attack.hitType === HitType.Hit || attack.hitType === HitType.Crit) {
-                hitTarget = true;
-                const damageRoll = rollDice(this.mainHand.damage);
-                const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.mainHand.damageBonus/2), sides: 4}) : 0;
-                let damage = damageRoll + this.mainHand.damageBonus + sneakDamage;
-                if (attack.hitType === HitType.Crit) damage = Math.floor(damage * this.mainHand.critMult);
-                // TODO: add calculations for block chance and block power
-                this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
-                this.target.takeDamage(this.name, damage, this.mainHand.damageType);
-                if (this.mainHand.onHit) this.mainHand.onHit.func(this, this.target);
-                this.addMana(this.mainHand.manaPerAtk);
-                
+            if (!this.hitRoll(this.target, this.mainHand.range, false)) {
+                // TODO: add to combat log
+                return;
             }
+            // TODO: add calculations for block chance and block power
+            const damage = this.damage(this.mainHand.damageRange, this.critRoll());
+            this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
+            this.target.takeDamage(this.name, damage, this.mainHand.damageType);
+            if (this.mainHand.onHit) this.mainHand.onHit.func(this, this.target);
+            this.addMana(this.stats.manaOnHit);
+                
             else {
                 this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
             }

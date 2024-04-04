@@ -1,7 +1,6 @@
 import { Equipment } from '../Equipment/Equipment';
 import { WeaponStyle } from '../Equipment/Hands';
 import { ItemStats } from '../Equipment/Item';
-import { RangeType } from '../Equipment/Weapon';
 import { AttributeStatScaling, AttributeType, Attributes } from './Attributes';
 
 interface Stat {
@@ -65,19 +64,18 @@ enum StatType {
 }
 
 class Stats {
+    static TwoHandedBonus = 50;
 
-    static ManaOnHit = {
-        OneHand: 5,
-        TwoHand: 10
-    };
-    static ManaRegen = 5;
-    static CriticalChance = 5;
-    static CriticalDamage = 5;
+    static BaseManaOnHit = 5;
+    static BaseManaRegen = 5;
+    static BaseCriticalChance = 5;
+    static BaseCriticalDamage = 50;
 
-    static DualWieldPenalty = -2;
-    static OffHandPenalty = -4;
+    static DualWieldPenalty = -10;
+    static OffHandPenalty = -20;
 
     // Defensive Stats
+    weaponStyle: WeaponStyle;
     [StatType.MaxHealth]: Stat = {base: 0, bonus: 0};
     [StatType.HealthPercent]: Stat = {base: 0, bonus: 0};
     [StatType.Armour]: Stat = {base: 0, bonus: 0};
@@ -104,8 +102,8 @@ class Stats {
     [StatType.MeleeDamagePercent]: Stat = {base: 0, bonus: 0};
     [StatType.RangedDamagePercent]: Stat = {base: 0, bonus: 0};
 
-    [StatType.CriticalChance]: Stat = {base: 0, bonus: 0};
-    [StatType.CriticalDamage]: Stat = {base: 0, bonus: 0};
+    [StatType.CriticalChance]: Stat = {base: Stats.BaseCriticalChance, bonus: 0};
+    [StatType.CriticalDamage]: Stat = {base: Stats.BaseCriticalDamage, bonus: 0};
 
     [StatType.ArmourPenetration]: Stat = {base: 0, bonus: 0};
     [StatType.DodgeReduction]: Stat = {base: 0, bonus: 0};
@@ -116,7 +114,7 @@ class Stats {
     // Mana
     [StatType.MaxMana]: Stat = {base: 0, bonus: 0};
     [StatType.StartingMana]: Stat = {base: 0, bonus: 0};
-    [StatType.ManaRegen]: Stat = {base: 0, bonus: 0};
+    [StatType.ManaRegen]: Stat = {base: Stats.BaseManaRegen, bonus: 0};
     [StatType.ManaOnHit]: Stat = {base: 0, bonus: 0};
     
     // Initiative
@@ -127,7 +125,7 @@ class Stats {
     [StatType.PotionHealing]: Stat = {base: 0, bonus: 0};
     [StatType.PotionEffectiveness]: Stat = {base: 0, bonus: 0};
 
-    constructor(attributes: Attributes, equipment: Equipment) {
+    constructor(attributes: Attributes, equipment: Equipment, weaponStyle: WeaponStyle) {
         // Add stats from attributes
         for (const [attributeType, {base, bonus}] of Object.entries(attributes)) {
             for (const [statType, scaling] of Object.entries(AttributeStatScaling[attributeType as AttributeType])) {
@@ -135,27 +133,18 @@ class Stats {
             }
         }
 
-        // Add stats from equipment
-
-        // Set conditional weapon stats
-        this[StatType.ManaOnHit].base += equipment.mainHand?.twoHanded ? Stats.ManaOnHit.TwoHand : Stats.ManaOnHit.OneHand;
+        // Add off-hand penalties
         if (equipment.offHandWeapon) {
             this[StatType.HitChance].bonus += Stats.DualWieldPenalty;
             this[StatType.OffHandHitChance].bonus += Stats.OffHandPenalty;
         }
 
+        this.weaponStyle = weaponStyle;
+
+        // Add stats from equipment
         if (equipment.armour) this.addItemStats(equipment.armour.stats);
         if (equipment.belt) this.addItemStats(equipment.belt.stats);
-        if (equipment.hands && 
-            // If gloves have Weapon Style, check if character is using correct weapon to add stats
-            ((equipment.hands.weaponStyle && (
-                (equipment.hands.weaponStyle === WeaponStyle.DualWield && equipment.mainHand && equipment.offHandWeapon) ||
-                (equipment.hands.weaponStyle === WeaponStyle.TwoHanded && equipment.mainHand?.twoHanded) ||
-                (equipment.hands.weaponStyle === WeaponStyle.OneHanded && !equipment.mainHand?.twoHanded && !equipment.offHandWeapon) ||
-                (equipment.hands.weaponStyle === WeaponStyle.Ranged && equipment.mainHand?.range === RangeType.LongRange)
-            )
-            // If gloves have no Weapon Style, add stats
-            ) || !equipment.hands.weaponStyle)) {
+        if (equipment.hands && ((equipment.hands.weaponStyle && equipment.hands.weaponStyle === weaponStyle) || !equipment.hands.weaponStyle)) {
             this.addItemStats(equipment.hands.stats);
         }
         if (equipment.head) this.addItemStats(equipment.head.stats);
@@ -177,8 +166,20 @@ class Stats {
         }
     }
 
+    getTwoHandedMultiplier(): number {
+        return (1 + this.weaponStyle === WeaponStyle.TwoHanded ? Stats.TwoHandedBonus/100 : 0);
+    }
+
     get maxHealth() {
         return calcTotalStat(this[StatType.MaxHealth]) * (1 + calcTotalStat(this[StatType.HealthPercent])/100);
+    }
+
+    get hitChance() {
+        return calcTotalStat(this[StatType.HitChance]); 
+    }
+
+    get offHandHitChance() {
+        return calcTotalStat(this[StatType.OffHandHitChance]); 
     }
 
     get meleeHitChance() {
@@ -187,6 +188,24 @@ class Stats {
 
     get rangedHitChance() {
         return calcTotalStat(this[StatType.RangedHitChance]);
+    }
+
+    get damage() {
+        return calcTotalStat(this[StatType.Damage]) * this.getTwoHandedMultiplier();
+    }
+    get meleeDamage() {
+        return calcTotalStat(this[StatType.Damage]) * this.getTwoHandedMultiplier();
+    }
+    get rangedDamage() {
+        return calcTotalStat(this[StatType.Damage]) * this.getTwoHandedMultiplier();
+    }
+
+    get criticalChance() {
+        return calcTotalStat(this[StatType.CriticalChance]);
+    }
+
+    get criticalDamage() {
+        return calcTotalStat(this[StatType.CriticalDamage]);
     }
 
     get dodge() {
@@ -211,6 +230,10 @@ class Stats {
 
     get manaRegen() {
         return calcTotalStat(this[StatType.ManaRegen]);
+    }
+
+    get manaOnHit() {
+        return calcTotalStat(this[StatType.ManaOnHit]) * this.getTwoHandedMultiplier();
     }
 }
 
