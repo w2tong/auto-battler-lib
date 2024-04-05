@@ -1,8 +1,7 @@
 enum HitType {
     Hit = 'Hit',
     Crit = 'Crit',
-    Miss = 'Miss',
-    CritMiss = 'Crit Miss'
+    Miss = 'Miss'
 }
 
 export default HitType;
