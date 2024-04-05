@@ -16,7 +16,7 @@ class Wizard extends ManaCharacter {
             const hit = this.attack({
                 target: this.target,
                 range: RangeType.LongRange,
-                damageRange: this.mainHand.damageRange, // replace with damageRange + spell power
+                damageRange: this.mainHand.damageRange, // TODO: replace with damageRange + spell power
                 isOffHand: false 
             });
 
