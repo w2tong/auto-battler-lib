@@ -1,7 +1,5 @@
 import { DebuffId } from '../../Buffs/buffs';
-import DamageType from '../../DamageType';
-import HitType from '../../HitType';
-import { rollDice } from '../../dice';
+import { RangeType } from '../../Equipment/Weapon';
 import ManaCharacter from '../ManaCharacter';
 
 class Wizard extends ManaCharacter {
@@ -13,15 +11,18 @@ class Wizard extends ManaCharacter {
         if (!this.battle) return;
         this.setTarget();
         if (this.target) {
-            this.currMana -= (this.maxMana - this.manaCostReduction);
+            this.useMana();
             this.battle.ref.log.add(`${this.name} casted ${'Firebolt'}.`);
-            const attack = this.attackRoll(this.mainHand);
-            this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
-            if (attack.hitType === HitType.Hit || attack.hitType === HitType.Crit) {
-                let damage = rollDice(this.mainHand.damage) + this.mainHand.damageBonus;
-                if (attack.hitType === HitType.Crit) damage *= this.mainHand.critMult;
-                this.target.takeDamage(this.name, damage, DamageType.Magic);
-                this.target?.buffTracker.addDebuff(DebuffId.Burn, 2, this);
+            const hit = this.attack({
+                target: this.target,
+                range: RangeType.LongRange,
+                damageRange: this.mainHand.damageRange, // replace with damageRange + spell power
+                isOffHand: false 
+            });
+
+            // this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
+            if (hit) {
+                this.target.buffTracker.addDebuff(DebuffId.Burn, 2, this);
             }
         }
     }

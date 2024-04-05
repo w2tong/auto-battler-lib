@@ -8,7 +8,7 @@ class Rogue extends ManaCharacter {
 
     special(): void {
         if (!this.battle) return;
-        this.currMana -= (this.maxMana - this.manaCostReduction);
+        this.useMana();
         this.battle.ref.log.add(`${this.name} used ${'Sneak'}.`);
         this.buffTracker.addBuff(BuffId.Invisible, 1, this);
     }

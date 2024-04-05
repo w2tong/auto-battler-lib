@@ -10,7 +10,7 @@ export default abstract class ManaCharacter extends Character {
             this.special();
         }
         else {
-            this.attack();
+            this.weaponAttack();
         }
         this.addMana(this.stats.manaRegen);
         this.buffTracker.tick();

@@ -178,6 +178,10 @@ export default class Character {
         }
     }
 
+    useMana(): void {
+        this.currentMana -= this.stats.maxMana;
+    }
+
     doTurn(): void {
         this.usePotion();
         this.weaponAttack();

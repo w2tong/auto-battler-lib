@@ -9,10 +9,10 @@ class Fighter extends ManaCharacter {
         if (!this.battle) return;
         this.setTarget();
         if (this.target) {
-            this.currMana -= (this.maxMana - this.manaCostReduction);
+            this.useMana();
             this.battle.ref.log.add(`${this.name} used ${Fighter.specialName}.`);
-            this.attack();
-            this.attack();
+            this.weaponAttack();
+            this.weaponAttack();
         }
     }
 }
