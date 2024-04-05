@@ -206,6 +206,8 @@ export default class Character {
         return roll <= this.stats.criticalChance;
     }
 
+    // TODO: add support for attacks that use spell power
+    // replace range with attack type? that includes (melee, ranged, spell)
     attack({target, range, damageRange, isOffHand, abilityName}: {target: Character, range: RangeType, damageRange: DamageRange, isOffHand: boolean, abilityName?: string}): boolean {
 
         let hitType: HitType = HitType.Miss;

@@ -20,6 +20,7 @@ enum RangeType {
     LongRange = 'LongRange'
 }
 
+// TODO: add spell power ratio damage
 interface Weapon extends Item {
     itemType: ItemType.Weapon
     type: WeaponType;
