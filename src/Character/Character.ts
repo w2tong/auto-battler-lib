@@ -6,7 +6,6 @@ import { PlayerStats } from '../statTemplates';
 import { RangeType, Weapon, weapons } from '../Equipment/Weapon';
 import { Shield } from '../Equipment/Shield';
 import { Equipment, defaultEquipment } from '../Equipment/Equipment';
-import DamageType from '../DamageType';
 import HitType from '../HitType';
 import { dice, rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
@@ -203,8 +202,8 @@ export default class Character {
         return roll <= this.stats.criticalChance;
     }
 
-    attack(target: Character, damageRange: DamageRange, damageType: DamageType, rangeType: RangeType): boolean {
-        const hit = this.hitRoll(target, rangeType, false);
+    attack({target, range, damageRange}: {target: Character, range: RangeType, damageRange: DamageRange}): boolean {
+        const hit = this.hitRoll(target, range, false);
 
         // Add hit to combat log
         // this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
@@ -225,7 +224,12 @@ export default class Character {
             // TODO: add sneak daamge
             // const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.mainHand.damageBonus/2), sides: 4}) : 0;
                 
-            target.takeDamage(this.name, damage, this.mainHand.damageType, true);
+            target.takeDamage({
+                source: this.name, 
+                damage,
+                armourPenetration: this.stats.armourPenetration,
+                isDirectDamage: true
+            });
         }
         return hit;
     }
@@ -242,23 +246,36 @@ export default class Character {
             let hitTarget = false;
             
             // Main hand attack
-            if (this.attack(this.target, this.mainHand.damageRange, this.mainHand.damageType, this.mainHand.range)) {
-                hitTarget = true;
-            }
+            const mainHandHit = this.attack({
+                target: this.target, 
+                range: this.mainHand.range, 
+                damageRange: this.mainHand.damageRange
+            });
+            if (mainHandHit)  hitTarget = true;
             
             // Off-hand attack
-            if (this.offHandWeapon && this.attack(this.target, this.offHandWeapon.damageRange, this.offHandWeapon.damageType, this.offHandWeapon.range)) {
-                hitTarget = true;
+            if (this.offHandWeapon) {
+                const offHandHit = this.attack({
+                    target: this.target, 
+                    range: this.offHandWeapon.range, 
+                    damageRange: this.offHandWeapon.damageRange
+                });
+                if (offHandHit) hitTarget = true;
             }
 
             // Deal thorns damage to this Character if target was hit
             if (hitTarget && this.target.stats.thorns > 0) {
-                this.takeDamage('Thorns', this.target.stats.thorns, DamageType.Physical, false);
+                this.takeDamage({
+                    source: StatType.Thorns,
+                    damage: this.target.stats.thorns,
+                    armourPenetration: this.target.stats.armourPenetration,
+                    isDirectDamage: false
+                });
             }
         }
     }
 
-    takeDamage(source: string, damage: number, type: DamageType, isDirectDamage: boolean): void {
+    takeDamage({source, damage, armourPenetration, isDirectDamage}: {source: string, damage: number, armourPenetration: number, isDirectDamage: boolean}): void {
         if (!this.battle) return;
 
         let damageTaken = damage;
@@ -269,9 +286,9 @@ export default class Character {
         }
         
         // Apply deflection
-        damageTaken = Math.max(damageTaken - calcTotalStat(this.stats[StatType.Deflection]), 0);
+        damageTaken = Math.max(damageTaken - this.stats.deflection, 0);
         // Apply armour
-        damageTaken = Math.max(Math.round(damageTaken * calcTotalStat(this.stats[StatType.Armour])/100), 0);
+        damageTaken = Math.max(Math.round(damageTaken * Math.max(this.stats.armour - armourPenetration, 0)/100), 0);
 
         this.currentHealth -= Math.round(damageTaken);
         this.battle.ref.log.addDamage(this.name, source, damage, type);

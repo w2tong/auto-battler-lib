@@ -1,4 +1,3 @@
-import DamageType from './DamageType';
 import HitType from './HitType';
 
 enum LineType {
@@ -73,8 +72,8 @@ class Log {
         this.add(`${charName} ⚔️ ${tarName} (${attackDetails}). ${hitType.toString()}${sneak ? ' (Sneak Attack)' : ''}.`);
     }
 
-    addDamage(name: string, source: string, damage: number, type: DamageType) {
-        `${name} took ${damage.toLocaleString()} ${type} from ${source}.`;
+    addDamage(name: string, source: string, damage: number) {
+        `${name} took ${damage.toLocaleString()} damage from ${source}.`;
     }
 
     addLoot(name: string, itemId: string) {
