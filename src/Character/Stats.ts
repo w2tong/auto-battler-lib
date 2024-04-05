@@ -170,6 +170,26 @@ class Stats {
         return (1 + this.weaponStyle === WeaponStyle.TwoHanded ? Stats.TwoHandedBonus/100 : 0);
     }
 
+    get dodge() {
+        return calcTotalStat(this[StatType.Dodge]);
+    }
+
+    get dodgeReduction() {
+        return calcTotalStat(this[StatType.Dodge]);
+    }
+
+    get thorns() {
+        return calcTotalStat(this[StatType.Thorns]);
+    }
+
+    get blockChance() {
+        return calcTotalStat(this[StatType.BlockChance]);
+    }
+
+    get blockPower() {
+        return calcTotalStat(this[StatType.BlockPower]);
+    }
+
     get maxHealth() {
         return calcTotalStat(this[StatType.MaxHealth]) * (1 + calcTotalStat(this[StatType.HealthPercent])/100);
     }
@@ -206,18 +226,6 @@ class Stats {
 
     get criticalDamage() {
         return calcTotalStat(this[StatType.CriticalDamage]);
-    }
-
-    get dodge() {
-        return calcTotalStat(this[StatType.Dodge]);
-    }
-
-    get dodgeReduction() {
-        return calcTotalStat(this[StatType.Dodge]);
-    }
-
-    get thorns() {
-        return calcTotalStat(this[StatType.Thorns]);
     }
 
     get initiative() {
