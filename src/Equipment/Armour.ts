@@ -10,11 +10,11 @@ enum ArmourType {
     Heavy = 'Heavy Armour',
 }
 
-const ArmourTypeDodgePenalty: {[type in ArmourType]: number} = {
-    [ArmourType.Unarmoured]: 0,
-    [ArmourType.Light]: 0.1,
-    [ArmourType.Medium]: 0.3,
-    [ArmourType.Heavy]: 0.6,
+const ArmourTypeDodgeMultiplier: {[type in ArmourType]: number} = {
+    [ArmourType.Unarmoured]: 1,
+    [ArmourType.Light]: 0.9,
+    [ArmourType.Medium]: 0.6,
+    [ArmourType.Heavy]: 0.4,
 };
 
 interface Armour extends Item {
@@ -369,4 +369,4 @@ const armour: {[id in ArmourId]: Armour} = {
     },
 } as const;
 
-export { ArmourTypeDodgePenalty, Armour, ArmourId, armour };
+export { ArmourTypeDodgeMultiplier, Armour, ArmourId, armour };

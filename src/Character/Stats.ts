@@ -1,3 +1,4 @@
+import { ArmourTypeDodgeMultiplier } from '../Equipment/Armour';
 import { Equipment } from '../Equipment/Equipment';
 import { WeaponStyle } from '../Equipment/Hands';
 import { ItemStats } from '../Equipment/Item';
@@ -75,6 +76,7 @@ class Stats {
     static OffHandPenalty = -20;
 
     weaponStyle: WeaponStyle;
+    armourTypeDodgeMultiplier: number;
 
     // Defensive
     [StatType.MaxHealth]: Stat = {base: 0, bonus: 0};
@@ -143,6 +145,7 @@ class Stats {
         }
 
         this.weaponStyle = weaponStyle;
+        this.armourTypeDodgeMultiplier =  equipment.armour ? ArmourTypeDodgeMultiplier[equipment.armour.type] : 0;
 
         // Add stats from equipment
         if (equipment.armour) this.addItemStats(equipment.armour.stats);
@@ -184,7 +187,7 @@ class Stats {
         return calcTotalStat(this[StatType.Deflection]);
     }
     get dodge() {
-        return calcTotalStat(this[StatType.Dodge]);
+        return calcTotalStat(this[StatType.Dodge]) * this.armourTypeDodgeMultiplier;
     }
     get thorns() {
         return calcTotalStat(this[StatType.Thorns]);
