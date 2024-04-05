@@ -4,7 +4,7 @@ import Fighter from './Character/Classes/Fighter';
 import Rogue from './Character/Classes/Rogue';
 import Wizard from './Character/Classes/Wizard';
 import { Equipment, defaultEquipment } from './Equipment/Equipment';
-import { weapons } from './Equipment/Weapons';
+import { weapons } from './Equipment/Weapon';
 import { CharacterStatTemplate, NPCStats } from './statTemplates';
 
 function createCharsFunc(chars: {class: typeof Character, stats: CharacterStatTemplate, equipment: Equipment, name: string}[], level: number, count: number) {
