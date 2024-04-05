@@ -184,14 +184,14 @@ export default class Character {
         this.buffTracker.tick();
     }
 
-    hitRoll(target: Character, rangeType: RangeType, offHand: boolean): boolean {
-        if (offHand && !this.offHandWeapon) return false;
+    hitRoll({target, range, isOffHand}: {target: Character, range: RangeType, isOffHand: boolean}): boolean {
+        if (isOffHand && !this.offHandWeapon) return false;
         const roll = rollDice(dice['1d100']);
         const hitChance = this.stats.hitChance + 
-        // Off-hand hit chance
-        (offHand ? this.stats.offHandHitChance : 0) + 
-        // Melee/Ranged hit chance
-        (rangeType === RangeType.Melee ? this.stats.meleeHitChance : this.stats.rangedHitChance);
+        // Add Off-hand hit chance
+        (isOffHand ? this.stats.offHandHitChance : 0) + 
+        // Add Melee/Ranged hit chance
+        (range === RangeType.Melee ? this.stats.meleeHitChance : this.stats.rangedHitChance);
         const targetDodgeChance = target.stats.dodge - this.stats.dodgeReduction;
 
         return roll + hitChance >= targetDodgeChance;
@@ -202,8 +202,12 @@ export default class Character {
         return roll <= this.stats.criticalChance;
     }
 
-    attack({target, range, damageRange}: {target: Character, range: RangeType, damageRange: DamageRange}): boolean {
-        const hit = this.hitRoll(target, range, false);
+    attack({target, range, damageRange, isOffHand}: {target: Character, range: RangeType, damageRange: DamageRange, isOffHand: boolean}): boolean {
+        const hit = this.hitRoll({
+            target, 
+            range, 
+            isOffHand
+        });
 
         // Add hit to combat log
         // this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
@@ -249,7 +253,8 @@ export default class Character {
             const mainHandHit = this.attack({
                 target: this.target, 
                 range: this.mainHand.range, 
-                damageRange: this.mainHand.damageRange
+                damageRange: this.mainHand.damageRange,
+                isOffHand: false
             });
             if (mainHandHit)  hitTarget = true;
             
@@ -258,7 +263,8 @@ export default class Character {
                 const offHandHit = this.attack({
                     target: this.target, 
                     range: this.offHandWeapon.range, 
-                    damageRange: this.offHandWeapon.damageRange
+                    damageRange: this.offHandWeapon.damageRange,
+                    isOffHand: true
                 });
                 if (offHandHit) hitTarget = true;
             }
@@ -291,7 +297,7 @@ export default class Character {
         damageTaken = Math.max(Math.round(damageTaken * Math.max(this.stats.armour - armourPenetration, 0)/100), 0);
 
         this.currentHealth -= Math.round(damageTaken);
-        this.battle.ref.log.addDamage(this.name, source, damage, type);
+        this.battle.ref.log.addDamage(this.name, source, damage);
         if (this.isDead()) {
             this.battle.ref.setCharDead(this.battle.side, this.battle.index);
             this.battle.ref.log.add(`${this.name} died.`);
