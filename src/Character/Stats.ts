@@ -227,6 +227,15 @@ class Stats {
     get rangedDamage() {
         return calcTotalStat(this[StatType.Damage]) * this.getTwoHandedMultiplier();
     }
+    get damagePercent() {
+        return calcTotalStat(this[StatType.DamagePercent]);
+    }
+    get meleeDamagePercent() {
+        return calcTotalStat(this[StatType.MeleeDamage]);
+    }
+    get rangedDamagePercent() {
+        return calcTotalStat(this[StatType.RangedDamagePercent]);
+    }
 
     // Critical
     get criticalChance() {

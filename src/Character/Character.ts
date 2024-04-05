@@ -222,6 +222,7 @@ export default class Character {
         // Calculate damage for the attack if hit
         if (hit) {
             hitType = HitType.Hit;
+            
             damage = damageRoll(damageRange);
             
             // TODO: add sneak daamge
@@ -229,6 +230,19 @@ export default class Character {
                 // const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.mainHand.damageBonus/2), sides: 4}) : 0;
                 sneak = true;
             }
+
+            // Add damage bonuses
+            let damageBonus = this.stats.damage;
+            let damagePercentBonus = this.stats.damagePercent;
+            if (range === RangeType.Melee) {
+                damageBonus += this.stats.meleeDamage;
+                damagePercentBonus += this.stats.meleeDamagePercent;
+            }
+            else {
+                damageBonus += this.stats.rangedDamage;
+                damagePercentBonus += this.stats.rangedDamage;
+            }
+            damage = (damage + damageBonus) * damagePercentBonus;
             
             const crit = this.critRoll();
             if (crit) {
