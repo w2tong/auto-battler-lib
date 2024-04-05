@@ -83,9 +83,9 @@ export default class Character {
             // If dual-wielding
             this._mainHand && this.offHandWeapon ? WeaponStyle.DualWield :
             // If two-handing
-            this._mainHand.twoHanded ? WeaponStyle.TwoHanded :
-            // Else one-handing
-            WeaponStyle.OneHanded
+                this._mainHand.twoHanded ? WeaponStyle.TwoHanded :
+                // Else one-handing
+                    WeaponStyle.OneHanded;
 
         this.potion = Object.assign({}, equipment.potion);
 
@@ -181,7 +181,7 @@ export default class Character {
 
     doTurn(): void {
         this.usePotion();
-        this.attack();
+        this.weaponAttack();
         this.buffTracker.tick();
     }
 
@@ -203,16 +203,35 @@ export default class Character {
         return roll <= this.stats.criticalChance;
     }
 
-    damage(damageRange: DamageRange, crit: boolean): number {
-        let damage = damageRoll(damageRange);
-        if (crit) damage *= 1 + this.stats.criticalDamage/100;
-        // TODO: add sneak daamge
-        // const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.mainHand.damageBonus/2), sides: 4}) : 0;
-        return Math.floor(damage);
+    attack(target: Character, damageRange: DamageRange, damageType: DamageType, rangeType: RangeType): boolean {
+        const hit = this.hitRoll(target, rangeType, false);
+
+        // Add hit to combat log
+        // this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
+        // this.target.takeDamage(this.name, damage, this.mainHand.damageType);
+        // if (this.mainHand.onHit) this.mainHand.onHit.func(this, this.target);
+        // this.addMana(this.stats.manaOnHit);
+            
+        // else {
+        //     this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
+        // }
+
+
+        // Calculate damage for the attack if hit
+        if (hit) {
+            let damage = damageRoll(damageRange);
+            const crit = this.critRoll();
+            if (crit) damage *= 1 + this.stats.criticalDamage/100;
+            // TODO: add sneak daamge
+            // const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.mainHand.damageBonus/2), sides: 4}) : 0;
+                
+            target.takeDamage(this.name, damage, this.mainHand.damageType, true);
+        }
+        return hit;
     }
 
     // TODO: redo damage calculations
-    attack(): void {
+    weaponAttack(): void {
         if (!this.battle) return;
         this.setTarget();
         if (!this.target) {
@@ -223,56 +242,38 @@ export default class Character {
             let hitTarget = false;
             
             // Main hand attack
-            if (!this.hitRoll(this.target, this.mainHand.range, false)) {
-                // TODO: add to combat log
-                return;
-            }
-            // TODO: add calculations for block chance and block power
-            const damage = this.damage(this.mainHand.damageRange, this.critRoll());
-            this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
-            this.target.takeDamage(this.name, damage, this.mainHand.damageType);
-            if (this.mainHand.onHit) this.mainHand.onHit.func(this, this.target);
-            this.addMana(this.stats.manaOnHit);
-                
-            else {
-                this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
-            }
-
-            // Off hand attack
-            if (this.offHandWeapon) {
-                attack = this.attackRoll(this.offHandWeapon);
-                if (attack.hitType === HitType.Hit || attack.hitType === HitType.Crit) {
-                    hitTarget = true;
-                    const damageRoll = rollDice(this.offHandWeapon.damage);
-                    const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.offHandWeapon.damageBonus/2), sides: 4}) : 0;
-                    let damage = damageRoll + this.offHandWeapon.damageBonus + sneakDamage;
-                    if (attack.hitType === HitType.Crit) damage = Math.floor(damage * this.mainHand.critMult);
-                    this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, sneakDamage > 0);
-                    this.target.takeDamage(this.name, damage, this.offHandWeapon.damageType);
-                    if (this.offHandWeapon.onHit) this.offHandWeapon.onHit.func(this, this.target);
-                    this.addMana(this.offHandWeapon.manaPerAtk);
-                }
-                else {
-                    this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
-                }
-            }
-
-            // Apply thorns damage if target was hit
-            if (hitTarget && this.target.stats.thorns > 0) {
-                this.takeDamage('Thorns', this.target.stats.thorns, DamageType.Physical);
+            if (this.attack(this.target, this.mainHand.damageRange, this.mainHand.damageType, this.mainHand.range)) {
+                hitTarget = true;
             }
             
+            // Off-hand attack
+            if (this.offHandWeapon && this.attack(this.target, this.offHandWeapon.damageRange, this.offHandWeapon.damageType, this.offHandWeapon.range)) {
+                hitTarget = true;
+            }
+
+            // Deal thorns damage to this Character if target was hit
+            if (hitTarget && this.target.stats.thorns > 0) {
+                this.takeDamage('Thorns', this.target.stats.thorns, DamageType.Physical, false);
+            }
         }
     }
 
-    takeDamage(source: string, damage: number, type: DamageType): void {
+    takeDamage(source: string, damage: number, type: DamageType, isDirectDamage: boolean): void {
         if (!this.battle) return;
+
         let damageTaken = damage;
+        
+        // Apply block chance/power
+        if (isDirectDamage && this.stats.blockChance > 0) {
+            // TODO: add calculations for block chance and block power
+        }
+        
         // Apply deflection
         damageTaken = Math.max(damageTaken - calcTotalStat(this.stats[StatType.Deflection]), 0);
         // Apply armour
         damageTaken = Math.max(Math.round(damageTaken * calcTotalStat(this.stats[StatType.Armour])/100), 0);
-        this.currentHealth -= damageTaken;
+
+        this.currentHealth -= Math.round(damageTaken);
         this.battle.ref.log.addDamage(this.name, source, damage, type);
         if (this.isDead()) {
             this.battle.ref.setCharDead(this.battle.side, this.battle.index);
