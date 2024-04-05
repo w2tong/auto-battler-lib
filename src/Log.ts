@@ -68,12 +68,19 @@ class Log {
         });
     }
 
-    addAttack(charName: string, tarName: string, attackDetails: string, hitType: HitType, sneak: boolean) {
-        this.add(`${charName} ⚔️ ${tarName} (${attackDetails}). ${hitType.toString()}${sneak ? ' (Sneak Attack)' : ''}.`);
+    addAttack({charName, tarName, hitType, damage, sneak, blocked, abilityName}: {charName: string, tarName: string, hitType: HitType, damage: number, sneak: boolean, blocked: boolean, abilityName?: string}) {
+        const attackName = abilityName ? `casted ${abilityName} on` : '⚔️';
+        let attackStr = `${charName} ${attackName} ${tarName} and ${hitType}`;
+        if (hitType !== HitType.Miss) {
+            attackStr += `for ${damage} damage`;
+            if (sneak) attackStr += ' (Sneak Attack)';
+            if (blocked) attackStr += ' (Blocked)';
+        }
+        this.add(`${attackStr}.`);
     }
 
     addDamage(name: string, source: string, damage: number) {
-        `${name} took ${damage.toLocaleString()} damage from ${source}.`;
+        this.add( `${name} took ${damage.toLocaleString()} damage from ${source}.`);
     }
 
     addLoot(name: string, itemId: string) {

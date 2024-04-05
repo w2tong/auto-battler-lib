@@ -12,12 +12,12 @@ class Wizard extends ManaCharacter {
         this.setTarget();
         if (this.target) {
             this.useMana();
-            this.battle.ref.log.add(`${this.name} casted ${'Firebolt'}.`);
             const hit = this.attack({
                 target: this.target,
                 range: RangeType.LongRange,
                 damageRange: this.mainHand.damageRange, // TODO: replace with damageRange + spell power
-                isOffHand: false 
+                isOffHand: false,
+                abilityName: Wizard.specialName
             });
 
             // this.battle.ref.log.addAttack(this.name, this.target.name, attack.details, attack.hitType, false);
