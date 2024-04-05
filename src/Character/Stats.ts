@@ -74,8 +74,9 @@ class Stats {
     static DualWieldPenalty = -10;
     static OffHandPenalty = -20;
 
-    // Defensive Stats
     weaponStyle: WeaponStyle;
+
+    // Defensive
     [StatType.MaxHealth]: Stat = {base: 0, bonus: 0};
     [StatType.HealthPercent]: Stat = {base: 0, bonus: 0};
     [StatType.Armour]: Stat = {base: 0, bonus: 0};
@@ -83,28 +84,30 @@ class Stats {
     [StatType.Dodge]: Stat = {base: 0, bonus: 0};
     [StatType.StatusResistance]: Stat = {base: 0, bonus: 0};
     [StatType.Thorns]: Stat = {base: 0, bonus: 0};
-
+    // Block
     [StatType.BlockChance]: Stat = {base: 0, bonus: 0};
     [StatType.BlockPower]: Stat = {base: 0, bonus: 0};
     
-    // Offensive Stats
+    // Hit Chance
     [StatType.HitChance]: Stat = {base: 0, bonus: 0};
     [StatType.OffHandHitChance]: Stat = {base: 0, bonus: 0};
     [StatType.MeleeHitChance]: Stat = {base: 0, bonus: 0};
     [StatType.RangedHitChance]: Stat = {base: 0, bonus: 0};
 
+    // Damage
     [StatType.Damage]: Stat = {base: 0, bonus: 0};
     [StatType.OffHandDamage]: Stat = {base: 0, bonus: 0};
     [StatType.MeleeDamage]: Stat = {base: 0, bonus: 0};
     [StatType.RangedDamage]: Stat = {base: 0, bonus: 0};
-
     [StatType.DamagePercent]: Stat = {base: 0, bonus: 0};
     [StatType.MeleeDamagePercent]: Stat = {base: 0, bonus: 0};
     [StatType.RangedDamagePercent]: Stat = {base: 0, bonus: 0};
 
+    // Critical
     [StatType.CriticalChance]: Stat = {base: Stats.BaseCriticalChance, bonus: 0};
     [StatType.CriticalDamage]: Stat = {base: Stats.BaseCriticalDamage, bonus: 0};
 
+    // Defense Reduction
     [StatType.ArmourPenetration]: Stat = {base: 0, bonus: 0};
     [StatType.DodgeReduction]: Stat = {base: 0, bonus: 0};
     
@@ -170,30 +173,31 @@ class Stats {
         return (1 + this.weaponStyle === WeaponStyle.TwoHanded ? Stats.TwoHandedBonus/100 : 0);
     }
 
+    // Defensive
+    get maxHealth() {
+        return calcTotalStat(this[StatType.MaxHealth]) * (1 + calcTotalStat(this[StatType.HealthPercent])/100);
+    }
+    get armour() {
+        return calcTotalStat(this[StatType.Armour]);
+    }
+    get deflection() {
+        return calcTotalStat(this[StatType.Deflection]);
+    }
     get dodge() {
         return calcTotalStat(this[StatType.Dodge]);
     }
-
-    get dodgeReduction() {
-        return calcTotalStat(this[StatType.Dodge]);
-    }
-
     get thorns() {
         return calcTotalStat(this[StatType.Thorns]);
     }
-
+    // Block
     get blockChance() {
         return calcTotalStat(this[StatType.BlockChance]);
     }
-
     get blockPower() {
         return calcTotalStat(this[StatType.BlockPower]);
     }
 
-    get maxHealth() {
-        return calcTotalStat(this[StatType.MaxHealth]) * (1 + calcTotalStat(this[StatType.HealthPercent])/100);
-    }
-
+    // Hit Chance
     get hitChance() {
         return calcTotalStat(this[StatType.HitChance]); 
     }
@@ -210,6 +214,7 @@ class Stats {
         return calcTotalStat(this[StatType.RangedHitChance]);
     }
 
+    // Damage
     get damage() {
         return calcTotalStat(this[StatType.Damage]) * this.getTwoHandedMultiplier();
     }
@@ -220,12 +225,21 @@ class Stats {
         return calcTotalStat(this[StatType.Damage]) * this.getTwoHandedMultiplier();
     }
 
+    // Critical
     get criticalChance() {
         return calcTotalStat(this[StatType.CriticalChance]);
     }
 
     get criticalDamage() {
         return calcTotalStat(this[StatType.CriticalDamage]);
+    }
+
+    // Defense Reduction
+    get armourPenetration() {
+        return calcTotalStat(this[StatType.ArmourPenetration]);
+    }
+    get dodgeReduction() {
+        return calcTotalStat(this[StatType.Dodge]);
     }
 
     get initiative() {
