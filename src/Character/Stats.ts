@@ -3,6 +3,7 @@ import { Equipment } from '../Equipment/Equipment';
 import { WeaponStyle } from '../Equipment/Hands';
 import { ItemStats } from '../Equipment/Item';
 import { AttributeStatScaling, AttributeType, Attributes } from './Attributes';
+import { StatTemplate } from './StatTemplate';
 
 interface Stat {
     base: number;
@@ -122,10 +123,15 @@ type BaseStats = {
 class Stats {
     static TwoHandedBonus = 50;
 
-    static BaseManaOnHit = 5;
-    static BaseManaRegen = 5;
-    static BaseCriticalChance = 5;
-    static BaseCriticalDamage = 50;
+    static DEFAULT_MAX_HEALTH = 20;
+    static DEFAULT_MAX_HEALTH_PER_LVL = 5;
+    static DEFAULT_DODGE = 50;
+    static DEFAULT_HIT_CHANCE = 50;
+    static DEFAULT_CRIT_CHANCE = 5;
+    static DEFAULT_CRIT_DAMAGE = 50;
+
+    static DEFAULT_MANA_ON_HIT = 5;
+    static DEFAULT_MANA_REGEN = 5;
 
     static DualWieldPenalty = -10;
     static OffHandPenalty = -20;
@@ -134,11 +140,11 @@ class Stats {
     armourTypeDodgeMultiplier: number;
 
     // Defensive
-    [StatType.MaxHealth]: Stat = {base: 0, bonus: 0};
+    [StatType.MaxHealth]: Stat = {base: Stats.DEFAULT_MAX_HEALTH, bonus: 0};
     [StatType.HealthPercent]: Stat = {base: 0, bonus: 0};
     [StatType.Armour]: Stat = {base: 0, bonus: 0};
     [StatType.Deflection]: Stat = {base: 0, bonus: 0};
-    [StatType.Dodge]: Stat = {base: 0, bonus: 0};
+    [StatType.Dodge]: Stat = {base: Stats.DEFAULT_DODGE, bonus: 0};
     [StatType.StatusResistance]: Stat = {base: 0, bonus: 0};
     [StatType.Thorns]: Stat = {base: 0, bonus: 0};
     // Block
@@ -146,7 +152,7 @@ class Stats {
     [StatType.BlockPower]: Stat = {base: 0, bonus: 0};
     
     // Hit Chance
-    [StatType.HitChance]: Stat = {base: 0, bonus: 0};
+    [StatType.HitChance]: Stat = {base: Stats.DEFAULT_HIT_CHANCE, bonus: 0};
     [StatType.OffHandHitChance]: Stat = {base: 0, bonus: 0};
     [StatType.MeleeHitChance]: Stat = {base: 0, bonus: 0};
     [StatType.RangedHitChance]: Stat = {base: 0, bonus: 0};
@@ -161,8 +167,8 @@ class Stats {
     [StatType.RangedDamagePercent]: Stat = {base: 0, bonus: 0};
 
     // Critical
-    [StatType.CriticalChance]: Stat = {base: Stats.BaseCriticalChance, bonus: 0};
-    [StatType.CriticalDamage]: Stat = {base: Stats.BaseCriticalDamage, bonus: 0};
+    [StatType.CriticalChance]: Stat = {base: Stats.DEFAULT_CRIT_CHANCE, bonus: 0};
+    [StatType.CriticalDamage]: Stat = {base: Stats.DEFAULT_CRIT_DAMAGE, bonus: 0};
 
     // Defense Reduction
     [StatType.ArmourPenetration]: Stat = {base: 0, bonus: 0};
@@ -176,8 +182,8 @@ class Stats {
     // Mana
     [StatType.MaxMana]: Stat = {base: 0, bonus: 0};
     [StatType.StartingMana]: Stat = {base: 0, bonus: 0};
-    [StatType.ManaRegen]: Stat = {base: Stats.BaseManaRegen, bonus: 0};
-    [StatType.ManaOnHit]: Stat = {base: 0, bonus: 0};
+    [StatType.ManaRegen]: Stat = {base: Stats.DEFAULT_MANA_REGEN, bonus: 0};
+    [StatType.ManaOnHit]: Stat = {base: Stats.DEFAULT_MANA_ON_HIT, bonus: 0};
     
     // Initiative
     [StatType.Initiative]: Stat = {base: 0, bonus: 0};
@@ -187,13 +193,21 @@ class Stats {
     [StatType.PotionHealing]: Stat = {base: 0, bonus: 0};
     [StatType.PotionEffectiveness]: Stat = {base: 0, bonus: 0};
 
-    constructor(baseStats: BaseStats, attributes: Attributes, equipment: Equipment, weaponStyle: WeaponStyle) {
-        // Add base stats
+    constructor({level, template, attributes, equipment, weaponStyle}: {level: number, template: StatTemplate, attributes?: Attributes, equipment: Equipment, weaponStyle: WeaponStyle}) {
+        // Set default max health
+        this[StatType.MaxHealth].base = Stats.DEFAULT_MAX_HEALTH + Stats.DEFAULT_MAX_HEALTH_PER_LVL * level;
+
+        // Set stats to template
+        for (const [stat, {base, perLvl}] of Object.entries(template)) {
+            this[stat as StatType].base = base + (perLvl ? perLvl * level : 0);
+        }
 
         // Add stats from attributes
-        for (const [attributeType, {base, bonus}] of Object.entries(attributes)) {
-            for (const [statType, scaling] of Object.entries(AttributeStatScaling[attributeType as AttributeType])) {
-                this[statType as StatType].base += (base + bonus) * scaling;
+        if (attributes) {
+            for (const [attributeType, {base, bonus}] of Object.entries(attributes)) {
+                for (const [statType, scaling] of Object.entries(AttributeStatScaling[attributeType as AttributeType])) {
+                    this[statType as StatType].base += (base + bonus) * scaling;
+                }
             }
         }
 
