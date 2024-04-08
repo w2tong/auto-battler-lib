@@ -14,7 +14,7 @@ export { Head, HeadId, heads } from './Equipment/Head';
 export { Potion, PotionId, potions } from './Equipment/Potion';
 export { Ring, RingId, rings } from './Equipment/Ring';
 export { Shield, ShieldId, shields } from './Equipment/Shield';
-export { WeaponType, RangeType, Weapon, WeaponId, weapons } from './Equipment/Weapon';
+export { WeaponType, Weapon, WeaponId, weapons } from './Equipment/Weapon';
 
 import Battle, { Side, BattleJSON } from './Battle';
 export { Battle, Side, BattleJSON };

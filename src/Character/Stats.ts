@@ -327,6 +327,17 @@ class Stats {
         return calcTotalStat(this[StatType.Dodge]);
     }
 
+    // Spell
+    get spellHitChance() {
+        return calcTotalStat(this[StatType.SpellHitChance]);
+    }
+    get spellPower() {
+        return calcTotalStat(this[StatType.SpellPower]);
+    }
+    get spellPowerPercent() {
+        return calcTotalStat(this[StatType.SpellPowerPercent]);
+    }
+
     get initiative() {
         return calcTotalStat(this[StatType.Initiative]);
     }

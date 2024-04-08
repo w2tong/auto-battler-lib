@@ -3,7 +3,7 @@ import Battle, { Side } from '../Battle';
 import BuffTracker from '../Buffs/BuffTracker';
 import { BuffId } from '../Buffs/buffs';
 import { PlayerStats } from '../statTemplates';
-import { RangeType, Weapon, weapons } from '../Equipment/Weapon';
+import { AttackType, Weapon, weapons } from '../Equipment/Weapon';
 import { Shield } from '../Equipment/Shield';
 import { Equipment, defaultEquipment } from '../Equipment/Equipment';
 import HitType from '../HitType';
@@ -14,6 +14,7 @@ import { Attributes, BaseAttributes } from './Attributes';
 import { StatType, Stats, calcTotalStat } from './Stats';
 import DamageRange, { damageRoll } from '../DamageRange';
 import { WeaponStyle } from '../Equipment/Hands';
+import Ability from '../Ability/Ability';
 
 type CharacterInfo = {
     name: string,
@@ -63,6 +64,9 @@ export default class Character {
     protected potion: Potion;
     protected weaponStyle: WeaponStyle;
 
+    // Ability
+    protected ability: Ability;
+
     // Buffs/Debuffs
     protected _buffTracker: BuffTracker = new BuffTracker(this);
 
@@ -70,7 +74,7 @@ export default class Character {
     protected _target: Character|null = null;
     protected _battle : {ref: Battle, side: Side, index: number} | null = null;
 
-    constructor(level: number, className: string, attributes: BaseAttributes, equipment: Equipment, name: string, options?: {userId?: string, currHealthPc?: number, currManaPc?: number}) {
+    constructor(level: number, className: string, attributes: BaseAttributes, equipment: Equipment, ability: Ability, name: string, options?: {userId?: string, currHealthPc?: number, currManaPc?: number}) {
         this._name = name;
         this.level = level;
         this.className = className;
@@ -91,6 +95,7 @@ export default class Character {
         // Attributes
         this.attributes = new Attributes(attributes, equipment);
         this.stats = new Stats(this.attributes, equipment, this.weaponStyle);
+        this.ability = ability;
         this.currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this.currentMana = calcTotalStat(this.stats[StatType.StartingMana]);
 
@@ -184,18 +189,41 @@ export default class Character {
 
     doTurn(): void {
         this.usePotion();
-        this.weaponAttack();
+        if (this.stats.maxMana !== 0) {
+            if (this.currentMana >= this.stats.maxMana) {
+                this.ability.func(this);
+            }
+            else {
+                this.weaponAttack();
+            }
+            this.addMana(this.stats.manaRegen);
+        }
+        else {
+            this.weaponAttack();
+        }
+        
         this.buffTracker.tick();
     }
 
-    hitRoll({target, range, isOffHand}: {target: Character, range: RangeType, isOffHand: boolean}): boolean {
+    hitRoll({target, attackType, isOffHand}: {target: Character, attackType: AttackType, isOffHand: boolean}): boolean {
         if (isOffHand && !this.offHandWeapon) return false;
         const roll = rollDice(dice['1d100']);
-        const hitChance = this.stats.hitChance + 
-        // Add Off-hand hit chance
-        (isOffHand ? this.stats.offHandHitChance : 0) + 
-        // Add Melee/Ranged hit chance
-        (range === RangeType.Melee ? this.stats.meleeHitChance : this.stats.rangedHitChance);
+        let hitChance = this.stats.hitChance;
+        // Add off-hand hit chance
+        if (isOffHand) hitChance += this.stats.offHandHitChance;
+        // Add attack type hit chance
+        switch(attackType) {
+            case AttackType.Melee:
+                hitChance += this.stats.meleeHitChance;
+                break;
+            case AttackType.Ranged:
+                hitChance += this.stats.rangedHitChance;
+                break;
+            case AttackType.Spell:
+                hitChance += this.stats.spellHitChance;
+                break;
+        }
+        (attackType === AttackType.Melee ? this.stats.meleeHitChance : this.stats.rangedHitChance);
         const targetDodgeChance = target.stats.dodge - this.stats.dodgeReduction;
 
         return roll + hitChance >= targetDodgeChance;
@@ -208,7 +236,7 @@ export default class Character {
 
     // TODO: add support for attacks that use spell power
     // replace range with attack type? that includes (melee, ranged, spell)
-    attack({target, range, damageRange, isOffHand, abilityName}: {target: Character, range: RangeType, damageRange: DamageRange, isOffHand: boolean, abilityName?: string}): boolean {
+    attack({target, attackType, damageRange, isOffHand, abilityName}: {target: Character, attackType: AttackType, damageRange: DamageRange, isOffHand: boolean, abilityName?: string}): boolean {
 
         let hitType: HitType = HitType.Miss;
         let damage: number = 0;
@@ -217,7 +245,7 @@ export default class Character {
 
         const hit = this.hitRoll({
             target, 
-            range, 
+            attackType, 
             isOffHand
         });
 
@@ -236,15 +264,20 @@ export default class Character {
             // Add damage bonuses
             let damageBonus = this.stats.damage;
             let damagePercentBonus = this.stats.damagePercent;
-            if (range === RangeType.Melee) {
-                damageBonus += this.stats.meleeDamage;
-                damagePercentBonus += this.stats.meleeDamagePercent;
+            switch(attackType) {
+                case AttackType.Melee:
+                    damageBonus += this.stats.meleeDamage;
+                    damagePercentBonus += this.stats.meleeDamagePercent;
+                    break;
+                case AttackType.Ranged:
+                    damageBonus += this.stats.rangedDamage;
+                    damagePercentBonus += this.stats.rangedDamage;
+                    break;
+                case AttackType.Spell:
+                    // add damage from spell power
+                    break;
             }
-            else {
-                damageBonus += this.stats.rangedDamage;
-                damagePercentBonus += this.stats.rangedDamage;
-            }
-            damage = (damage + damageBonus) * damagePercentBonus;
+            damage = (damage + damageBonus) * (1 + (damagePercentBonus/100));
             
             const crit = this.critRoll();
             if (crit) {
@@ -296,7 +329,7 @@ export default class Character {
             // Main hand attack
             const mainHandHit = this.attack({
                 target: this.target, 
-                range: this.mainHand.range, 
+                attackType: this.mainHand.attackType, 
                 damageRange: this.mainHand.damageRange,
                 isOffHand: false
             });
@@ -310,7 +343,7 @@ export default class Character {
             if (this.offHandWeapon) {
                 const offHandHit = this.attack({
                     target: this.target, 
-                    range: this.offHandWeapon.range, 
+                    attackType: this.offHandWeapon.attackType, 
                     damageRange: this.offHandWeapon.damageRange,
                     isOffHand: true
                 });
