@@ -53,7 +53,7 @@ export default class Character {
     protected level: number;
 
     // Attributes and Stats
-    protected attributes: Attributes;
+    protected _attributes: Attributes;
     protected _stats: Stats;
     protected currentHealth: number;
     protected currentMana: number;
@@ -94,7 +94,7 @@ export default class Character {
         this.potion = Object.assign({}, equipment.potion);
 
         // Attributes
-        this.attributes = new Attributes(baseAttributes, equipment);
+        this._attributes = new Attributes(baseAttributes, equipment);
         this._stats = new Stats({
             level: this.level,
             template,
@@ -119,6 +119,10 @@ export default class Character {
 
     get name() {
         return this._name;
+    }
+
+    get attributes() {
+        return this._attributes;
     }
 
     get stats() {
@@ -245,8 +249,6 @@ export default class Character {
         return roll <= this.stats.criticalChance;
     }
 
-    // TODO: add support for attacks that use spell power
-    // replace range with attack type? that includes (melee, ranged, spell)
     attack({target, attackType, damageRange, spellPowerRatio, isOffHand, abilityName}: {target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean, abilityName?: string}): boolean {
 
         let hitType: HitType = HitType.Miss;

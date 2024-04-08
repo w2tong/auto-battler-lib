@@ -7,6 +7,10 @@ interface Attribute {
     bonus: number;
 }
 
+function calcTotalAttribute(attribute: Attribute) {
+    return attribute.base + attribute.bonus;
+}
+
 enum AttributeType {
     WeaponSkill = 'WeaponSkill',
     Strength = 'Strength',
@@ -107,6 +111,28 @@ class Attributes {
         if (equipment.mainHand) this.addItemAttributes(equipment.mainHand.attributes);
         if (equipment.offHandWeapon) this.addItemAttributes(equipment.offHandWeapon.attributes);
         else if (equipment.offHandShield) this.addItemAttributes(equipment.offHandShield.attributes);
+    }
+
+    get weaponSkill() {
+        return calcTotalAttribute(this[AttributeType.WeaponSkill]);
+    }
+    get strength() {
+        return calcTotalAttribute(this[AttributeType.Strength]);
+    }
+    get dexterity() {
+        return calcTotalAttribute(this[AttributeType.Dexterity]);
+    }
+    get perception() {
+        return calcTotalAttribute(this[AttributeType.Perception]);
+    }
+    get constitution() {
+        return calcTotalAttribute(this[AttributeType.Constitution]);
+    }
+    get intelligence() {
+        return calcTotalAttribute(this[AttributeType.Intelligence]);
+    }
+    get wisdom() {
+        return calcTotalAttribute(this[AttributeType.Wisdom]);
     }
 
     addItemAttributes(itemAttributes?: ItemAttributes) {
