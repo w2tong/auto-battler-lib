@@ -16,7 +16,6 @@ enum WeaponType {
     Wand = 'Wand'
 }
 
-// TODO: add spell power ratio damage
 interface Weapon extends Item {
     itemType: ItemType.Weapon
     type: WeaponType;
