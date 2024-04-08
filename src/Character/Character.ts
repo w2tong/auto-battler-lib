@@ -54,7 +54,7 @@ export default class Character {
 
     // Attributes and Stats
     protected attributes: Attributes;
-    protected stats: Stats;
+    protected _stats: Stats;
     protected currentHealth: number;
     protected currentMana: number;
 
@@ -95,7 +95,7 @@ export default class Character {
 
         // Attributes
         this.attributes = new Attributes(baseAttributes, equipment);
-        this.stats = new Stats({
+        this._stats = new Stats({
             level: this.level,
             template,
             attributes: this.attributes,
@@ -119,6 +119,10 @@ export default class Character {
 
     get name() {
         return this._name;
+    }
+
+    get stats() {
+        return this._stats;
     }
 
     get mainHand() {

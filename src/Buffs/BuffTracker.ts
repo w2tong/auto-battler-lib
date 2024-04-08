@@ -1,9 +1,8 @@
 import Character from '../Character/Character';
 import { Buff, BuffId, Debuff, DebuffId } from './buffs';
-import DamageType from '../DamageType';
 import { dice, rollDice } from '../dice';
 
-const BurnDamage = dice['1d3'];
+const BurnDamageDice = dice['1d3'];
 const PoisonDamage = 1;
 
 type BuffInfo = {
@@ -103,10 +102,20 @@ class BuffTracker {
         for (const [id, debuff] of Object.entries(this.debuffs)) {
             for (const [sideId, charDebuff] of Object.entries(debuff)) {
                 if (id as DebuffId === DebuffId.Burn) {
-                    this.char.takeDamage(`${Debuff.Burn.name} (${charDebuff.source.name})`, rollDice(BurnDamage) + Math.floor(charDebuff.source.mainHand.damageBonus/2), DamageType.Magic);
+                    this.char.takeDamage({
+                        source: `${Debuff.Burn.name} (${charDebuff.source.name})`, 
+                        damage: rollDice(BurnDamageDice) + Math.floor(charDebuff.source.stats.spellPower * 0.2),
+                        armourPenetration: charDebuff.source.stats.armourPenetration,
+                        addToLog: true
+                    });
                 }
                 else if (id as DebuffId === DebuffId.Poison && this.debuffs.Poison) {
-                    this.char.takeDamage(`${Debuff.Poison.name} (${charDebuff.source.name})`, PoisonDamage, DamageType.Physical);
+                    this.char.takeDamage({
+                        source: `${Debuff.Poison.name} (${charDebuff.source.name})`, 
+                        damage: PoisonDamage, 
+                        armourPenetration: charDebuff.source.stats.armourPenetration,
+                        addToLog: true
+                    });
                 }
     
                 charDebuff.duration -= 1;
