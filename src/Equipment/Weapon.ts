@@ -25,6 +25,7 @@ interface Weapon extends Item {
     twoHanded: boolean;
     damageType: DamageType;
     damageRange: DamageRange;
+    spellPowerRatio?: number;
     attributes?: ItemAttributes;
     stats?: ItemStats;
     onHit?: {
@@ -500,9 +501,10 @@ const weapons: {[id in WeaponId]: Weapon} = {
         light: false,
         twoHanded: false,
         damageType: DamageType.Magic,
-        damageRange: { min: 2, max: 4, bonus: 0 },
+        damageRange: { min: 1, max: 3, bonus: 0 },
+        spellPowerRatio: 0.1,
         stats: {
-            [StatType.SpellPower]: 2 
+            [StatType.SpellPower]: 5 
         }
     },
     wand1: {
@@ -517,12 +519,13 @@ const weapons: {[id in WeaponId]: Weapon} = {
         light: false,
         twoHanded: false,
         damageType: DamageType.Magic,
-        damageRange: { min: 2, max: 4, bonus: 1 },
+        damageRange: { min: 1, max: 3, bonus: 1 },
+        spellPowerRatio: 0.1,
         attributes: {
             [AttributeType.Intelligence]: 1
         },
         stats: {
-            [StatType.SpellPower]: 2 
+            [StatType.SpellPower]: 5 
         }
     },
     wand2: {
@@ -537,12 +540,13 @@ const weapons: {[id in WeaponId]: Weapon} = {
         light: false,
         twoHanded: false,
         damageType: DamageType.Magic,
-        damageRange: { min: 2, max: 4, bonus: 2 },
+        damageRange: { min: 1, max: 3, bonus: 2 },
+        spellPowerRatio: 0.1,
         attributes: {
             [AttributeType.Intelligence]: 2
         },
         stats: {
-            [StatType.SpellPower]: 2 
+            [StatType.SpellPower]: 5 
         }
     },
     wand3: {
@@ -557,12 +561,13 @@ const weapons: {[id in WeaponId]: Weapon} = {
         light: false,
         twoHanded: false,
         damageType: DamageType.Magic,
-        damageRange: { min: 2, max: 4, bonus: 3 },
+        damageRange: { min: 1, max: 3, bonus: 3 },
+        spellPowerRatio: 0.1,
         attributes: {
             [AttributeType.Intelligence]: 3
         },
         stats: {
-            [StatType.SpellPower]: 2 
+            [StatType.SpellPower]: 5 
         }
     },
     wand4: {
@@ -577,12 +582,13 @@ const weapons: {[id in WeaponId]: Weapon} = {
         light: false,
         twoHanded: false,
         damageType: DamageType.Magic,
-        damageRange: { min: 2, max: 4, bonus: 4 },
+        damageRange: { min: 1, max: 3, bonus: 4 },
+        spellPowerRatio: 0.1,
         attributes: {
             [AttributeType.Intelligence]: 4
         },
         stats: {
-            [StatType.SpellPower]: 2 
+            [StatType.SpellPower]: 5 
         }
     },
     wand5: {
@@ -597,12 +603,13 @@ const weapons: {[id in WeaponId]: Weapon} = {
         light: false,
         twoHanded: false,
         damageType: DamageType.Magic,
-        damageRange: { min: 2, max: 4, bonus: 5 },
+        damageRange: { min: 1, max: 3, bonus: 5 },
+        spellPowerRatio: 0.1,
         attributes: {
             [AttributeType.Intelligence]: 5
         },
         stats: {
-            [StatType.SpellPower]: 2 
+            [StatType.SpellPower]: 5 
         }
     },
     // NPC Weapons

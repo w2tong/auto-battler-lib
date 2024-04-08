@@ -13,7 +13,8 @@ const Firebolt: Ability = {
             const hit = char.attack({
                 target: char.target,
                 attackType: AttackType.Spell,
-                damageRange: char.mainHand.damageRange, // TODO: replace with damageRange + spell power
+                damageRange: char.mainHand.damageRange,
+                spellPowerRatio: 0.25,
                 isOffHand: false,
                 abilityName: 'Firebolt'
             });

@@ -251,7 +251,10 @@ class Stats {
 
     // Defensive
     get maxHealth() {
-        return calcTotalStat(this[StatType.MaxHealth]) * (1 + calcTotalStat(this[StatType.HealthPercent])/100);
+        return calcTotalStat(this[StatType.MaxHealth]) * (1 + this.healthPercent/100);
+    }
+    get healthPercent() {
+        return calcTotalStat(this[StatType.HealthPercent]);
     }
     get armour() {
         return calcTotalStat(this[StatType.Armour]);
@@ -332,7 +335,7 @@ class Stats {
         return calcTotalStat(this[StatType.SpellHitChance]);
     }
     get spellPower() {
-        return calcTotalStat(this[StatType.SpellPower]);
+        return calcTotalStat(this[StatType.SpellPower]) * (1 + this.spellPowerPercent/100);
     }
     get spellPowerPercent() {
         return calcTotalStat(this[StatType.SpellPowerPercent]);

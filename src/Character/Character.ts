@@ -15,6 +15,7 @@ import { StatType, Stats, calcTotalStat } from './Stats';
 import DamageRange, { damageRoll } from '../DamageRange';
 import { WeaponStyle } from '../Equipment/Hands';
 import Ability from '../Ability/Ability';
+import { StatTemplate } from './StatTemplate';
 
 type CharacterInfo = {
     name: string,
@@ -74,7 +75,7 @@ export default class Character {
     protected _target: Character|null = null;
     protected _battle : {ref: Battle, side: Side, index: number} | null = null;
 
-    constructor(level: number, className: string, attributes: BaseAttributes, equipment: Equipment, ability: Ability, name: string, options?: {userId?: string, currHealthPc?: number, currManaPc?: number}) {
+    constructor({level, className, baseAttributes, template, equipment, ability, name, options} :{level: number, className: string, baseAttributes: BaseAttributes, template: StatTemplate, equipment: Equipment, ability: Ability, name: string, options?: {userId?: string, currHealthPc?: number, currManaPc?: number}}) {
         this._name = name;
         this.level = level;
         this.className = className;
@@ -93,8 +94,14 @@ export default class Character {
         this.potion = Object.assign({}, equipment.potion);
 
         // Attributes
-        this.attributes = new Attributes(attributes, equipment);
-        this.stats = new Stats(this.attributes, equipment, this.weaponStyle);
+        this.attributes = new Attributes(baseAttributes, equipment);
+        this.stats = new Stats({
+            level: this.level,
+            template,
+            attributes: this.attributes,
+            equipment,
+            weaponStyle: this.weaponStyle
+        });
         this.ability = ability;
         this.currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this.currentMana = calcTotalStat(this.stats[StatType.StartingMana]);
@@ -236,7 +243,7 @@ export default class Character {
 
     // TODO: add support for attacks that use spell power
     // replace range with attack type? that includes (melee, ranged, spell)
-    attack({target, attackType, damageRange, isOffHand, abilityName}: {target: Character, attackType: AttackType, damageRange: DamageRange, isOffHand: boolean, abilityName?: string}): boolean {
+    attack({target, attackType, damageRange, spellPowerRatio, isOffHand, abilityName}: {target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean, abilityName?: string}): boolean {
 
         let hitType: HitType = HitType.Miss;
         let damage: number = 0;
@@ -274,10 +281,13 @@ export default class Character {
                     damagePercentBonus += this.stats.rangedDamage;
                     break;
                 case AttackType.Spell:
-                    // add damage from spell power
+                    // do nothing
+                    break;
+                default:
                     break;
             }
-            damage = (damage + damageBonus) * (1 + (damagePercentBonus/100));
+            const spellDamage = spellPowerRatio ? Math.floor(this.stats.spellPower * spellPowerRatio) : 0;
+            damage = (damage + damageBonus + spellDamage) * (1 + (damagePercentBonus/100));
             
             const crit = this.critRoll();
             if (crit) {
