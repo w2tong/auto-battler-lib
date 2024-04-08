@@ -1,3 +1,4 @@
+import ClassAbilities from '../../Ability/ClassAbilities';
 import Fighter from './Fighter';
 import Rogue from './Rogue';
 import Wizard from './Wizard';
@@ -14,21 +15,21 @@ const Classes = {
     [ClassName.Wizard]: Wizard
 } as const;
 
-const ClassDescriptions: {[key in ClassName]: {description: string; specialName: string, specialDescription: string}} = {
+const ClassDescriptions: {[key in ClassName]: {description: string; abilityName: string, abilityDescription: string}} = {
     [ClassName.Fighter]: {
         description: Fighter.description,
-        specialName: Fighter.specialName,
-        specialDescription: Fighter.specialDescription
+        abilityName: ClassAbilities[ClassName.Fighter].name,
+        abilityDescription: ClassAbilities[ClassName.Fighter].description
     },
     [ClassName.Rogue]: {
         description: Rogue.description,
-        specialName: Rogue.specialName,
-        specialDescription: Rogue.specialDescription
+        abilityName: ClassAbilities[ClassName.Rogue].name,
+        abilityDescription: ClassAbilities[ClassName.Rogue].description
     },
     [ClassName.Wizard]: {
         description: Wizard.description,
-        specialName: Wizard.specialName,
-        specialDescription: Wizard.specialDescription
+        abilityName: ClassAbilities[ClassName.Wizard].name,
+        abilityDescription: ClassAbilities[ClassName.Wizard].description
     }
 };
 
