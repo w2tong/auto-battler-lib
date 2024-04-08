@@ -14,7 +14,7 @@ const Firebolt: Ability = {
                 target: char.target,
                 attackType: AttackType.Spell,
                 damageRange: char.mainHand.damageRange,
-                spellPowerRatio: 0.25,
+                spellPowerRatio: 0.34,
                 isOffHand: false,
                 abilityName: 'Firebolt'
             });
