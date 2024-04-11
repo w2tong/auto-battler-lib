@@ -42,7 +42,7 @@ const NPCStatTemplate: {[name in ClassName|'Rat'|'GoblinFighter'|'GoblinRogue'|'
     OrcFighter: {},
     Zombie: {},
     OgreFighter: {},
-};
+} as const;
 
 function calculateBaseStats(template: StatTemplate, level: number): BaseStats {
     const stats: BaseStats = {};

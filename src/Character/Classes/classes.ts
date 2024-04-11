@@ -31,6 +31,6 @@ const ClassDescriptions: {[key in ClassName]: {description: string; abilityName:
         abilityName: ClassAbilities[ClassName.Wizard].name,
         abilityDescription: ClassAbilities[ClassName.Wizard].description
     }
-};
+} as const;
 
 export { Classes, ClassName, ClassDescriptions };

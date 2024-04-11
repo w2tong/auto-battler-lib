@@ -1,6 +1,6 @@
-export { Buff, BuffId, Debuff, DebuffId } from './Buffs/buffs';
+export { Buff, BuffId, Debuff, DebuffId } from './StatusEffect/statusEffects';
 
-import BuffTracker from './Buffs/BuffTracker';
+import BuffTracker from './StatusEffect/StatusEffectManager';
 export { BuffTracker };
 
 export { ClassName, Classes, ClassDescriptions } from './Character/Classes/classes';

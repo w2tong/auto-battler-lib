@@ -1,7 +1,7 @@
 import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle';
-import BuffTracker from '../Buffs/BuffTracker';
-import { BuffId } from '../Buffs/buffs';
+import StatusEffectManager from '../StatusEffect/StatusEffectManager';
+import { BuffId } from '../StatusEffect/statusEffects';
 import { PlayerStats } from '../statTemplates';
 import { AttackType, Weapon, weapons } from '../Equipment/Weapon';
 import { Shield } from '../Equipment/Shield';
@@ -69,7 +69,7 @@ export default class Character {
     protected ability: Ability;
 
     // Buffs/Debuffs
-    protected _buffTracker: BuffTracker = new BuffTracker(this);
+    protected _statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
 
     // Battle Info
     protected _target: Character|null = null;
@@ -149,8 +149,8 @@ export default class Character {
         return this._battle;
     }
 
-    get buffTracker() {
-        return this._buffTracker;
+    get statusEffectManager() {
+        return this._statusEffectManager;
     }
     
     getName(): string {
@@ -217,7 +217,7 @@ export default class Character {
             this.weaponAttack();
         }
         
-        this.buffTracker.tick();
+        this.statusEffectManager.tick();
     }
 
     hitRoll({target, attackType, isOffHand}: {target: Character, attackType: AttackType, isOffHand: boolean}): boolean {
@@ -414,7 +414,7 @@ export default class Character {
     }
 
     isInvisible(): boolean {
-        return this.buffTracker.getBuff(BuffId.Invisible) > 0;
+        return this.statusEffectManager.getBuff(BuffId.Invisible) > 0;
     }
 
     info(): CharacterInfo {
@@ -443,8 +443,8 @@ export default class Character {
             maxHealth: this.stats[StatType.MaxHealth].base + this.stats[StatType.MaxHealth].bonus,
             currMana: this.currentHealth,
             maxMana: this.stats[StatType.MaxMana].base + this.stats[StatType.MaxMana].bonus,
-            buffs: this.buffTracker.getBuffString(),
-            debuffs: this.buffTracker.getDebuffString()
+            buffs: this.statusEffectManager.getBuffString(),
+            debuffs: this.statusEffectManager.getDebuffString()
         };
     }
 }

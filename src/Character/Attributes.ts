@@ -61,7 +61,7 @@ const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number
         [StatType.StartingMana]: 2,
         [StatType.Initiative]: 0.2
     },
-};
+} as const;
 
 type BaseAttributes = {
     [AttributeType.WeaponSkill]?: number,

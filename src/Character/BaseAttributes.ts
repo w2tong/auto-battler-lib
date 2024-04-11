@@ -14,6 +14,6 @@ const PlayerAttributes: {[name in ClassName]: BaseAttributes} = {
         [AttributeType.Intelligence]: 10,
         [AttributeType.Wisdom]: 5
     },
-};
+} as const;
 
 export { PlayerAttributes };

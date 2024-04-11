@@ -1,5 +1,5 @@
 import AttackType from '../AttackType';
-import { DebuffId } from '../Buffs/buffs';
+import { DebuffId } from '../StatusEffect/statusEffects';
 import Ability from './Ability';
 
 const Firebolt: Ability = {
