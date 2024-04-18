@@ -1,4 +1,3 @@
-import Buff from './StatusEffect';
 import Bless from './Buffs/Bless';
 import Invisible from './Buffs/Invisible';
 import Burn from './Debuffs/Burn';
@@ -9,7 +8,7 @@ enum BuffId {
     Invisible = 'Invisible',
     Bless = 'Bless',
 }
-const Buffs: {[id in BuffId]: Buff} = {
+const Buffs = {
     [BuffId.Invisible]: Invisible,
     [BuffId.Bless]: Bless,
 } as const;
@@ -19,7 +18,7 @@ enum DebuffId {
     Poison = 'Poison',
     Frozen = 'Frozen',
 }
-const Debuffs: {[id in DebuffId]: Buff} = {
+const Debuffs = {
     [DebuffId.Burn]: Burn,
     [DebuffId.Poison]: Poison,
     [DebuffId.Frozen]: Frozen,

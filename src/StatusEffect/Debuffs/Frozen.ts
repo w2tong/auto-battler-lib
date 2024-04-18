@@ -1,12 +1,7 @@
-import Debuff from '../Debuff';
-import { StatusEffectType } from '../StatusEffect';
+import Debuff from './Debuff';
 
-const Frozen: Debuff = {
-    type: StatusEffectType.Debuff,
-    name: 'Frozen',
-    symbol: '🧊',
-    duration: true,
-    stacks: false,
-};
-
-export default Frozen;
+// TODO: skip turn on turn start
+export default class Frozen extends Debuff {
+    name: string = 'Frozen';
+    symbol: string = '🧊';
+}

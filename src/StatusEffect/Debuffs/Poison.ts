@@ -1,24 +1,24 @@
-import Debuff from '../Debuff';
-import { StatusEffectType } from '../StatusEffect';
+import { StatusEffectEventInterface } from '../StatusEffect';
+import Debuff from './Debuff';
 
-const name = 'Poison';
-const damage = 1;
+export default class Poison extends Debuff implements StatusEffectEventInterface {
+    name: string = 'Poison';
+    symbol: string = '🤢';
 
-const Poison: Debuff = {
-    type: StatusEffectType.Debuff,
-    name,
-    symbol: '🤢',
-    duration: true,
-    stacks: false,
+    static baseDamage = 1;
+    static healthDamagePercent = 0.01;
     
-    onTurnEnd: (char, source) => {
-        char.takeDamage({
-            source: `${name} (${source.name})`, 
-            damage, 
-            armourPenetration: source.stats.armourPenetration,
-            addToLog: true
-        });
-    }
-};
+    onTurnEnd() {
+        for (const [key, instance] of Object.entries(this.instances)) {
+            this.char.takeDamage({
+                source: `${Poison.name} (${instance.source.name})`, 
+                damage: Poison.baseDamage + Math.floor(this.char.currentHealth * Poison.healthDamagePercent),
+                armourPenetration: instance.source.stats.armourPenetration,
+                addToLog: true
+            });
 
-export default Poison;
+            instance.stacks -= 1;
+            if (instance.stacks <= 0) this.remove(key);
+        }
+    }
+}

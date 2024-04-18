@@ -16,6 +16,7 @@ import DamageRange, { damageRoll } from '../DamageRange';
 import { WeaponStyle } from '../Equipment/Hands';
 import Ability from '../Ability/Ability';
 import { StatTemplate } from './StatTemplate';
+import Invisible from '../StatusEffect/Buffs/Invisible';
 
 type CharacterInfo = {
     name: string,
@@ -55,8 +56,8 @@ export default class Character {
     // Attributes and Stats
     protected _attributes: Attributes;
     protected _stats: Stats;
-    protected currentHealth: number;
-    protected currentMana: number;
+    protected _currentHealth: number;
+    protected _currentMana: number;
 
     // Equipment
     protected _mainHand: Weapon;
@@ -103,8 +104,8 @@ export default class Character {
             weaponStyle: this.weaponStyle
         });
         this.ability = ability;
-        this.currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
-        this.currentMana = calcTotalStat(this.stats[StatType.StartingMana]);
+        this._currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
+        this._currentMana = calcTotalStat(this.stats[StatType.StartingMana]);
 
         if (options?.userId) this.userId = options.userId;
     }
@@ -127,6 +128,14 @@ export default class Character {
 
     get stats() {
         return this._stats;
+    }
+
+    get currentHealth() {
+        return this._currentHealth;
+    }
+
+    get currentMana() {
+        return this._currentMana;
     }
 
     get mainHand() {
@@ -199,9 +208,10 @@ export default class Character {
     }
 
     useMana(): void {
-        this.currentMana -= this.stats.maxMana;
+        this._currentMana -= this.stats.maxMana;
     }
 
+    // TODO: add events for StatusEffects
     doTurn(): void {
         this.usePotion();
         if (this.stats.maxMana !== 0) {
@@ -216,8 +226,6 @@ export default class Character {
         else {
             this.weaponAttack();
         }
-        
-        this.statusEffectManager.tick();
     }
 
     hitRoll({target, attackType, isOffHand}: {target: Character, attackType: AttackType, isOffHand: boolean}): boolean {
@@ -253,7 +261,7 @@ export default class Character {
 
         let hitType: HitType = HitType.Miss;
         let damage: number = 0;
-        let sneak: boolean = false;
+        let sneakDamage: number = 0;
         let blocked: boolean = false;
 
         const hit = this.hitRoll({
@@ -267,12 +275,6 @@ export default class Character {
             hitType = HitType.Hit;
             
             damage = damageRoll(damageRange);
-            
-            // TODO: add sneak daamge
-            if (this.isInvisible()) {
-                // const sneakDamage = this.isInvisible() ? rollDice({num: 1 + Math.floor(this.mainHand.damageBonus/2), sides: 4}) : 0;
-                sneak = true;
-            }
 
             // Add damage bonuses
             let damageBonus = this.stats.damage;
@@ -293,7 +295,12 @@ export default class Character {
                     break;
             }
             const spellDamage = spellPowerRatio ? Math.floor(this.stats.spellPower * spellPowerRatio) : 0;
-            damage = (damage + damageBonus + spellDamage) * (1 + (damagePercentBonus/100));
+
+            if (this.isInvisible()) {
+                sneakDamage = Invisible.damage * this.statusEffectManager.getBuffStacks(BuffId.Invisible);
+            }
+
+            damage = (damage + damageBonus + spellDamage + sneakDamage) * (1 + (damagePercentBonus/100));
             
             const crit = this.critRoll();
             if (crit) {
@@ -322,7 +329,7 @@ export default class Character {
                 tarName: target.name,
                 hitType,
                 damage,
-                sneak,
+                sneak: sneakDamage > 0,
                 blocked,
                 abilityName
             });
@@ -393,7 +400,7 @@ export default class Character {
         // Apply armour
         damageTaken = Math.max(Math.round(damageTaken * Math.max(this.stats.armour - armourPenetration, 0)/100), 0);
 
-        this.currentHealth -= Math.round(damageTaken);
+        this._currentHealth -= Math.round(damageTaken);
         if (addToLog) this.battle.ref.log.addDamage(this.name, source, damage);
         if (this.isDead()) {
             this.battle.ref.setCharDead(this.battle.side, this.battle.index);
@@ -402,11 +409,11 @@ export default class Character {
     }
 
     addMana(mana: number): void {
-        this.currentMana += mana;
+        this._currentMana += mana;
     }
 
     addHealth(health: number): void {
-        this.currentHealth = Math.min(this.currentHealth + health, this.stats.maxHealth);
+        this._currentHealth = Math.min(this.currentHealth + health, this.stats.maxHealth);
     }
 
     isDead(): boolean {
@@ -414,7 +421,7 @@ export default class Character {
     }
 
     isInvisible(): boolean {
-        return this.statusEffectManager.getBuff(BuffId.Invisible) > 0;
+        return this.statusEffectManager.getBuffStacks(BuffId.Invisible) > 0;
     }
 
     info(): CharacterInfo {

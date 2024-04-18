@@ -1,12 +1,7 @@
-import Buff from '../Buff';
-import { StatusEffectType } from '../StatusEffect';
+import Buff from './Buff';
 
-const Bless: Buff = {
-    type: StatusEffectType.Buff,
-    name: 'Bless',
-    symbol: '🙏',
-    duration: true,
-    stacks: false
-};
-
-export default Bless;
+// TODO: add attribute/stat buff system
+export default class Bless extends Buff {
+    name: string = 'Bless';
+    symbol: string = '🙏';
+}

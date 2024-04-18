@@ -1,12 +1,16 @@
-import Buff from '../Buff';
-import { StatusEffectType } from '../StatusEffect';
+import { StatusEffectEventInterface } from '../StatusEffect';
+import Buff from './Buff';
 
-const Invisible: Buff = {
-    type: StatusEffectType.Buff,
-    name: 'Invisible',
-    symbol: '☁️',
-    duration: false,
-    stacks: true
-};
+// TODO: remove all stacks on attack
+export default class Invisible extends Buff implements StatusEffectEventInterface {
+    name: string = 'Invisible';
+    symbol: string = '☁️';
 
-export default Invisible;
+    static damage = 2;
+
+    onAttack() {
+        for (const key of Object.keys(this.instances)) {
+            this.remove(key);
+        }
+    }
+}

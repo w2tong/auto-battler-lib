@@ -1,25 +1,24 @@
-import Debuff from '../Debuff';
-import { StatusEffectType } from '../StatusEffect';
-import { dice, rollDice } from '../../dice';
+import { StatusEffectEventInterface } from '../StatusEffect';
+import Debuff from './Debuff';
 
-const name = 'Burn';
-const BurnDamageDice = dice['1d3'];
+export default class Burn extends Debuff implements StatusEffectEventInterface {
+    name: string = 'Burn';
+    symbol: string = '🔥';
 
-const Burn: Debuff = {
-    type: StatusEffectType.Debuff,
-    name,
-    symbol: '🔥',
-    duration: true,
-    stacks: false,
+    static baseDamage = 1;
+    static spellPowerRatio = 0.2;
     
-    onTurnEnd: (char, source) => {
-        char.takeDamage({
-            source: `${name} (${source.name})`, 
-            damage: rollDice(BurnDamageDice) + Math.floor(source.stats.spellPower * 0.2),
-            armourPenetration: source.stats.armourPenetration,
-            addToLog: true
-        });
-    }
-};
+    onTurnEnd() {
+        for (const [key, instance] of Object.entries(this.instances)) {
+            this.char.takeDamage({
+                source: `${Burn.name} (${instance.source.name})`, 
+                damage: Burn.baseDamage + Math.floor(instance.source.stats.spellPower * Burn.spellPowerRatio),
+                armourPenetration: instance.source.stats.armourPenetration,
+                addToLog: true
+            });
 
-export default Burn;
+            instance.stacks -= 1;
+            if (instance.stacks <= 0) this.remove(key);
+        }
+    }
+}
