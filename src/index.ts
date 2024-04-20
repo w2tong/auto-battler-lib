@@ -1,4 +1,5 @@
-export { Buff, BuffId, Debuff, DebuffId } from './StatusEffect/statusEffects';
+export { Buffs, BuffId } from './StatusEffect/Buffs/buffs';
+export { Debuffs, DebuffId } from './StatusEffect/Debuffs/debuffs';
 
 import BuffTracker from './StatusEffect/StatusEffectManager';
 export { BuffTracker };

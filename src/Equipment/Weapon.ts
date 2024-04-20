@@ -5,7 +5,7 @@ import { StatType } from '../Character/Stats';
 import DamageRange from '../DamageRange';
 import { AttributeType } from '../Character/Attributes';
 import AttackType from '../AttackType';
-import { DebuffId } from '../StatusEffect/statusEffects';
+import { DebuffId } from '../StatusEffect/Debuffs/debuffs';
 
 enum WeaponType {
     Unarmed = 'Unarmed',
@@ -628,7 +628,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         damageRange: { min: 1, max: 3, bonus: 0 },
         onHit: {
             func: (self: Character, target: Character) => {
-                target.statusEffectManager.addDebuff(DebuffId.Poison, {source: self, stacks: 2});
+                target.statusEffectManager.addDebuff(DebuffId.Poison, self, 2);
             },
             description: 'Inflict 1 Poison on hit.'
         }
@@ -648,7 +648,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         damageRange: { min: 1, max: 3, bonus: 1 },
         onHit: {
             func: (self: Character, target: Character) => {
-                target.statusEffectManager.addDebuff(DebuffId.Poison, {source: self, stacks: 2});
+                target.statusEffectManager.addDebuff(DebuffId.Poison, self, 2);
             },
             description: 'Inflict 2 Poison on hit.'
         }

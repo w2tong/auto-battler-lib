@@ -1,4 +1,4 @@
-import { BuffId } from '../StatusEffect/statusEffects';
+import { BuffId } from '../StatusEffect/Buffs/buffs';
 import Ability from './Ability';
 
 const name = 'Vanish';
@@ -9,7 +9,7 @@ const Vanish: Ability = {
         if (!char.battle) return;
         char.useMana();
         char.battle.ref.log.add(`${char.name} used ${name}.`);
-        char.statusEffectManager.addBuff(BuffId.Invisible, {source: char, stacks: Math.max(Math.floor(char.attributes.dexterity/10), 1)});
+        char.statusEffectManager.addBuff(BuffId.Invisible, char, Math.max(Math.floor(char.attributes.dexterity/10), 1));
     }
 };
 

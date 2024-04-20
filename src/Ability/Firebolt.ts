@@ -1,5 +1,5 @@
 import AttackType from '../AttackType';
-import { DebuffId } from '../StatusEffect/statusEffects';
+import { DebuffId } from '../StatusEffect/Debuffs/debuffs';
 import Ability from './Ability';
 
 const Firebolt: Ability = {
@@ -20,7 +20,7 @@ const Firebolt: Ability = {
             });
 
             if (hit) {
-                char.target.buffTracker.addDebuff(DebuffId.Burn, 2, char);
+                char.target.statusEffectManager.addDebuff(DebuffId.Burn, char, 2);
             }
         }
     }
