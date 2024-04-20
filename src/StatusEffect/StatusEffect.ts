@@ -1,12 +1,15 @@
 import Character from '../Character/Character';
+import { BuffId } from './Buffs/buffs';
+import { DebuffId } from './Debuffs/debuffs';
 
-type OnEventFunction = () => void
 enum StatusEffectType {
     Buff = 'Buff',
     Debuff = 'Debuff'
 }
 
 abstract class StatusEffect {
+    abstract readonly id: BuffId | DebuffId;
+    abstract readonly type: StatusEffectType;
     abstract readonly name: string;
     abstract readonly symbol: string;
     readonly char: Character;
@@ -16,6 +19,17 @@ abstract class StatusEffect {
         this.char = char;
     }
 
+    // Status Effect events
+    abstract onApply(): void;
+    abstract onExpire(): void;
+    // Char events
+    abstract onTurnStart(): void;
+    abstract onTurnEnd(): void;
+    abstract onAttack(hit: boolean): void;
+    // Source events
+    abstract onSourceTurnStart(source: Character): void;
+    abstract onSourceTurnEnd(source: Character): void;
+
     get stacks(): number {
         return Object.values(this.instances).reduce((sum, curr) => sum + curr.stacks, 0);
     }
@@ -24,27 +38,22 @@ abstract class StatusEffect {
         if (this.char.battle) this.char.battle.ref.log.add(`${this.char.name} gained ${id}${stacks !== 1 ? `(${stacks})` : ''} from ${source.name}.`);
 
         if (this.instances[id]) this.instances[id].stacks += stacks;
-        else this.instances[id] = {source, stacks};
+        else {
+            this.instances[id] = {source, stacks};
+            this.onApply();
+        }
     }
 
     remove(id: string) {
         if (this.char.battle) this.char.battle.ref.log.add(`${this.char.name} lost ${id} from ${this.instances[id].source.name}.`);
 
+        this.onExpire();
+        if (this.id in BuffId) this.instances[id].source.statusEffectManager.removeOutgoingBuff(this.id as BuffId, this.char);
+        else if (this.id in DebuffId) this.instances[id].source.statusEffectManager.removeOutgoingDebuff(this.id as DebuffId, this.char);
+        
         delete this.instances[id];
     }
 }
 
-interface StatusEffectEventInterface {
-    // Char events
-    onTurnStart?: OnEventFunction;
-    onTurnEnd?: OnEventFunction;
-    onAttack?: OnEventFunction;
-    onApply?: OnEventFunction;
-    onExpire?: OnEventFunction;
-    // Source events
-    onSourceTurnStart?: OnEventFunction;
-    onSourceTurnEnd?: OnEventFunction;
-}
-
 export default StatusEffect;
-export { StatusEffectType, StatusEffectEventInterface };
+export { StatusEffectType };

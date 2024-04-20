@@ -213,6 +213,7 @@ export default class Character {
 
     // TODO: add events for StatusEffects
     doTurn(): void {
+        this.statusEffectManager.onTurnStart();
         this.usePotion();
         if (this.stats.maxMana !== 0) {
             if (this.currentMana >= this.stats.maxMana) {
@@ -226,6 +227,7 @@ export default class Character {
         else {
             this.weaponAttack();
         }
+        this.statusEffectManager.onTurnEnd();
     }
 
     hitRoll({target, attackType, isOffHand}: {target: Character, attackType: AttackType, isOffHand: boolean}): boolean {
@@ -334,6 +336,8 @@ export default class Character {
                 abilityName
             });
         }
+
+        this.statusEffectManager.onAttack(hit);
 
         return hit;
     }

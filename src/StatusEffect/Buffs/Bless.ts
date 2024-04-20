@@ -1,7 +1,19 @@
 import Buff from './Buff';
+import { BuffId } from './buffs';
 
 // TODO: add attribute/stat buff system
 export default class Bless extends Buff {
-    name: string = 'Bless';
-    symbol: string = '🙏';
+    id = BuffId.Bless;
+    name = 'Bless';
+    symbol = '🙏';
+
+    onApply() {}
+    onExpire() {}
+
+    onTurnStart() {}
+    onTurnEnd() {}
+    onAttack() {}
+    
+    onSourceTurnStart() {}
+    onSourceTurnEnd() {}
 }

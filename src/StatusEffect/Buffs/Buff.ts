@@ -1,5 +1,7 @@
 import StatusEffect, { StatusEffectType } from '../StatusEffect';
+import { BuffId } from './buffs';
 
 export default abstract class Buff extends StatusEffect {
-    type: StatusEffectType = StatusEffectType.Buff;
+    abstract readonly id: BuffId;
+    type = StatusEffectType.Buff;
 }

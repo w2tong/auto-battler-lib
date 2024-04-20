@@ -1,13 +1,18 @@
-import { StatusEffectEventInterface } from '../StatusEffect';
 import Debuff from './Debuff';
+import { DebuffId } from './debuffs';
 
-export default class Burn extends Debuff implements StatusEffectEventInterface {
+export default class Burn extends Debuff {
+    id = DebuffId.Burn;
     name: string = 'Burn';
     symbol: string = '🔥';
 
     static baseDamage = 1;
     static spellPowerRatio = 0.2;
-    
+
+    onApply() {}
+    onExpire() {}
+
+    onTurnStart() {}
     onTurnEnd() {
         for (const [key, instance] of Object.entries(this.instances)) {
             this.char.takeDamage({
@@ -21,4 +26,8 @@ export default class Burn extends Debuff implements StatusEffectEventInterface {
             if (instance.stacks <= 0) this.remove(key);
         }
     }
+    onAttack() {}
+
+    onSourceTurnStart() {}
+    onSourceTurnEnd() {}
 }

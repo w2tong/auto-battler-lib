@@ -1,13 +1,17 @@
 import Character from '../Character/Character';
+import { geOutgoingStatusEffectId, getCharBattleId } from '../util';
 import Buff from './Buffs/Buff';
+import { BuffId, Buffs } from './Buffs/buffs';
 import Debuff from './Debuffs/Debuff';
-import { StatusEffectType } from './StatusEffect';
-import { BuffId, Buffs, DebuffId, Debuffs } from './statusEffects';
+import { DebuffId, Debuffs } from './Debuffs/debuffs';
 
 export default class StatusEffectManager {
     private char: Character;
     private buffs: {[id in BuffId]?: Buff} = {};
     private debuffs: {[id in DebuffId]?: Debuff} = {};
+
+    private outgoingBuffs: {[key: string]: Buff} = {};
+    private outgoingDebuffs: {[key: string]: Debuff} = {};
 
     constructor(char: Character) {
         this.char = char;
@@ -33,32 +37,56 @@ export default class StatusEffectManager {
         return this.getStatusEffectString(this.debuffs);
     }
 
-    private addStatusEffect({type, id}: {type: StatusEffectType.Buff, id: BuffId} | {type: StatusEffectType.Debuff, id: DebuffId}, source: Character, stacks: number) {
-    // private addStatusEffect(id: BuffId | DebuffId, source: Character, stacks: number) {
-        if (!this.char.battle || !source.battle) return;
-        
-        const char = `${source.battle.side}${source.battle.index}`;
-        let statusEffect;
-
-        if (type === StatusEffectType.Buff) {
-            console.log(id);
-            if (!this.buffs[id]) this.buffs[id] = new Buffs[id](this.char);
-            statusEffect = this.buffs[id];
-        }
-        else {
-            if (!this.debuffs[id]) this.debuffs[id] = new Debuffs[id](this.char);
-            statusEffect = this.debuffs[id];
-        }
-
-        if (!statusEffect) return;
-        statusEffect.add(char, source, stacks);
-    }
-
     addBuff(id: BuffId, source: Character, stacks: number) {
-        this.addStatusEffect({type: StatusEffectType.Buff, id}, source, stacks);
+        if (!this.buffs[id]) this.buffs[id] = new Buffs[id](this.char);
+        const buff = this.buffs[id];
+        if (!buff) return;
+        buff.add(getCharBattleId(source), source, stacks);
+        
+        source.statusEffectManager.addOutgoingBuff(id, this.char, buff);
     }
 
     addDebuff(id: DebuffId, source: Character, stacks: number) {
-        this.addStatusEffect({type: StatusEffectType.Debuff, id}, source, stacks);
+        if (!this.debuffs[id]) this.debuffs[id] = new Debuffs[id](this.char);
+        const debuff = this.debuffs[id];
+        if (!debuff) return;
+        debuff.add(getCharBattleId(source), source, stacks);
+
+        source.statusEffectManager.addOutgoingDebuff(id, this.char, debuff);
+    }
+
+    addOutgoingBuff(id: BuffId, char: Character, ref: Buff) {
+        this.outgoingBuffs[geOutgoingStatusEffectId(id, char)] = ref;
+    }
+    addOutgoingDebuff(id: DebuffId, char: Character, ref: Debuff) {
+        this.outgoingDebuffs[geOutgoingStatusEffectId(id, char)] = ref;
+    }
+
+    removeOutgoingBuff(id: BuffId, char: Character) {
+        delete this.outgoingBuffs[geOutgoingStatusEffectId(id, char)];
+    }
+    removeOutgoingDebuff(id: DebuffId, char: Character) {
+        delete this.outgoingDebuffs[geOutgoingStatusEffectId(id, char)];
+    }
+
+    onTurnStart() {
+        for (const buff of Object.values(this.buffs)) buff.onTurnStart();
+        for (const debuff of Object.values(this.debuffs)) debuff.onTurnStart();
+
+        for (const buff of Object.values(this.buffs)) buff.onSourceTurnStart(this.char);
+        for (const debuff of Object.values(this.debuffs)) debuff.onSourceTurnStart(this.char);
+    }
+
+    onTurnEnd() {
+        for (const buff of Object.values(this.buffs)) buff.onTurnEnd();
+        for (const debuff of Object.values(this.debuffs)) debuff.onTurnEnd();
+
+        for (const buff of Object.values(this.buffs)) buff.onSourceTurnEnd(this.char);
+        for (const debuff of Object.values(this.debuffs)) debuff.onSourceTurnEnd(this.char);
+    }
+
+    onAttack(hit : boolean) {
+        for (const buff of Object.values(this.buffs)) buff.onAttack(hit);
+        for (const debuff of Object.values(this.debuffs)) debuff.onAttack(hit);
     }
 }

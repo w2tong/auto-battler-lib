@@ -1,5 +1,7 @@
 import StatusEffect, { StatusEffectType } from '../StatusEffect';
+import { DebuffId } from './debuffs';
 
 export default abstract class Debuff extends StatusEffect {
-    type: StatusEffectType = StatusEffectType.Debuff;
+    abstract readonly id: DebuffId;
+    type = StatusEffectType.Debuff;
 }
