@@ -211,7 +211,6 @@ export default class Character {
         this._currentMana -= this.stats.maxMana;
     }
 
-    // TODO: add events for StatusEffects
     doTurn(): void {
         this.statusEffectManager.onTurnStart();
         this.usePotion();
@@ -342,7 +341,6 @@ export default class Character {
         return hit;
     }
 
-    // TODO: redo damage calculations
     weaponAttack(): void {
         if (!this.battle) return;
         this.setTarget();
