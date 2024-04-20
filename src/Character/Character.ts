@@ -1,7 +1,6 @@
 import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
-import { BuffId } from '../StatusEffect/statusEffects';
 import { PlayerStats } from '../statTemplates';
 import { AttackType, Weapon, weapons } from '../Equipment/Weapon';
 import { Shield } from '../Equipment/Shield';
@@ -17,6 +16,7 @@ import { WeaponStyle } from '../Equipment/Hands';
 import Ability from '../Ability/Ability';
 import { StatTemplate } from './StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
+import { BuffId } from '../StatusEffect/Buffs/buffs';
 
 type CharacterInfo = {
     name: string,
