@@ -4,7 +4,7 @@ import StatusEffectManager from '../StatusEffect/StatusEffectManager';
 import { PlayerStats } from '../statTemplates';
 import { AttackType, Weapon, weapons } from '../Equipment/Weapon';
 import { Shield } from '../Equipment/Shield';
-import { Equipment, defaultEquipment } from '../Equipment/Equipment';
+import { Equipment } from '../Equipment/Equipment';
 import HitType from '../HitType';
 import { dice, rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
@@ -459,6 +459,7 @@ export default class Character {
 }
 
 function newPlayerChar(userId: string, character: {name: string, level: number; class: ClassName}, equipment: Equipment) {
+    // TODO: remove default equipment from player chars
     const classDefault = defaultEquipment[character.class];
     // Set main hand to class default weapon if missing
     if (classDefault.mainHand && !equipment.mainHand) {

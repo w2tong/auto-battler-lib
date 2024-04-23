@@ -63,15 +63,7 @@ const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number
     },
 } as const;
 
-type BaseAttributes = {
-    [AttributeType.WeaponSkill]?: number,
-    [AttributeType.Strength]?: number;
-    [AttributeType.Dexterity]?: number;
-    [AttributeType.Perception]?: number;
-    [AttributeType.Constitution]?: number;
-    [AttributeType.Intelligence]?: number;
-    [AttributeType.Wisdom]?: number;
-}
+type BaseAttributes = {[attr in AttributeType]?: number}
 
 class Attributes {
     [AttributeType.WeaponSkill]: Attribute;

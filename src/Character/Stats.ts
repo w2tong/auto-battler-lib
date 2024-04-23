@@ -67,69 +67,19 @@ enum StatType {
     PotionEffectiveness = 'Potion Effectiveness'
 }
 
-type BaseStats = {
-    // Defensive Stats
-    [StatType.MaxHealth]?: number,
-    [StatType.HealthPercent]?: number,
-    [StatType.Armour]?: number,
-    [StatType.Deflection]?: number,
-    [StatType.Dodge]?: number,
-    [StatType.StatusResistance]?: number,
-    [StatType.Thorns]?: number,
-
-    [StatType.BlockChance]?: number,
-    [StatType.BlockPower]?: number,
-
-    // Offensive Stats
-    [StatType.HitChance]?: number,
-    [StatType.OffHandHitChance]?: number,
-    [StatType.MeleeHitChance]?: number,
-    [StatType.RangedHitChance]?: number,
-
-    [StatType.Damage]?: number,
-    [StatType.OffHandDamage]?: number,
-    [StatType.MeleeDamage]?: number,
-    [StatType.RangedDamage]?: number,
-    [StatType.DamagePercent]?: number,
-    [StatType.MeleeDamagePercent]?: number,
-    [StatType.RangedDamagePercent]?: number,
-
-    [StatType.CriticalChance]?: number,
-    [StatType.CriticalDamage]?: number,
-
-    [StatType.ArmourPenetration]?: number,
-    [StatType.DodgeReduction]?: number,
-
-    // Spell
-    [StatType.SpellHitChance]?: number,
-    [StatType.SpellPower]?: number,
-    [StatType.SpellPowerPercent]?: number,
-
-    // Mana
-    [StatType.MaxMana]?: number,
-    [StatType.StartingMana]?: number,
-    [StatType.ManaRegen]?: number,
-    [StatType.ManaOnHit]?: number,
-
-    // Initiative
-    [StatType.Initiative]?: number,
-
-    // Potion
-    [StatType.PotionCharges]?: number,
-    [StatType.PotionHealing]?: number,
-    [StatType.PotionEffectiveness]?: number
-}
+type BaseStats = {[stat in StatType]?: number};
 
 class Stats {
     static TwoHandedBonus = 50;
 
     static DEFAULT_MAX_HEALTH = 20;
-    static DEFAULT_MAX_HEALTH_PER_LVL = 5;
+    static DEFAULT_MAX_HEALTH_PER_LVL = 4;
     static DEFAULT_DODGE = 50;
     static DEFAULT_HIT_CHANCE = 50;
     static DEFAULT_CRIT_CHANCE = 5;
     static DEFAULT_CRIT_DAMAGE = 50;
 
+    static DEFAULT_MAX_MANA = 100;
     static DEFAULT_MANA_ON_HIT = 5;
     static DEFAULT_MANA_REGEN = 5;
 

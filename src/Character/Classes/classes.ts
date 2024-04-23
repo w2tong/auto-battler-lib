@@ -17,17 +17,17 @@ const Classes = {
 
 const ClassDescriptions: {[key in ClassName]: {description: string; abilityName: string, abilityDescription: string}} = {
     [ClassName.Fighter]: {
-        description: Fighter.description,
+        description: 'Fighter description here',
         abilityName: ClassAbilities[ClassName.Fighter].name,
         abilityDescription: ClassAbilities[ClassName.Fighter].description
     },
     [ClassName.Rogue]: {
-        description: Rogue.description,
+        description: 'Rogue description here',
         abilityName: ClassAbilities[ClassName.Rogue].name,
         abilityDescription: ClassAbilities[ClassName.Rogue].description
     },
     [ClassName.Wizard]: {
-        description: Wizard.description,
+        description: 'Fighter description here',
         abilityName: ClassAbilities[ClassName.Wizard].name,
         abilityDescription: ClassAbilities[ClassName.Wizard].description
     }

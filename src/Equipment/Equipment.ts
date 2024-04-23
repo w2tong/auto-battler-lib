@@ -1,4 +1,3 @@
-import { ClassName } from '../Character/Classes/classes';
 import { Amulet, amulets } from './Amulet';
 import { Armour, ArmourId, armour } from './Armour';
 import { Belt, BeltId, belts } from './Belt';
@@ -52,20 +51,6 @@ enum EquipSlot {
     Potion = 'Potion',
     Amulet = 'Amulet'
 }
-
-const defaultEquipment: {[name in ClassName]: Equipment} = {
-    [ClassName.Fighter]: {
-        mainHand: weapons.longsword0,
-        offHandShield: shields.buckler0
-    },
-    [ClassName.Rogue]: {
-        mainHand: weapons.dagger0,
-        offHandWeapon: weapons.dagger0
-    },
-    [ClassName.Wizard]: {
-        mainHand: weapons.quarterstaff0
-    }
-};
 
 function isValidEquip(itemId: string, slot: EquipSlot): boolean {
     const item = equips[itemId];
@@ -150,4 +135,4 @@ function createEquipment(equipmentItemIds: EquipmentItemIds): Equipment {
     return equipment;
 }
 
-export { Equip, EquipmentItemIds, equips, Equipment, EquipSlot, defaultEquipment, isValidEquip, createEquipment };
+export { Equip, EquipmentItemIds, equips, Equipment, EquipSlot, isValidEquip, createEquipment };
