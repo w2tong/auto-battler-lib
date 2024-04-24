@@ -17,6 +17,10 @@ const Rat: NPC = {
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE + 10 },
 
         [StatType.HitChance]: { base: Stats.DEFAULT_HIT_CHANCE - 10 },
+
+        [StatType.Damage]: { base: 0, perLvl: 0.2 },
+
+        [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
     },
     equipment: {
         mainHand: weapons.poisonbite0

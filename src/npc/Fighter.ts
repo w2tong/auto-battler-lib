@@ -19,6 +19,8 @@ const Fighter: NPC = {
         [StatType.BlockPower]: { base: 0, perLvl: 0.2 },
     
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
+
+        [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
     
         [StatType.MaxMana]: { base: 100 }
     },

@@ -13,10 +13,14 @@ const Zombie: NPC = {
         [AttributeType.Constitution]: {base: 0, perLvl: 1}
     },
     stats: {
-        [StatType.MaxHealth]: { base: 16, perLvl: 3 },
+        [StatType.MaxHealth]: { base: 16, perLvl: 3.5 },
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 10 },
 
         [StatType.HitChance]: { base: Stats.DEFAULT_HIT_CHANCE - 10 },
+
+        [StatType.Damage]: { base: 0, perLvl: 0.2 },
+
+        [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
     },
     equipment: {
         mainHand: weapons.poisonbite0

@@ -17,6 +17,8 @@ const Rogue: NPC = {
         [StatType.Armour]: { base: 0, perLvl: 0.8 },
     
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
+
+        [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
     
         [StatType.MaxMana]: { base: 100 }
     },
