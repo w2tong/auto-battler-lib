@@ -308,32 +308,4 @@ class Stats {
     }
 }
 
-// addRingBonuses(ring: Ring) {
-//     this.mainHand.attackBonus += ring.attackBonus ?? 0;
-//     this.mainHand.damageBonus += (ring.damageBonus ?? 0) * (this._mainHand.twoHanded ? Character.twoHandedMult : 1);
-//     this.mainHand.critRange -= ring.critRangeBonus ?? 0;
-//     this.mainHand.critMult += ring.critMultBonus ?? 0;
-//     this.mainHand.manaPerAtk += ring.manaPerAtk ?? 0;
-
-//     if (this.offHandWeapon) {
-//         this.offHandWeapon.attackBonus += ring.attackBonus ?? 0;
-//         this.offHandWeapon.damageBonus += ring.damageBonus ?? 0;
-//         this.offHandWeapon.critRange -= ring.critRangeBonus ?? 0;
-//         this.offHandWeapon.critMult += ring.critMultBonus ?? 0;
-//         this.offHandWeapon.manaPerAtk += ring.manaPerAtk ?? 0;
-//     }
-//     // Defense
-//     this._armourClass += ring.armourClass ?? 0;
-//     this.physDR += ring.physDR ?? 0;
-//     this.magicDR += ring.magicDR ?? 0;
-//     this.physResist += ring.physResist ?? 0;
-//     this.magicResist += ring.magicResist ?? 0;
-//     this._thorns += ring.thorns ?? 0;
-//     // Mana
-//     this.manaRegen += ring.manaRegen ?? 0;
-//     this.manaCostReduction += ring.manaCostReduction ?? 0;
-//     // Other
-//     this._initiativeBonus += ring.initiativeBonus ?? 0;
-// }
-
 export { Stat, StatType, BaseStats, Stats, calcTotalStat };
