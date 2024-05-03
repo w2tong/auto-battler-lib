@@ -2,8 +2,11 @@ import AttackType from '../AttackType';
 import { DebuffId } from '../StatusEffect/Debuffs/debuffs';
 import Ability from './Ability';
 
+const NAME = 'Firebolt';
+const SPELLPOWER_RATIO = 0.34;
+
 const Firebolt: Ability = {
-    name: 'Firebolt',
+    name: NAME,
     description: 'Attack your target and apply Burn.',
     func: (char) => {
         if (!char.battle) return;
@@ -14,9 +17,9 @@ const Firebolt: Ability = {
                 target: char.target,
                 attackType: AttackType.Spell,
                 damageRange: char.mainHand.damageRange,
-                spellPowerRatio: 0.34,
+                spellPowerRatio: SPELLPOWER_RATIO,
                 isOffHand: false,
-                abilityName: 'Firebolt'
+                abilityName: NAME
             });
 
             if (hit) {

@@ -1,14 +1,15 @@
 import Ability from './Ability';
 
-const name = 'Double Strike';
+const NAME = 'Double Strike';
+
 const DoubleStrike: Ability = {
-    name,
+    name: NAME,
     description: 'Attack an enemy twice.',
     func: (char) => {
         if (!char.battle) return;
         char.setTarget();
         if (char.target) {
-            char.battle.ref.log.add(`${char.name} used ${name}.`);
+            char.battle.ref.log.add(`${char.name} used ${NAME}.`);
             char.useMana();
             char.weaponAttack();
             char.weaponAttack();
