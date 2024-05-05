@@ -4,9 +4,9 @@ export { Debuffs, DebuffId } from './StatusEffect/Debuffs/debuffs';
 import BuffTracker from './StatusEffect/StatusEffectManager';
 export { BuffTracker };
 
-export { ClassName, Classes, ClassDescriptions } from './Character/Classes/classes';
+export { ClassName, Classes } from './Character/Classes/classes';
 
-export { Equip, Equipment, EquipmentItemIds, EquipSlot, equips, defaultEquipment, isValidEquip, createEquipment } from './Equipment/Equipment';
+export { Equip, Equipment, EquipmentItemIds, EquipSlot, equips, isValidEquip, createEquipment } from './Equipment/Equipment';
 export { Item, ItemType, Tier } from './Equipment/Item';
 export { Armour, ArmourId, armour } from './Equipment/Armour';
 export { Belt, BeltId, belts } from './Equipment/Belt';
@@ -20,8 +20,8 @@ export { WeaponType, Weapon, WeaponId, weapons } from './Equipment/Weapon';
 import Battle, { Side, BattleJSON } from './Battle';
 export { Battle, Side, BattleJSON };
 
-import Character, { CharacterInfo, CharacterJSON, newPlayerChar } from './Character/Character';
-export { Character, CharacterInfo, CharacterJSON, newPlayerChar };
+import Character, { CharacterInfo, CharacterJSON } from './Character/Character';
+export { Character, CharacterInfo, CharacterJSON };
 
 import Log, { LogLine, LineType } from './Log';
 export { Log, LogLine, LineType };
@@ -40,5 +40,3 @@ export { HitType };
 
 import lootTables from './lootTables';
 export { lootTables };
-
-export { CharacterStatTemplate, PlayerStats, NPCStats } from './statTemplates';

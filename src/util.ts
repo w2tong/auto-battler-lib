@@ -1,4 +1,9 @@
+import Ability from './Ability/Ability';
+import { BaseAttributes } from './Character/Attributes';
 import Character from './Character/Character';
+import { ClassName } from './Character/Classes/classes';
+import { StatTemplate } from './Character/StatTemplate';
+import { Equipment } from './Equipment/Equipment';
 import { BuffId } from './StatusEffect/Buffs/buffs';
 import { DebuffId } from './StatusEffect/Debuffs/debuffs';
 
@@ -15,4 +20,20 @@ function geOutgoingStatusEffectId(id: BuffId | DebuffId, char: Character) {
     return `${id}-${getCharBattleId(char)}`;
 }
 
-export { getRandomRange, getCharBattleId, geOutgoingStatusEffectId };
+function createPlayerChar({userId, name, level, className, attributes, statTemplate, equipment, ability}: {userId: string, name: string, level: number, className: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: Equipment, ability: Ability}) {
+    return new Character({
+        name,
+        level,
+        className,
+        attributes,
+        statTemplate,
+        equipment,
+        ability,
+        options: {
+            userId
+        }
+    });
+}
+
+
+export { getRandomRange, getCharBattleId, geOutgoingStatusEffectId, createPlayerChar };

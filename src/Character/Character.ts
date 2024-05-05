@@ -1,14 +1,12 @@
 import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
-import { PlayerStats } from '../statTemplates';
-import { AttackType, Weapon, weapons } from '../Equipment/Weapon';
+import { AttackType, Weapon } from '../Equipment/Weapon';
 import { Shield } from '../Equipment/Shield';
 import { Equipment } from '../Equipment/Equipment';
 import HitType from '../HitType';
 import { dice, rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
-import { ClassName, Classes } from './Classes/classes';
 import { Attributes, BaseAttributes } from './Attributes';
 import { StatType, Stats, calcTotalStat } from './Stats';
 import DamageRange, { damageRoll } from '../DamageRange';
@@ -17,10 +15,11 @@ import Ability from '../Ability/Ability';
 import { StatTemplate } from './StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
 import { BuffId } from '../StatusEffect/Buffs/buffs';
+import { ClassName, Classes } from './Classes/classes';
 
 type CharacterInfo = {
     name: string,
-    className: string,
+    className: string | null,
     level: number,
     mainHand: Weapon,
     offHandWeapon?: Weapon,
@@ -32,7 +31,7 @@ type CharacterInfo = {
 
 type CharacterJSON = {
     name: string;
-    className: string;
+    className: string | null;
     level: number;
     currHealth: number;
     maxHealth: number;
@@ -44,12 +43,10 @@ type CharacterJSON = {
 
 // Crit chance, crit dmg, hit chance, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
 export default class Character {
-    static twoHandedMult = 1.5;
-
     private userId?: string;
 
     protected _name: string;
-    protected className: string;
+    protected className: ClassName | null;
 
     protected level: number;
 
@@ -67,7 +64,7 @@ export default class Character {
     protected weaponStyle: WeaponStyle;
 
     // Ability
-    protected ability: Ability;
+    protected ability: Ability | null;
 
     // Buffs/Debuffs
     protected _statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
@@ -76,10 +73,10 @@ export default class Character {
     protected _target: Character|null = null;
     protected _battle : {ref: Battle, side: Side, index: number} | null = null;
 
-    constructor({level, className, baseAttributes, template, equipment, ability, name, options} :{level: number, className: string, baseAttributes: BaseAttributes, template: StatTemplate, equipment: Equipment, ability: Ability, name: string, options?: {userId?: string, currHealthPc?: number, currManaPc?: number}}) {
+    constructor({name, level, className, attributes, statTemplate, equipment, ability, options} :{name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: Equipment, ability?: Ability, options?: {userId?: string, currHealthPc?: number, currManaPc?: number}}) {
         this._name = name;
         this.level = level;
-        this.className = className;
+        this.className = className ?? null;
 
         // Weapons and Potion
         this._mainHand = Object.assign({}, equipment.mainHand);
@@ -95,15 +92,15 @@ export default class Character {
         this.potion = Object.assign({}, equipment.potion);
 
         // Attributes
-        this._attributes = new Attributes(baseAttributes, equipment);
+        this._attributes = new Attributes(attributes, equipment);
         this._stats = new Stats({
             level: this.level,
-            template,
+            template: statTemplate,
             attributes: this.attributes,
             equipment,
             weaponStyle: this.weaponStyle
         });
-        this.ability = ability;
+        this.ability = ability ?? (className ? Classes[className].ability : null);
         this._currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = calcTotalStat(this.stats[StatType.StartingMana]);
 
@@ -214,24 +211,25 @@ export default class Character {
     doTurn(): void {
         this.statusEffectManager.onTurnStart();
         this.usePotion();
-        if (this.stats.maxMana !== 0) {
-            if (this.currentMana >= this.stats.maxMana) {
-                this.ability.func(this);
-            }
-            else {
-                this.weaponAttack();
-            }
-            this.addMana(this.stats.manaRegen);
+
+        if (this.ability && this.currentMana >= this.stats.maxMana) {
+            this.ability.func(this);
         }
         else {
             this.weaponAttack();
         }
+        this.addMana(this.stats.manaRegen);
         this.statusEffectManager.onTurnEnd();
     }
 
+    
     hitRoll({target, attackType, isOffHand}: {target: Character, attackType: AttackType, isOffHand: boolean}): boolean {
         if (isOffHand && !this.offHandWeapon) return false;
+        // TODO: add crit miss (always 5% chance to miss) and crit hits (always 5% chance to hit)
+        // rolling 1-5 misses
+        // rolling 96-100 hits
         const roll = rollDice(dice['1d100']);
+        
         let hitChance = this.stats.hitChance;
         // Add off-hand hit chance
         if (isOffHand) hitChance += this.stats.offHandHitChance;
@@ -458,24 +456,4 @@ export default class Character {
     }
 }
 
-function newPlayerChar(userId: string, character: {name: string, level: number; class: ClassName}, equipment: Equipment) {
-    // TODO: remove default equipment from player chars
-    const classDefault = defaultEquipment[character.class];
-    // Set main hand to class default weapon if missing
-    if (classDefault.mainHand && !equipment.mainHand) {
-        if ((classDefault.mainHand.twoHanded && !equipment.offHandWeapon && !equipment.offHandShield) || !classDefault.mainHand.twoHanded) {
-            equipment.mainHand = classDefault.mainHand;
-        }
-        else {
-            equipment.mainHand = weapons.unarmed0;
-        }
-    }
-    // Set off hand to class default weapon/shield if missing and main hand is not two-handed
-    if ((classDefault.offHandWeapon || classDefault.offHandShield) && !equipment.offHandWeapon && !equipment.offHandShield && equipment.mainHand && !equipment.mainHand.twoHanded) {
-        equipment.offHandWeapon = classDefault.offHandWeapon;
-        equipment.offHandShield = classDefault.offHandShield;
-    }
-    return new Classes[character.class](character.level, PlayerStats[character.class], equipment, character.name, {userId});
-}
-
-export { CharacterInfo, CharacterJSON, newPlayerChar };
+export { CharacterInfo, CharacterJSON };
