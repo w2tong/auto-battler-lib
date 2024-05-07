@@ -1,5 +1,5 @@
 import AttackType from '../AttackType';
-import { DebuffId } from '../StatusEffect/Debuffs/debuffs';
+import DebuffId from '../StatusEffect/DebuffId';
 import Ability from './Ability';
 
 const NAME = 'Firebolt';

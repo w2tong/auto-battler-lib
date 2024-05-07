@@ -1,4 +1,4 @@
-import { BuffId } from '../StatusEffect/Buffs/buffs';
+import BuffId from '../StatusEffect/BuffId';
 import Ability from './Ability';
 
 const NAME = 'Vanish';

@@ -1,21 +1,8 @@
+import ArmourType from '../ArmourType';
 import { AttributeType } from '../Character/Attributes';
 import Character from '../Character/Character';
 import { StatType } from '../Character/Stats';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
-
-enum ArmourType {
-    Unarmoured = 'Unarmoured',
-    Light = 'Light Armour',
-    Medium = 'Medium Armour',
-    Heavy = 'Heavy Armour',
-}
-
-const ArmourTypeDodgeMultiplier: {[type in ArmourType]: number} = {
-    [ArmourType.Unarmoured]: 1,
-    [ArmourType.Light]: 0.9,
-    [ArmourType.Medium]: 0.6,
-    [ArmourType.Heavy]: 0.4,
-};
 
 interface Armour extends Item {
     itemType: ItemType.Armour;
@@ -369,4 +356,4 @@ const armour: {[id in ArmourId]: Armour} = {
     },
 } as const;
 
-export { ArmourTypeDodgeMultiplier, Armour, ArmourId, armour };
+export { Armour, ArmourId, armour };

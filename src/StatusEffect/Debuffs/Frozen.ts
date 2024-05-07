@@ -1,5 +1,5 @@
-import Debuff from './Debuff';
-import { DebuffId } from './debuffs';
+import Debuff from '../Debuff';
+import DebuffId from '../DebuffId';
 
 // TODO: skip turn on turn start
 export default class Frozen extends Debuff {

@@ -133,6 +133,10 @@ class Attributes {
             this[type as AttributeType].bonus += val;
         }
     }
+
+    addBonus(type: AttributeType, num: number) {
+        this[type].bonus += num;
+    }
 }
 
 export { Attribute, AttributeType, BaseAttributes, AttributeStatScaling, Attributes, StartingAttributePoints, AttributePointsPerLevel };

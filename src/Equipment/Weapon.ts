@@ -5,7 +5,7 @@ import { StatType } from '../Character/Stats';
 import DamageRange from '../DamageRange';
 import { AttributeType } from '../Character/Attributes';
 import AttackType from '../AttackType';
-import { DebuffId } from '../StatusEffect/Debuffs/debuffs';
+import DebuffId from '../StatusEffect/DebuffId';
 
 enum WeaponType {
     Unarmed = 'Unarmed',

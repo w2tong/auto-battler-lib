@@ -1,5 +1,5 @@
-import Buff from './Buff';
-import { BuffId } from './buffs';
+import Buff from '../Buff';
+import BuffId from '../BuffId';
 
 export default class Invisible extends Buff {
     id = BuffId.Invisible;

@@ -1,6 +1,6 @@
 import Character from '../Character/Character';
-import { BuffId } from './Buffs/buffs';
-import { DebuffId } from './Debuffs/debuffs';
+import BuffId from './BuffId';
+import DebuffId from './DebuffId';
 
 enum StatusEffectType {
     Buff = 'Buff',

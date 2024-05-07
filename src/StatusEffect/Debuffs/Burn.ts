@@ -1,5 +1,5 @@
-import Debuff from './Debuff';
-import { DebuffId } from './debuffs';
+import Debuff from '../Debuff';
+import DebuffId from '../DebuffId';
 
 export default class Burn extends Debuff {
     id = DebuffId.Burn;

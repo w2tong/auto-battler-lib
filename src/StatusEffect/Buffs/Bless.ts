@@ -1,5 +1,5 @@
-import Buff from './Buff';
-import { BuffId } from './buffs';
+import Buff from '../Buff';
+import BuffId from '../BuffId';
 
 // TODO: add attribute/stat buff system
 export default class Bless extends Buff {

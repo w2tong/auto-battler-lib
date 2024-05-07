@@ -10,12 +10,12 @@ import { Potion } from '../Equipment/Potion';
 import { Attributes, BaseAttributes } from './Attributes';
 import { StatType, Stats, calcTotalStat } from './Stats';
 import DamageRange, { damageRoll } from '../DamageRange';
-import { WeaponStyle } from '../Equipment/Hands';
 import Ability from '../Ability/Ability';
 import { StatTemplate } from './StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
-import { BuffId } from '../StatusEffect/Buffs/buffs';
 import { ClassName, Classes } from './Classes/classes';
+import WeaponStyle from '../WeaponStyle';
+import BuffId from '../StatusEffect/BuffId';
 
 type CharacterInfo = {
     name: string,
@@ -48,7 +48,7 @@ export default class Character {
     protected _name: string;
     protected className: ClassName | null;
 
-    protected level: number;
+    protected _level: number;
 
     // Attributes and Stats
     protected _attributes: Attributes;
@@ -61,7 +61,7 @@ export default class Character {
     protected offHandWeapon?: Weapon;
     protected offHandShield?: Shield;
     protected potion: Potion;
-    protected weaponStyle: WeaponStyle;
+    protected _weaponStyle: WeaponStyle;
 
     // Ability
     protected ability: Ability | null;
@@ -75,13 +75,13 @@ export default class Character {
 
     constructor({name, level, className, attributes, statTemplate, equipment, ability, options} :{name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: Equipment, ability?: Ability, options?: {userId?: string, currHealthPc?: number, currManaPc?: number}}) {
         this._name = name;
-        this.level = level;
+        this._level = level;
         this.className = className ?? null;
 
         // Weapons and Potion
         this._mainHand = Object.assign({}, equipment.mainHand);
         this.offHandWeapon = Object.assign({}, equipment.offHandWeapon);
-        this.weaponStyle = 
+        this._weaponStyle = 
             // If dual-wielding
             this._mainHand && this.offHandWeapon ? WeaponStyle.DualWield :
             // If two-handing
@@ -94,11 +94,10 @@ export default class Character {
         // Attributes
         this._attributes = new Attributes(attributes, equipment);
         this._stats = new Stats({
-            level: this.level,
+            character: this,
             template: statTemplate,
             attributes: this.attributes,
             equipment,
-            weaponStyle: this.weaponStyle
         });
         this.ability = ability ?? (className ? Classes[className].ability : null);
         this._currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
@@ -119,12 +118,20 @@ export default class Character {
         return this._name;
     }
 
+    get level() {
+        return this._level;
+    }
+
     get attributes() {
         return this._attributes;
     }
 
     get stats() {
         return this._stats;
+    }
+
+    get weaponStyle() {
+        return this._weaponStyle;
     }
 
     get currentHealth() {

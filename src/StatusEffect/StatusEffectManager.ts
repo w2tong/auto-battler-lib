@@ -1,9 +1,11 @@
 import Character from '../Character/Character';
 import { geOutgoingStatusEffectId, getCharBattleId } from '../util';
-import Buff from './Buffs/Buff';
-import { BuffId, Buffs } from './Buffs/buffs';
-import Debuff from './Debuffs/Debuff';
-import { DebuffId, Debuffs } from './Debuffs/debuffs';
+import Buff from './Buff';
+import BuffId from './BuffId';
+import buffs from './buffs';
+import Debuff from './Debuff';
+import DebuffId from './DebuffId';
+import debuffs from './debuffs';
 
 export default class StatusEffectManager {
     private char: Character;
@@ -38,7 +40,7 @@ export default class StatusEffectManager {
     }
 
     addBuff(id: BuffId, source: Character, stacks: number) {
-        if (!this.buffs[id]) this.buffs[id] = new Buffs[id](this.char);
+        if (!this.buffs[id]) this.buffs[id] = new buffs[id](this.char);
         const buff = this.buffs[id];
         if (!buff) return;
         buff.add(getCharBattleId(source), source, stacks);
@@ -47,7 +49,7 @@ export default class StatusEffectManager {
     }
 
     addDebuff(id: DebuffId, source: Character, stacks: number) {
-        if (!this.debuffs[id]) this.debuffs[id] = new Debuffs[id](this.char);
+        if (!this.debuffs[id]) this.debuffs[id] = new debuffs[id](this.char);
         const debuff = this.debuffs[id];
         if (!debuff) return;
         debuff.add(getCharBattleId(source), source, stacks);

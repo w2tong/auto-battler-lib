@@ -1,12 +1,6 @@
 import { StatType } from '../Character/Stats';
+import WeaponStyle from '../WeaponStyle';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
-
-enum WeaponStyle {
-    DualWield = 'Dual Wield',
-    TwoHanded = 'Two-Handed',
-    OneHanded = 'One-Handed',
-    Ranged = 'Ranged'
-}
 
 interface Hands extends Item {
     itemType: ItemType.Hands
@@ -136,4 +130,4 @@ const hands: {[id in HandsId]: Hands} = {
     },
 } as const;
 
-export { WeaponStyle, Hands, HandsId, hands };
+export { Hands, HandsId, hands };

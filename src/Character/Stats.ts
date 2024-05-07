@@ -1,18 +1,27 @@
-import { ArmourTypeDodgeMultiplier } from '../Equipment/Armour';
+import ArmourType from '../ArmourType';
 import { Equipment } from '../Equipment/Equipment';
-import { WeaponStyle } from '../Equipment/Hands';
 import { ItemStats } from '../Equipment/Item';
+import WeaponStyle from '../WeaponStyle';
 import { AttributeStatScaling, AttributeType, Attributes } from './Attributes';
+import Character from './Character';
 import { StatTemplate } from './StatTemplate';
 
 interface Stat {
     base: number;
+    attribute: number;
     bonus: number;
 }
 
 function calcTotalStat(stat: Stat) {
-    return stat.base + stat.bonus;
+    return stat.base + stat.attribute + stat.bonus;
 }
+
+const ArmourTypeDodgeMultiplier: {[type in ArmourType]: number} = {
+    [ArmourType.Unarmoured]: 1,
+    [ArmourType.Light]: 0.9,
+    [ArmourType.Medium]: 0.6,
+    [ArmourType.Heavy]: 0.4,
+};
 
 enum StatType {
     // Defensive Stats
@@ -86,78 +95,78 @@ class Stats {
     static DUAL_WIELD_HIT_CHANCE_PENALTY = -10;
     static OFF_HAND_HIT_CHANCE_PENALTY = -20;
 
-    weaponStyle: WeaponStyle;
+    character: Character;
     armourTypeDodgeMultiplier: number;
 
     // Defensive
-    [StatType.MaxHealth]: Stat = {base: Stats.DEFAULT_MAX_HEALTH, bonus: 0};
-    [StatType.HealthPercent]: Stat = {base: 0, bonus: 0};
-    [StatType.Armour]: Stat = {base: 0, bonus: 0};
-    [StatType.Deflection]: Stat = {base: 0, bonus: 0};
-    [StatType.Dodge]: Stat = {base: Stats.DEFAULT_DODGE, bonus: 0};
-    [StatType.StatusResistance]: Stat = {base: 0, bonus: 0};
-    [StatType.Thorns]: Stat = {base: 0, bonus: 0};
+    [StatType.MaxHealth]: Stat = {base: Stats.DEFAULT_MAX_HEALTH, attribute: 0, bonus: 0};
+    [StatType.HealthPercent]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.Armour]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.Deflection]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.Dodge]: Stat = {base: Stats.DEFAULT_DODGE, attribute: 0, bonus: 0};
+    [StatType.StatusResistance]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.Thorns]: Stat = {base: 0, attribute: 0, bonus: 0};
     // Block
-    [StatType.BlockChance]: Stat = {base: 0, bonus: 0};
-    [StatType.BlockPower]: Stat = {base: 0, bonus: 0};
+    [StatType.BlockChance]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.BlockPower]: Stat = {base: 0, attribute: 0, bonus: 0};
     
     // Hit Chance
-    [StatType.HitChance]: Stat = {base: Stats.DEFAULT_HIT_CHANCE, bonus: 0};
-    [StatType.OffHandHitChance]: Stat = {base: 0, bonus: 0};
-    [StatType.MeleeHitChance]: Stat = {base: 0, bonus: 0};
-    [StatType.RangedHitChance]: Stat = {base: 0, bonus: 0};
+    [StatType.HitChance]: Stat = {base: Stats.DEFAULT_HIT_CHANCE, attribute: 0, bonus: 0};
+    [StatType.OffHandHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.MeleeHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.RangedHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
 
     // Damage
-    [StatType.Damage]: Stat = {base: 0, bonus: 0};
-    [StatType.OffHandDamage]: Stat = {base: 0, bonus: 0};
-    [StatType.MeleeDamage]: Stat = {base: 0, bonus: 0};
-    [StatType.RangedDamage]: Stat = {base: 0, bonus: 0};
-    [StatType.DamagePercent]: Stat = {base: 0, bonus: 0};
-    [StatType.MeleeDamagePercent]: Stat = {base: 0, bonus: 0};
-    [StatType.RangedDamagePercent]: Stat = {base: 0, bonus: 0};
+    [StatType.Damage]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.OffHandDamage]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.MeleeDamage]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.RangedDamage]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.DamagePercent]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.MeleeDamagePercent]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.RangedDamagePercent]: Stat = {base: 0, attribute: 0, bonus: 0};
 
     // Critical
-    [StatType.CriticalChance]: Stat = {base: Stats.DEFAULT_CRIT_CHANCE, bonus: 0};
-    [StatType.CriticalDamage]: Stat = {base: Stats.DEFAULT_CRIT_DAMAGE, bonus: 0};
+    [StatType.CriticalChance]: Stat = {base: Stats.DEFAULT_CRIT_CHANCE, attribute: 0, bonus: 0};
+    [StatType.CriticalDamage]: Stat = {base: Stats.DEFAULT_CRIT_DAMAGE, attribute: 0, bonus: 0};
 
     // Defense Reduction
-    [StatType.ArmourPenetration]: Stat = {base: 0, bonus: 0};
-    [StatType.DodgeReduction]: Stat = {base: 0, bonus: 0};
+    [StatType.ArmourPenetration]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.DodgeReduction]: Stat = {base: 0, attribute: 0, bonus: 0};
     
     // Spell
-    [StatType.SpellHitChance]: Stat = {base: 0, bonus: 0};
-    [StatType.SpellPower]: Stat = {base: 0, bonus: 0};
-    [StatType.SpellPowerPercent]: Stat = {base: 0, bonus: 0};
+    [StatType.SpellHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.SpellPower]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.SpellPowerPercent]: Stat = {base: 0, attribute: 0, bonus: 0};
     
     // Mana
-    [StatType.MaxMana]: Stat = {base: 0, bonus: 0};
-    [StatType.StartingMana]: Stat = {base: 0, bonus: 0};
-    [StatType.ManaRegen]: Stat = {base: Stats.DEFAULT_MANA_REGEN, bonus: 0};
-    [StatType.ManaOnHit]: Stat = {base: Stats.DEFAULT_MANA_ON_HIT, bonus: 0};
+    [StatType.MaxMana]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.StartingMana]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.ManaRegen]: Stat = {base: Stats.DEFAULT_MANA_REGEN, attribute: 0, bonus: 0};
+    [StatType.ManaOnHit]: Stat = {base: Stats.DEFAULT_MANA_ON_HIT, attribute: 0, bonus: 0};
     
     // Initiative
-    [StatType.Initiative]: Stat = {base: 0, bonus: 0};
+    [StatType.Initiative]: Stat = {base: 0, attribute: 0, bonus: 0};
     
     // Potion
-    [StatType.PotionCharges]: Stat = {base: 0, bonus: 0};
-    [StatType.PotionHealing]: Stat = {base: 0, bonus: 0};
-    [StatType.PotionEffectiveness]: Stat = {base: 0, bonus: 0};
+    [StatType.PotionCharges]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.PotionHealing]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.PotionEffectiveness]: Stat = {base: 0, attribute: 0, bonus: 0};
 
-    constructor({level, template, attributes, equipment, weaponStyle}: {level: number, template: StatTemplate, attributes?: Attributes, equipment: Equipment, weaponStyle: WeaponStyle}) {
+    constructor({character, template, attributes, equipment}: {character: Character, attributes: Attributes, template: StatTemplate, equipment: Equipment}) {
+        this.character = character;
+
         // Set default max health
-        this[StatType.MaxHealth].base = Stats.DEFAULT_MAX_HEALTH + Stats.DEFAULT_MAX_HEALTH_PER_LVL * level;
+        this[StatType.MaxHealth].base = Stats.DEFAULT_MAX_HEALTH + Stats.DEFAULT_MAX_HEALTH_PER_LVL * character.level;
 
         // Set stats to template
         for (const [stat, {base, perLvl}] of Object.entries(template)) {
-            this[stat as StatType].base = base + (perLvl ? perLvl * level : 0);
+            this[stat as StatType].base = base + (perLvl ? perLvl * (character.level - 1) : 0);
         }
 
         // Add stats from attributes
         if (attributes) {
-            for (const [attributeType, {base, bonus}] of Object.entries(attributes)) {
-                for (const [statType, scaling] of Object.entries(AttributeStatScaling[attributeType as AttributeType])) {
-                    this[statType as StatType].base += (base + bonus) * scaling;
-                }
+            for (const [type, {base, bonus}] of Object.entries(attributes)) {
+                this.setStatAttribute(type as AttributeType, base + bonus);
             }
         }
 
@@ -167,13 +176,12 @@ class Stats {
             this[StatType.OffHandHitChance].bonus += Stats.OFF_HAND_HIT_CHANCE_PENALTY;
         }
 
-        this.weaponStyle = weaponStyle;
         this.armourTypeDodgeMultiplier =  equipment.armour ? ArmourTypeDodgeMultiplier[equipment.armour.type] : 0;
 
         // Add stats from equipment
         if (equipment.armour) this.addItemStats(equipment.armour.stats);
         if (equipment.belt) this.addItemStats(equipment.belt.stats);
-        if (equipment.hands && ((equipment.hands.weaponStyle && equipment.hands.weaponStyle === weaponStyle) || !equipment.hands.weaponStyle)) {
+        if (equipment.hands && ((equipment.hands.weaponStyle && equipment.hands.weaponStyle === character.weaponStyle) || !equipment.hands.weaponStyle)) {
             this.addItemStats(equipment.hands.stats);
         }
         if (equipment.head) this.addItemStats(equipment.head.stats);
@@ -188,6 +196,12 @@ class Stats {
         // TODO: Math.floor stats that are needed
     }
 
+    setStatAttribute(type: AttributeType, num: number): void {
+        for (const [statType, scaling] of Object.entries(AttributeStatScaling[type as AttributeType])) {
+            this[statType as StatType].attribute = (num) * scaling;
+        }
+    }
+
     addItemStats(itemStats?: ItemStats) {
         if (!itemStats) return;
         for (const [type, val] of Object.entries(itemStats)) {
@@ -196,7 +210,7 @@ class Stats {
     }
 
     getTwoHandedMultiplier(): number {
-        return (1 + this.weaponStyle === WeaponStyle.TwoHanded ? Stats.TwoHandedBonus : 0);
+        return (1 + this.character.weaponStyle === WeaponStyle.TwoHanded ? Stats.TwoHandedBonus : 0);
     }
 
     // Defensive

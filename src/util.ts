@@ -4,8 +4,8 @@ import Character from './Character/Character';
 import { ClassName } from './Character/Classes/classes';
 import { StatTemplate } from './Character/StatTemplate';
 import { Equipment } from './Equipment/Equipment';
-import { BuffId } from './StatusEffect/Buffs/buffs';
-import { DebuffId } from './StatusEffect/Debuffs/debuffs';
+import BuffId from './StatusEffect/BuffId';
+import DebuffId from './StatusEffect/DebuffId';
 import NPC from './npc/NPC';
 
 // Random integer between 0 and max
@@ -24,7 +24,7 @@ function geOutgoingStatusEffectId(id: BuffId | DebuffId, char: Character) {
 function createNPCChar(npc: NPC, level: number, num?: number): Character {
     const attributes: BaseAttributes = {};
     for (const [type, {base, perLvl}] of Object.entries(npc.attributes)) {
-        attributes[type as AttributeType] = base + (perLvl ? perLvl * level : 0);
+        attributes[type as AttributeType] = base + (perLvl ? perLvl * (level - 1) : 0);
     }
 
     return new Character({
