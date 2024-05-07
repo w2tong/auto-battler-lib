@@ -165,9 +165,7 @@ class Stats {
 
         // Add stats from attributes
         if (attributes) {
-            for (const [type, {base, bonus}] of Object.entries(attributes)) {
-                this.setStatAttribute(type as AttributeType, base + bonus);
-            }
+            this.setStatsAttribute(attributes);
         }
 
         // Add off-hand penalties
@@ -196,9 +194,19 @@ class Stats {
         // TODO: Math.floor stats that are needed
     }
 
-    setStatAttribute(type: AttributeType, num: number): void {
-        for (const [statType, scaling] of Object.entries(AttributeStatScaling[type as AttributeType])) {
-            this[statType as StatType].attribute = (num) * scaling;
+    setStatsAttribute(attributes: Attributes): void {
+        // Set attribute scaling stats to 0
+        for (const stats of Object.values(AttributeStatScaling)) {
+            for (const stat of Object.keys(stats)) {
+                this[stat as StatType].attribute = 0;
+            }
+        }
+
+        // Calculate attribute scaling stats
+        for (const [type, {base, bonus}] of Object.entries(attributes)) {
+            for (const [statType, scaling] of Object.entries(AttributeStatScaling[type as AttributeType])) {
+                this[statType as StatType].attribute += (base + bonus) * scaling;
+            }
         }
     }
 
