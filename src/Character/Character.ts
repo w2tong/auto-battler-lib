@@ -197,7 +197,7 @@ export default class Character {
 
     usePotion(): void {
         if (this.potion && this.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth/2) {
-            const potionHeal = Math.round((rollDice(this.potion.dice) + this.potion.bonus) * (1 + calcTotalStat(this.stats[StatType.PotionEffectiveness])/100));
+            const potionHeal = Math.round((rollDice(this.potion.dice) + this.potion.bonus) * (1 + calcTotalStat(this.stats[StatType.PotionEffectiveness])));
             this.addHealth(potionHeal);
             this.potion.charges -= 1;
             if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
@@ -299,11 +299,11 @@ export default class Character {
                 sneakDamage = Invisible.damage * this.statusEffectManager.getBuffStacks(BuffId.Invisible);
             }
 
-            damage = (damage + damageBonus + spellDamage + sneakDamage) * (1 + (damagePercentBonus/100));
+            damage = (damage + damageBonus + spellDamage + sneakDamage) * (1 + (damagePercentBonus));
             
             const crit = this.critRoll();
             if (crit) {
-                damage *= 1 + this.stats.criticalDamage/100;
+                damage *= this.stats.criticalDamage;
                 hitType = HitType.Crit;
             }
             

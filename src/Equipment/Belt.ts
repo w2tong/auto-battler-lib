@@ -44,7 +44,7 @@ const belts: {[id in BeltId]: Belt} = {
         img: 'belt-red-pot.png',
 
         stats: {
-            [StatType.PotionEffectiveness]: 25
+            [StatType.PotionEffectiveness]: 0.25
         }
     },
     effBelt1: {
@@ -55,7 +55,7 @@ const belts: {[id in BeltId]: Belt} = {
         img: 'belt-red-pot.png',
         
         stats: {
-            [StatType.PotionEffectiveness]: 50
+            [StatType.PotionEffectiveness]: 0.50
         }
     },
     effBelt2: {
@@ -66,7 +66,7 @@ const belts: {[id in BeltId]: Belt} = {
         img: 'belt-red-pot.png',
         
         stats: {
-            [StatType.PotionEffectiveness]: 75
+            [StatType.PotionEffectiveness]: 0.75
         }
     },
     effBelt3: {
@@ -77,7 +77,7 @@ const belts: {[id in BeltId]: Belt} = {
         img: 'belt-red-pot.png',
         
         stats: {
-            [StatType.PotionEffectiveness]: 100
+            [StatType.PotionEffectiveness]: 1.00
         }
     },
     healBelt0: {

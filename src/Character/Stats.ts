@@ -70,21 +70,21 @@ enum StatType {
 type BaseStats = {[stat in StatType]?: number};
 
 class Stats {
-    static TwoHandedBonus = 50;
+    static TwoHandedBonus = 0.5;
 
     static DEFAULT_MAX_HEALTH = 20;
     static DEFAULT_MAX_HEALTH_PER_LVL = 4;
     static DEFAULT_DODGE = 50;
     static DEFAULT_HIT_CHANCE = 50;
     static DEFAULT_CRIT_CHANCE = 5;
-    static DEFAULT_CRIT_DAMAGE = 50;
+    static DEFAULT_CRIT_DAMAGE = 1.5;
 
     static DEFAULT_MAX_MANA = 100;
     static DEFAULT_MANA_ON_HIT = 5;
     static DEFAULT_MANA_REGEN = 5;
 
-    static DualWieldPenalty = -10;
-    static OffHandPenalty = -20;
+    static DUAL_WIELD_HIT_CHANCE_PENALTY = -10;
+    static OFF_HAND_HIT_CHANCE_PENALTY = -20;
 
     weaponStyle: WeaponStyle;
     armourTypeDodgeMultiplier: number;
@@ -163,8 +163,8 @@ class Stats {
 
         // Add off-hand penalties
         if (equipment.offHandWeapon) {
-            this[StatType.HitChance].bonus += Stats.DualWieldPenalty;
-            this[StatType.OffHandHitChance].bonus += Stats.OffHandPenalty;
+            this[StatType.HitChance].bonus += Stats.DUAL_WIELD_HIT_CHANCE_PENALTY;
+            this[StatType.OffHandHitChance].bonus += Stats.OFF_HAND_HIT_CHANCE_PENALTY;
         }
 
         this.weaponStyle = weaponStyle;
@@ -196,12 +196,12 @@ class Stats {
     }
 
     getTwoHandedMultiplier(): number {
-        return (1 + this.weaponStyle === WeaponStyle.TwoHanded ? Stats.TwoHandedBonus/100 : 0);
+        return (1 + this.weaponStyle === WeaponStyle.TwoHanded ? Stats.TwoHandedBonus : 0);
     }
 
     // Defensive
     get maxHealth() {
-        return calcTotalStat(this[StatType.MaxHealth]) * (1 + this.healthPercent/100);
+        return calcTotalStat(this[StatType.MaxHealth]) * (1 + this.healthPercent);
     }
     get healthPercent() {
         return calcTotalStat(this[StatType.HealthPercent]);
@@ -285,7 +285,7 @@ class Stats {
         return calcTotalStat(this[StatType.SpellHitChance]);
     }
     get spellPower() {
-        return calcTotalStat(this[StatType.SpellPower]) * (1 + this.spellPowerPercent/100);
+        return calcTotalStat(this[StatType.SpellPower]) * (1 + this.spellPowerPercent);
     }
     get spellPowerPercent() {
         return calcTotalStat(this[StatType.SpellPowerPercent]);
