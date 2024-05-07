@@ -1,6 +1,7 @@
 import DoubleStrike from '../../Ability/DoubleStrike';
-import { AttributeType } from '../Attributes';
-import { StatType, Stats } from '../Stats';
+import { AttributeType } from '../Attributes/Attributes';
+import StatType from '../Stats/StatType';
+import { Stats } from '../Stats/Stats';
 import Class from './Class';
 
 const Fighter: Class =  {

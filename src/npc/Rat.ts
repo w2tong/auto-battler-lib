@@ -1,5 +1,5 @@
-import { AttributeType } from '../Character/Attributes';
-import { StatType, Stats } from '../Character/Stats';
+import { AttributeType } from '../Character/Attributes/Attributes';
+import { StatType, Stats } from '../Character/Stats/Stats';
 import { weapons } from '../Equipment/Weapon';
 import NPC from './NPC';
 

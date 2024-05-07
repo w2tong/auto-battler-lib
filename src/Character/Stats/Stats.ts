@@ -1,16 +1,13 @@
-import ArmourType from '../ArmourType';
-import { Equipment } from '../Equipment/Equipment';
-import { ItemStats } from '../Equipment/Item';
-import WeaponStyle from '../WeaponStyle';
-import { AttributeStatScaling, AttributeType, Attributes } from './Attributes';
-import Character from './Character';
+import ArmourType from '../../ArmourType';
+import { Equipment } from '../../Equipment/Equipment';
+import { ItemStats } from '../../Equipment/Item';
+import WeaponStyle from '../../WeaponStyle';
+import AttributeStatScaling from '../Attributes/AttributeStatScaling';
+import { AttributeType } from '../Attributes/Attributes';
+import Character from '../Character';
+import Stat from './Stat';
 import { StatTemplate } from './StatTemplate';
-
-interface Stat {
-    base: number;
-    attribute: number;
-    bonus: number;
-}
+import StatType from './StatType';
 
 function calcTotalStat(stat: Stat) {
     return stat.base + stat.attribute + stat.bonus;
@@ -22,59 +19,6 @@ const ArmourTypeDodgeMultiplier: {[type in ArmourType]: number} = {
     [ArmourType.Medium]: 0.6,
     [ArmourType.Heavy]: 0.4,
 };
-
-enum StatType {
-    // Defensive Stats
-    MaxHealth = 'Max Health',
-    HealthPercent = '% Health',
-    Armour = 'Armour',
-    Deflection = 'Deflection',
-    Dodge = 'Dodge',
-    StatusResistance = 'Status Resistance',
-    Thorns = 'Thorns',
-
-    BlockChance = 'Block Chance',
-    BlockPower = 'Block Power',
-
-    // Offensive Stats
-    HitChance = 'Hit Chance',
-    OffHandHitChance = 'Off-Hand Hit Chance',
-    MeleeHitChance = 'Melee Hit Chance',
-    RangedHitChance = 'Ranged Hit Chance',
-
-    Damage = 'Damage',
-    OffHandDamage = 'Off-Hand Damage',
-    MeleeDamage = 'Melee Damage',
-    RangedDamage = 'Ranged Damage',
-    DamagePercent = '% Damage',
-    MeleeDamagePercent = '% Melee Damage',
-    RangedDamagePercent = '% Ranged Damage',
-
-    CriticalChance = 'Critical Chance',
-    CriticalDamage = 'Critical Damage',
-
-    ArmourPenetration = 'Armour Penetration',
-    DodgeReduction = 'Dodge Reduction',
-
-    // Spell
-    SpellHitChance = 'Spell Hit Chance',
-    SpellPower = 'Spell Power',
-    SpellPowerPercent = '% Spell Power',
-
-    // Mana
-    MaxMana = 'Max Mana',
-    StartingMana = 'Starting Mana',
-    ManaRegen = 'Mana Regen',
-    ManaOnHit = 'Mana On Hit',
-
-    // Initiative
-    Initiative = 'Initiative',
-
-    // Potion
-    PotionCharges = 'Potion Charges',
-    PotionHealing = 'Potion Healing',
-    PotionEffectiveness = 'Potion Effectiveness'
-}
 
 type BaseStats = {[stat in StatType]?: number};
 
@@ -152,7 +96,7 @@ class Stats {
     [StatType.PotionHealing]: Stat = {base: 0, attribute: 0, bonus: 0};
     [StatType.PotionEffectiveness]: Stat = {base: 0, attribute: 0, bonus: 0};
 
-    constructor({character, template, attributes, equipment}: {character: Character, attributes: Attributes, template: StatTemplate, equipment: Equipment}) {
+    constructor({character, template, equipment}: {character: Character, template: StatTemplate, equipment: Equipment}) {
         this.character = character;
 
         // Set default max health
@@ -164,9 +108,7 @@ class Stats {
         }
 
         // Add stats from attributes
-        if (attributes) {
-            this.setStatsAttribute(attributes);
-        }
+        this.setStatsAttribute();
 
         // Add off-hand penalties
         if (equipment.offHandWeapon) {
@@ -194,7 +136,7 @@ class Stats {
         // TODO: Math.floor stats that are needed
     }
 
-    setStatsAttribute(attributes: Attributes): void {
+    setStatsAttribute(): void {
         // Set attribute scaling stats to 0
         for (const stats of Object.values(AttributeStatScaling)) {
             for (const stat of Object.keys(stats)) {
@@ -203,7 +145,7 @@ class Stats {
         }
 
         // Calculate attribute scaling stats
-        for (const [type, {base, bonus}] of Object.entries(attributes)) {
+        for (const [type, {base, bonus}] of Object.entries(this.character.attributes)) {
             for (const [statType, scaling] of Object.entries(AttributeStatScaling[type as AttributeType])) {
                 this[statType as StatType].attribute += (base + bonus) * scaling;
             }
@@ -213,7 +155,7 @@ class Stats {
     addItemStats(itemStats?: ItemStats) {
         if (!itemStats) return;
         for (const [type, val] of Object.entries(itemStats)) {
-            this[type as StatType].bonus += val;
+            if (val) this[type as StatType].bonus += val;
         }
     }
 
@@ -330,4 +272,4 @@ class Stats {
     }
 }
 
-export { Stat, StatType, BaseStats, Stats, calcTotalStat };
+export { Stat, BaseStats, Stats, calcTotalStat };

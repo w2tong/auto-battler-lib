@@ -1,21 +1,21 @@
 import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
-import { AttackType, Weapon } from '../Equipment/Weapon';
-import { Shield } from '../Equipment/Shield';
+import { AttackType, Weapon, weapons } from '../Equipment/Weapon';
 import { Equipment } from '../Equipment/Equipment';
 import HitType from '../HitType';
 import { dice, rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
-import { Attributes, BaseAttributes } from './Attributes';
-import { StatType, Stats, calcTotalStat } from './Stats';
+import { Attributes, BaseAttributes } from './Attributes/Attributes';
+import { Stats, calcTotalStat } from './Stats/Stats';
 import DamageRange, { damageRoll } from '../DamageRange';
 import Ability from '../Ability/Ability';
-import { StatTemplate } from './StatTemplate';
+import { StatTemplate } from './Stats/StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
 import { ClassName, Classes } from './Classes/classes';
 import WeaponStyle from '../WeaponStyle';
 import BuffId from '../StatusEffect/BuffId';
+import StatType from './Stats/StatType';
 
 type CharacterInfo = {
     name: string,
@@ -50,18 +50,14 @@ export default class Character {
 
     protected _level: number;
 
+    // Equipment
+    protected _equipment: Equipment;
+
     // Attributes and Stats
     protected _attributes: Attributes;
     protected _stats: Stats;
     protected _currentHealth: number;
     protected _currentMana: number;
-
-    // Equipment
-    protected _mainHand: Weapon;
-    protected offHandWeapon?: Weapon;
-    protected offHandShield?: Shield;
-    protected potion: Potion;
-    protected _weaponStyle: WeaponStyle;
 
     // Ability
     protected ability: Ability | null;
@@ -78,25 +74,13 @@ export default class Character {
         this._level = level;
         this.className = className ?? null;
 
-        // Weapons and Potion
-        this._mainHand = Object.assign({}, equipment.mainHand);
-        this.offHandWeapon = Object.assign({}, equipment.offHandWeapon);
-        this._weaponStyle = 
-            // If dual-wielding
-            this._mainHand && this.offHandWeapon ? WeaponStyle.DualWield :
-            // If two-handing
-                this._mainHand.twoHanded ? WeaponStyle.TwoHanded :
-                // Else one-handing
-                    WeaponStyle.OneHanded;
-
-        this.potion = Object.assign({}, equipment.potion);
+        this._equipment = equipment;
 
         // Attributes
         this._attributes = new Attributes(attributes, equipment);
         this._stats = new Stats({
             character: this,
             template: statTemplate,
-            attributes: this.attributes,
             equipment,
         });
         this.ability = ability ?? (className ? Classes[className].ability : null);
@@ -130,8 +114,16 @@ export default class Character {
         return this._stats;
     }
 
+    get equipment() {
+        return this._equipment;
+    }
+
+    get mainHand() {
+        return this.equipment.mainHand ?? weapons.unarmed0;
+    }
+
     get weaponStyle() {
-        return this._weaponStyle;
+        return this.equipment.mainHand && this.equipment.offHandWeapon ? WeaponStyle.DualWield : this.equipment.mainHand?.twoHanded ? WeaponStyle.TwoHanded : WeaponStyle.OneHanded;  
     }
 
     get currentHealth() {
@@ -140,10 +132,6 @@ export default class Character {
 
     get currentMana() {
         return this._currentMana;
-    }
-
-    get mainHand() {
-        return this._mainHand;
     }
 
     get initiative() {
@@ -203,11 +191,11 @@ export default class Character {
     }
 
     usePotion(): void {
-        if (this.potion && this.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth/2) {
-            const potionHeal = Math.round((rollDice(this.potion.dice) + this.potion.bonus) * (1 + calcTotalStat(this.stats[StatType.PotionEffectiveness])));
+        if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth/2) {
+            const potionHeal = Math.round((rollDice(this.equipment.potion.dice) + this.equipment.potion.bonus) * (1 + calcTotalStat(this.stats[StatType.PotionEffectiveness])));
             this.addHealth(potionHeal);
-            this.potion.charges -= 1;
-            if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
+            this.equipment.potion.charges -= 1;
+            if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.equipment.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
         }
     }
 
@@ -231,7 +219,7 @@ export default class Character {
 
     
     hitRoll({target, attackType, isOffHand}: {target: Character, attackType: AttackType, isOffHand: boolean}): boolean {
-        if (isOffHand && !this.offHandWeapon) return false;
+        if (isOffHand && !this.equipment.offHandWeapon) return false;
         // TODO: add crit miss (always 5% chance to miss) and crit hits (always 5% chance to hit)
         // rolling 1-5 misses
         // rolling 96-100 hits
@@ -370,16 +358,16 @@ export default class Character {
             }
             
             // Off-hand attack
-            if (this.offHandWeapon) {
+            if (this.equipment.offHandWeapon) {
                 const offHandHit = this.attack({
                     target: this.target, 
-                    attackType: this.offHandWeapon.attackType, 
-                    damageRange: this.offHandWeapon.damageRange,
+                    attackType: this.equipment.offHandWeapon.attackType, 
+                    damageRange: this.equipment.offHandWeapon.damageRange,
                     isOffHand: true
                 });
                 if (offHandHit) {
                     this.addMana(this.stats.manaOnHit);
-                    if (this.offHandWeapon.onHit) this.offHandWeapon.onHit.func(this, this.target);
+                    if (this.equipment.offHandWeapon.onHit) this.equipment.offHandWeapon.onHit.func(this, this.target);
                     hitTarget = true;
                 }
             }
@@ -432,19 +420,16 @@ export default class Character {
     }
 
     info(): CharacterInfo {
-        const info: CharacterInfo = {
+        return {
             name: this.name,
             className: this.className,
             level: this.level,
             mainHand: this.mainHand,
-            potion: this.potion,
+            offHandWeapon: this.equipment.offHandWeapon,
+            potion: this.equipment.potion,
             attributes: this.attributes,
             stats: this.stats
         };
-        if (this.offHandWeapon) {
-            info.offHandWeapon = this.offHandWeapon;
-        }
-        return info;
     }
 
     // Helper functions

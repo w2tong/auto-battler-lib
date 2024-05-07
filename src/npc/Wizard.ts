@@ -1,6 +1,6 @@
 import Firebolt from '../Ability/Firebolt';
-import { AttributeType } from '../Character/Attributes';
-import { StatType } from '../Character/Stats';
+import { AttributeType } from '../Character/Attributes/Attributes';
+import { StatType } from '../Character/Stats/Stats';
 import defaultEquipment from '../Equipment/defaultEquipment';
 import NPC from './NPC';
 

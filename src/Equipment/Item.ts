@@ -1,5 +1,5 @@
-import { AttributeType } from '../Character/Attributes';
-import { StatType } from '../Character/Stats';
+import { AttributeType } from '../Character/Attributes/Attributes';
+import StatType from '../Character/Stats/StatType';
 
 enum ItemType {
     Weapon = 'Weapon',

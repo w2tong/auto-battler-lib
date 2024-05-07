@@ -1,4 +1,4 @@
-import { StatType } from '../Character/Stats';
+import { StatType } from '../Character/Stats/Stats';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 enum ShieldType {

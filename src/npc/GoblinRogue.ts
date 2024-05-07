@@ -1,6 +1,6 @@
 import DoubleStrike from '../Ability/DoubleStrike';
-import { AttributeType } from '../Character/Attributes';
-import { StatType } from '../Character/Stats';
+import { AttributeType } from '../Character/Attributes/Attributes';
+import { StatType } from '../Character/Stats/Stats';
 import { armour } from '../Equipment/Armour';
 import { weapons } from '../Equipment/Weapon';
 import NPC from './NPC';

@@ -1,7 +1,8 @@
-import AttributeTemplate from '../Character/AttributeTemplate';
-import { AttributeType, BaseAttributes } from '../Character/Attributes';
-import { StatTemplate } from '../Character/StatTemplate';
-import { BaseStats, StatType } from '../Character/Stats';
+import AttributeTemplate from '../Character/Attributes/AttributeTemplate';
+import { AttributeType, BaseAttributes } from '../Character/Attributes/Attributes';
+import { StatTemplate } from '../Character/Stats/StatTemplate';
+import StatType from '../Character/Stats/StatType';
+import { BaseStats } from '../Character/Stats/Stats';
 
 function calculateBaseAttributes(template: AttributeTemplate, level: number): BaseAttributes {
     const attributes: BaseAttributes = {};
