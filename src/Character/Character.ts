@@ -6,7 +6,7 @@ import { Equipment } from '../Equipment/Equipment';
 import HitType from '../HitType';
 import { dice, rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
-import { Stats, calcTotalStat } from './Stats/Stats';
+import Stats, { calcTotalStat } from './Stats/Stats';
 import DamageRange, { damageRoll } from '../DamageRange';
 import Ability from '../Ability/Ability';
 import { StatTemplate } from './Stats/StatTemplate';

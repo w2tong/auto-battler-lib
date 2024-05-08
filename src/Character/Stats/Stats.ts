@@ -20,8 +20,6 @@ const ArmourTypeDodgeMultiplier: {[type in ArmourType]: number} = {
     [ArmourType.Heavy]: 0.4,
 };
 
-type BaseStats = {[stat in StatType]?: number};
-
 class Stats {
     static TwoHandedBonus = 0.5;
 
@@ -272,4 +270,5 @@ class Stats {
     }
 }
 
-export { Stat, BaseStats, Stats, calcTotalStat };
+export default Stats;
+export { calcTotalStat };

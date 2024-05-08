@@ -1,7 +1,8 @@
 import Ability from '../../Ability/Ability';
 import BaseAttributes from '../Attributes/BaseAttributes';
+import BaseStats from '../Stats/BaseStats';
 import StatType from '../Stats/StatType';
-import { BaseStats, Stats } from '../Stats/Stats';
+import Stats from '../Stats/Stats';
 
 type Class = {
     name: string;

@@ -1,4 +1,4 @@
-import { StatType } from '../Character/Stats/Stats';
+import StatType from '../Character/Stats/StatType';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Head extends Item {
