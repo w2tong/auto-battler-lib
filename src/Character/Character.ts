@@ -221,10 +221,13 @@ export default class Character {
     
     hitRoll({target, attackType, isOffHand}: {target: Character, attackType: AttackType, isOffHand: boolean}): boolean {
         if (isOffHand && !this.equipment.offHandWeapon) return false;
-        // TODO: add crit miss (always 5% chance to miss) and crit hits (always 5% chance to hit)
-        // rolling 1-5 misses
-        // rolling 96-100 hits
+
         const roll = rollDice(dice['1d100']);
+
+        // Rolling 1-5 always misses
+        if (roll <= 5) return false;
+        // Rolling 96-100 always hits
+        if (roll > 95) return true;
         
         let hitChance = this.stats.getStat(StatType.HitChance);
         // Add off-hand hit chance
