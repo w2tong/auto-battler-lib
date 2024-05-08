@@ -1,5 +1,6 @@
 import AttributeTemplate from '../Character/Attributes/AttributeTemplate';
-import { AttributeType, BaseAttributes } from '../Character/Attributes/Attributes';
+import AttributeType from '../Character/Attributes/AttributeType';
+import { BaseAttributes } from '../Character/Attributes/Attributes';
 import { StatTemplate } from '../Character/Stats/StatTemplate';
 import StatType from '../Character/Stats/StatType';
 import { BaseStats } from '../Character/Stats/Stats';

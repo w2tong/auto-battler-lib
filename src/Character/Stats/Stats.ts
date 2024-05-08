@@ -3,7 +3,7 @@ import { Equipment } from '../../Equipment/Equipment';
 import { ItemStats } from '../../Equipment/Item';
 import WeaponStyle from '../../WeaponStyle';
 import AttributeStatScaling from '../Attributes/AttributeStatScaling';
-import { AttributeType } from '../Attributes/Attributes';
+import AttributeType from '../Attributes/AttributeType';
 import Character from '../Character';
 import Stat from './Stat';
 import { StatTemplate } from './StatTemplate';

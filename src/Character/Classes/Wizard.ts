@@ -1,5 +1,5 @@
 import Firebolt from '../../Ability/Firebolt';
-import { AttributeType } from '../Attributes/Attributes';
+import AttributeType from '../Attributes/AttributeType';
 import StatType from '../Stats/StatType';
 import { Stats } from '../Stats/Stats';
 import Class from './Class';

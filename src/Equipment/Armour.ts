@@ -1,7 +1,7 @@
 import ArmourType from '../ArmourType';
-import { AttributeType } from '../Character/Attributes/Attributes';
+import AttributeType from '../Character/Attributes/AttributeType';
 import Character from '../Character/Character';
-import { StatType } from '../Character/Stats/Stats';
+import StatType from '../Character/Stats/StatType';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Armour extends Item {

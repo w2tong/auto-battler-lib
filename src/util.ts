@@ -1,5 +1,6 @@
 import Ability from './Ability/Ability';
-import { AttributeType, BaseAttributes } from './Character/Attributes/Attributes';
+import AttributeType from './Character/Attributes/AttributeType';
+import { BaseAttributes } from './Character/Attributes/Attributes';
 import Character from './Character/Character';
 import { ClassName } from './Character/Classes/classes';
 import { StatTemplate } from './Character/Stats/StatTemplate';

@@ -1,4 +1,4 @@
-import { AttributeType } from '../Character/Attributes/Attributes';
+import AttributeType from '../Character/Attributes/AttributeType';
 import StatType from '../Character/Stats/StatType';
 
 enum ItemType {

@@ -2,9 +2,9 @@ import Character from '../Character/Character';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 import DamageType from '../DamageType';
 import DamageRange from '../DamageRange';
-import { AttributeType } from '../Character/Attributes/Attributes';
 import AttackType from '../AttackType';
 import DebuffId from '../StatusEffect/DebuffId';
+import AttributeType from '../Character/Attributes/AttributeType';
 import StatType from '../Character/Stats/StatType';
 
 enum WeaponType {

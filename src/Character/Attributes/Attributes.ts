@@ -1,11 +1,7 @@
 import { Equipment } from '../../Equipment/Equipment';
 import { ItemAttributes } from '../../Equipment/Item';
+import Attribute from './Attribute';
 import AttributeType from './AttributeType';
-
-interface Attribute {
-    base: number;
-    bonus: number;
-}
 
 function calcTotalAttribute(attribute: Attribute) {
     return attribute.base + attribute.bonus;
@@ -90,4 +86,4 @@ class Attributes {
     }
 }
 
-export { Attribute, AttributeType, BaseAttributes, Attributes, StartingAttributePoints, AttributePointsPerLevel };
+export { BaseAttributes, Attributes, StartingAttributePoints, AttributePointsPerLevel };
