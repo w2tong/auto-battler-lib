@@ -1,8 +1,8 @@
-import { BaseAttributes } from './Attributes';
 import Character from '../Character';
 import StatType from '../Stats/StatType';
 import AttributeStatScaling from './AttributeStatScaling';
 import AttributeType from './AttributeType';
+import BaseAttributes from './BaseAttributes';
 
 function createCharacter(attributes: BaseAttributes): Character  {
     return new Character({

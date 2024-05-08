@@ -1,5 +1,5 @@
 import Ability from '../../Ability/Ability';
-import { BaseAttributes } from '../Attributes/Attributes';
+import BaseAttributes from '../Attributes/BaseAttributes';
 import StatType from '../Stats/StatType';
 import { BaseStats, Stats } from '../Stats/Stats';
 

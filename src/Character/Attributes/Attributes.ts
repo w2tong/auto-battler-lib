@@ -2,6 +2,7 @@ import { Equipment } from '../../Equipment/Equipment';
 import { ItemAttributes } from '../../Equipment/Item';
 import Attribute from './Attribute';
 import AttributeType from './AttributeType';
+import BaseAttributes from './BaseAttributes';
 
 function calcTotalAttribute(attribute: Attribute) {
     return attribute.base + attribute.bonus;
@@ -10,7 +11,7 @@ function calcTotalAttribute(attribute: Attribute) {
 const StartingAttributePoints = 10;
 const AttributePointsPerLevel = 2;
 
-type BaseAttributes = {[attr in AttributeType]?: number}
+
 
 class Attributes {
     [AttributeType.WeaponSkill]: Attribute;
@@ -86,4 +87,5 @@ class Attributes {
     }
 }
 
-export { BaseAttributes, Attributes, StartingAttributePoints, AttributePointsPerLevel };
+export default Attributes;
+export { StartingAttributePoints, AttributePointsPerLevel };

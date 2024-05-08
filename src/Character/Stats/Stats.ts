@@ -155,7 +155,7 @@ class Stats {
     addItemStats(itemStats?: ItemStats) {
         if (!itemStats) return;
         for (const [type, val] of Object.entries(itemStats)) {
-            if (val) this[type as StatType].bonus += val;
+            this[type as StatType].bonus += val;
         }
     }
 

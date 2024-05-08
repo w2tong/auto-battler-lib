@@ -6,7 +6,6 @@ import { Equipment } from '../Equipment/Equipment';
 import HitType from '../HitType';
 import { dice, rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
-import { Attributes, BaseAttributes } from './Attributes/Attributes';
 import { Stats, calcTotalStat } from './Stats/Stats';
 import DamageRange, { damageRoll } from '../DamageRange';
 import Ability from '../Ability/Ability';
@@ -16,6 +15,8 @@ import { ClassName, Classes } from './Classes/classes';
 import WeaponStyle from '../WeaponStyle';
 import BuffId from '../StatusEffect/BuffId';
 import StatType from './Stats/StatType';
+import Attributes from './Attributes/Attributes';
+import BaseAttributes from './Attributes/BaseAttributes';
 
 type CharacterInfo = {
     name: string,
