@@ -12,7 +12,7 @@ const Fighter: Class =  {
         [AttributeType.Constitution]: 5
     },
     stats: {
-        [StatType.MaxMana]: Stats.DEFAULT_MAX_MANA
+        [StatType.ManaCost]: Stats.DEFAULT_MANA_COST
     },
     ability: DoubleStrike
 } as const;

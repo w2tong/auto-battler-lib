@@ -37,7 +37,7 @@ enum StatType {
     SpellPowerPercent = '% Spell Power',
 
     // Mana
-    MaxMana = 'Max Mana',
+    ManaCost = 'Mana Cost',
     StartingMana = 'Starting Mana',
     ManaRegen = 'Mana Regen',
     ManaOnHit = 'Mana On Hit',

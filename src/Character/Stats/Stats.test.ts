@@ -1,39 +1,20 @@
-import { calcTotalStat } from './Stats';
+import Character from '../Character';
+import { StatTemplate } from './StatTemplate';
 
-describe('calcTotalStat()', () => {
-    test('0 base, 0 attribute, 0 bonus', () => {
-        expect(calcTotalStat({base: 0, attribute: 0, bonus: 0})).toEqual(0);
+function createCharacter(statTemplate: StatTemplate): Character  {
+    return new Character({
+        name: '',
+        level: 1,
+        attributes: {},
+        statTemplate,
+        equipment: {}
     });
+}
 
-    test('1 base, 0 attribute, 0 bonus', () => {
-        expect(calcTotalStat({base: 1, attribute: 0, bonus: 0})).toEqual(1);
-    });
+describe('setStatsAttribute()', () => {
 
-    test('0 base, 1 attribute, 0 bonus', () => {
-        expect(calcTotalStat({base: 0, attribute: 1, bonus: 0})).toEqual(1);
-    });
-
-    test('0 base, 0 attribute, 1 bonus', () => {
-        expect(calcTotalStat({base: 0, attribute: 0, bonus: 1})).toEqual(1);
-    });
-
-    test('1 base, 1 attribute, 0 bonus', () => {
-        expect(calcTotalStat({base: 1, attribute: 1, bonus: 0})).toEqual(2);
-    });
-
-    test('1 base, 0 attribute, 1 bonus', () => {
-        expect(calcTotalStat({base: 1, attribute: 0, bonus: 1})).toEqual(2);
-    });
-
-    test('0 base, 1 attribute, 1 bonus', () => {
-        expect(calcTotalStat({base: 0, attribute: 1, bonus: 1})).toEqual(2);
-    });
-
-    test('1 base, 1 attribute, 1 bonus', () => {
-        expect(calcTotalStat({base: 1, attribute: 1, bonus: 1})).toEqual(3);
-    });
 });
 
-describe('setStatsAttribute', () => {
+describe('stats', () => {
 
 });

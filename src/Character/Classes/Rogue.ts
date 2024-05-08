@@ -12,7 +12,7 @@ const Rogue: Class =  {
         [AttributeType.Dexterity]: 10
     },
     stats: {
-        [StatType.MaxMana]: Stats.DEFAULT_MAX_MANA
+        [StatType.ManaCost]: Stats.DEFAULT_MANA_COST
     },
     ability: Vanish
 } as const;

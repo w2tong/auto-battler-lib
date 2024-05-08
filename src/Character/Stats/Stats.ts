@@ -9,10 +9,6 @@ import Stat from './Stat';
 import { StatTemplate } from './StatTemplate';
 import StatType from './StatType';
 
-function calcTotalStat(stat: Stat) {
-    return stat.base + stat.attribute + stat.bonus;
-}
-
 const ArmourTypeDodgeMultiplier: {[type in ArmourType]: number} = {
     [ArmourType.Unarmoured]: 1,
     [ArmourType.Light]: 0.9,
@@ -30,7 +26,7 @@ class Stats {
     static DEFAULT_CRIT_CHANCE = 5;
     static DEFAULT_CRIT_DAMAGE = 1.5;
 
-    static DEFAULT_MAX_MANA = 100;
+    static DEFAULT_MANA_COST = 100;
     static DEFAULT_MANA_ON_HIT = 5;
     static DEFAULT_MANA_REGEN = 5;
 
@@ -81,7 +77,7 @@ class Stats {
     [StatType.SpellPowerPercent]: Stat = {base: 0, attribute: 0, bonus: 0};
     
     // Mana
-    [StatType.MaxMana]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.ManaCost]: Stat = {base: 0, attribute: 0, bonus: 0};
     [StatType.StartingMana]: Stat = {base: 0, attribute: 0, bonus: 0};
     [StatType.ManaRegen]: Stat = {base: Stats.DEFAULT_MANA_REGEN, attribute: 0, bonus: 0};
     [StatType.ManaOnHit]: Stat = {base: Stats.DEFAULT_MANA_ON_HIT, attribute: 0, bonus: 0};
@@ -161,114 +157,39 @@ class Stats {
         return (1 + this.character.weaponStyle === WeaponStyle.TwoHanded ? Stats.TwoHandedBonus : 0);
     }
 
+    getStat(type: StatType): number {
+        const stat = this[type];
+        return stat.base + stat.attribute + stat.bonus;
+    }
+
     // Defensive
     get maxHealth() {
-        return calcTotalStat(this[StatType.MaxHealth]) * (1 + this.healthPercent);
-    }
-    get healthPercent() {
-        return calcTotalStat(this[StatType.HealthPercent]);
-    }
-    get armour() {
-        return calcTotalStat(this[StatType.Armour]);
-    }
-    get deflection() {
-        return calcTotalStat(this[StatType.Deflection]);
+        return this.getStat(StatType.MaxHealth) * (1 + this.getStat(StatType.HealthPercent));
     }
     get dodge() {
-        return calcTotalStat(this[StatType.Dodge]) * this.armourTypeDodgeMultiplier;
-    }
-    get thorns() {
-        return calcTotalStat(this[StatType.Thorns]);
-    }
-    // Block
-    get blockChance() {
-        return calcTotalStat(this[StatType.BlockChance]);
-    }
-    get blockPower() {
-        return calcTotalStat(this[StatType.BlockPower]);
-    }
-
-    // Hit Chance
-    get hitChance() {
-        return calcTotalStat(this[StatType.HitChance]); 
-    }
-
-    get offHandHitChance() {
-        return calcTotalStat(this[StatType.OffHandHitChance]); 
-    }
-
-    get meleeHitChance() {
-        return calcTotalStat(this[StatType.MeleeHitChance]);
-    }
-
-    get rangedHitChance() {
-        return calcTotalStat(this[StatType.RangedHitChance]);
+        return this.getStat(StatType.Dodge) * this.armourTypeDodgeMultiplier;
     }
 
     // Damage
     get damage() {
-        return calcTotalStat(this[StatType.Damage]) * this.getTwoHandedMultiplier();
+        return this.getStat(StatType.Damage) * this.getTwoHandedMultiplier();
     }
     get meleeDamage() {
-        return calcTotalStat(this[StatType.Damage]) * this.getTwoHandedMultiplier();
+        return this.getStat(StatType.MeleeDamage) * this.getTwoHandedMultiplier();
     }
     get rangedDamage() {
-        return calcTotalStat(this[StatType.Damage]) * this.getTwoHandedMultiplier();
-    }
-    get damagePercent() {
-        return calcTotalStat(this[StatType.DamagePercent]);
-    }
-    get meleeDamagePercent() {
-        return calcTotalStat(this[StatType.MeleeDamage]);
-    }
-    get rangedDamagePercent() {
-        return calcTotalStat(this[StatType.RangedDamagePercent]);
-    }
-
-    // Critical
-    get criticalChance() {
-        return calcTotalStat(this[StatType.CriticalChance]);
-    }
-
-    get criticalDamage() {
-        return calcTotalStat(this[StatType.CriticalDamage]);
-    }
-
-    // Defense Reduction
-    get armourPenetration() {
-        return calcTotalStat(this[StatType.ArmourPenetration]);
-    }
-    get dodgeReduction() {
-        return calcTotalStat(this[StatType.Dodge]);
+        return this.getStat(StatType.RangedDamage) * this.getTwoHandedMultiplier();
     }
 
     // Spell
-    get spellHitChance() {
-        return calcTotalStat(this[StatType.SpellHitChance]);
-    }
     get spellPower() {
-        return calcTotalStat(this[StatType.SpellPower]) * (1 + this.spellPowerPercent);
-    }
-    get spellPowerPercent() {
-        return calcTotalStat(this[StatType.SpellPowerPercent]);
+        return this.getStat(StatType.SpellPower) * (1 + this.getStat(StatType.SpellPowerPercent));
     }
 
-    get initiative() {
-        return calcTotalStat(this[StatType.Initiative]);
-    }
-
-    get maxMana() {
-        return calcTotalStat(this[StatType.MaxMana]);
-    }
-
-    get manaRegen() {
-        return calcTotalStat(this[StatType.ManaRegen]);
-    }
-
+    // Mana
     get manaOnHit() {
-        return calcTotalStat(this[StatType.ManaOnHit]) * this.getTwoHandedMultiplier();
+        return this.getStat(StatType.ManaOnHit) * this.getTwoHandedMultiplier();
     }
 }
 
 export default Stats;
-export { calcTotalStat };

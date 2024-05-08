@@ -8,7 +8,7 @@ type Class = {
     name: string;
     description: string;
     attributes: BaseAttributes;
-    stats: BaseStats & {[StatType.MaxMana]: typeof Stats.DEFAULT_MAX_MANA};
+    stats: BaseStats & {[StatType.ManaCost]: typeof Stats.DEFAULT_MANA_COST};
     ability: Ability;
 }
 
