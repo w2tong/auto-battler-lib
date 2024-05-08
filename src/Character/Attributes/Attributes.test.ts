@@ -98,7 +98,7 @@ describe('Attribute Stat Scaling', () => {
     });
 
     describe('Overlapping Attributes', () => {
-        test('10 STR, 10 DEX - MeleeDamagePercent', () => {
+        test('10 STR, 10 DEX - MeleeWeaponDamagePercent', () => {
             const num = 10;
             const attributes: BaseAttributes = {
                 [AttributeType.Strength]: num,
@@ -106,7 +106,7 @@ describe('Attribute Stat Scaling', () => {
             };
             const character = createCharacter(attributes);
 
-            expect(character.stats[StatType.MeleeDamagePercent].attribute).toEqual((AttributeStatScaling.Strength[StatType.MeleeDamagePercent] ?? 0) * num + (AttributeStatScaling.Dexterity[StatType.MeleeDamagePercent] ?? 0) * num);
+            expect(character.stats[StatType.MeleeWeaponDamagePercent].attribute).toEqual((AttributeStatScaling.Strength[StatType.MeleeWeaponDamagePercent] ?? 0) * num + (AttributeStatScaling.Dexterity[StatType.MeleeWeaponDamagePercent] ?? 0) * num);
         });
 
         test('10 DEX, 10 WIS - Initiative', () => {

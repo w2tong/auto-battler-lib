@@ -56,12 +56,12 @@ class Stats {
 
     // Damage
     [StatType.Damage]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.OffHandDamage]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.MeleeDamage]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.RangedDamage]: Stat = {base: 0, attribute: 0, bonus: 0};
     [StatType.DamagePercent]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.MeleeDamagePercent]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.RangedDamagePercent]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.OffHandDamage]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.MeleeWeaponDamage]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.MeleeWeaponDamagePercent]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.RangedWeaponDamage]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.RangedWeaponDamagePercent]: Stat = {base: 0, attribute: 0, bonus: 0};
 
     // Critical
     [StatType.CriticalChance]: Stat = {base: Stats.DEFAULT_CRIT_CHANCE, attribute: 0, bonus: 0};
@@ -175,10 +175,10 @@ class Stats {
         return this.getStat(StatType.Damage) * this.getTwoHandedMultiplier();
     }
     get meleeDamage() {
-        return this.getStat(StatType.MeleeDamage) * this.getTwoHandedMultiplier();
+        return this.getStat(StatType.MeleeWeaponDamage) * this.getTwoHandedMultiplier();
     }
     get rangedDamage() {
-        return this.getStat(StatType.RangedDamage) * this.getTwoHandedMultiplier();
+        return this.getStat(StatType.RangedWeaponDamage) * this.getTwoHandedMultiplier();
     }
 
     // Spell
