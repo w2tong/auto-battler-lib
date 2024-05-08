@@ -22,7 +22,6 @@ class Stats {
     static DEFAULT_MAX_HEALTH = 20;
     static DEFAULT_MAX_HEALTH_PER_LVL = 4;
     static DEFAULT_DODGE = 50;
-    static DEFAULT_HIT_CHANCE = 50;
     static DEFAULT_CRIT_CHANCE = 5;
     static DEFAULT_CRIT_DAMAGE = 1.5;
 
@@ -49,7 +48,7 @@ class Stats {
     [StatType.BlockPower]: Stat = {base: 0, attribute: 0, bonus: 0};
     
     // Hit Chance
-    [StatType.HitChance]: Stat = {base: Stats.DEFAULT_HIT_CHANCE, attribute: 0, bonus: 0};
+    [StatType.HitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
     [StatType.OffHandHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
     [StatType.MeleeHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
     [StatType.RangedHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
@@ -94,7 +93,7 @@ class Stats {
         this.character = character;
 
         // Set default max health
-        this[StatType.MaxHealth].base = Stats.DEFAULT_MAX_HEALTH + Stats.DEFAULT_MAX_HEALTH_PER_LVL * character.level;
+        this[StatType.MaxHealth].base = Stats.DEFAULT_MAX_HEALTH + Stats.DEFAULT_MAX_HEALTH_PER_LVL * (character.level - 1);
 
         // Set stats to template
         for (const [stat, {base, perLvl}] of Object.entries(template)) {
