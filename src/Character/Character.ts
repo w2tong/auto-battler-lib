@@ -271,7 +271,7 @@ export default class Character {
             damage = damageRoll(damageRange);
 
             // Add damage bonuses
-            let damageBonus = this.stats.damage;
+            let damageBonus = this.stats.damage + (isOffHand ? this.stats.getStat(StatType.OffHandDamage) : 0);
             let damagePercent = this.stats.getStat(StatType.DamagePercent);
             switch(attackType) {
                 case AttackType.MeleeWeapon:
@@ -331,10 +331,20 @@ export default class Character {
 
         this.statusEffectManager.onAttack(hit);
 
+        // Deal thorns damage to this Character if target was hit
+        if (hit && target.stats.getStat(StatType.Thorns) > 0) {
+            this.takeDamage({
+                source: StatType.Thorns,
+                damage: target.stats.getStat(StatType.Thorns),
+                armourPenetration: target.stats.getStat(StatType.ArmourPenetration),
+                addToLog: true
+            });
+        }
+
         return hit;
     }
 
-    weaponAttack(): void {
+    weaponAttack(options?: {fromAbility: boolean}): void {
         if (!this.battle) return;
         this.setTarget();
         if (!this.target) {
@@ -342,7 +352,6 @@ export default class Character {
             return;
         }
         if (this.target) { 
-            let hitTarget = false;
             
             // Main hand attack
             const mainHandHit = this.attack({
@@ -352,9 +361,8 @@ export default class Character {
                 isOffHand: false
             });
             if (mainHandHit) {
-                this.addMana(this.stats.manaOnHit);
+                if (!options?.fromAbility) this.addMana(this.stats.manaOnHit);
                 if (this.mainHand.onHit) this.mainHand.onHit.func(this, this.target);
-                hitTarget = true;
             }
             
             // Off-hand attack
@@ -366,20 +374,9 @@ export default class Character {
                     isOffHand: true
                 });
                 if (offHandHit) {
-                    this.addMana(this.stats.manaOnHit);
+                    if (!options?.fromAbility) this.addMana(this.stats.manaOnHit);
                     if (this.equipment.offHandWeapon.onHit) this.equipment.offHandWeapon.onHit.func(this, this.target);
-                    hitTarget = true;
                 }
-            }
-
-            // Deal thorns damage to this Character if target was hit
-            if (hitTarget && this.target.stats.getStat(StatType.Thorns) > 0) {
-                this.takeDamage({
-                    source: StatType.Thorns,
-                    damage: this.target.stats.getStat(StatType.Thorns),
-                    armourPenetration: this.target.stats.getStat(StatType.ArmourPenetration),
-                    addToLog: true
-                });
             }
         }
     }
