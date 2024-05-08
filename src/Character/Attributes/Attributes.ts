@@ -8,11 +8,6 @@ function calcTotalAttribute(attribute: Attribute) {
     return attribute.base + attribute.bonus;
 }
 
-const StartingAttributePoints = 10;
-const AttributePointsPerLevel = 2;
-
-
-
 class Attributes {
     [AttributeType.WeaponSkill]: Attribute;
     [AttributeType.Strength]: Attribute;
@@ -88,4 +83,3 @@ class Attributes {
 }
 
 export default Attributes;
-export { StartingAttributePoints, AttributePointsPerLevel };
