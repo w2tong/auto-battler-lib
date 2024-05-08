@@ -18,7 +18,6 @@ const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number
     },
     [AttributeType.Perception]: {
         [StatType.DodgeReduction]: 1,
-        [StatType.RangedWeaponDamage]: 0.5,
         [StatType.CriticalDamage]: 0.5,
         [StatType.ArmourPenetration]: 0.5
     },
@@ -36,7 +35,8 @@ const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number
         [StatType.ManaRegen]: 0.5,
         [StatType.ManaOnHit]: 0.5,
         [StatType.StartingMana]: 2,
-        [StatType.Initiative]: 0.2
+        [StatType.Initiative]: 0.2,
+        [StatType.StatusResistance]: 0.2
     },
 } as const;
 
