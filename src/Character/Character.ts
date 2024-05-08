@@ -231,10 +231,10 @@ export default class Character {
         if (isOffHand) hitChance += this.stats.getStat(StatType.OffHandHitChance);
         // Add attack type hit chance
         switch(attackType) {
-            case AttackType.Melee:
+            case AttackType.MeleeWeapon:
                 hitChance += this.stats.getStat(StatType.MeleeHitChance);
                 break;
-            case AttackType.Ranged:
+            case AttackType.RangedWeapon:
                 hitChance += this.stats.getStat(StatType.RangedHitChance);
                 break;
             case AttackType.Spell:
@@ -274,11 +274,11 @@ export default class Character {
             let damageBonus = this.stats.damage;
             let damagePercent= this.stats.getStat(StatType.DamagePercent);
             switch(attackType) {
-                case AttackType.Melee:
+                case AttackType.MeleeWeapon:
                     damageBonus += this.stats.meleeDamage;
                     damagePercent += this.stats.getStat(StatType.MeleeDamagePercent);
                     break;
-                case AttackType.Ranged:
+                case AttackType.RangedWeapon:
                     damageBonus += this.stats.rangedDamage;
                     damagePercent += this.stats.getStat(StatType.RangedDamagePercent);
                     break;

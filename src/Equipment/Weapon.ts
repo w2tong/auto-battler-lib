@@ -51,7 +51,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: '',
 
         type: WeaponType.Unarmed,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: true,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -67,7 +67,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-longsword.png',
 
         type: WeaponType.Longsword,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -84,7 +84,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-longsword.png',
 
         type: WeaponType.Longsword,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -101,7 +101,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-longsword.png',
 
         type: WeaponType.Longsword,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -118,7 +118,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-longsword.png',
 
         type: WeaponType.Longsword,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -135,7 +135,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-longsword.png',
 
         type: WeaponType.Longsword,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -152,7 +152,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-longsword.png',
 
         type: WeaponType.Longsword,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -171,7 +171,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-greatsword.png',
 
         type: WeaponType.Greatsword,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -188,7 +188,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-greatsword.png',
 
         type: WeaponType.Greatsword,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -205,7 +205,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-greatsword.png',
 
         type: WeaponType.Greatsword,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -222,7 +222,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-greatsword.png',
 
         type: WeaponType.Greatsword,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -239,7 +239,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-greatsword.png',
 
         type: WeaponType.Greatsword,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -256,7 +256,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-greatsword.png',
 
         type: WeaponType.Greatsword,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -275,7 +275,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-dagger.png',
 
         type: WeaponType.Dagger,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: true,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -292,7 +292,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-dagger.png',
 
         type: WeaponType.Dagger,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: true,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -309,7 +309,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-dagger.png',
 
         type: WeaponType.Dagger,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: true,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -326,7 +326,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-dagger.png',
 
         type: WeaponType.Dagger,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: true,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -343,7 +343,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-dagger.png',
 
         type: WeaponType.Dagger,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: true,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -360,7 +360,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-dagger.png',
 
         type: WeaponType.Dagger,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: true,
         twoHanded: false,
         damageType: DamageType.Physical,
@@ -378,7 +378,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-quarterstaff.png',
 
         type: WeaponType.Quarterstaff,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -395,7 +395,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-quarterstaff.png',
 
         type: WeaponType.Quarterstaff,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -415,7 +415,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-quarterstaff.png',
 
         type: WeaponType.Quarterstaff,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -435,7 +435,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-quarterstaff.png',
 
         type: WeaponType.Quarterstaff,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -455,7 +455,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-quarterstaff.png',
 
         type: WeaponType.Quarterstaff,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -475,7 +475,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-quarterstaff.png',
 
         type: WeaponType.Quarterstaff,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -496,7 +496,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-wand.png',
 
         type: WeaponType.Wand,
-        attackType: AttackType.Spell,
+        attackType: AttackType.RangedWeapon,
         light: false,
         twoHanded: false,
         damageType: DamageType.Magic,
@@ -514,7 +514,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-wand.png',
         
         type: WeaponType.Wand,
-        attackType: AttackType.Spell,
+        attackType: AttackType.RangedWeapon,
         light: false,
         twoHanded: false,
         damageType: DamageType.Magic,
@@ -535,7 +535,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-wand.png',
         
         type: WeaponType.Wand,
-        attackType: AttackType.Spell,
+        attackType: AttackType.RangedWeapon,
         light: false,
         twoHanded: false,
         damageType: DamageType.Magic,
@@ -556,7 +556,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-wand.png',
         
         type: WeaponType.Wand,
-        attackType: AttackType.Spell,
+        attackType: AttackType.RangedWeapon,
         light: false,
         twoHanded: false,
         damageType: DamageType.Magic,
@@ -577,7 +577,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-wand.png',
         
         type: WeaponType.Wand,
-        attackType: AttackType.Spell,
+        attackType: AttackType.RangedWeapon,
         light: false,
         twoHanded: false,
         damageType: DamageType.Magic,
@@ -598,7 +598,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: 'weapon-wand.png',
         
         type: WeaponType.Wand,
-        attackType: AttackType.Spell,
+        attackType: AttackType.RangedWeapon,
         light: false,
         twoHanded: false,
         damageType: DamageType.Magic,
@@ -621,7 +621,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: '',
 
         type: WeaponType.Unarmed,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
@@ -641,7 +641,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         img: '',
         
         type: WeaponType.Unarmed,
-        attackType: AttackType.Melee,
+        attackType: AttackType.MeleeWeapon,
         light: false,
         twoHanded: true,
         damageType: DamageType.Physical,
