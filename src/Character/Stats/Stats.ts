@@ -1,20 +1,13 @@
-import ArmourType from '../../ArmourType';
 import { Equipment } from '../../Equipment/Equipment';
 import { ItemStats } from '../../Equipment/Item';
 import WeaponStyle from '../../WeaponStyle';
 import AttributeStatScaling from '../Attributes/AttributeStatScaling';
 import AttributeType from '../Attributes/AttributeType';
 import Character from '../Character';
+import ArmourTypeDodgeMultiplier from './ArmourTypeDodgeMultiplier';
 import Stat from './Stat';
 import { StatTemplate } from './StatTemplate';
 import StatType from './StatType';
-
-const ArmourTypeDodgeMultiplier: {[type in ArmourType]: number} = {
-    [ArmourType.Unarmoured]: 1,
-    [ArmourType.Light]: 0.9,
-    [ArmourType.Medium]: 0.6,
-    [ArmourType.Heavy]: 0.4,
-};
 
 class Stats {
     static TwoHandedBonus = 0.5;
