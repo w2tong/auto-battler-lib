@@ -1,7 +1,7 @@
 import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
-import { AttackType, Weapon, weapons } from '../Equipment/Weapon';
+import { Weapon, WeaponTypeProperties, weapons } from '../Equipment/Weapon';
 import { Equipment } from '../Equipment/Equipment';
 import HitType from '../HitType';
 import { dice, rollDice } from '../dice';
@@ -17,6 +17,7 @@ import BuffId from '../StatusEffect/BuffId';
 import StatType from './Stats/StatType';
 import Attributes from './Attributes/Attributes';
 import BaseAttributes from './Attributes/BaseAttributes';
+import AttackType from '../AttackType';
 
 type CharacterInfo = {
     name: string,
@@ -122,8 +123,16 @@ export default class Character {
         return this.equipment.mainHand ?? weapons.unarmed0;
     }
 
-    get weaponStyle() {
-        return this.equipment.mainHand && this.equipment.offHandWeapon ? WeaponStyle.DualWield : this.equipment.mainHand?.twoHanded ? WeaponStyle.TwoHanded : WeaponStyle.OneHanded;  
+    get weaponStyle(): WeaponStyle {
+        if (this.equipment.mainHand && this.equipment.offHandWeapon) {
+            return WeaponStyle.DualWield;
+        }
+        else if (this.equipment.mainHand && WeaponTypeProperties[this.equipment.mainHand.type].twoHanded) {
+            return WeaponStyle.TwoHanded;
+        }
+        else {
+            return  WeaponStyle.OneHanded;
+        }
     }
 
     get currentHealth() {
