@@ -1,4 +1,3 @@
-import ArmourType from '../ArmourType';
 import AttributeType from '../Character/Attributes/AttributeType';
 import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';
@@ -13,6 +12,13 @@ interface Armour extends Item {
         func: (self: Character, target: Character) => void;
         description: string;
     }
+}
+
+enum ArmourType {
+    Unarmoured = 'Unarmoured',
+    Light = 'Light Armour',
+    Medium = 'Medium Armour',
+    Heavy = 'Heavy Armour',
 }
 
 type ArmourId = 
@@ -356,4 +362,4 @@ const armour: {[id in ArmourId]: Armour} = {
     },
 } as const;
 
-export { Armour, ArmourId, armour };
+export { Armour, ArmourId, ArmourType, armour };
