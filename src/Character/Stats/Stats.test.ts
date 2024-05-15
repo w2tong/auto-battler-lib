@@ -3,6 +3,7 @@ import { weapons } from '../../Equipment/Weapon';
 import { createCharacter, createCharacterWithEquipment, createCharacterWithTemplate } from '../../tests/util';
 import Character from '../Character';
 import ArmourTypeDodgeMultiplier from './ArmourTypeDodgeMultiplier';
+import { StatTemplate } from './StatTemplate';
 import StatType from './StatType';
 import Stats from './Stats';
 
@@ -76,31 +77,47 @@ describe('Dodge with Armour Type Penalty', () => {
     });
 });
 
+function create2HCharacter(statTemplate: StatTemplate) {
+    return new Character({
+        name: '',
+        level: 1,
+        attributes: {},
+        statTemplate,
+        equipment: { mainHand: weapons.greatsword0 }
+    });
+}
+
 describe('Two-Handed Stat Bonuses', () => {
     // TODO: complete this test case
-    test('0 Attack', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
-            statTemplate: {},
-            equipment: { mainHand: weapons.greatsword0 }
-        });
+    test('0 is 0', () => {
+        const char = create2HCharacter({});
         expect(char.stats.damage).toEqual(0);
-        expect(char.stats.meleeDamage).toEqual(0);
-        expect(char.stats.rangedDamage).toEqual(0);
-        expect(char.stats.manaOnHit).toEqual(0);
+        expect(char.stats.meleeWeaponDamage).toEqual(0);
+        expect(char.stats.rangedWeaponDamage).toEqual(0);
+        expect(char.stats.manaOnHit).toEqual(Stats.DEFAULT_MANA_ON_HIT * (1 + Stats.TWO_HANDED_BONUS));
+    });
+    test('10 is 15', () => {
+        const char = create2HCharacter({
+            [StatType.Damage]: { base: 10 },
+            [StatType.MeleeWeaponDamage]: { base: 10 },
+            [StatType.RangedWeaponDamage]: { base: 10 },
+            [StatType.ManaOnHit]: { base: 10 },
+        });
+        expect(char.stats.damage).toEqual(15);
+        expect(char.stats.meleeWeaponDamage).toEqual(15);
+        expect(char.stats.rangedWeaponDamage).toEqual(15);
+        expect(char.stats.manaOnHit).toEqual(15);
     });
     // TODO: add more test cases
 });
 
 describe('Spell Power %', () => {
-    test('100 SP with 0% SP% is 100', () => {
+    test('100 + 0% is 100', () => {
         const char = createCharacterWithTemplate(1, {[StatType.SpellPower]: { base: 100 }});
         expect(char.stats.spellPower).toEqual(100);
     });
 
-    test('100 SP with 10% SP% is 110', () => {
+    test('100 + 10% is 110', () => {
         const char = createCharacterWithTemplate(1, {[StatType.SpellPower]: { base: 100 }, [StatType.SpellPowerPercent]: { base: 0.1 }});
         expect(char.stats.spellPower).toEqual(110);
     });
