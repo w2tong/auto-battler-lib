@@ -9,7 +9,7 @@ import { StatTemplate } from './StatTemplate';
 import StatType from './StatType';
 
 class Stats {
-    static TwoHandedBonus = 0.5;
+    static TWO_HANDED_BONUS = 0.5;
 
     static DEFAULT_MAX_HEALTH = 20;
     static DEFAULT_MAX_HEALTH_PER_LVL = 4;
@@ -143,7 +143,7 @@ class Stats {
     }
 
     getTwoHandedMultiplier(): number {
-        return (1 + this.character.weaponStyle === WeaponStyle.TwoHanded ? Stats.TwoHandedBonus : 0);
+        return 1 + (this.character.weaponStyle === WeaponStyle.TwoHanded ? Stats.TWO_HANDED_BONUS : 0);
     }
 
     getStat(type: StatType): number {
@@ -164,10 +164,10 @@ class Stats {
     get damage() {
         return this.getStat(StatType.Damage) * this.getTwoHandedMultiplier();
     }
-    get meleeDamage() {
+    get meleeWeaponDamage() {
         return this.getStat(StatType.MeleeWeaponDamage) * this.getTwoHandedMultiplier();
     }
-    get rangedDamage() {
+    get rangedWeaponDamage() {
         return this.getStat(StatType.RangedWeaponDamage) * this.getTwoHandedMultiplier();
     }
 

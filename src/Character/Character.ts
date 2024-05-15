@@ -286,11 +286,11 @@ export default class Character {
             let damagePercent = this.stats.getStat(StatType.DamagePercent);
             switch(attackType) {
                 case AttackType.MeleeWeapon:
-                    damageBonus += this.stats.meleeDamage;
+                    damageBonus += this.stats.meleeWeaponDamage;
                     damagePercent += this.stats.getStat(StatType.MeleeWeaponDamagePercent);
                     break;
                 case AttackType.RangedWeapon:
-                    damageBonus += this.stats.rangedDamage;
+                    damageBonus += this.stats.rangedWeaponDamage;
                     damagePercent += this.stats.getStat(StatType.RangedWeaponDamagePercent);
                     break;
                 case AttackType.Spell:
