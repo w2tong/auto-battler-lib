@@ -22,7 +22,7 @@ const GoblinRogue: NPC = {
 
         [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
     
-        [StatType.MaxMana]: { base: 100 }
+        [StatType.ManaCost]: { base: 100 }
     },
     equipment: {
         mainHand: weapons.dagger0,

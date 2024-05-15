@@ -292,7 +292,7 @@ const rings: {[id in RingId]: Ring} = {
         img: 'ring-teal.png',
 
         stats: {
-            [StatType.MaxMana]: -4
+            [StatType.ManaCost]: -4
         }
     },
     mpCostRing1: {
@@ -303,7 +303,7 @@ const rings: {[id in RingId]: Ring} = {
         img: 'ring-teal.png',
 
         stats: {
-            [StatType.MaxMana]: -7
+            [StatType.ManaCost]: -7
         }
     },
     mpCostRing2: {
@@ -314,7 +314,7 @@ const rings: {[id in RingId]: Ring} = {
         img: 'ring-teal.png',
 
         stats: {
-            [StatType.MaxMana]: -10
+            [StatType.ManaCost]: -10
         }
     }
 
