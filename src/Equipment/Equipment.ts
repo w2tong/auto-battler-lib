@@ -7,7 +7,7 @@ import { ItemType } from './Item';
 import { Potion, PotionId, potions } from './Potion';
 import { Ring, RingId, rings } from './Ring';
 import { Shield, ShieldId, shields } from './Shield';
-import { Weapon, WeaponId, weapons } from './Weapon';
+import { Weapon, WeaponId, WeaponTypeProperties, weapons } from './Weapon';
 
 type Equip = Weapon|Shield|Armour|Head|Hands|Ring|Potion|Belt|Amulet;
 const equips: {[key: string]: Equip} = {...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts, ...amulets} as const;
@@ -60,7 +60,11 @@ function isValidEquip(itemId: string, slot: EquipSlot): boolean {
         return item.itemType === ItemType.Weapon;
     }
     else if (slot === EquipSlot.OffHand) {
-        return (item.itemType === ItemType.Weapon && !item.twoHanded && item.light) || item.itemType === ItemType.Shield;
+        if (item.itemType === ItemType.Weapon) {
+            const { twoHanded, light } = WeaponTypeProperties[item.type];
+            return twoHanded === false && light === true;
+        }
+        return item.itemType === ItemType.Shield;
     }
     else if (slot === EquipSlot.Armour) {
         return item.itemType === ItemType.Armour;
