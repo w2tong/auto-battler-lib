@@ -1,11 +1,11 @@
-import Character from '../Character/Character';
-import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
-import DamageType from '../DamageType';
-import DamageRange from '../DamageRange';
 import AttackType from '../AttackType';
-import DebuffId from '../StatusEffect/DebuffId';
 import AttributeType from '../Character/Attributes/AttributeType';
+import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';
+import DamageRange from '../DamageRange';
+import DamageType from '../DamageType';
+import DebuffId from '../StatusEffect/DebuffId';
+import { Item, ItemType, ItemAttributes, ItemStats } from './Item';
 
 enum WeaponType {
     Unarmed = 'Unarmed',
@@ -16,12 +16,50 @@ enum WeaponType {
     Wand = 'Wand'
 }
 
+type WeaponId = 
+'unarmed0'
+| 'longsword0' | 'longsword1' | 'longsword2' | 'longsword3' | 'longsword4' | 'longsword5'
+| 'greatsword0' | 'greatsword1' | 'greatsword2' | 'greatsword3' | 'greatsword4' | 'greatsword5'
+| 'dagger0' | 'dagger1' | 'dagger2' |  'dagger3' |  'dagger4' |  'dagger5'
+| 'quarterstaff0' | 'quarterstaff1' | 'quarterstaff2' | 'quarterstaff3' | 'quarterstaff4' | 'quarterstaff5'
+| 'wand0' | 'wand1' | 'wand2' | 'wand3' | 'wand4' | 'wand5' 
+| 'poisonbite0' | 'poisonbite1';
+
+const WeaponTypeProperties: {[type in WeaponType]: {
+    twoHanded: boolean,
+    light: boolean
+}} = {
+    Unarmed: {
+        twoHanded: false,
+        light: true
+    },
+    Longsword: {
+        twoHanded: false,
+        light: true
+    },
+    Greatsword: {
+        twoHanded: true,
+        light: false
+    },
+    Dagger: {
+        twoHanded: false,
+        light: true
+    },
+    Quarterstaff: {
+        twoHanded: true,
+        light: false
+    },
+    Wand: {
+        twoHanded: false,
+        light: true
+    }
+};
+
+
 interface Weapon extends Item {
     itemType: ItemType.Weapon
     type: WeaponType;
     attackType: AttackType;
-    light: boolean;
-    twoHanded: boolean;
     damageType: DamageType;
     damageRange: DamageRange;
     spellPowerRatio?: number;
@@ -33,14 +71,6 @@ interface Weapon extends Item {
     }
 }
 
-type WeaponId = 
-'unarmed0'
-| 'longsword0' | 'longsword1' | 'longsword2' | 'longsword3' | 'longsword4' | 'longsword5'
-| 'greatsword0' | 'greatsword1' | 'greatsword2' | 'greatsword3' | 'greatsword4' | 'greatsword5'
-| 'dagger0' | 'dagger1' | 'dagger2' |  'dagger3' |  'dagger4' |  'dagger5'
-| 'quarterstaff0' | 'quarterstaff1' | 'quarterstaff2' | 'quarterstaff3' | 'quarterstaff4' | 'quarterstaff5'
-| 'wand0' | 'wand1' | 'wand2' | 'wand3' | 'wand4' | 'wand5' 
-| 'poisonbite0' | 'poisonbite1'
 const weapons: {[id in WeaponId]: Weapon} = {
     // Unarmed
     unarmed0: {
@@ -52,8 +82,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Unarmed,
         attackType: AttackType.MeleeWeapon,
-        light: true,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 2, max: 4, bonus: 0 },
     },
@@ -68,8 +96,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Longsword,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 0 },
         stats: {
@@ -85,8 +111,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Longsword,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 1 },
         stats: {
@@ -102,8 +126,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Longsword,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 2 },
         stats: {
@@ -119,8 +141,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Longsword,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 3 },
         stats: {
@@ -136,8 +156,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Longsword,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 4 },
         stats: {
@@ -153,8 +171,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Longsword,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 5 },
         stats: {
@@ -172,8 +188,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 5, max: 9, bonus: 0 },
         stats: {
@@ -189,8 +203,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 5, max: 9, bonus: 2 },
         stats: {
@@ -206,8 +218,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 5, max: 9, bonus: 4 },
         stats: {
@@ -223,8 +233,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 5, max: 9, bonus: 6 },
         stats: {
@@ -240,8 +248,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 5, max: 9, bonus: 8 },
         stats: {
@@ -257,8 +263,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 4, max: 9, bonus: 10 },
         stats: {
@@ -276,8 +280,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
-        light: true,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 2, max: 5, bonus: 0 },
         stats: {
@@ -293,8 +295,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
-        light: true,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 2, max: 5, bonus: 1 },
         stats: {
@@ -310,8 +310,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
-        light: true,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 2, max: 5, bonus: 2 },
         stats: {
@@ -327,8 +325,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
-        light: true,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 2, max: 5, bonus: 3 },
         stats: {
@@ -344,8 +340,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
-        light: true,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 2, max: 5, bonus: 4 },
         stats: {
@@ -361,8 +355,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
-        light: true,
-        twoHanded: false,
         damageType: DamageType.Physical,
         damageRange: { min: 2, max: 5, bonus: 5 },
         stats: {
@@ -379,8 +371,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 4, max: 8, bonus: 0 },
         stats: {
@@ -396,8 +386,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 4, max: 8, bonus: 2 },
         attributes: {
@@ -416,8 +404,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 4, max: 8, bonus: 4 },
         attributes: {
@@ -436,8 +422,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 4, max: 8, bonus: 6 },
         attributes: {
@@ -456,8 +440,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 4, max: 8, bonus: 8 },
         attributes: {
@@ -476,8 +458,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 4, max: 8, bonus: 10 },
         attributes: {
@@ -497,8 +477,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        light: false,
-        twoHanded: false,
         damageType: DamageType.Magic,
         damageRange: { min: 1, max: 3, bonus: 0 },
         spellPowerRatio: 0.1,
@@ -515,8 +493,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
         
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        light: false,
-        twoHanded: false,
         damageType: DamageType.Magic,
         damageRange: { min: 1, max: 3, bonus: 1 },
         spellPowerRatio: 0.1,
@@ -536,8 +512,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
         
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        light: false,
-        twoHanded: false,
         damageType: DamageType.Magic,
         damageRange: { min: 1, max: 3, bonus: 2 },
         spellPowerRatio: 0.1,
@@ -557,8 +531,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
         
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        light: false,
-        twoHanded: false,
         damageType: DamageType.Magic,
         damageRange: { min: 1, max: 3, bonus: 3 },
         spellPowerRatio: 0.1,
@@ -578,8 +550,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
         
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        light: false,
-        twoHanded: false,
         damageType: DamageType.Magic,
         damageRange: { min: 1, max: 3, bonus: 4 },
         spellPowerRatio: 0.1,
@@ -599,8 +569,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
         
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        light: false,
-        twoHanded: false,
         damageType: DamageType.Magic,
         damageRange: { min: 1, max: 3, bonus: 5 },
         spellPowerRatio: 0.1,
@@ -622,8 +590,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
 
         type: WeaponType.Unarmed,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 1, max: 3, bonus: 0 },
         onHit: {
@@ -642,8 +608,6 @@ const weapons: {[id in WeaponId]: Weapon} = {
         
         type: WeaponType.Unarmed,
         attackType: AttackType.MeleeWeapon,
-        light: false,
-        twoHanded: true,
         damageType: DamageType.Physical,
         damageRange: { min: 1, max: 3, bonus: 1 },
         onHit: {
@@ -655,4 +619,4 @@ const weapons: {[id in WeaponId]: Weapon} = {
     }
 } as const;
 
-export { WeaponType, AttackType, Weapon, WeaponId, weapons };
+export { Weapon, WeaponId, WeaponType, WeaponTypeProperties, weapons };
