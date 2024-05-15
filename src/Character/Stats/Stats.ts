@@ -1,4 +1,3 @@
-import { Equipment } from '../../Equipment/Equipment';
 import { ItemStats } from '../../Equipment/Item';
 import WeaponStyle from '../../WeaponStyle';
 import AttributeStatScaling from '../Attributes/AttributeStatScaling';
@@ -26,7 +25,6 @@ class Stats {
     static OFF_HAND_HIT_CHANCE_PENALTY = -20;
 
     character: Character;
-    armourTypeDodgeMultiplier: number;
 
     // Defensive
     [StatType.MaxHealth]: Stat = {base: Stats.DEFAULT_MAX_HEALTH, attribute: 0, bonus: 0};
@@ -69,7 +67,7 @@ class Stats {
     [StatType.SpellPowerPercent]: Stat = {base: 0, attribute: 0, bonus: 0};
     
     // Mana
-    [StatType.ManaCost]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.ManaCost]: Stat = {base: Stats.DEFAULT_MANA_COST, attribute: 0, bonus: 0};
     [StatType.StartingMana]: Stat = {base: 0, attribute: 0, bonus: 0};
     [StatType.ManaRegen]: Stat = {base: Stats.DEFAULT_MANA_REGEN, attribute: 0, bonus: 0};
     [StatType.ManaOnHit]: Stat = {base: Stats.DEFAULT_MANA_ON_HIT, attribute: 0, bonus: 0};
@@ -82,8 +80,9 @@ class Stats {
     [StatType.PotionHealing]: Stat = {base: 0, attribute: 0, bonus: 0};
     [StatType.PotionEffectiveness]: Stat = {base: 0, attribute: 0, bonus: 0};
 
-    constructor({character, template, equipment}: {character: Character, template: StatTemplate, equipment: Equipment}) {
+    constructor({character, template}: {character: Character, template: StatTemplate}) {
         this.character = character;
+        const equipment = character.equipment;
 
         // Set default max health
         this[StatType.MaxHealth].base = Stats.DEFAULT_MAX_HEALTH + Stats.DEFAULT_MAX_HEALTH_PER_LVL * (character.level - 1);
@@ -101,8 +100,6 @@ class Stats {
             this[StatType.HitChance].bonus += Stats.DUAL_WIELD_HIT_CHANCE_PENALTY;
             this[StatType.OffHandHitChance].bonus += Stats.OFF_HAND_HIT_CHANCE_PENALTY;
         }
-
-        this.armourTypeDodgeMultiplier =  equipment.armour ? ArmourTypeDodgeMultiplier[equipment.armour.type] : 0;
 
         // Add stats from equipment
         if (equipment.armour) this.addItemStats(equipment.armour.stats);
@@ -159,7 +156,8 @@ class Stats {
         return this.getStat(StatType.MaxHealth) * (1 + this.getStat(StatType.HealthPercent));
     }
     get dodge() {
-        return this.getStat(StatType.Dodge) * this.armourTypeDodgeMultiplier;
+        const armour = this.character.equipment.armour;
+        return this.getStat(StatType.Dodge) * (armour ? ArmourTypeDodgeMultiplier[armour.type] : 1);
     }
 
     // Damage
