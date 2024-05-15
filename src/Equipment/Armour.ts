@@ -42,7 +42,6 @@ const armour: {[id in ArmourId]: Armour} = {
             [AttributeType.Intelligence]: 5
         },
         stats: {
-            [StatType.Dodge]: 5,
             [StatType.ManaRegen]: 5
         }
     },
@@ -58,8 +57,7 @@ const armour: {[id in ArmourId]: Armour} = {
             [AttributeType.Intelligence]: 6
         },
         stats: {
-            [StatType.Dodge]: 10,
-            [StatType.ManaRegen]: 6
+            [StatType.ManaRegen]: 7
         }
     },
     robe2: {
@@ -74,8 +72,7 @@ const armour: {[id in ArmourId]: Armour} = {
             [AttributeType.Intelligence]: 7
         },
         stats: {
-            [StatType.Dodge]: 15,
-            [StatType.ManaRegen]: 7
+            [StatType.ManaRegen]: 9
         }
     },
     robe3: {
@@ -90,8 +87,7 @@ const armour: {[id in ArmourId]: Armour} = {
             [AttributeType.Intelligence]: 8
         },
         stats: {
-            [StatType.Dodge]: 20,
-            [StatType.ManaRegen]: 8
+            [StatType.ManaRegen]: 11
         }
     },
     robe4: {
@@ -106,8 +102,7 @@ const armour: {[id in ArmourId]: Armour} = {
             [AttributeType.Intelligence]: 9
         },
         stats: {
-            [StatType.Dodge]: 25,
-            [StatType.ManaRegen]: 9
+            [StatType.ManaRegen]: 13
         }
     },
     robe5: {
@@ -122,8 +117,7 @@ const armour: {[id in ArmourId]: Armour} = {
             [AttributeType.Intelligence]: 10
         },
         stats: {
-            [StatType.Dodge]: 30,
-            [StatType.ManaRegen]: 10
+            [StatType.ManaRegen]: 15
         }
     },
 
