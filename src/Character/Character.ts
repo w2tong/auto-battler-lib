@@ -81,8 +81,7 @@ export default class Character {
         this._attributes = new Attributes(attributes, equipment);
         this._stats = new Stats({
             character: this,
-            template: statTemplate,
-            equipment,
+            template: statTemplate
         });
         this.ability = ability ?? (className ? Classes[className].ability : null);
         this._currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
