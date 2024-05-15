@@ -1,4 +1,4 @@
-import ArmourType from '../../ArmourType';
+import { ArmourType } from '../../Equipment/Armour';
 
 const ArmourTypeDodgeMultiplier: {[type in ArmourType]: number} = {
     [ArmourType.Unarmoured]: 1,
