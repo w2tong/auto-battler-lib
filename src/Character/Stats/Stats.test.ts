@@ -1,7 +1,7 @@
-import ArmourType from '../../ArmourType';
-import { Armour } from '../../Equipment/Armour';
-import { ItemType } from '../../Equipment/Item';
-import { createCharacter, createCharacterWithEquipment } from '../../tests/util';
+import { ArmourType, armour } from '../../Equipment/Armour';
+import { weapons } from '../../Equipment/Weapon';
+import { createCharacter, createCharacterWithEquipment, createCharacterWithTemplate } from '../../tests/util';
+import Character from '../Character';
 import ArmourTypeDodgeMultiplier from './ArmourTypeDodgeMultiplier';
 import StatType from './StatType';
 import Stats from './Stats';
@@ -49,40 +49,61 @@ describe('Default Stats', () => {
     });
 });
 
-function createArmourType(type: ArmourType): Armour {
-    return {
-        itemType: ItemType.Armour,
-        type,
-        id: '',
-        name: '',
-        tier: 0,
-        img: ''
-    };
-}
-
 describe('Dodge with Armour Type Penalty', () => {
     test('Dodge with no armour is Stats.DEFAULT_DODGE', () => {
-        const char = createCharacterWithEquipment(1, {armour: createArmourType(ArmourType.Unarmoured)});
+        const char = createCharacterWithEquipment(1, {});
         expect(char.stats.dodge).toEqual(Stats.DEFAULT_DODGE);
     });
 
     test('Dodge with Unarmoured Armour is Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Unarmoured]', () => {
-        const char = createCharacterWithEquipment(1, {armour: createArmourType(ArmourType.Unarmoured)});
+        const char = createCharacterWithEquipment(1, {armour: armour.robe0});
         expect(char.stats.dodge).toEqual(Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Unarmoured]);
     });
 
     test('Dodge with Light Armour is Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Light]', () => {
-        const char = createCharacterWithEquipment(1, {armour: createArmourType(ArmourType.Light)});
+        const char = createCharacterWithEquipment(1, {armour: armour.leatherArmour0});
         expect(char.stats.dodge).toEqual(Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Light]);
     });
 
     test('Dodge with Medium Armour is Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Medium]', () => {
-        const char = createCharacterWithEquipment(1, {armour: createArmourType(ArmourType.Medium)});
+        const char = createCharacterWithEquipment(1, {armour: armour.mailArmour0});
         expect(char.stats.dodge).toEqual(Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Medium]);
     });
 
     test('Dodge with Heavy Armour is Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Heavy]', () => {
-        const char = createCharacterWithEquipment(1, {armour: createArmourType(ArmourType.Heavy)});
+        const char = createCharacterWithEquipment(1, {armour: armour.plateArmour0});
         expect(char.stats.dodge).toEqual(Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Heavy]);
     });
+});
+
+describe('Two-Handed Stat Bonuses', () => {
+    // TODO: complete this test case
+    test('0 Attack', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {},
+            equipment: { mainHand: weapons.greatsword0 }
+        });
+        expect(char.stats.damage).toEqual(0);
+        expect(char.stats.meleeDamage).toEqual(0);
+        expect(char.stats.rangedDamage).toEqual(0);
+        expect(char.stats.manaOnHit).toEqual(0);
+    });
+    // TODO: add more test cases
+});
+
+describe('Spell Power %', () => {
+    test('100 SP with 0% SP% is 100', () => {
+        const char = createCharacterWithTemplate(1, {[StatType.SpellPower]: { base: 100 }});
+        expect(char.stats.spellPower).toEqual(100);
+    });
+
+    test('100 SP with 10% SP% is 110', () => {
+        const char = createCharacterWithTemplate(1, {[StatType.SpellPower]: { base: 100 }, [StatType.SpellPowerPercent]: { base: 0.1 }});
+        expect(char.stats.spellPower).toEqual(110);
+    });
+
+    // TODO: add more test cases
 });
