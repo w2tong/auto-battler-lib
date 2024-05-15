@@ -173,7 +173,7 @@ class Stats {
 
     // Spell
     get spellPower() {
-        return this.getStat(StatType.SpellPower) * (1 + this.getStat(StatType.SpellPowerPercent));
+        return Math.floor(this.getStat(StatType.SpellPower) * (1 + this.getStat(StatType.SpellPowerPercent)));
     }
 
     // Mana
