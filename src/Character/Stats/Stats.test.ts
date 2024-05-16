@@ -100,20 +100,28 @@ describe('Two-Handed Stat Bonuses', () => {
         const char = createCharacterWithTemplate(1, {
             [StatType.Damage]: { base: num },
             [StatType.MeleeWeaponDamage]: { base: num },
-            [StatType.RangedWeaponDamage]: { base: num }
+            [StatType.RangedWeaponDamage]: { base: num },
+            [StatType.ManaOnHit]: { base: num }
         });
         expect(char.stats.damage).toEqual(num);
         expect(char.stats.meleeWeaponDamage).toEqual(num);
         expect(char.stats.rangedWeaponDamage).toEqual(num);
-        expect(char.stats.manaOnHit).toEqual(Stats.DEFAULT_MANA_ON_HIT);
+        expect(char.stats.manaOnHit).toEqual(num);
+    });
+
+    test('Mana On Hit is Default * twoHandedBonus', () => {
+        const char = create2HCharacter({});
+        expect(char.stats.manaOnHit).toEqual(Stats.DEFAULT_MANA_ON_HIT * twoHandedBonus);
     });
 
     test('0 is 0', () => {
-        const char = create2HCharacter({});
+        const char = create2HCharacter({
+            [StatType.ManaOnHit]: { base: 0 },
+        });
         expect(char.stats.damage).toEqual(0);
         expect(char.stats.meleeWeaponDamage).toEqual(0);
         expect(char.stats.rangedWeaponDamage).toEqual(0);
-        expect(char.stats.manaOnHit).toEqual(Stats.DEFAULT_MANA_ON_HIT * twoHandedBonus);
+        expect(char.stats.manaOnHit).toEqual(0);
     });
 
     test('10 is 15', () => {
@@ -144,20 +152,32 @@ describe('Two-Handed Stat Bonuses', () => {
         expect(char.stats.manaOnHit).toEqual(num * twoHandedBonus);
     });
 
-    // TODO: test case with negative numbers
-    // TODO: should two handed mult apply to negatives?
-    test('-10 is -15', () => {
-        const num = 100;
+    test('-10 is -10', () => {
+        const num = -10;
         const char = create2HCharacter({
             [StatType.Damage]: { base: num },
             [StatType.MeleeWeaponDamage]: { base: num },
             [StatType.RangedWeaponDamage]: { base: num },
             [StatType.ManaOnHit]: { base: num },
         });
-        expect(char.stats.damage).toEqual(num * twoHandedBonus);
-        expect(char.stats.meleeWeaponDamage).toEqual(num * twoHandedBonus);
-        expect(char.stats.rangedWeaponDamage).toEqual(num * twoHandedBonus);
-        expect(char.stats.manaOnHit).toEqual(num * twoHandedBonus);
+        expect(char.stats.damage).toEqual(num);
+        expect(char.stats.meleeWeaponDamage).toEqual(num);
+        expect(char.stats.rangedWeaponDamage).toEqual(num);
+        expect(char.stats.manaOnHit).toEqual(num);
+    });
+
+    test('-100 is -100', () => {
+        const num = -100;
+        const char = create2HCharacter({
+            [StatType.Damage]: { base: num },
+            [StatType.MeleeWeaponDamage]: { base: num },
+            [StatType.RangedWeaponDamage]: { base: num },
+            [StatType.ManaOnHit]: { base: num },
+        });
+        expect(char.stats.damage).toEqual(num);
+        expect(char.stats.meleeWeaponDamage).toEqual(num);
+        expect(char.stats.rangedWeaponDamage).toEqual(num);
+        expect(char.stats.manaOnHit).toEqual(num);
     });
 });
 
@@ -304,5 +324,4 @@ describe('Spell Power %', () => {
             expect(char.stats.spellPower).toEqual(0);
         });
     });
-
 });

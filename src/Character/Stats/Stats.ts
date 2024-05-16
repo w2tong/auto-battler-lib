@@ -160,19 +160,27 @@ class Stats {
         return this.getStat(StatType.Dodge) * (armour ? ArmourTypeDodgeMultiplier[armour.type] : 1);
     }
 
+    // Hit Chance
     get hitChance() {
         return this.getStat(StatType.HitChance) + (this.character.weaponStyle === WeaponStyle.DualWield ? Stats.DUAL_WIELD_HIT_CHANCE_PENALTY : 0);
     }
 
     // Damage
     get damage() {
-        return this.getStat(StatType.Damage) * this.getTwoHandedMultiplier();
+        const damage = this.getStat(StatType.Damage);
+        if (damage < 0) return damage;
+        return damage * this.getTwoHandedMultiplier();
+
     }
     get meleeWeaponDamage() {
-        return this.getStat(StatType.MeleeWeaponDamage) * this.getTwoHandedMultiplier();
+        const meleeWeaponDamage = this.getStat(StatType.MeleeWeaponDamage);
+        if (meleeWeaponDamage < 0) return meleeWeaponDamage;
+        return meleeWeaponDamage * this.getTwoHandedMultiplier();
     }
     get rangedWeaponDamage() {
-        return this.getStat(StatType.RangedWeaponDamage) * this.getTwoHandedMultiplier();
+        const rangedDamage = this.getStat(StatType.RangedWeaponDamage);
+        if (rangedDamage < 0) return rangedDamage;
+        return rangedDamage * this.getTwoHandedMultiplier();
     }
 
     // Spell
@@ -186,7 +194,9 @@ class Stats {
 
     // Mana
     get manaOnHit() {
-        return this.getStat(StatType.ManaOnHit) * this.getTwoHandedMultiplier();
+        const manaOnHit = this.getStat(StatType.ManaOnHit);
+        if (manaOnHit < 0) return manaOnHit;
+        return manaOnHit * this.getTwoHandedMultiplier();
     }
 }
 
