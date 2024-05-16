@@ -40,7 +40,7 @@ class Stats {
     
     // Hit Chance
     [StatType.HitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.OffHandHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.OffHandHitChance]: Stat = {base: Stats.OFF_HAND_HIT_CHANCE_PENALTY, attribute: 0, bonus: 0};
     [StatType.MeleeHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
     [StatType.RangedHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
 
@@ -160,6 +160,10 @@ class Stats {
         return this.getStat(StatType.Dodge) * (armour ? ArmourTypeDodgeMultiplier[armour.type] : 1);
     }
 
+    get hitChance() {
+        return this.getStat(StatType.HitChance) + (this.character.weaponStyle === WeaponStyle.DualWield ? Stats.DUAL_WIELD_HIT_CHANCE_PENALTY : 0);
+    }
+
     // Damage
     get damage() {
         return this.getStat(StatType.Damage) * this.getTwoHandedMultiplier();
@@ -173,7 +177,11 @@ class Stats {
 
     // Spell
     get spellPower() {
-        return Math.floor(this.getStat(StatType.SpellPower) * (1 + this.getStat(StatType.SpellPowerPercent)));
+        const spellPower = this.getStat(StatType.SpellPower);
+        const spellPowerPercent = this.getStat(StatType.SpellPowerPercent);
+        // Swap signs of spellPowerPercent when spellPower is negative
+        const spellPowerMult = 1 + Math.max(spellPowerPercent * (spellPower >= 0 ? 1 : -1), -1.00);
+        return Math.round(spellPower * spellPowerMult);
     }
 
     // Mana
