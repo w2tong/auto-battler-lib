@@ -21,7 +21,7 @@ const groups: {[name: string]: NPC[]} = {
     orcFighter: [OrcFighter],
     zombie: [Zombie],
     ogreFighter: [OgreFighter]
-} as const;
+};
 
 const leveledEncounters: {[level: number]: {group: EncounterGroup, level?: number, count?: number}[]} = {
     1: [
@@ -196,7 +196,7 @@ const leveledEncounters: {[level: number]: {group: EncounterGroup, level?: numbe
         { group: groups.orcFighter },
         { group: groups.ogreEncounter },
     ],
-} as const;
+};
 
 function createNPCChars(npcs: NPC[], level: number, count: number = 1): Character[] {
     const chars: Character[] = [];
