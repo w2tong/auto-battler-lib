@@ -1,3 +1,4 @@
+import StatType from '../../Character/Stats/StatType';
 import Debuff from '../Debuff';
 import DebuffId from '../DebuffId';
 
@@ -18,7 +19,7 @@ export default class Burn extends Debuff {
             this.char.takeDamage({
                 source: `${Burn.name} (${instance.source.name})`, 
                 damage: Burn.baseDamage + Math.floor(instance.source.stats.spellPower * Burn.spellPowerRatio),
-                armourPenetration: instance.source.stats.armourPenetration,
+                armourPenetration: instance.source.stats.getStat(StatType.ArmourPenetration),
                 addToLog: true
             });
 

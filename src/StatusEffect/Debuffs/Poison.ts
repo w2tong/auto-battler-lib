@@ -1,3 +1,4 @@
+import StatType from '../../Character/Stats/StatType';
 import Debuff from '../Debuff';
 import DebuffId from '../DebuffId';
 
@@ -18,7 +19,7 @@ export default class Poison extends Debuff {
             this.char.takeDamage({
                 source: `${Poison.name} (${instance.source.name})`, 
                 damage: Poison.baseDamage + Math.floor(this.char.currentHealth * Poison.healthDamagePercent),
-                armourPenetration: instance.source.stats.armourPenetration,
+                armourPenetration: instance.source.stats.getStat(StatType.ArmourPenetration),
                 addToLog: true
             });
 
