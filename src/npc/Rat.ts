@@ -17,7 +17,7 @@ const Rat: NPC = {
         [StatType.MaxHealth]: { base: 5, perLvl: 2 },
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE + 10 },
 
-        [StatType.HitChance]: { base: Stats.DEFAULT_HIT_CHANCE - 10 },
+        [StatType.HitChance]: { base: -10 },
 
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
 

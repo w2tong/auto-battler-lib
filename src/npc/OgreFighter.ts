@@ -21,7 +21,7 @@ const OgreFighter: NPC = {
         [StatType.Deflection] : { base: 0, perLvl: 0.2 },
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 20 },
     
-        [StatType.HitChance]: { base: Stats.DEFAULT_HIT_CHANCE - 10 },
+        [StatType.HitChance]: { base: -10 },
 
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
 
