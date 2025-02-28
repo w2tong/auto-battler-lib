@@ -35,7 +35,7 @@ abstract class StatusEffect {
     }
 
     add(id: string, source: Character, stacks: number) {
-        if (this.char.battle) this.char.battle.ref.log.add(`${this.char.name} gained ${id}${stacks !== 1 ? `(${stacks})` : ''} from ${source.name}.`);
+        if (this.char.battle) this.char.battle.ref.log.add(`${this.char.name} gained ${this.name}${stacks !== 1 ? `(${stacks})` : ''} from ${source.name}.`);
 
         if (this.instances[id]) this.instances[id].stacks += stacks;
         else {
@@ -45,7 +45,7 @@ abstract class StatusEffect {
     }
 
     remove(id: string) {
-        if (this.char.battle) this.char.battle.ref.log.add(`${this.char.name} lost ${id} from ${this.instances[id].source.name}.`);
+        if (this.char.battle) this.char.battle.ref.log.add(`${this.char.name} lost ${this.name} from ${this.instances[id].source.name}.`);
 
         this.onExpire();
         if (this.id in BuffId) this.instances[id].source.statusEffectManager.removeOutgoingBuff(this.id as BuffId, this.char);
