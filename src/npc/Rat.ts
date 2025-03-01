@@ -5,7 +5,7 @@ import { weapons } from '../Equipment/Weapon';
 import NPC from './NPC';
 
 const Rat: NPC = {
-    name: 'Fighter',
+    name: 'Rat',
     attributes: {
         [AttributeType.WeaponSkill]: {base: 0, perLvl: 0.75},
         [AttributeType.Strength]: {base: 0, perLvl: 0.5},
