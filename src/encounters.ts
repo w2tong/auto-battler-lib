@@ -24,6 +24,9 @@ const groups: {[name: string]: NPC[]} = {
 };
 
 const leveledEncounters: {[level: number]: {group: EncounterGroup, level?: number, count?: number}[]} = {
+    0: [
+        { group: groups.zombie, level: 1 }
+    ],
     1: [
         { group: groups.fighter },
         { group: groups.rogue },
