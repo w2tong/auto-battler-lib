@@ -401,10 +401,10 @@ export default class Character {
         damageTaken = Math.max(damageTaken - this.stats.getStat(StatType.Deflection), 0);
 
         // Apply armour
-        damageTaken = Math.max(Math.round(damageTaken * Math.max(this.stats.getStat(StatType.Armour) - armourPenetration, 0)/100), 0);
+        damageTaken = Math.max(damageTaken * (1 - Math.max(this.stats.getStat(StatType.Armour) - armourPenetration, 0)/100), 0);
 
-        this._currentHealth -= Math.round(damageTaken);
-        if (addToLog) this.battle.ref.log.addDamage(this.name, source, damage);
+        this._currentHealth -= damageTaken;
+        if (addToLog) this.battle.ref.log.addDamage(this.name, source, damageTaken);
         if (this.isDead()) {
             this.battle.ref.setCharDead(this.battle.side, this.battle.index);
             this.battle.ref.log.add(`${this.name} died.`);
