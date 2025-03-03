@@ -168,6 +168,14 @@ class Stats {
         return this.getStat(StatType.HitChance) + (this.character.weaponStyle === WeaponStyle.DualWield ? Stats.DUAL_WIELD_HIT_CHANCE_PENALTY : 0);
     }
 
+    // Crit
+    get critChance() {
+        return this.getStat(StatType.CriticalChance);
+    }
+    get critDamage() {
+        return this.getStat(StatType.CriticalDamage);
+    }
+
     // Damage
     get damage() {
         const damage = this.getStat(StatType.Damage);
