@@ -183,6 +183,55 @@ describe('Two-Handed Stat Bonuses', () => {
 
 // TODO: add test cases for dual wielding           
 
+describe('Health %', () => {
+    describe('100 health', () => {
+        test('100 + 0% is 100', () => {
+            const char = createCharacterWithTemplate(1, {[StatType.MaxHealth]: { base: 100 }});
+            expect(char.stats.maxHealth).toEqual(100);
+        });
+    
+        test('100 + 10% is 110', () => {
+            const char = createCharacterWithTemplate(1, {[StatType.MaxHealth]: { base: 100 }, [StatType.HealthPercent]: { base: 0.10 }});
+            expect(char.stats.maxHealth).toBeCloseTo(110);
+        });
+    
+        test('100 + 50% is 150', () => {
+            const char = createCharacterWithTemplate(1, {[StatType.MaxHealth]: { base: 100 }, [StatType.HealthPercent]: { base: 0.50 }});
+            expect(char.stats.maxHealth).toEqual(150);
+        });
+    
+        test('100 + 100% is 200', () => {
+            const char = createCharacterWithTemplate(1, {[StatType.MaxHealth]: { base: 100 }, [StatType.HealthPercent]: { base: 1.00 }});
+            expect(char.stats.maxHealth).toEqual(200);
+        });
+    
+        test('100 + 1000% is 1100', () => {
+            const char = createCharacterWithTemplate(1, {[StatType.MaxHealth]: { base: 100 }, [StatType.HealthPercent]: { base: 10.00 }});
+            expect(char.stats.maxHealth).toEqual(1100);
+        });
+    
+        test('100 - 10% is 90', () => {
+            const char = createCharacterWithTemplate(1, {[StatType.MaxHealth]: { base: 100 }, [StatType.HealthPercent]: { base: -0.10 }});
+            expect(char.stats.maxHealth).toEqual(90);
+        });
+    
+        test('100 - 50% is 50', () => {
+            const char = createCharacterWithTemplate(1, {[StatType.MaxHealth]: { base: 100 }, [StatType.HealthPercent]: { base: -0.50 }});
+            expect(char.stats.maxHealth).toEqual(50);
+        });
+    
+        test('100 - 100% is 10', () => {
+            const char = createCharacterWithTemplate(1, {[StatType.MaxHealth]: { base: 100 }, [StatType.HealthPercent]: { base: -1.00 }});
+            expect(char.stats.maxHealth).toEqual(10);
+        });
+    
+        test('100 - 1000% is 10', () => {
+            const char = createCharacterWithTemplate(1, {[StatType.MaxHealth]: { base: 100 }, [StatType.HealthPercent]: { base: -10.00 }});
+            expect(char.stats.maxHealth).toEqual(10);
+        });
+    });
+});
+
 describe('Spell Power %', () => {
     describe('100 SP', () => {
         test('100 + 0% is 100', () => {
@@ -325,3 +374,6 @@ describe('Spell Power %', () => {
         });
     });
 });
+
+// TODO: add tests for following stats
+// MeleeWeaponDamagePercent, RangedWeaponDamagePercent

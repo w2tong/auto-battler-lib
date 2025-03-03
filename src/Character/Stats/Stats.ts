@@ -84,10 +84,9 @@ class Stats {
         this.character = character;
         const equipment = character.equipment;
 
-        // Set default max health
         this[StatType.MaxHealth].base = Stats.DEFAULT_MAX_HEALTH + Stats.DEFAULT_MAX_HEALTH_PER_LVL * (character.level - 1);
 
-        // Set stats to template
+        // Set stats to template (sets MaxHealth if included in template)
         for (const [stat, {base, perLvl}] of Object.entries(template)) {
             this[stat as StatType].base = base + (perLvl ? perLvl * (character.level - 1) : 0);
         }
@@ -152,8 +151,12 @@ class Stats {
     }
 
     // Defensive
+    // Max Health cannot be reduced below 10% of its base from Health %
     get maxHealth() {
-        return this.getStat(StatType.MaxHealth) * (1 + this.getStat(StatType.HealthPercent));
+        return Math.max(
+            this.getStat(StatType.MaxHealth) * (1 + this.getStat(StatType.HealthPercent)),
+            this.getStat(StatType.MaxHealth) * 0.1
+        );
     }
     get dodge() {
         const armour = this.character.equipment.armour;
@@ -183,7 +186,7 @@ class Stats {
         return rangedDamage * this.getTwoHandedMultiplier();
     }
 
-    // Spell
+    // Spell power 
     get spellPower() {
         const spellPower = this.getStat(StatType.SpellPower);
         const spellPowerPercent = this.getStat(StatType.SpellPowerPercent);
