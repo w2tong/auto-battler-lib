@@ -1,19 +1,20 @@
 import StatType from '../Stats/StatType';
 import AttributeType from './AttributeType';
 
+// TODO: test if these changed values are being calculated correctly
 const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number}} = {
     [AttributeType.WeaponSkill]: {
         [StatType.HitChance]: 1,
     },
     [AttributeType.Strength]: {
-        [StatType.MeleeWeaponDamagePercent]: 1,
+        [StatType.MeleeWeaponDamagePercent]: 0.01,
         [StatType.BlockPower]: 0.2,
         [StatType.MaxHealth]: 0.5
     },
     [AttributeType.Dexterity]: {
         [StatType.Dodge]: 1,
-        [StatType.RangedWeaponDamagePercent]: 1,
-        [StatType.MeleeWeaponDamagePercent]: 0.5,
+        [StatType.RangedWeaponDamagePercent]: 0.01,
+        [StatType.MeleeWeaponDamagePercent]: 0.005,
         [StatType.Initiative]: 0.2
     },
     [AttributeType.Perception]: {
@@ -22,7 +23,7 @@ const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number
         [StatType.ArmourPenetration]: 0.5
     },
     [AttributeType.Constitution]: {
-        [StatType.HealthPercent]: 1,
+        [StatType.HealthPercent]: 0.01,
         [StatType.StatusResistance]: 0.2,
         [StatType.Armour]: 0.1
     },
