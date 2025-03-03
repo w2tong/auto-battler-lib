@@ -1,12 +1,11 @@
-import { Item, ItemType } from './Item';
+import StatType from '../Character/Stats/StatType';
+import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Head extends Item {
     itemType: ItemType.Head
     armourClass?: number
-    manaPerAtk?: number;
-    manaRegen?: number;
-    manaCostReduction?: number;
-    initiativeBonus?: number;
+    attributes?: ItemAttributes;
+    stats: ItemStats;
 }
 
 type HeadId = 
@@ -19,58 +18,68 @@ const heads: {[id in HeadId]: Head} = {
         id: 'helmet0',
         itemType: ItemType.Head,
         name: 'Leather Helmet',
-        armourClass: 1
+        tier: 0,
+        img: 'head-leather.png',
+
+        stats: {
+            [StatType.Armour]: 3
+        }
     },
     helmet1: {
         id: 'helmet1',
         itemType: ItemType.Head,
         name: 'Mail Coif',
-        armourClass: 2
+        tier: 3,
+        img: 'head-mail.png',
+
+        stats: {
+            [StatType.Armour]: 6
+        }
     },
     helmet2: {
         id: 'helmet2',
         itemType: ItemType.Head,
         name: 'Plate Helmet',
-        armourClass: 3
+        tier: 5,
+        img: 'head-plate.png',
+
+        stats: {
+            [StatType.Armour]: 10
+        }
     },
     clothHood0: {
-        id: 'clothhood0',
+        id: 'clothHood0',
         itemType: ItemType.Head,
         name: 'Cloth Hood',
-        manaCostReduction: 10
+        tier: 0,
+        img: 'head-cloth.png',
+
+        stats: {
+            [StatType.ManaCost]: -5
+        }
     },
     clothHood1: {
-        id: 'clothhood1',
+        id: 'clothHood1',
         itemType: ItemType.Head,
         name: 'Cloth Hood +1',
-        manaCostReduction: 15
+        tier: 3,
+        img: 'head-cloth.png',
+
+        stats: {
+            [StatType.ManaCost]: -10
+        }
     },
     clothHood2: {
-        id: 'clothhood2',
+        id: 'clothHood2',
         itemType: ItemType.Head,
         name: 'Cloth Hood +2',
-        manaCostReduction: 20
+        tier: 5,
+        img: 'head-cloth.png',
+
+        stats: {
+            [StatType.ManaCost]: -15
+        }
     }
 } as const;
 
-function getHeadTooltip(head: Head) {
-    const tooltip = [];
-    if (head.armourClass) tooltip.push(`Armour Class: ${head.armourClass}`);
-    if (head.manaPerAtk) tooltip.push(`Mana/Attack: ${head.manaPerAtk}`);
-    if (head.manaRegen) tooltip.push(`Mana Regen: ${head.manaRegen}`);
-    if (head.manaCostReduction) tooltip.push(`Mana Cost Reduction: ${head.manaCostReduction}`);
-    if (head.initiativeBonus) tooltip.push(`Initiative Bonus: ${head.initiativeBonus}`);
-    return tooltip.join('\n');
-}
-
-function getHeadDescription(head: Head) {
-    const descriptions = [];
-    if (head.armourClass) descriptions.push(`AC: ${head.armourClass}`);
-    if (head.manaPerAtk) descriptions.push(`MP/ATK: ${head.manaPerAtk}`);
-    if (head.manaRegen) descriptions.push(`MP Regen: ${head.manaRegen}`);
-    if (head.manaCostReduction) descriptions.push(`MCR: ${head.manaCostReduction}`);
-    if (head.initiativeBonus) descriptions.push(`IB: ${head.initiativeBonus}`);
-    return descriptions.join(', ');
-}
-
-export { Head, HeadId, heads, getHeadTooltip, getHeadDescription };
+export { Head, HeadId, heads };

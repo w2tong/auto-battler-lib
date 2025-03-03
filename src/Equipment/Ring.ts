@@ -1,242 +1,323 @@
-import { Item, ItemType } from './Item';
+import StatType from '../Character/Stats/StatType';
+import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Ring extends Item {
-    itemType: ItemType.Ring
-    // Attack
-    attackBonus?: number;
-    damageBonus?: number;
-    critRangeBonus?: number;
-    critMultBonus?: number;
-    // Defense
-    armourClass?: number
-    physDR?: number;
-    magicDR?: number;
-    physResist?: number;
-    magicResist?: number;
-    thorns?: number;
-    // Mana
-    manaPerAtk?: number;
-    manaRegen?: number;
-    manaCostReduction?: number;
-    // Other
-    initiativeBonus?: number;
+    itemType: ItemType.Ring;
+    attributes?: ItemAttributes;
+    stats?: ItemStats;
 }
 
 type RingId = 
-'abRing0' | 'abRing1' | 'abRing2'
-| 'dbRing0' | 'dbRing1' | 'dbRing2'
-| 'crRing0' | 'crRing1' 
-| 'cmRing0' | 'cmRing1' | 'cmRing2' 
-| 'acRing0' | 'acRing1' | 'acRing2'
-| 'thrRing0' | 'thrRing1' | 'thrRing2'
-| 'mpatkRing0' | 'mpatkRing1' | 'mpatkRing2'
-| 'mrgnRing0' | 'mrgnRing1' | 'mrgnRing2'
-| 'mcostRing0' | 'mcostRing1' | 'mcostRing2'
+'atkRing0' | 'atkRing1' | 'atkRing2'
+| 'dmgRing0' | 'dmgRing1' | 'dmgRing2'
+| 'critRing0' | 'critRing1' | 'critRing2'
+| 'critDmgRing0' | 'critDmgRing1' | 'critDmgRing2' 
+| 'dodgeRing0' | 'dodgeRing1' | 'dodgeRing2'
+| 'thornsRing0' | 'thornsRing1' | 'thornsRing2'
+| 'mpHitRing0' | 'mpHitRing1' | 'mpHitRing2'
+| 'mpRegenRing0' | 'mpRegenRing1' | 'mpRegenRing2'
+| 'mpCostRing0' | 'mpCostRing1' | 'mpCostRing2'
 ;
 
-// TODO: add rings and add rings to loot table
 const rings: {[id in RingId]: Ring} = {
-    abRing0: {
-        id: 'abRing0',
+    atkRing0: {
+        id: 'atkRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Attack',
-        attackBonus: 1
+        tier: 0,
+        img: 'ring-red.png',
+
+        stats: {
+            [StatType.HitChance]: 4
+        }
     },
-    abRing1: {
-        id: 'abRing1',
+    atkRing1: {
+        id: 'atkRing1',
         itemType: ItemType.Ring,
         name: 'Ring of Attack',
-        attackBonus: 2
+        tier: 3,
+        img: 'ring-red.png',
+
+        stats: {
+            [StatType.HitChance]: 7
+        }
     },
-    abRing2: {
-        id: 'abRing2',
+    atkRing2: {
+        id: 'atkRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater Attack',
-        attackBonus: 3
+        tier: 0,
+        img: 'ring-red.png',
+        
+        stats: {
+            [StatType.HitChance]: 10
+        }
     },
-    dbRing0: {
-        id: 'dbRing0',
+    dmgRing0: {
+        id: 'dmgRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Damage',
-        attackBonus: 1
+        tier: 0,
+        img: 'ring-orange.png',
+
+        stats: {
+            [StatType.Damage]: 1
+        }
     },
-    dbRing1: {
-        id: 'dbRing1',
+    dmgRing1: {
+        id: 'dmgRing1',
         itemType: ItemType.Ring,
         name: 'Ring of Damage',
-        attackBonus: 2
+        tier: 3,
+        img: 'ring-orange.png',
+        
+        stats: {
+            [StatType.Damage]: 2
+        }
     },
-    dbRing2: {
-        id: 'dbRing2',
+    dmgRing2: {
+        id: 'dmgRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater Damage',
-        attackBonus: 3
+        tier: 5,
+        img: 'ring-orange.png',
+        
+        stats: {
+            [StatType.Damage]: 3
+        }
     },
-    crRing0: {
-        id: 'crRing0',
+    critRing0: {
+        id: 'critRing0',
+        itemType: ItemType.Ring,
+        name: 'Ring of Lesser Crit Chance',
+        tier: 1,
+        img: 'ring-black.png',
+        
+        stats: {
+            [StatType.CriticalChance]: 4
+        }
+    },
+    critRing1: {
+        id: 'critRing1',
         itemType: ItemType.Ring,
         name: 'Ring of Crit Chance',
-        critRangeBonus: 1
+        tier: 3,
+        img: 'ring-black.png',
+        
+        stats: {
+            [StatType.CriticalChance]: 7
+        }
     },
-    crRing1: {
-        id: 'crRing1',
+    critRing2: {
+        id: 'critRing2',
         itemType: ItemType.Ring,
-        name: 'Ring of Pog Clazy Crit Chance',
-        critRangeBonus: 2
+        name: 'Ring of Greater Crit Chance',
+        tier: 5,
+        img: 'ring-black.png',
+        
+        stats: {
+            [StatType.CriticalChance]: 10
+        }
     },
-    cmRing0: {
-        id: 'cmRing0',
+    critDmgRing0: {
+        id: 'critDmgRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Crit Damage',
-        critMultBonus: 0.2
+        tier: 1,
+        img: 'ring-grey.png',
+
+        stats: {
+            [StatType.CriticalDamage]: 10
+        }
     },
-    cmRing1: {
-        id: 'cmRing1',
+    critDmgRing1: {
+        id: 'critDmgRing1',
         itemType: ItemType.Ring,
         name: 'Ring of Crit Damage',
-        critMultBonus: 0.35
+        tier: 3,
+        img: 'ring-grey.png',
+        
+        stats: {
+            [StatType.CriticalDamage]: 20
+        }
     },
-    cmRing2: {
-        id: 'cmRing2',
+    critDmgRing2: {
+        id: 'critDmgRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater Crit Damage',
-        critMultBonus: 0.5
+        tier: 5,
+        img: 'ring-grey.png',
+        
+        stats: {
+            [StatType.CriticalDamage]: 30
+        }
     },
-    acRing0: {
-        id: 'acRing0',
+    dodgeRing0: {
+        id: 'dodgeRing0',
         itemType: ItemType.Ring,
-        name: 'Ring of Lesser Armour',
-        armourClass: 1
+        name: 'Ring of Lesser Dodge',
+        tier: 0,
+        img: 'ring-shield.png',
+
+        stats: {
+            [StatType.Dodge]: 5
+        }
     },
-    acRing1: {
-        id: 'acRing1',
+    dodgeRing1: {
+        id: 'dodgeRing1',
         itemType: ItemType.Ring,
-        name: 'Ring of Armour',
-        armourClass: 2
+        name: 'Ring of Dodge',
+        tier: 3,
+        img: 'ring-shield.png',
+
+        stats: {
+            [StatType.Dodge]: 10
+        }
     },
-    acRing2: {
-        id: 'acRing2',
+    dodgeRing2: {
+        id: 'dodgeRing2',
         itemType: ItemType.Ring,
-        name: 'Ring of Greater Armour',
-        armourClass: 3
+        name: 'Ring of Greater Dodge',
+        tier: 5,
+        img: 'ring-shield.png',
+
+        stats: {
+            [StatType.Dodge]: 15
+        }
     },
-    thrRing0: {
-        id: 'thrRing0',
+    thornsRing0: {
+        id: 'thornsRing0',
         itemType: ItemType.Ring,
         name: 'Ring of Lesser Thorns',
-        thorns: 1
+        tier: 1,
+        img: 'ring-thorns.png',
+        
+        stats: {
+            [StatType.Thorns]: 1
+        }
     },
-    thrRing1: {
-        id: 'thrRing1',
+    thornsRing1: {
+        id: 'thornsRing1',
         itemType: ItemType.Ring,
         name: 'Ring of Thorns',
-        thorns: 2
+        tier: 3,
+        img: 'ring-thorns.png',
+        
+        stats: {
+            [StatType.Thorns]: 2
+        }
     },
-    thrRing2: {
-        id: 'thrRing2',
+    thornsRing2: {
+        id: 'thornsRing2',
         itemType: ItemType.Ring,
         name: 'Ring of Greater Thorns',
-        thorns: 3
+        tier: 5,
+        img: 'ring-thorns.png',
+        
+        stats: {
+            [StatType.Thorns]: 3
+        }
     },
-    mpatkRing0: {
-        id: 'mpatkRing0',
+    mpHitRing0: {
+        id: 'mpHitRing0',
         itemType: ItemType.Ring,
-        name: 'Ring of Lesser M.Atk Ring',
-        manaPerAtk: 2.5
+        name: 'Ring of Lesser Mana Hit',
+        tier: 1,
+        img: 'ring-purple.png',
+                
+        stats: {
+            [StatType.ManaOnHit]: 1
+        }
     },
-    mpatkRing1: {
-        id: 'mpatkRing1',
+    mpHitRing1: {
+        id: 'mpHitRing1',
         itemType: ItemType.Ring,
-        name: 'Ring of M.Atk Ring',
-        manaPerAtk: 5.0
+        name: 'Ring of Mana Hit',
+        tier: 3,
+        img: 'ring-purple.png',
+
+        stats: {
+            [StatType.ManaOnHit]: 2
+        }
     },
-    mpatkRing2: {
-        id: 'mpatkRing3',
+    mpHitRing2: {
+        id: 'mpHitRing2',
         itemType: ItemType.Ring,
-        name: 'Ring of Greater M.Atk Ring',
-        manaPerAtk: 7.5
+        name: 'Ring of Greater Mana Hit',
+        tier: 5,
+        img: 'ring-purple.png',
+
+        stats: {
+            [StatType.ManaOnHit]: 3
+        }
     },
-    mrgnRing0: {
-        id: 'mrgnRing0',
+    mpRegenRing0: {
+        id: 'mpRegenRing0',
         itemType: ItemType.Ring,
-        name: 'Ring of Lesser M.Regen Ring',
-        manaRegen: 4
+        name: 'Ring of Lesser Mana Regen',
+        tier: 1,
+        img: 'ring-blue.png',
+
+        stats: {
+            [StatType.ManaRegen]: 2
+        }
     },
-    mrgnRing1: {
-        id: 'mrgnRing1',
+    mpRegenRing1: {
+        id: 'mpRegenRing1',
         itemType: ItemType.Ring,
-        name: 'Ring of M.Regen Ring',
-        manaRegen: 7
+        name: 'Ring of Mana Regen',
+        tier: 3,
+        img: 'ring-blue.png',
+
+        stats: {
+            [StatType.ManaRegen]: 4
+        }
     },
-    mrgnRing2: {
-        id: 'mrgnRing2',
+    mpRegenRing2: {
+        id: 'mpRegenRing2',
         itemType: ItemType.Ring,
-        name: 'Ring of Greater M.Regen Ring',
-        manaRegen: 11
+        name: 'Ring of Greater Mana Regen',
+        tier: 5,
+        img: 'ring-blue.png',
+
+        stats: {
+            [StatType.ManaRegen]: 6
+        }
     },
-    mcostRing0: {
-        id: 'mcostRing0',
+    mpCostRing0: {
+        id: 'mpCostRing0',
         itemType: ItemType.Ring,
-        name: 'Ring of Lesser M.Cost Ring',
-        manaRegen: 5
+        name: 'Ring of Lesser Mana Cost',
+        tier: 1,
+        img: 'ring-teal.png',
+
+        stats: {
+            [StatType.ManaCost]: -4
+        }
     },
-    mcostRing1: {
-        id: 'mcostRing1',
+    mpCostRing1: {
+        id: 'mpCostRing1',
         itemType: ItemType.Ring,
-        name: 'Ring of M.Cost Ring',
-        manaRegen: 7.5
+        name: 'Ring of Mana Cost',
+        tier: 3,
+        img: 'ring-teal.png',
+
+        stats: {
+            [StatType.ManaCost]: -7
+        }
     },
-    mcostRing2: {
-        id: 'mcostRing2',
+    mpCostRing2: {
+        id: 'mpCostRing2',
         itemType: ItemType.Ring,
-        name: 'Ring of Greater M.Cost Ring',
-        manaRegen: 10
+        name: 'Ring of Greater Mana Cost',
+        tier: 5,
+        img: 'ring-teal.png',
+
+        stats: {
+            [StatType.ManaCost]: -10
+        }
     }
 
 };
 
-function getRingTooltip(ring: Ring) {
-    const tooltip = [];
-    if (ring.attackBonus) tooltip.push(`Attack Bonus: ${ring.attackBonus}`);
-    if (ring.damageBonus) tooltip.push(`Damage Bonus: ${ring.damageBonus}`);
-    if (ring.critRangeBonus) tooltip.push(`Crit Range Bonus: ${ring.critRangeBonus}`);
-    if (ring.critMultBonus) tooltip.push(`Crit Mult Bonus: ${ring.critMultBonus*100}%`);
-
-    if (ring.armourClass) tooltip.push(`Armour Class: ${ring.armourClass}`);
-    if (ring.physDR) tooltip.push(`Physical DR: ${ring.physDR}`);
-    if (ring.magicDR) tooltip.push(`Magic DR: ${ring.magicDR}`);
-    if (ring.physResist) tooltip.push(`Physical Resist: ${ring.physResist}%`);
-    if (ring.magicResist) tooltip.push(`Magic Resist: ${ring.magicResist}%`);
-    if (ring.thorns) tooltip.push(`Thorns: ${ring.thorns}`);
-
-    if (ring.manaPerAtk) tooltip.push(`Mana/Attack: ${ring.manaPerAtk}`);
-    if (ring.manaRegen) tooltip.push(`Mana Regen: ${ring.manaRegen}`);
-    if (ring.manaCostReduction) tooltip.push(`Mana Cost Reduction: ${ring.manaCostReduction}`);
-
-    if (ring.initiativeBonus) tooltip.push(`Initiative Bonus: ${ring.initiativeBonus}`);
-    return tooltip.join('\n');
-}
-
-function getRingDescription(ring: Ring) {
-    const descriptions = [];
-    if (ring.attackBonus) descriptions.push(`ATK: ${ring.attackBonus}`);
-    if (ring.damageBonus) descriptions.push(`DMG: ${ring.damageBonus}`);
-    if (ring.critRangeBonus) descriptions.push(`Crit Range: ${ring.critRangeBonus}`);
-    if (ring.critMultBonus) descriptions.push(`Crit Mult: ${ring.critMultBonus*100}%`);
-
-    if (ring.armourClass) descriptions.push(`AC: ${ring.armourClass}`);
-    if (ring.physDR) descriptions.push(`Phys DR: ${ring.physDR}`);
-    if (ring.magicDR) descriptions.push(`Mag DR: ${ring.magicDR}`);
-    if (ring.physResist) descriptions.push(`Phys Res: ${ring.physResist}%`);
-    if (ring.magicResist) descriptions.push(`Mag Res: ${ring.magicResist}%`);
-    if (ring.thorns) descriptions.push(`Thorns: ${ring.thorns}`);
-
-    if (ring.manaPerAtk) descriptions.push(`MP/ATK: ${ring.manaPerAtk}`);
-    if (ring.manaRegen) descriptions.push(`MP Regen: ${ring.manaRegen}`);
-    if (ring.manaCostReduction) descriptions.push(`MCR: ${ring.manaCostReduction}`);
-
-    if (ring.initiativeBonus) descriptions.push(`IB: ${ring.initiativeBonus}`);
-    return descriptions.join(', ');
-}
-
-export { Ring, RingId, rings, getRingTooltip, getRingDescription };
+export { Ring, RingId, rings };

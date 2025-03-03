@@ -1,5 +1,5 @@
-import Character, { CharacterJSON } from './Character';
-import CombatLog from './CombatLog';
+import Character, { CharacterJSON } from './Character/Character';
+import Log from './Log';
 import { rollDice, dice } from './dice';
 
 enum Side {
@@ -16,9 +16,8 @@ type TurnRes = {
 type BattleJSON = {
     left: CharacterJSON[];
     right: CharacterJSON[];
-    turnOrder: {char: Character, init: number}[];
+    turnOrder: {name: string, init: number}[];
     turnIndex: number;
-    log: string[];
 }
 
 class Battle {
@@ -31,7 +30,7 @@ class Battle {
     private _turnIndex = -1;
     private _turnOrder: {char: Character, init: number}[] = [];
 
-    private _combatLog: CombatLog;
+    private _log: Log;
 
     private winner?: Side; 
 
@@ -48,11 +47,11 @@ class Battle {
             this.right[i].setBattle(this, Side.Right, i);
         }
 
-        this._combatLog = new CombatLog();
+        this._log = new Log();
     }
 
-    get combatLog() {
-        return this._combatLog;
+    get log() {
+        return this._log;
     }
 
     get left() {
@@ -89,35 +88,36 @@ class Battle {
     startCombat() {
         // Assign turn order for characters
         for (const char of this.left) {
-            const init = rollDice(dice['1d20']) + char.initiativeBonus;
+            const init = rollDice(dice['1d20']) + char.initiative;
             this.turnOrder.push({char, init});
         }
         for (const char of this.right) {
-            const init = rollDice(dice['1d20']) + char.initiativeBonus;
+            const init = rollDice(dice['1d20']) + char.initiative;
             this.turnOrder.push({char, init});
         }
         this.turnOrder.sort((a, b) => b.init - a.init);
     }
 
     nextTurn(): TurnRes {
+        this.log.nextTurn();
         const res: TurnRes = {combatEnded: false};
         if (this.leftAlive.size === 0 && this.rightAlive.size === 0) {
             this.winner = Side.Tie;
             res.combatEnded = true;
             res.winner = Side.Tie;
-            this.combatLog.add('Tie!');
+            this.log.add('Tie!');
         }
         else if (this.leftAlive.size === 0) {
             this.winner = Side.Right;
             res.combatEnded = true;
             res.winner = Side.Right;
-            this.combatLog.add(`${'Right'} wins!`);
+            this.log.add(`${'Right'} wins!`);
         }
         else if (this.rightAlive.size === 0) {
             this.winner = Side.Left;
             res.combatEnded = true;
             res.winner = Side.Left;
-            this.combatLog.add(`${'Left'} wins!`);
+            this.log.add(`${'Left'} wins!`);
         }
         else {
             this._turnIndex++;
@@ -133,18 +133,13 @@ class Battle {
 
     json(): BattleJSON {
         return {
-            left: [
-                ...this.left.map(char => char.json())
-            ],
-            right: [
-                ...this.right.map(char => char.json())
-            ],
-            turnOrder: this.turnOrder,
+            left: [...this.left.map(char => char.json())],
+            right: [...this.right.map(char => char.json())],
+            turnOrder: this.turnOrder.map(charInit => {return {name: charInit.char.name, init: charInit.init};}),
             turnIndex: this.turnIndex,
-            log: this._combatLog.log
         };
     }
 }
 
 export default Battle;
-export { Side };
+export { BattleJSON, Side };

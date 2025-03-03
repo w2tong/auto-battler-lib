@@ -1,19 +1,13 @@
-import { Item, ItemType } from './Item';
-
-enum WeaponStyle {
-    DualWield = 'Dual Wield',
-    TwoHanded = 'Two-Handed',
-    OneHanded = 'One-Handed',
-    Ranged = 'Ranged'
-}
+import StatType from '../Character/Stats/StatType';
+import WeaponStyle from '../WeaponStyle';
+import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Hands extends Item {
     itemType: ItemType.Hands
     weaponStyle?: WeaponStyle;
-    attackBonus?: number;
-    damageBonus?: number;
-    critRangeBonus?: number;
-    critMultBonus?: number;
+
+    attributes?: ItemAttributes;
+    stats?: ItemStats;
 }
 
 type HandsId = 
@@ -28,88 +22,112 @@ const hands: {[id in HandsId]: Hands} = {
         id: 'dwGloves0',
         itemType: ItemType.Hands,
         name: 'Gloves of Lesser Dual Wielding',
+        tier: 0,
+        img: 'gloves-dual-wield.png',
+
         weaponStyle: WeaponStyle.DualWield,
-        attackBonus: 2
+        stats: {
+            [StatType.HitChance]: 5,
+        }
     },
     dwGloves1: {
         id: 'dwGloves1',
         itemType: ItemType.Hands,
         name: 'Gloves of Dual Wielding',
+        tier: 3,
+        img: 'gloves-dual-wield.png',
+
         weaponStyle: WeaponStyle.DualWield,
-        attackBonus: 4
+        stats: {
+            [StatType.HitChance]: 10,
+        }
     },
     dwGloves2: {
         id: 'dwGloves2',
         itemType: ItemType.Hands,
         name: 'Gloves of Greater Dual Wielding',
+        tier: 5,
+        img: 'gloves-dual-wield.png',
+
         weaponStyle: WeaponStyle.DualWield,
-        attackBonus: 6
+        stats: {
+            [StatType.HitChance]: 15,
+        }
     },
     thGloves0: {
         id: 'thGloves0',
         itemType: ItemType.Hands,
         name: 'Gloves of Lesser Two Handing',
+        tier: 0,
+        img: 'gloves-two-hand.png',
+
         weaponStyle: WeaponStyle.TwoHanded,
-        damageBonus: 2
+        stats: {
+            [StatType.Damage]: 2,
+        }
     },
     thGloves1: {
         id: 'thGloves1',
         itemType: ItemType.Hands,
         name: 'Gloves of Two Handing',
+        tier: 3,
+        img: 'gloves-two-hand.png',
         weaponStyle: WeaponStyle.TwoHanded,
-        damageBonus: 4
+        stats: {
+            [StatType.Damage]: 4,
+        }
     },
     thGloves2: {
         id: 'thGloves2',
         itemType: ItemType.Hands,
         name: 'Gloves of Greater Two Handing',
+        tier: 5,
+        img: 'gloves-two-hand.png',
+
         weaponStyle: WeaponStyle.TwoHanded,
-        damageBonus: 6
+        stats: {
+            [StatType.Damage]: 6,
+        }
     },
     ohGloves0: {
-        id: 'thGloves0',
+        id: 'ohGloves0',
         itemType: ItemType.Hands,
         name: 'Gloves of the Lesser Duelist',
+        tier: 0,
+        img: 'gloves-one-hand.png',
+
         weaponStyle: WeaponStyle.OneHanded,
-        attackBonus: 1,
-        damageBonus: 1
+        stats: {
+            [StatType.HitChance]: 3,
+            [StatType.Damage]: 1,
+        }
     },
     ohGloves1: {
-        id: 'thGloves1',
+        id: 'ohGloves1',
         itemType: ItemType.Hands,
         name: 'Gloves of the Duelist',
+        tier: 3,
+        img: 'gloves-one-hand.png',
+
         weaponStyle: WeaponStyle.OneHanded,
-        attackBonus: 2,
-        damageBonus: 2
+        stats: {
+            [StatType.HitChance]: 6,
+            [StatType.Damage]: 2,
+        }
     },
     ohGloves2: {
-        id: 'thGloves2',
+        id: 'ohGloves2',
         itemType: ItemType.Hands,
         name: 'Gloves of the Greater Duelist',
+        tier: 5,
+        img: 'gloves-one-hand.png',
+
         weaponStyle: WeaponStyle.OneHanded,
-        attackBonus: 3,
-        damageBonus: 3
+        stats: {
+            [StatType.HitChance]: 9,
+            [StatType.Damage]: 3,
+        }
     },
 } as const;
 
-function getHandsTooltip(hands: Hands) {
-    const tooltip = [];
-    if (hands.weaponStyle) tooltip.push(`Weapon Style: ${hands.weaponStyle}`);
-    if (hands.attackBonus) tooltip.push(`Attack Bonus: ${hands.attackBonus}`);
-    if (hands.damageBonus) tooltip.push(`Damage Bonus: ${hands.damageBonus}`);
-    if (hands.critRangeBonus) tooltip.push(`Crit Range Bonus: ${hands.critRangeBonus}`);
-    if (hands.critMultBonus) tooltip.push(`Crit Mult Bonus: ${hands.critMultBonus*100}%`);
-    return tooltip.join('\n');
-}
-
-function getHandsDescription(hands: Hands) {
-    const descriptions = [];
-    if (hands.weaponStyle) descriptions.push(`Style: ${hands.weaponStyle}`);
-    if (hands.attackBonus) descriptions.push(`ATK: ${hands.attackBonus}`);
-    if (hands.damageBonus) descriptions.push(`DMG: ${hands.damageBonus}`);
-    if (hands.critRangeBonus) descriptions.push(`Crit Range: ${hands.critRangeBonus}`);
-    if (hands.critMultBonus) descriptions.push(`Crit Mult: ${hands.critMultBonus*100}%`);
-    return descriptions.join(', ');
-}
-
-export { WeaponStyle, Hands, HandsId, hands, getHandsTooltip, getHandsDescription };
+export { Hands, HandsId, hands };

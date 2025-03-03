@@ -1,30 +1,34 @@
-export { Buff, BuffId, Debuff, DebuffId } from './Buffs/buffs';
+// TODO: redo exports for StatusEffects / Buffs / Debuffs
+// export { Buffs, BuffId } from './StatusEffect/buffs';
+// export { Debuffs, DebuffId } from './StatusEffect/debuffs';
 
-import BuffTracker from './Buffs/BuffTracker';
+import BuffTracker from './StatusEffect/StatusEffectManager';
 export { BuffTracker };
 
-export { ClassName, Classes } from './Classes/classes';
+export { ClassName, Classes } from './Character/Classes/classes';
 
-export { Equip, Equipment, equips, defaultEquipment, getItemTooltip, getItemDescription } from './Equipment/Equipment';
-export { Item, ItemType } from './Equipment/Item';
+export { Equip, Equipment, EquipmentItemIds, EquipSlot, equips, isValidEquip, createEquipment } from './Equipment/Equipment';
+export { Item, ItemType, Tier } from './Equipment/Item';
 export { Armour, ArmourId, armour } from './Equipment/Armour';
 export { Belt, BeltId, belts } from './Equipment/Belt';
-export { WeaponStyle, Hands, HandsId, hands } from './Equipment/Hands';
+export { Hands, HandsId, hands } from './Equipment/Hands';
 export { Head, HeadId, heads } from './Equipment/Head';
 export { Potion, PotionId, potions } from './Equipment/Potion';
 export { Ring, RingId, rings } from './Equipment/Ring';
 export { Shield, ShieldId, shields } from './Equipment/Shield';
-export { WeaponType, RangeType, Weapon, WeaponId, weapons } from './Equipment/Weapons';
+export { WeaponType, Weapon, WeaponId, WeaponTypeProperties, weapons } from './Equipment/Weapon';
 
-import Battle from './Battle';
-export { Battle };
-export { Side } from './Battle';
+import WeaponStyle from './WeaponStyle';
+export { WeaponStyle };
 
-import Character from './Character';
-export { Character };
+import Battle, { Side, BattleJSON } from './Battle';
+export { Battle, Side, BattleJSON };
 
-import CombatLog from './CombatLog';
-export { CombatLog };
+import Character, { CharacterInfo, CharacterJSON } from './Character/Character';
+export { Character, CharacterInfo, CharacterJSON };
+
+import Log, { LogLine, LineType } from './Log';
+export { Log, LogLine, LineType };
 
 import DamageType from './DamageType';
 export { DamageType };
@@ -40,5 +44,3 @@ export { HitType };
 
 import lootTables from './lootTables';
 export { lootTables };
-
-export { CharacterStatTemplate, PlayerStats, NPCStats } from './statTemplates';
