@@ -259,7 +259,32 @@ export default class Character {
 
     critRoll(): boolean {
         const roll = rollDice(dice['1d100']);
-        return roll <= this.stats.getStat(StatType.CriticalChance);
+        return roll <= this.stats.critChance;
+    }
+
+    calcDamageRange({attackType, damageRange, spellPowerRatio, isOffHand}: {attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean}): DamageRange {
+        let damageBonus = this.stats.damage + (isOffHand ? this.stats.getStat(StatType.OffHandDamage) : 0);
+        let damagePercent = this.stats.getStat(StatType.DamagePercent);
+        switch(attackType) {
+            case AttackType.MeleeWeapon:
+                damageBonus += this.stats.meleeWeaponDamage;
+                damagePercent += this.stats.getStat(StatType.MeleeWeaponDamagePercent);
+                break;
+            case AttackType.RangedWeapon:
+                damageBonus += this.stats.rangedWeaponDamage;
+                damagePercent += this.stats.getStat(StatType.RangedWeaponDamagePercent);
+                break;
+            case AttackType.Spell:
+                // do nothing
+                break;
+            default:
+                break;
+        }
+        const spellDamage = spellPowerRatio ? Math.floor(this.stats.spellPower * spellPowerRatio) : 0;
+
+        const minDamage = (damageRange.min + damageRange.bonus + damageBonus + spellDamage) * (1 + (damagePercent));
+        const maxDamage = (damageRange.max + damageRange.bonus + damageBonus + spellDamage) * (1 + (damagePercent));
+        return {min: minDamage, max: maxDamage, bonus: 0};
     }
 
     attack({target, attackType, damageRange, spellPowerRatio, isOffHand, abilityName}: {target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean, abilityName?: string}): boolean {
@@ -309,7 +334,7 @@ export default class Character {
             
             const crit = this.critRoll();
             if (crit) {
-                damage *= this.stats.getStat(StatType.CriticalDamage);
+                damage *= this.stats.critDamage;
                 hitType = HitType.Crit;
             }
             
