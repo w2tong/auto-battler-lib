@@ -1,5 +1,6 @@
 import Battle from '../Battle';
 import Character from '../Character/Character';
+import StatType from '../Character/Stats/StatType';
 import { getRandomEncounter } from '../encounters';
 
 const testChar = new Character({
@@ -19,8 +20,19 @@ const battle = new Battle(
 const left = battle.left[0];
 const right = battle.right[0];
 
-// console.log(left.currentHealth);
-// console.log(right.name, right.currentHealth, right.stats['Max Health'], right.stats.maxHealth);
+function displayCharacterStats(char: Character) {
+    console.log(`${char.name}
+Lvl. ${char.level}
+Health: ${char.currentHealth}
+Hit Chance: ${char.stats.hitChance}
+Dodge Chance: ${char.stats.dodge}
+Crit Chance: ${char.stats.critChance}
+Crit Damage: ${char.stats.critDamage}
+`);
+}
+
+displayCharacterStats(left);
+displayCharacterStats(right);
 
 battle.startCombat();
 let combatEnded = false;
