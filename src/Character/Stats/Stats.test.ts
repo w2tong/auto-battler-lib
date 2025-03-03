@@ -232,6 +232,13 @@ describe('Health %', () => {
     });
 });
 
+// TODO: fill out tests
+// describe('MeleeWeaponDamagePercent', () => {
+// });
+
+// describe('RangedWeaponDamagePercent', () => {
+// });
+
 describe('Spell Power %', () => {
     describe('100 SP', () => {
         test('100 + 0% is 100', () => {
@@ -374,6 +381,3 @@ describe('Spell Power %', () => {
         });
     });
 });
-
-// TODO: add tests for following stats
-// MeleeWeaponDamagePercent, RangedWeaponDamagePercent
