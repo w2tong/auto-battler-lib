@@ -45,7 +45,6 @@ displayCharacterStats(left);
 displayCharacterStats(right);
 
 battle.startCombat();
-let combatEnded = false;
 
 const interval = setInterval(() => {
     const res = battle.nextTurn();
@@ -54,7 +53,6 @@ const interval = setInterval(() => {
     });
     console.log(left.name, left.currentHealth);
     console.log(right.name, right.currentHealth);
-    combatEnded = res.combatEnded;
 
     if (res.combatEnded) clearInterval(interval);
 }, 1000);
