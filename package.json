@@ -18,7 +18,7 @@
     "build": "tsup",
     "test": "jest",
     "prepublishOnly": "npm run build",
-    "test-battle": "npx tsx src/test/battle.ts"
+    "test-battle": "npx tsx src/tests/battle.ts"
   },
   "repository": {
     "type": "git",
