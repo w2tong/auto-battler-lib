@@ -420,15 +420,18 @@ export default class Character {
     takeDamage({source, damage, armourPenetration, addToLog}: {source: string, damage: number, armourPenetration: number, addToLog: boolean}): void {
         if (!this.battle) return;
 
-        let damageTaken = damage;
+        
+        let damageTaken = Math.max(damage, 0);
 
-        // Apply deflection
-        damageTaken = Math.max(damageTaken - this.stats.getStat(StatType.Deflection), 0);
+        if (damageTaken > 0) {
+            // Apply deflection
+            damageTaken = Math.max(damageTaken - this.stats.getStat(StatType.Deflection), 0);
+            // Apply armour
+            damageTaken = Math.max(damageTaken * (1 - Math.max(this.stats.getStat(StatType.Armour) - armourPenetration, 0)/100), 0);
 
-        // Apply armour
-        damageTaken = Math.max(damageTaken * (1 - Math.max(this.stats.getStat(StatType.Armour) - armourPenetration, 0)/100), 0);
+            this._currentHealth -= damageTaken;
+        }
 
-        this._currentHealth -= damageTaken;
         if (addToLog) this.battle.ref.log.addDamage(this.name, source, damageTaken);
         if (this.isDead()) {
             this.battle.ref.setCharDead(this.battle.side, this.battle.index);
