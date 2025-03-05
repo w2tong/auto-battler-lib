@@ -13,7 +13,7 @@ class Stats {
 
     static DEFAULT_MAX_HEALTH = 20;
     static DEFAULT_MAX_HEALTH_PER_LVL = 4;
-    static DEFAULT_DODGE = 50;
+    static DEFAULT_DODGE = 40;
     static DEFAULT_CRIT_CHANCE = 5;
     static DEFAULT_CRIT_DAMAGE = 1.5;
 
