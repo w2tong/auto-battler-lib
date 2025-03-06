@@ -220,7 +220,7 @@ export default class Character {
             this.ability.func(this);
         }
         else {
-            this.weaponAttack();
+            this.turnAttack();
         }
         this.addMana(this.stats.getStat(StatType.ManaRegen));
         this.statusEffectManager.onTurnEnd();
@@ -387,7 +387,8 @@ export default class Character {
         return hit;
     }
 
-    weaponAttack(options?: {fromAbility: boolean}): void {
+    // Add helper function for single weapon attack to use for both main-hand and off-hand attacks
+    turnAttack(): void {
         if (!this.battle) return;
         this.setTarget();
         if (!this.target) {
@@ -395,32 +396,23 @@ export default class Character {
             return;
         }
         if (this.target) { 
-            
             // Main hand attack
-            const mainHandHit = this.attack({
-                target: this.target, 
-                attackType: this.mainHand.attackType, 
-                damageRange: this.mainHand.damageRange,
-                isOffHand: false
-            });
-            if (mainHandHit) {
-                if (!options?.fromAbility) this.addMana(this.stats.manaOnHit);
-                if (this.mainHand.onHit) this.mainHand.onHit.func(this, this.target);
-            }
-            
+            this.weaponAttack(this.mainHand, this.target, false);
             // Off-hand attack
-            if (this.equipment.offHandWeapon) {
-                const offHandHit = this.attack({
-                    target: this.target, 
-                    attackType: this.equipment.offHandWeapon.attackType, 
-                    damageRange: this.equipment.offHandWeapon.damageRange,
-                    isOffHand: true
-                });
-                if (offHandHit) {
-                    if (!options?.fromAbility) this.addMana(this.stats.manaOnHit);
-                    if (this.equipment.offHandWeapon.onHit) this.equipment.offHandWeapon.onHit.func(this, this.target);
-                }
-            }
+            if (this.equipment.offHandWeapon) this.weaponAttack(this.equipment.offHandWeapon, this.target, false);
+        }
+    }
+
+    weaponAttack(weapon: Weapon, target: Character, isOffHand: boolean): void {
+        const hit = this.attack({
+            target: target, 
+            attackType: weapon.attackType, 
+            damageRange: weapon.damageRange,
+            isOffHand
+        });
+        if (hit) {
+            this.addMana(this.stats.manaOnHit);
+            if (weapon.onHit) weapon.onHit.func(this, target);
         }
     }
 
