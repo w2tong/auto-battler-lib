@@ -194,6 +194,10 @@ class Stats {
         return rangedDamage * this.getTwoHandedMultiplier();
     }
 
+    get armourPenetration() {
+        return this.getStat(StatType.ArmourPenetration);
+    }
+
     // Spell power 
     get spellPower() {
         const spellPower = this.getStat(StatType.SpellPower);
