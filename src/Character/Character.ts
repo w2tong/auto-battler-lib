@@ -220,7 +220,7 @@ export default class Character {
             this.ability.func(this);
         }
         else {
-            this.weaponAttack();
+            this.turnAttack();
         }
         this.addMana(this.stats.getStat(StatType.ManaRegen));
         this.statusEffectManager.onTurnEnd();
@@ -260,6 +260,11 @@ export default class Character {
     critRoll(): boolean {
         const roll = rollDice(dice['1d100']);
         return roll <= this.stats.critChance;
+    }
+
+    blockRoll(): boolean {
+        if (this.stats.getStat(StatType.BlockChance) <= 0) return false;
+        return rollDice(dice['1d100']) >= this.stats.getStat(StatType.BlockChance);
     }
 
     calcDamageRange({attackType, damageRange, spellPowerRatio, isOffHand}: {attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean}): DamageRange {
@@ -332,22 +337,24 @@ export default class Character {
 
             damage = (damage + damageBonus + spellDamage + sneakDamage) * (1 + (damagePercent));
             
+            // Crit
             const crit = this.critRoll();
             if (crit) {
-                damage *= this.stats.critDamage;
+                damage = Character.calcCritDamage(damage, this.stats.critDamage);
                 hitType = HitType.Crit;
             }
             
             // Calculate block chance/power
-            if (target.stats.getStat(StatType.BlockChance) > 0 && rollDice(dice['1d100']) >= target.stats.getStat(StatType.BlockChance)) {
-                damage -= target.stats.getStat(StatType.BlockPower);
-                blocked = true;
+            // Change to block roll
+            blocked = target.blockRoll();
+            if (blocked) {
+                damage = Character.calcDamageAfterBlock(damage, target.stats.getStat(StatType.BlockPower));
             }
 
             target.takeDamage({
                 source: this.name, 
                 damage,
-                armourPenetration: this.stats.getStat(StatType.ArmourPenetration),
+                armourPenetration: this.stats.armourPenetration,
                 addToLog: false
             });
         }
@@ -372,7 +379,7 @@ export default class Character {
             this.takeDamage({
                 source: StatType.Thorns,
                 damage: target.stats.getStat(StatType.Thorns),
-                armourPenetration: target.stats.getStat(StatType.ArmourPenetration),
+                armourPenetration: target.stats.armourPenetration,
                 addToLog: true
             });
         }
@@ -380,7 +387,8 @@ export default class Character {
         return hit;
     }
 
-    weaponAttack(options?: {fromAbility: boolean}): void {
+    // Add helper function for single weapon attack to use for both main-hand and off-hand attacks
+    turnAttack(): void {
         if (!this.battle) return;
         this.setTarget();
         if (!this.target) {
@@ -388,47 +396,37 @@ export default class Character {
             return;
         }
         if (this.target) { 
-            
             // Main hand attack
-            const mainHandHit = this.attack({
-                target: this.target, 
-                attackType: this.mainHand.attackType, 
-                damageRange: this.mainHand.damageRange,
-                isOffHand: false
-            });
-            if (mainHandHit) {
-                if (!options?.fromAbility) this.addMana(this.stats.manaOnHit);
-                if (this.mainHand.onHit) this.mainHand.onHit.func(this, this.target);
-            }
-            
+            this.weaponAttack(this.mainHand, this.target, false);
             // Off-hand attack
-            if (this.equipment.offHandWeapon) {
-                const offHandHit = this.attack({
-                    target: this.target, 
-                    attackType: this.equipment.offHandWeapon.attackType, 
-                    damageRange: this.equipment.offHandWeapon.damageRange,
-                    isOffHand: true
-                });
-                if (offHandHit) {
-                    if (!options?.fromAbility) this.addMana(this.stats.manaOnHit);
-                    if (this.equipment.offHandWeapon.onHit) this.equipment.offHandWeapon.onHit.func(this, this.target);
-                }
-            }
+            if (this.equipment.offHandWeapon) this.weaponAttack(this.equipment.offHandWeapon, this.target, false);
+        }
+    }
+
+    weaponAttack(weapon: Weapon, target: Character, isOffHand: boolean): void {
+        const hit = this.attack({
+            target: target, 
+            attackType: weapon.attackType, 
+            damageRange: weapon.damageRange,
+            isOffHand
+        });
+        if (hit) {
+            this.addMana(this.stats.manaOnHit);
+            if (weapon.onHit) weapon.onHit.func(this, target);
         }
     }
 
     takeDamage({source, damage, armourPenetration, addToLog}: {source: string, damage: number, armourPenetration: number, addToLog: boolean}): void {
         if (!this.battle) return;
 
-        let damageTaken = damage;
+        let damageTaken = Math.max(damage, 0);
 
-        // Apply deflection
-        damageTaken = Math.max(damageTaken - this.stats.getStat(StatType.Deflection), 0);
+        if (damageTaken > 0) {
+            damageTaken = Character.calcDamageAfterDeflection(damageTaken, this.stats.getStat(StatType.Deflection));
+            damageTaken = Character.calcDamageAfterArmour(damageTaken, this.stats.getStat(StatType.Armour), armourPenetration);
+            this._currentHealth -= damageTaken;
+        }
 
-        // Apply armour
-        damageTaken = Math.max(damageTaken * (1 - Math.max(this.stats.getStat(StatType.Armour) - armourPenetration, 0)/100), 0);
-
-        this._currentHealth -= damageTaken;
         if (addToLog) this.battle.ref.log.addDamage(this.name, source, damageTaken);
         if (this.isDead()) {
             this.battle.ref.setCharDead(this.battle.side, this.battle.index);
@@ -478,6 +476,21 @@ export default class Character {
             buffs: this.statusEffectManager.getBuffString(),
             debuffs: this.statusEffectManager.getDebuffString()
         };
+    }
+
+    static calcCritDamage(damage: number, critDamage: number) {
+        return damage *= critDamage;
+    }
+        
+    static calcDamageAfterDeflection(damage: number, deflection: number) {
+        return Math.max(damage - deflection, 0);
+    }
+    static calcDamageAfterArmour(damage: number, armour: number, armourPenetration: number) {
+        return Math.max(damage * (1 - Math.max(armour - armourPenetration, 0)/100), 0);
+    }
+
+    static calcDamageAfterBlock(damage: number, blockPower: number) {
+        return damage - blockPower;
     }
 }
 

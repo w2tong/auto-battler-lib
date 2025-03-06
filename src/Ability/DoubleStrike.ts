@@ -11,8 +11,8 @@ const DoubleStrike: Ability = {
         if (char.target) {
             char.battle.ref.log.add(`${char.name} used ${NAME}.`);
             char.useMana();
-            char.weaponAttack({fromAbility: true});
-            char.weaponAttack({fromAbility: true});
+            char.turnAttack();
+            char.turnAttack();
         }
     }
 };
