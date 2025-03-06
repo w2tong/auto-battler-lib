@@ -481,6 +481,7 @@ export default class Character {
     }
         
     static calcDamageAfterDeflection(damage: number, deflection: number) {
+        if (damage == 0) return 0;
         return Math.max(damage - deflection, 0);
     }
     static calcDamageAfterArmour(damage: number, armour: number, armourPenetration: number) {
