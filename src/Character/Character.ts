@@ -337,15 +337,13 @@ export default class Character {
 
             damage = (damage + damageBonus + spellDamage + sneakDamage) * (1 + (damagePercent));
             
-            // Crit
             const crit = this.critRoll();
             if (crit) {
                 damage = Character.calcCritDamage(damage, this.stats.critDamage);
                 hitType = HitType.Crit;
             }
             
-            // Calculate block chance/power
-            // Change to block roll
+            // Block
             blocked = target.blockRoll();
             if (blocked) {
                 damage = Character.calcDamageAfterBlock(damage, target.stats.getStat(StatType.BlockPower));
@@ -479,7 +477,7 @@ export default class Character {
     }
 
     static calcCritDamage(damage: number, critDamage: number) {
-        return damage *= critDamage;
+        return Math.max(damage *= critDamage, 0);
     }
         
     static calcDamageAfterDeflection(damage: number, deflection: number) {
