@@ -485,7 +485,9 @@ export default class Character {
         return Math.max(damage - deflection, 0);
     }
     static calcDamageAfterArmour(damage: number, armour: number, armourPenetration: number) {
-        return Math.max(damage * (1 - Math.max(armour - armourPenetration, 0)/100), 0);
+        if (armour > 0) armour = Math.max(armour - armourPenetration, 0);
+        const armourMultiplier = 1 - armour/100;
+        return Math.max(damage * armourMultiplier, 0);
     }
 
     static calcDamageAfterBlock(damage: number, blockPower: number) {

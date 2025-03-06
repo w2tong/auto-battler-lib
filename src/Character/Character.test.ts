@@ -1,6 +1,5 @@
 // TODO: add tests for following methods:
 /*
-calcDamageAfterArmour
 calcDamageAfterBlock
 */
 
@@ -98,5 +97,159 @@ describe('calcDamageAfterDeflection', () => {
     });
     test('0 - -10 deflection = 0', () => {
         expect(Character.calcDamageAfterDeflection(0, -10)).toEqual(0);
+    });
+});
+
+describe('calcDamageAfterArmour', () => {
+    describe('10 DMG', () => {
+        describe('0 Armour', () => {
+            test('0 pen = 10', () => {
+                expect(Character.calcDamageAfterArmour(10, 0, 0)).toBe(10);
+            });
+            test('1 pen = 10', () => {
+                expect(Character.calcDamageAfterArmour(10, 0, 1)).toBe(10);
+            });
+            test('10 pen = 10', () => {
+                expect(Character.calcDamageAfterArmour(10, 0, 10)).toBe(10);
+            });
+        });
+        describe('10 Armour', () => {
+            test('0 pen = 9', () => {
+                expect(Character.calcDamageAfterArmour(10, 10, 0)).toBe(9);
+            });
+            test('1 pen = 9.1', () => {
+                expect(Character.calcDamageAfterArmour(10, 10, 1)).toBe(9.1);
+            });
+            test('10 pen = 10', () => {
+                expect(Character.calcDamageAfterArmour(10, 10, 10)).toBe(10);
+            });
+            test('100 pen = 10', () => {
+                expect(Character.calcDamageAfterArmour(10, 10, 100)).toBe(10);
+            });
+        });
+        describe('50 Armour', () => {
+            test('0 pen = 5', () => {
+                expect(Character.calcDamageAfterArmour(10, 50, 0)).toBe(5);
+            });
+            test('1 pen = 5.1', () => {
+                expect(Character.calcDamageAfterArmour(10, 50, 1)).toBe(5.1);
+            });
+            test('10 pen = 7', () => {
+                expect(Character.calcDamageAfterArmour(10, 50, 10)).toBe(6);
+            });
+            test('50 pen = 10', () => {
+                expect(Character.calcDamageAfterArmour(10, 50, 50)).toBe(10);
+            });
+            test('100 pen = 10', () => {
+                expect(Character.calcDamageAfterArmour(10, 50, 100)).toBe(10);
+            });
+        });
+        describe('100 Armour', () => {
+            test('0 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(10, 100, 0)).toBe(0);
+            });
+            test('1 pen = 0.1', () => {
+                expect(Character.calcDamageAfterArmour(10, 100, 1)).toBeCloseTo(0.1);
+            });
+            test('10 pen = 1', () => {
+                expect(Character.calcDamageAfterArmour(10, 100, 10)).toBeCloseTo(1);
+            });
+            test('50 pen = 5', () => {
+                expect(Character.calcDamageAfterArmour(10, 100, 50)).toBe(5);
+            });
+            test('100 pen = 10', () => {
+                expect(Character.calcDamageAfterArmour(10, 100, 100)).toBe(10);
+            });
+        });
+        describe('1000 Armour', () => {
+            test('0 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(10, 1000, 0)).toBe(0);
+            });
+            test('1 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(10, 1000, 1)).toBeCloseTo(0);
+            });
+            test('10 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(10, 1000, 10)).toBeCloseTo(0);
+            });
+            test('50 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(10, 1000, 50)).toBe(0);
+            });
+            test('100 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(10, 1000, 100)).toBe(0);
+            });
+            test('1000 pen = 10', () => {
+                expect(Character.calcDamageAfterArmour(10, 1000, 1000)).toBe(10);
+            });
+        });
+        describe('-50 Armour', () => {
+            test('0 pen = 15', () => {
+                expect(Character.calcDamageAfterArmour(10, -50, 0)).toBe(15);
+            });
+            test('10 pen = 15', () => {
+                expect(Character.calcDamageAfterArmour(10, -50, 10)).toBeCloseTo(15);
+            });
+            test('50 pen = 15', () => {
+                expect(Character.calcDamageAfterArmour(10, -50, 50)).toBe(15);
+            });
+            test('100 pen = 15', () => {
+                expect(Character.calcDamageAfterArmour(10, -50, 100)).toBe(15);
+            });
+        });
+    });
+
+    describe('0 DMG', () => {
+        describe('0 Armour', () => {
+            test('0 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, 0, 0)).toBe(0);
+            });
+            test('1 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, 0, 1)).toBe(0);
+            });
+            test('10 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, 0, 10)).toBe(0);
+            });
+        });
+        describe('50 Armour', () => {
+            test('0 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, 50, 0)).toBe(0);
+            });
+            test('10 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, 50, 10)).toBe(0);
+            });
+            test('50 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, 50, 50)).toBe(0);
+            });
+            test('100 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, 50, 100)).toBe(0);
+            });
+        });
+        describe('100 Armour', () => {
+            test('0 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, 100, 0)).toBe(0);
+            });
+            test('10 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, 100, 10)).toBe(0);
+            });
+            test('50 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, 100, 50)).toBe(0);
+            });
+            test('100 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, 100, 100)).toBe(0);
+            });
+        });
+        describe('-50 Armour', () => {
+            test('0 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, -50, 0)).toBe(0);
+            });
+            test('10 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, -50, 10)).toBe(0);
+            });
+            test('50 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, -50, 50)).toBe(0);
+            });
+            test('100 pen = 0', () => {
+                expect(Character.calcDamageAfterArmour(0, -50, 100)).toBe(0);
+            });
+        });
     });
 });
