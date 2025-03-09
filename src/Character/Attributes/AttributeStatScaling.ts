@@ -19,7 +19,7 @@ const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number
     },
     [AttributeType.Perception]: {
         [StatType.DodgeReduction]: 1,
-        [StatType.CriticalDamage]: 0.5,
+        [StatType.CriticalDamage]: 0.005,
         [StatType.ArmourPenetration]: 0.5
     },
     [AttributeType.Constitution]: {
