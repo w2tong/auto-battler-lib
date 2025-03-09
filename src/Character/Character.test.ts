@@ -253,3 +253,47 @@ describe('calcDamageAfterArmour', () => {
         });
     });
 });
+
+describe('calcDamageAfterBlock', () => {
+    describe('10 DMG', () => {
+        test('0 Block Power = 10', () => {
+            expect(Character.calcDamageAfterBlock(10, 0)).toBe(10);
+        });
+        test('1 Block Power = 9', () => {
+            expect(Character.calcDamageAfterBlock(10, 1)).toBe(9);
+        });
+        test('5 Block Power = 5', () => {
+            expect(Character.calcDamageAfterBlock(10, 5)).toBe(5);
+        });
+        test('10 Block Power = 0', () => {
+            expect(Character.calcDamageAfterBlock(10, 10)).toBe(0);
+        });
+        test('100 Block Power = 0', () => {
+            expect(Character.calcDamageAfterBlock(10, 100)).toBe(0);
+        });
+        test('-10 Block Power = 0', () => {
+            expect(Character.calcDamageAfterBlock(10, -10)).toBe(10);
+        });
+    });
+
+    describe('0 DMG', () => {
+        test('0 Block Power= 0', () => {
+            expect(Character.calcDamageAfterBlock(0, 0)).toBe(0);
+        });
+        test('1 Block Power = 0', () => {
+            expect(Character.calcDamageAfterBlock(0, 1)).toBe(0);
+        });
+        test('5 Block Power = 0', () => {
+            expect(Character.calcDamageAfterBlock(0, 5)).toBe(0);
+        });
+        test('10 Block Power = 0', () => {
+            expect(Character.calcDamageAfterBlock(0, 10)).toBe(0);
+        });
+        test('100 Block Power = 0', () => {
+            expect(Character.calcDamageAfterBlock(0, 100)).toBe(0);
+        });
+        test('-10 Block Power = 0', () => {
+            expect(Character.calcDamageAfterBlock(0, -10)).toBe(0);
+        });
+    });
+});

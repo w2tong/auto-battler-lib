@@ -68,10 +68,10 @@ export default class Character {
     protected _statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
 
     // Battle Info
-    protected _target: Character|null = null;
-    protected _battle : {ref: Battle, side: Side, index: number} | null = null;
+    protected _target: Character | null = null;
+    protected _battle: { ref: Battle, side: Side, index: number } | null = null;
 
-    constructor({name, level, className, attributes, statTemplate, equipment, ability, options} :{name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: Equipment, ability?: Ability, options?: {userId?: string, currHealthPc?: number, currManaPc?: number}}) {
+    constructor({ name, level, className, attributes, statTemplate, equipment, ability, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: Equipment, ability?: Ability, options?: { userId?: string, currHealthPc?: number, currManaPc?: number } }) {
         this._name = name;
         this._level = level;
         this.className = className ?? null;
@@ -131,7 +131,7 @@ export default class Character {
             return WeaponStyle.TwoHanded;
         }
         else {
-            return  WeaponStyle.OneHanded;
+            return WeaponStyle.OneHanded;
         }
     }
 
@@ -162,7 +162,7 @@ export default class Character {
     get statusEffectManager() {
         return this._statusEffectManager;
     }
-    
+
     getName(): string {
         let name = this.name;
         if (this.userId) name += ` (${this.userId})`;
@@ -183,7 +183,7 @@ export default class Character {
         }
         else {
             this.target = chars[getRandomRange(chars.length)];
-        }   
+        }
     }
 
     setTarget(): void {
@@ -200,7 +200,7 @@ export default class Character {
     }
 
     usePotion(): void {
-        if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth/2) {
+        if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
             const potionHeal = Math.round((rollDice(this.equipment.potion.dice) + this.equipment.potion.bonus + this.stats.getStat(StatType.PotionHealing)) * (1 + this.stats.getStat(StatType.PotionEffectiveness)));
             this.addHealth(potionHeal);
             this.equipment.potion.charges -= 1;
@@ -226,8 +226,8 @@ export default class Character {
         this.statusEffectManager.onTurnEnd();
     }
 
-    
-    hitRoll({target, attackType, isOffHand}: {target: Character, attackType: AttackType, isOffHand: boolean}): boolean {
+
+    hitRoll({ target, attackType, isOffHand }: { target: Character, attackType: AttackType, isOffHand: boolean }): boolean {
         if (isOffHand && !this.equipment.offHandWeapon) return false;
 
         const roll = rollDice(dice['1d100']);
@@ -236,12 +236,12 @@ export default class Character {
         if (roll <= 5) return false;
         // Rolling 96-100 always hits
         if (roll > 95) return true;
-        
+
         let hitChance = this.stats.getStat(StatType.HitChance);
         // Add off-hand hit chance
         if (isOffHand) hitChance += this.stats.getStat(StatType.OffHandHitChance);
         // Add attack type hit chance
-        switch(attackType) {
+        switch (attackType) {
             case AttackType.MeleeWeapon:
                 hitChance += this.stats.getStat(StatType.MeleeHitChance);
                 break;
@@ -267,10 +267,10 @@ export default class Character {
         return rollDice(dice['1d100']) >= this.stats.getStat(StatType.BlockChance);
     }
 
-    calcDamageRange({attackType, damageRange, spellPowerRatio, isOffHand}: {attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean}): DamageRange {
+    calcDamageRange({ attackType, damageRange, spellPowerRatio, isOffHand }: { attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean }): DamageRange {
         let damageBonus = this.stats.damage + (isOffHand ? this.stats.getStat(StatType.OffHandDamage) : 0);
         let damagePercent = this.stats.getStat(StatType.DamagePercent);
-        switch(attackType) {
+        switch (attackType) {
             case AttackType.MeleeWeapon:
                 damageBonus += this.stats.meleeWeaponDamage;
                 damagePercent += this.stats.getStat(StatType.MeleeWeaponDamagePercent);
@@ -289,10 +289,10 @@ export default class Character {
 
         const minDamage = (damageRange.min + damageRange.bonus + damageBonus + spellDamage) * (1 + (damagePercent));
         const maxDamage = (damageRange.max + damageRange.bonus + damageBonus + spellDamage) * (1 + (damagePercent));
-        return {min: minDamage, max: maxDamage, bonus: 0};
+        return { min: minDamage, max: maxDamage, bonus: 0 };
     }
 
-    attack({target, attackType, damageRange, spellPowerRatio, isOffHand, abilityName}: {target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean, abilityName?: string}): boolean {
+    attack({ target, attackType, damageRange, spellPowerRatio, isOffHand, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean, abilityName?: string }): boolean {
 
         let hitType: HitType = HitType.Miss;
         let damage: number = 0;
@@ -300,21 +300,21 @@ export default class Character {
         let blocked: boolean = false;
 
         const hit = this.hitRoll({
-            target, 
-            attackType, 
+            target,
+            attackType,
             isOffHand
         });
 
         // Calculate damage for the attack if hit
         if (hit) {
             hitType = HitType.Hit;
-            
+
             damage = damageRoll(damageRange);
 
             // Add damage bonuses
             let damageBonus = this.stats.damage + (isOffHand ? this.stats.getStat(StatType.OffHandDamage) : 0);
             let damagePercent = this.stats.getStat(StatType.DamagePercent);
-            switch(attackType) {
+            switch (attackType) {
                 case AttackType.MeleeWeapon:
                     damageBonus += this.stats.meleeWeaponDamage;
                     damagePercent += this.stats.getStat(StatType.MeleeWeaponDamagePercent);
@@ -336,13 +336,13 @@ export default class Character {
             }
 
             damage = (damage + damageBonus + spellDamage + sneakDamage) * (1 + (damagePercent));
-            
+
             const crit = this.critRoll();
             if (crit) {
                 damage = Character.calcCritDamage(damage, this.stats.critDamage);
                 hitType = HitType.Crit;
             }
-            
+
             // Block
             blocked = target.blockRoll();
             if (blocked) {
@@ -350,7 +350,7 @@ export default class Character {
             }
 
             target.takeDamage({
-                source: this.name, 
+                source: this.name,
                 damage,
                 armourPenetration: this.stats.armourPenetration,
                 addToLog: false
@@ -393,7 +393,7 @@ export default class Character {
             this.battle.ref.log.add(`${this._name} has no target.`);
             return;
         }
-        if (this.target) { 
+        if (this.target) {
             // Main hand attack
             this.weaponAttack(this.mainHand, this.target, false);
             // Off-hand attack
@@ -403,8 +403,8 @@ export default class Character {
 
     weaponAttack(weapon: Weapon, target: Character, isOffHand: boolean): void {
         const hit = this.attack({
-            target: target, 
-            attackType: weapon.attackType, 
+            target: target,
+            attackType: weapon.attackType,
             damageRange: weapon.damageRange,
             isOffHand
         });
@@ -414,7 +414,7 @@ export default class Character {
         }
     }
 
-    takeDamage({source, damage, armourPenetration, addToLog}: {source: string, damage: number, armourPenetration: number, addToLog: boolean}): void {
+    takeDamage({ source, damage, armourPenetration, addToLog }: { source: string, damage: number, armourPenetration: number, addToLog: boolean }): void {
         if (!this.battle) return;
 
         let damageTaken = Math.max(damage, 0);
@@ -479,19 +479,19 @@ export default class Character {
     static calcCritDamage(damage: number, critDamage: number) {
         return Math.max(damage *= critDamage, 0);
     }
-        
+
     static calcDamageAfterDeflection(damage: number, deflection: number) {
         if (damage == 0) return 0;
         return Math.max(damage - deflection, 0);
     }
     static calcDamageAfterArmour(damage: number, armour: number, armourPenetration: number) {
         if (armour > 0) armour = Math.max(armour - armourPenetration, 0);
-        const armourMultiplier = 1 - armour/100;
+        const armourMultiplier = 1 - armour / 100;
         return Math.max(damage * armourMultiplier, 0);
     }
 
     static calcDamageAfterBlock(damage: number, blockPower: number) {
-        return damage - blockPower;
+        return Math.max(damage - Math.max(blockPower, 0), 0);
     }
 }
 
