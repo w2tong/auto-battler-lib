@@ -1,6 +1,6 @@
 import Character from './Character';
-import StatType from './Stats/StatType';
 import * as diceModlue from '../dice';
+import StatType from './Stats/StatType';
 
 // TODO: add tests for following methods:
 /*
@@ -8,7 +8,6 @@ hitRoll
 calcDamageRange
 addMana
 addHealth
-useMana
 */
 
 describe('calcCritDamage', () => {
@@ -463,5 +462,92 @@ describe('blockRoll', () => {
             rollDiceSpy.mockReturnValue(100);
             expect(Character.blockRoll(100)).toBe(true);
         });
+    });
+});
+
+describe('useAbilityMana', () => {
+    test('20 Starting Mana - 0 Mana Cost = 20', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.StartingMana]: { base: 20 },
+                [StatType.ManaCost]: { base: 0 }
+            },
+            equipment: {}
+        });
+        char.useAbilityMana();
+        expect(char.currentMana).toBe(20);
+    });
+    test('20 Starting Mana - 5 Mana Cost = 15', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.StartingMana]: { base: 20 },
+                [StatType.ManaCost]: { base: 5 }
+            },
+            equipment: {}
+        });
+        char.useAbilityMana();
+        expect(char.currentMana).toBe(15);
+    });
+    test('20 Starting Mana - 10 Mana Cost = 10', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.StartingMana]: { base: 20 },
+                [StatType.ManaCost]: { base: 10 }
+            },
+            equipment: {}
+        });
+        char.useAbilityMana();
+        expect(char.currentMana).toBe(10);
+    });
+    test('20 Starting Mana - 20 Mana Cost = 0', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.StartingMana]: { base: 20 },
+                [StatType.ManaCost]: { base: 20 }
+            },
+            equipment: {}
+        });
+        char.useAbilityMana();
+        expect(char.currentMana).toBe(0);
+    });
+    test('20 Starting Mana - 25 Mana Cost = -5', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.StartingMana]: { base: 20 },
+                [StatType.ManaCost]: { base: 25 }
+            },
+            equipment: {}
+        });
+        char.useAbilityMana();
+        expect(char.currentMana).toBe(-5);
+    });
+    test('20 Starting Mana - -10 Mana Cost = 20', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.StartingMana]: { base: 20 },
+                [StatType.ManaCost]: { base: -10 }
+            },
+            equipment: {}
+        });
+        char.useAbilityMana();
+        expect(char.currentMana).toBe(20);
     });
 });
