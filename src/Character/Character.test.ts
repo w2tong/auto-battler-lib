@@ -335,16 +335,6 @@ describe('critRoll', () => {
     });
 
     describe('50% Crit Chance', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
-            statTemplate: {
-                [StatType.CriticalChance]: { base: 50 }
-            },
-            equipment: {}
-        });
-
         test('1 Roll = false', () => {
             rollDiceSpy.mockReturnValue(1);
             expect(Character.critRoll(50)).toBe(true);
@@ -372,16 +362,6 @@ describe('critRoll', () => {
     });
 
     describe('100% Crit Chance', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
-            statTemplate: {
-                [StatType.CriticalChance]: { base: 100 }
-            },
-            equipment: {}
-        });
-
         test('1 Roll = false', () => {
             rollDiceSpy.mockReturnValue(1);
             expect(Character.critRoll(100)).toBe(true);
