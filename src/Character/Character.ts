@@ -209,7 +209,7 @@ export default class Character {
     }
 
     useAbilityMana(): void {
-        this._currentMana -= this.stats.getStat(StatType.ManaCost);
+        this._currentMana -= Math.max(this.stats.getStat(StatType.ManaCost), 0);
     }
 
     doTurn(): void {
