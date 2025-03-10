@@ -433,11 +433,11 @@ export default class Character {
     }
 
     addMana(mana: number): void {
-        this._currentMana += mana;
+        this._currentMana += Math.max(mana, 0);
     }
 
     addHealth(health: number): void {
-        this._currentHealth = Math.min(this.currentHealth + health, this.stats.maxHealth);
+        this._currentHealth = Math.min(this.currentHealth + Math.max(health, 0), this.stats.maxHealth);
     }
 
     isDead(): boolean {
