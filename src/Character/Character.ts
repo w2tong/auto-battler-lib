@@ -208,7 +208,7 @@ export default class Character {
         }
     }
 
-    useMana(): void {
+    useAbilityMana(): void {
         this._currentMana -= this.stats.getStat(StatType.ManaCost);
     }
 
