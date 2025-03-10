@@ -632,3 +632,86 @@ describe('addMana', () => {
         expect(char.currentMana).toBe(10);
     });
 });
+
+describe('addHealth', () => {
+    test('50/100 Health + 0 = 50 Health', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 }
+            },
+            equipment: {},
+            options: {
+                currHealthPc: 0.5
+            }
+        });
+        char.addHealth(0);
+        expect(char.currentHealth).toBe(50);
+    });
+    test('50/100 Health + 10 = 60 Health', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 }
+            },
+            equipment: {},
+            options: {
+                currHealthPc: 0.5
+            }
+        });
+        char.addHealth(10);
+        expect(char.currentHealth).toBe(60);
+    });
+    test('50/100 Health + 10 = 100 Health', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 }
+            },
+            equipment: {},
+            options: {
+                currHealthPc: 0.5
+            }
+        });
+        char.addHealth(50);
+        expect(char.currentHealth).toBe(100);
+    });
+    test('50/100 Health + 10 = 100 Health', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 }
+            },
+            equipment: {},
+            options: {
+                currHealthPc: 0.5
+            }
+        });
+        char.addHealth(100);
+        expect(char.currentHealth).toBe(100);
+    });
+    test('50/100 Health + -10 = 50 Health', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 }
+            },
+            equipment: {},
+            options: {
+                currHealthPc: 0.5
+            }
+        });
+        char.addHealth(-10);
+        expect(char.currentHealth).toBe(50);
+    });
+});
