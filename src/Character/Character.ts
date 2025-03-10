@@ -258,8 +258,8 @@ export default class Character {
     }
 
     critRoll(): boolean {
-        const roll = rollDice(dice['1d100']);
-        return roll <= this.stats.critChance;
+        if (this.stats.critChance <= 0) return false;
+        return rollDice(dice['1d100']) <= this.stats.critChance;
     }
 
     blockRoll(): boolean {
