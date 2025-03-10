@@ -551,3 +551,84 @@ describe('useAbilityMana', () => {
         expect(char.currentMana).toBe(20);
     });
 });
+
+describe('addMana', () => {
+    test('10 + 0 = 10', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.StartingMana]: { base: 10 },
+            },
+            equipment: {}
+        });
+        char.addMana(0);
+        expect(char.currentMana).toBe(10);
+    });
+    test('0 + 10 = 10', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.StartingMana]: { base: 0 },
+            },
+            equipment: {}
+        });
+        char.addMana(10);
+        expect(char.currentMana).toBe(10);
+    });
+    test('10 + 100 = 10', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.StartingMana]: { base: 10 },
+            },
+            equipment: {}
+        });
+        char.addMana(100);
+        expect(char.currentMana).toBe(110);
+    });
+    test('10 + 10000 = 10', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.StartingMana]: { base: 10 },
+            },
+            equipment: {}
+        });
+        char.addMana(10000);
+        expect(char.currentMana).toBe(10010);
+    });
+    test('0 + -100 = 0', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.StartingMana]: { base: 0 },
+            },
+            equipment: {}
+        });
+        char.addMana(-100);
+        expect(char.currentMana).toBe(0);
+    });
+    test('10 + -100 = 10', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.StartingMana]: { base: 10 },
+            },
+            equipment: {}
+        });
+        char.addMana(-100);
+        expect(char.currentMana).toBe(10);
+    });
+});
