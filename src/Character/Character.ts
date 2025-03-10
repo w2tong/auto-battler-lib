@@ -257,14 +257,14 @@ export default class Character {
         return roll + hitChance >= targetDodgeChance;
     }
 
-    critRoll(): boolean {
-        if (this.stats.critChance <= 0) return false;
-        return rollDice(dice['1d100']) <= this.stats.critChance;
+    static critRoll(critChance: number): boolean {
+        if (critChance <= 0) return false;
+        return rollDice(dice['1d100']) <= critChance;
     }
 
-    blockRoll(): boolean {
-        if (this.stats.getStat(StatType.BlockChance) <= 0) return false;
-        return rollDice(dice['1d100']) >= this.stats.getStat(StatType.BlockChance);
+    static blockRoll(blockChance: number): boolean {
+        if (blockChance <= 0) return false;
+        return rollDice(dice['1d100']) <= blockChance;
     }
 
     calcDamageRange({ attackType, damageRange, spellPowerRatio, isOffHand }: { attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean }): DamageRange {
@@ -337,14 +337,14 @@ export default class Character {
 
             damage = (damage + damageBonus + spellDamage + sneakDamage) * (1 + (damagePercent));
 
-            const crit = this.critRoll();
+            const crit = Character.critRoll(this.stats.critChance);
             if (crit) {
                 damage = Character.calcCritDamage(damage, this.stats.critDamage);
                 hitType = HitType.Crit;
             }
 
-            // Block
-            blocked = target.blockRoll();
+            // Target block
+            blocked = Character.blockRoll(target.stats.getStat(StatType.BlockChance));
             if (blocked) {
                 damage = Character.calcDamageAfterBlock(damage, target.stats.getStat(StatType.BlockPower));
             }

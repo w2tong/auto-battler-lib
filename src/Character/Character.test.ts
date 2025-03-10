@@ -5,7 +5,6 @@ import * as diceModlue from '../dice';
 // TODO: add tests for following methods:
 /*
 hitRoll
-blockRoll
 calcDamageRange
 addMana
 addHealth
@@ -308,9 +307,36 @@ describe('calcDamageAfterBlock', () => {
 describe('critRoll', () => {
     const rollDiceSpy = jest.spyOn(diceModlue, 'rollDice');
 
+    describe('0% Crit Chance', () => {
+        test('1 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(1);
+            expect(Character.critRoll(0)).toBe(false);
+        });
+        test('10 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(10);
+            expect(Character.critRoll(0)).toBe(false);
+        });
+        test('50 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(50);
+            expect(Character.critRoll(0)).toBe(false);
+        });
+        test('51 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(51);
+            expect(Character.critRoll(0)).toBe(false);
+        });
+        test('75 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(75);
+            expect(Character.critRoll(0)).toBe(false);
+        });
+        test('100 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(100);
+            expect(Character.critRoll(0)).toBe(false);
+        });
+    });
+
     describe('50% Crit Chance', () => {
         const char = new Character({
-            name: 'Test Char',
+            name: '',
             level: 1,
             attributes: {},
             statTemplate: {
@@ -321,70 +347,33 @@ describe('critRoll', () => {
 
         test('1 Roll = false', () => {
             rollDiceSpy.mockReturnValue(1);
-            expect(char.critRoll()).toBe(true);
+            expect(Character.critRoll(50)).toBe(true);
         });
         test('10 Roll = false', () => {
             rollDiceSpy.mockReturnValue(10);
-            expect(char.critRoll()).toBe(true);
+            expect(Character.critRoll(50)).toBe(true);
         });
         test('50 Roll = false', () => {
             rollDiceSpy.mockReturnValue(50);
-            expect(char.critRoll()).toBe(true);
+            expect(Character.critRoll(50)).toBe(true);
         });
         test('51 Roll = false', () => {
             rollDiceSpy.mockReturnValue(51);
-            expect(char.critRoll()).toBe(false);
+            expect(Character.critRoll(50)).toBe(false);
         });
         test('75 Roll = false', () => {
             rollDiceSpy.mockReturnValue(75);
-            expect(char.critRoll()).toBe(false);
+            expect(Character.critRoll(50)).toBe(false);
         });
         test('100 Roll = false', () => {
             rollDiceSpy.mockReturnValue(100);
-            expect(char.critRoll()).toBe(false);
-        });
-    });
-
-    describe('0% Crit Chance', () => {
-        const char = new Character({
-            name: 'Test Char',
-            level: 1,
-            attributes: {},
-            statTemplate: {
-                [StatType.CriticalChance]: { base: 0 }
-            },
-            equipment: {}
-        });
-
-        test('1 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(1);
-            expect(char.critRoll()).toBe(false);
-        });
-        test('10 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(10);
-            expect(char.critRoll()).toBe(false);
-        });
-        test('50 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(50);
-            expect(char.critRoll()).toBe(false);
-        });
-        test('51 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(51);
-            expect(char.critRoll()).toBe(false);
-        });
-        test('75 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(75);
-            expect(char.critRoll()).toBe(false);
-        });
-        test('100 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(100);
-            expect(char.critRoll()).toBe(false);
+            expect(Character.critRoll(50)).toBe(false);
         });
     });
 
     describe('100% Crit Chance', () => {
         const char = new Character({
-            name: 'Test Char',
+            name: '',
             level: 1,
             attributes: {},
             statTemplate: {
@@ -395,27 +384,104 @@ describe('critRoll', () => {
 
         test('1 Roll = false', () => {
             rollDiceSpy.mockReturnValue(1);
-            expect(char.critRoll()).toBe(true);
+            expect(Character.critRoll(100)).toBe(true);
         });
         test('10 Roll = false', () => {
             rollDiceSpy.mockReturnValue(10);
-            expect(char.critRoll()).toBe(true);
+            expect(Character.critRoll(100)).toBe(true);
         });
         test('50 Roll = false', () => {
             rollDiceSpy.mockReturnValue(50);
-            expect(char.critRoll()).toBe(true);
+            expect(Character.critRoll(100)).toBe(true);
         });
         test('51 Roll = false', () => {
             rollDiceSpy.mockReturnValue(51);
-            expect(char.critRoll()).toBe(true);
+            expect(Character.critRoll(100)).toBe(true);
         });
         test('75 Roll = false', () => {
             rollDiceSpy.mockReturnValue(75);
-            expect(char.critRoll()).toBe(true);
+            expect(Character.critRoll(100)).toBe(true);
         });
         test('100 Roll = false', () => {
             rollDiceSpy.mockReturnValue(100);
-            expect(char.critRoll()).toBe(true);
+            expect(Character.critRoll(100)).toBe(true);
+        });
+    });
+});
+
+describe('blockRoll', () => {
+    const rollDiceSpy = jest.spyOn(diceModlue, 'rollDice');
+
+    describe('0% Block Chance', () => {
+        test('1 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(1);
+            expect(Character.blockRoll(0)).toBe(false);
+        });
+        test('10 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(10);
+            expect(Character.blockRoll(0)).toBe(false);
+        });
+        test('50 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(50);
+            expect(Character.blockRoll(0)).toBe(false);
+        });
+        test('75 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(75);
+            expect(Character.blockRoll(0)).toBe(false);
+        });
+        test('100 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(100);
+            expect(Character.blockRoll(0)).toBe(false);
+        });
+    });
+
+    describe('50% Block Chance', () => {
+        test('1 Roll = true', () => {
+            rollDiceSpy.mockReturnValue(1);
+            expect(Character.blockRoll(50)).toBe(true);
+        });
+        test('10 Roll = true', () => {
+            rollDiceSpy.mockReturnValue(10);
+            expect(Character.blockRoll(50)).toBe(true);
+        });
+        test('50 Roll = true', () => {
+            rollDiceSpy.mockReturnValue(50);
+            expect(Character.blockRoll(50)).toBe(true);
+        });
+        test('51 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(51);
+            expect(Character.blockRoll(50)).toBe(false);
+        });
+        test('75 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(75);
+            expect(Character.blockRoll(50)).toBe(false);
+        });
+        test('100 Roll = false', () => {
+            rollDiceSpy.mockReturnValue(100);
+            expect(Character.blockRoll(50)).toBe(false);
+        });
+    });
+
+    describe('100% Block Chance', () => {
+        test('1 Roll = true', () => {
+            rollDiceSpy.mockReturnValue(1);
+            expect(Character.blockRoll(100)).toBe(true);
+        });
+        test('10 Roll = true', () => {
+            rollDiceSpy.mockReturnValue(10);
+            expect(Character.blockRoll(100)).toBe(true);
+        });
+        test('50 Roll = true', () => {
+            rollDiceSpy.mockReturnValue(50);
+            expect(Character.blockRoll(100)).toBe(true);
+        });
+        test('75 Roll = true', () => {
+            rollDiceSpy.mockReturnValue(75);
+            expect(Character.blockRoll(100)).toBe(true);
+        });
+        test('100 Roll = true', () => {
+            rollDiceSpy.mockReturnValue(100);
+            expect(Character.blockRoll(100)).toBe(true);
         });
     });
 });
