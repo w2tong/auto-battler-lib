@@ -85,7 +85,7 @@ export default class Character {
             template: statTemplate
         });
         this.ability = ability ?? (className ? Classes[className].ability : null);
-        this._currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
+        this._currentHealth = options?.currHealthPc != null ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
 
         if (options?.userId) this.userId = options.userId;
@@ -385,7 +385,6 @@ export default class Character {
         return hit;
     }
 
-    // Add helper function for single weapon attack to use for both main-hand and off-hand attacks
     turnAttack(): void {
         if (!this.battle) return;
         this.setTarget();
@@ -414,9 +413,8 @@ export default class Character {
         }
     }
 
+    // TODO: Refactor to only take damage and move battle to other function
     takeDamage({ source, damage, armourPenetration, addToLog }: { source: string, damage: number, armourPenetration: number, addToLog: boolean }): void {
-        if (!this.battle) return;
-
         let damageTaken = Math.max(damage, 0);
 
         if (damageTaken > 0) {
@@ -425,10 +423,12 @@ export default class Character {
             this._currentHealth -= damageTaken;
         }
 
-        if (addToLog) this.battle.ref.log.addDamage(this.name, source, damageTaken);
-        if (this.isDead()) {
-            this.battle.ref.setCharDead(this.battle.side, this.battle.index);
-            this.battle.ref.log.add(`${this.name} died.`);
+        if (this.battle) {
+            if (addToLog) this.battle.ref.log.addDamage(this.name, source, damageTaken);
+            if (this.isDead()) {
+                this.battle.ref.setCharDead(this.battle.side, this.battle.index);
+                this.battle.ref.log.add(`${this.name} died.`);
+            }
         }
     }
 
