@@ -4,10 +4,11 @@ import StatType from './Stats/StatType';
 
 // TODO: add tests for following methods:
 /*
+Character constructor
 hitRoll
 calcDamageRange
-addMana
-addHealth
+isInvisible
+takeDamage
 */
 
 describe('calcCritDamage', () => {
@@ -713,5 +714,216 @@ describe('addHealth', () => {
         });
         char.addHealth(-10);
         expect(char.currentHealth).toBe(50);
+    });
+});
+
+describe('isDead', () => {
+    test('Stat Template - 0 Max Health = true', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 0 }
+            },
+            equipment: {}
+        });
+        expect(char.isDead()).toBeTruthy();
+    });
+    test('Stat Template - 1 Max Health = false', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 1 }
+            },
+            equipment: {}
+        });
+        expect(char.isDead()).toBeFalsy();
+    });
+    test('Options - currHealthPc: 0 = true', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {},
+            equipment: {},
+            options: { currHealthPc: 0 }
+        });
+        expect(char.isDead()).toBeTruthy();
+    });
+    test('Options currHealthPc: 1 = false', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {},
+            equipment: {},
+            options: { currHealthPc: 1 }
+        });
+        expect(char.isDead()).toBeFalsy();
+    });
+
+    test('20 Max Health, Take 20 Damage = true', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 20 },
+                [StatType.Armour]: { base: 0 },
+                [StatType.Deflection]: { base: 0 }
+            },
+            equipment: {}
+        });
+        char.takeDamage({
+            source: '',
+            damage: 20,
+            armourPenetration: 0
+        });
+        expect(char.isDead()).toBeTruthy();
+    });
+
+    test('20 Max Health, Take 10 Damage = false', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 20 },
+                [StatType.Armour]: { base: 0 },
+                [StatType.Deflection]: { base: 0 }
+            },
+            equipment: {}
+        });
+        char.takeDamage({
+            source: '',
+            damage: 20,
+            armourPenetration: 0
+        });
+        expect(char.isDead()).toBeTruthy();
+    });
+
+    test('20 Max Health, Take 0 Damage', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 20 },
+                [StatType.Armour]: { base: 0 },
+                [StatType.Deflection]: { base: 0 }
+            },
+            equipment: {}
+        });
+        char.takeDamage({
+            source: '',
+            damage: 0,
+            armourPenetration: 0
+        });
+        expect(char.isDead()).toBeFalsy();
+    });
+
+    test('20 Max Health, Take 25 Damage', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 20 },
+                [StatType.Armour]: { base: 0 },
+                [StatType.Deflection]: { base: 0 }
+            },
+            equipment: {}
+        });
+        char.takeDamage({
+            source: '',
+            damage: 25,
+            armourPenetration: 0
+        });
+        expect(char.isDead()).toBeTruthy();
+    });
+});
+
+describe('takeDamage', () => {
+    test('20 Max Health - 10 Damage = 10 Current Health', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 20 },
+                [StatType.Armour]: { base: 0 },
+                [StatType.Deflection]: { base: 0 }
+            },
+            equipment: {}
+        });
+        char.takeDamage({
+            source: '',
+            damage: 10,
+            armourPenetration: 0
+        });
+        expect(char.currentHealth).toBe(10);
+    });
+
+    test('20 Max Health - 20 Damage = 0 Current Health', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 20 },
+                [StatType.Armour]: { base: 0 },
+                [StatType.Deflection]: { base: 0 }
+            },
+            equipment: {}
+        });
+        char.takeDamage({
+            source: '',
+            damage: 20,
+            armourPenetration: 0
+        });
+        expect(char.currentHealth).toBe(0);
+    });
+
+    test('20 Max Health - 25 Damage = -5 Current Health', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 20 },
+                [StatType.Armour]: { base: 0 },
+                [StatType.Deflection]: { base: 0 }
+            },
+            equipment: {}
+        });
+        char.takeDamage({
+            source: '',
+            damage: 25,
+            armourPenetration: 0
+        });
+        expect(char.currentHealth).toBe(-5);
+    });
+
+    test('20 Max Health - -10 Damage = 20 Current Health', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 20 },
+                [StatType.Armour]: { base: 0 },
+                [StatType.Deflection]: { base: 0 }
+            },
+            equipment: {}
+        });
+        char.takeDamage({
+            source: '',
+            damage: -10,
+            armourPenetration: 0
+        });
+        expect(char.currentHealth).toBe(20);
     });
 });
