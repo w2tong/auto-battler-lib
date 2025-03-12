@@ -85,7 +85,7 @@ export default class Character {
             template: statTemplate
         });
         this.ability = ability ?? (className ? Classes[className].ability : null);
-        this._currentHealth = options?.currHealthPc != null ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
+        this._currentHealth = options?.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
 
         if (options?.userId) this.userId = options.userId;
@@ -353,7 +353,7 @@ export default class Character {
                 source: this.name,
                 damage,
                 armourPenetration: this.stats.armourPenetration,
-                addToLog: false
+                options: { addToLog: false }
             });
         }
 
@@ -377,8 +377,7 @@ export default class Character {
             this.takeDamage({
                 source: StatType.Thorns,
                 damage: target.stats.getStat(StatType.Thorns),
-                armourPenetration: target.stats.armourPenetration,
-                addToLog: true
+                armourPenetration: target.stats.armourPenetration
             });
         }
 
@@ -414,7 +413,7 @@ export default class Character {
     }
 
     // TODO: Refactor to only take damage and move battle to other function
-    takeDamage({ source, damage, armourPenetration, addToLog }: { source: string, damage: number, armourPenetration: number, addToLog: boolean }): void {
+    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean } }): void {
         let damageTaken = Math.max(damage, 0);
 
         if (damageTaken > 0) {
@@ -424,7 +423,7 @@ export default class Character {
         }
 
         if (this.battle) {
-            if (addToLog) this.battle.ref.log.addDamage(this.name, source, damageTaken);
+            if (options?.addToLog === undefined || options?.addToLog === true) this.battle.ref.log.addDamage(this.name, source, damageTaken);
             if (this.isDead()) {
                 this.battle.ref.setCharDead(this.battle.side, this.battle.index);
                 this.battle.ref.log.add(`${this.name} died.`);

@@ -10,25 +10,24 @@ export default class Burn extends Debuff {
     static baseDamage = 1;
     static spellPowerRatio = 0.2;
 
-    onApply() {}
-    onExpire() {}
+    onApply() { }
+    onExpire() { }
 
-    onTurnStart() {}
+    onTurnStart() { }
     onTurnEnd() {
         for (const [key, instance] of Object.entries(this.instances)) {
             this.char.takeDamage({
-                source: `${Burn.name} (${instance.source.name})`, 
+                source: `${Burn.name} (${instance.source.name})`,
                 damage: Burn.baseDamage + Math.floor(instance.source.stats.spellPower * Burn.spellPowerRatio),
-                armourPenetration: instance.source.stats.getStat(StatType.ArmourPenetration),
-                addToLog: true
+                armourPenetration: instance.source.stats.getStat(StatType.ArmourPenetration)
             });
 
             instance.stacks -= 1;
             if (instance.stacks <= 0) this.remove(key);
         }
     }
-    onAttack() {}
+    onAttack() { }
 
-    onSourceTurnStart() {}
-    onSourceTurnEnd() {}
+    onSourceTurnStart() { }
+    onSourceTurnEnd() { }
 }
