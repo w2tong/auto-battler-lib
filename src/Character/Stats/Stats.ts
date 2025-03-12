@@ -27,67 +27,67 @@ class Stats {
     character: Character;
 
     // Defensive
-    [StatType.MaxHealth]: Stat = {base: Stats.DEFAULT_MAX_HEALTH, attribute: 0, bonus: 0};
-    [StatType.HealthPercent]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.Armour]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.Deflection]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.Dodge]: Stat = {base: Stats.DEFAULT_DODGE, attribute: 0, bonus: 0};
-    [StatType.StatusResistance]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.Thorns]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.MaxHealth]: Stat = { base: Stats.DEFAULT_MAX_HEALTH, attribute: 0, bonus: 0 };
+    [StatType.HealthPercent]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.Armour]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.Deflection]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.Dodge]: Stat = { base: Stats.DEFAULT_DODGE, attribute: 0, bonus: 0 };
+    [StatType.StatusResistance]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.Thorns]: Stat = { base: 0, attribute: 0, bonus: 0 };
     // Block
-    [StatType.BlockChance]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.BlockPower]: Stat = {base: 0, attribute: 0, bonus: 0};
-    
+    [StatType.BlockChance]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.BlockPower]: Stat = { base: 0, attribute: 0, bonus: 0 };
+
     // Hit Chance
-    [StatType.HitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.OffHandHitChance]: Stat = {base: Stats.OFF_HAND_HIT_CHANCE_PENALTY, attribute: 0, bonus: 0};
-    [StatType.MeleeHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.RangedHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.HitChance]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.OffHandHitChance]: Stat = { base: Stats.OFF_HAND_HIT_CHANCE_PENALTY, attribute: 0, bonus: 0 };
+    [StatType.MeleeHitChance]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.RangedHitChance]: Stat = { base: 0, attribute: 0, bonus: 0 };
 
     // Damage
-    [StatType.Damage]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.DamagePercent]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.OffHandDamage]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.MeleeWeaponDamage]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.MeleeWeaponDamagePercent]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.RangedWeaponDamage]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.RangedWeaponDamagePercent]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.Damage]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.DamagePercent]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.OffHandDamage]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.MeleeWeaponDamage]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.MeleeWeaponDamagePercent]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.RangedWeaponDamage]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.RangedWeaponDamagePercent]: Stat = { base: 0, attribute: 0, bonus: 0 };
 
     // Critical
-    [StatType.CriticalChance]: Stat = {base: Stats.DEFAULT_CRIT_CHANCE, attribute: 0, bonus: 0};
-    [StatType.CriticalDamage]: Stat = {base: Stats.DEFAULT_CRIT_DAMAGE, attribute: 0, bonus: 0};
+    [StatType.CriticalChance]: Stat = { base: Stats.DEFAULT_CRIT_CHANCE, attribute: 0, bonus: 0 };
+    [StatType.CriticalDamage]: Stat = { base: Stats.DEFAULT_CRIT_DAMAGE, attribute: 0, bonus: 0 };
 
     // Defense Reduction
-    [StatType.ArmourPenetration]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.DodgeReduction]: Stat = {base: 0, attribute: 0, bonus: 0};
-    
-    // Spell
-    [StatType.SpellHitChance]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.SpellPower]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.SpellPowerPercent]: Stat = {base: 0, attribute: 0, bonus: 0};
-    
-    // Mana
-    [StatType.ManaCost]: Stat = {base: Stats.DEFAULT_MANA_COST, attribute: 0, bonus: 0};
-    [StatType.StartingMana]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.ManaRegen]: Stat = {base: Stats.DEFAULT_MANA_REGEN, attribute: 0, bonus: 0};
-    [StatType.ManaOnHit]: Stat = {base: Stats.DEFAULT_MANA_ON_HIT, attribute: 0, bonus: 0};
-    
-    // Initiative
-    [StatType.Initiative]: Stat = {base: 0, attribute: 0, bonus: 0};
-    
-    // Potion
-    [StatType.PotionCharges]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.PotionHealing]: Stat = {base: 0, attribute: 0, bonus: 0};
-    [StatType.PotionEffectiveness]: Stat = {base: 0, attribute: 0, bonus: 0};
+    [StatType.ArmourPenetration]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.DodgeReduction]: Stat = { base: 0, attribute: 0, bonus: 0 };
 
-    constructor({character, template}: {character: Character, template: StatTemplate}) {
+    // Spell
+    [StatType.SpellHitChance]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.SpellPower]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.SpellPowerPercent]: Stat = { base: 0, attribute: 0, bonus: 0 };
+
+    // Mana
+    [StatType.ManaCost]: Stat = { base: Stats.DEFAULT_MANA_COST, attribute: 0, bonus: 0 };
+    [StatType.StartingMana]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.ManaRegen]: Stat = { base: Stats.DEFAULT_MANA_REGEN, attribute: 0, bonus: 0 };
+    [StatType.ManaOnHit]: Stat = { base: Stats.DEFAULT_MANA_ON_HIT, attribute: 0, bonus: 0 };
+
+    // Initiative
+    [StatType.Initiative]: Stat = { base: 0, attribute: 0, bonus: 0 };
+
+    // Potion
+    [StatType.PotionCharges]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.PotionHealing]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.PotionEffectiveness]: Stat = { base: 0, attribute: 0, bonus: 0 };
+
+    constructor({ character, template }: { character: Character, template: StatTemplate }) {
         this.character = character;
         const equipment = character.equipment;
 
         this[StatType.MaxHealth].base = Stats.DEFAULT_MAX_HEALTH + Stats.DEFAULT_MAX_HEALTH_PER_LVL * (character.level - 1);
 
         // Set stats to template (sets MaxHealth if included in template)
-        for (const [stat, {base, perLvl}] of Object.entries(template)) {
+        for (const [stat, { base, perLvl }] of Object.entries(template)) {
             this[stat as StatType].base = base + (perLvl ? perLvl * (character.level - 1) : 0);
         }
 
@@ -127,7 +127,7 @@ class Stats {
         }
 
         // Calculate attribute scaling stats
-        for (const [type, {base, bonus}] of Object.entries(this.character.attributes)) {
+        for (const [type, { base, bonus }] of Object.entries(this.character.attributes)) {
             for (const [statType, scaling] of Object.entries(AttributeStatScaling[type as AttributeType])) {
                 this[statType as StatType].attribute += (base + bonus) * scaling;
             }

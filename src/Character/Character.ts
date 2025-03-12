@@ -208,8 +208,8 @@ export default class Character {
         }
     }
 
-    useMana(): void {
-        this._currentMana -= this.stats.getStat(StatType.ManaCost);
+    useAbilityMana(): void {
+        this._currentMana -= Math.max(this.stats.getStat(StatType.ManaCost), 0);
     }
 
     doTurn(): void {
@@ -257,14 +257,14 @@ export default class Character {
         return roll + hitChance >= targetDodgeChance;
     }
 
-    critRoll(): boolean {
-        const roll = rollDice(dice['1d100']);
-        return roll <= this.stats.critChance;
+    static critRoll(critChance: number): boolean {
+        if (critChance <= 0) return false;
+        return rollDice(dice['1d100']) <= critChance;
     }
 
-    blockRoll(): boolean {
-        if (this.stats.getStat(StatType.BlockChance) <= 0) return false;
-        return rollDice(dice['1d100']) >= this.stats.getStat(StatType.BlockChance);
+    static blockRoll(blockChance: number): boolean {
+        if (blockChance <= 0) return false;
+        return rollDice(dice['1d100']) <= blockChance;
     }
 
     calcDamageRange({ attackType, damageRange, spellPowerRatio, isOffHand }: { attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean }): DamageRange {
@@ -337,14 +337,14 @@ export default class Character {
 
             damage = (damage + damageBonus + spellDamage + sneakDamage) * (1 + (damagePercent));
 
-            const crit = this.critRoll();
+            const crit = Character.critRoll(this.stats.critChance);
             if (crit) {
                 damage = Character.calcCritDamage(damage, this.stats.critDamage);
                 hitType = HitType.Crit;
             }
 
-            // Block
-            blocked = target.blockRoll();
+            // Target block
+            blocked = Character.blockRoll(target.stats.getStat(StatType.BlockChance));
             if (blocked) {
                 damage = Character.calcDamageAfterBlock(damage, target.stats.getStat(StatType.BlockPower));
             }
@@ -433,11 +433,11 @@ export default class Character {
     }
 
     addMana(mana: number): void {
-        this._currentMana += mana;
+        this._currentMana += Math.max(mana, 0);
     }
 
     addHealth(health: number): void {
-        this._currentHealth = Math.min(this.currentHealth + health, this.stats.maxHealth);
+        this._currentHealth = Math.min(this.currentHealth + Math.max(health, 0), this.stats.maxHealth);
     }
 
     isDead(): boolean {

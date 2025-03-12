@@ -9,7 +9,7 @@ const Vanish: Ability = {
     description: `Gain ${DEX_RATIO * 100}% DEX (rounded down, min 1) ${BuffId.Invisible} stacks, causing your next attack to be a sneak attack.`,
     func: (char) => {
         if (!char.battle) return;
-        char.useMana();
+        char.useAbilityMana();
         char.battle.ref.log.add(`${char.name} used ${NAME}.`);
         char.statusEffectManager.addBuff(BuffId.Invisible, char, Math.max(Math.floor(char.attributes.dexterity * DEX_RATIO), 1));
     }

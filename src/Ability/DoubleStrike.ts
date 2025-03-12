@@ -10,7 +10,7 @@ const DoubleStrike: Ability = {
         char.setTarget();
         if (char.target) {
             char.battle.ref.log.add(`${char.name} used ${NAME}.`);
-            char.useMana();
+            char.useAbilityMana();
             char.turnAttack();
             char.turnAttack();
         }
