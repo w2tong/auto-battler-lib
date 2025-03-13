@@ -1,14 +1,14 @@
 import Character from './Character';
 import * as diceModlue from '../dice';
 import StatType from './Stats/StatType';
+import BuffId from '../StatusEffect/BuffId';
+import Battle from '../Battle';
 
 // TODO: add tests for following methods:
 /*
 Character constructor
 hitRoll
 calcDamageRange
-isInvisible
-takeDamage
 */
 
 describe('calcCritDamage', () => {
@@ -925,5 +925,44 @@ describe('takeDamage', () => {
             armourPenetration: 0
         });
         expect(char.currentHealth).toBe(20);
+    });
+});
+
+describe('isInvisible', () => {
+    test('new char = false', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {},
+            equipment: {}
+        });
+
+        expect(char.isInvisible()).toBeFalsy();
+    });
+    test('new char, add buff = true', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {},
+            equipment: {}
+        });
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const battle = new Battle([char], []);
+        char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
+        expect(char.isInvisible()).toBeTruthy();
+    });
+    test('new char, add buff = true', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {},
+            equipment: {}
+        });
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const battle = new Battle([char], []);
+        char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
     });
 });
