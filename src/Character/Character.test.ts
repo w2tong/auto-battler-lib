@@ -3,12 +3,13 @@ import * as diceModlue from '../dice';
 import StatType from './Stats/StatType';
 import BuffId from '../StatusEffect/BuffId';
 import Battle from '../Battle';
+import AttackType from '../AttackType';
+import DamageRange from '../DamageRange';
 
 // TODO: add tests for following methods:
 /*
 Character constructor
 hitRoll
-calcDamageRange
 */
 
 describe('calcCritDamage', () => {
@@ -964,5 +965,86 @@ describe('isInvisible', () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const battle = new Battle([char], []);
         char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
+    });
+});
+
+describe('calcDamageRange', () => {
+    const char = new Character({
+        name: '',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.Damage]: { base: 1 },
+            [StatType.DamagePercent]: { base: 0.2 },
+            [StatType.MeleeWeaponDamage]: { base: 2 },
+            [StatType.MeleeWeaponDamagePercent]: { base: 0.3 },
+            [StatType.RangedWeaponDamage]: { base: 3 },
+            [StatType.RangedWeaponDamagePercent]: { base: 0.2 },
+            [StatType.SpellPower]: { base: 10 },
+            [StatType.SpellPowerPercent]: { base: 0.1 },
+            [StatType.OffHandDamage]: { base: 1 }
+        },
+        equipment: {}
+    });
+
+    test('Melee weapon main-hand attack', () => {
+        const damageRange: DamageRange = { min: 10, max: 20, bonus: 5 };
+        const { min, max } = char.calcDamageRange({
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            isOffHand: false
+        });
+
+        expect(min).toEqual(27); // (10 + 5 + 1 + 2) * 1.5
+        expect(max).toEqual(42); // (20 + 5 + 1 + 2) * 1.5
+    });
+
+    test('Melee weapon off-hand attack', () => {
+        const damageRange: DamageRange = { min: 10, max: 20, bonus: 5 };
+        const { min, max } = char.calcDamageRange({
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            isOffHand: true
+        });
+
+        expect(min).toBeCloseTo(28.5); // (10 + 5 + 1 + 2 + 1) * 1.5
+        expect(max).toBeCloseTo(43.5); // (20 + 5 + 1 + 2 + 1) * 1.5
+    });
+
+    test('Ranged weapon main-hand attack', () => {
+        const damageRange: DamageRange = { min: 10, max: 20, bonus: 5 };
+        const { min, max } = char.calcDamageRange({
+            attackType: AttackType.RangedWeapon,
+            damageRange,
+            isOffHand: false
+        });
+
+        expect(min).toBeCloseTo(26.6); // (10 + 5 + 1 + 3) * 1.4
+        expect(max).toBeCloseTo(40.6); // (20 + 5 + 1 + 3) * 1.4
+    });
+
+    test('Ranged weapon off-hand attack', () => {
+        const damageRange: DamageRange = { min: 5, max: 10, bonus: 5 };
+        const { min, max } = char.calcDamageRange({
+            attackType: AttackType.RangedWeapon,
+            damageRange,
+            isOffHand: true
+        });
+
+        expect(min).toBeCloseTo(21); // (5 + 5 + 1 + 3 + 1) * 1.4
+        expect(max).toBeCloseTo(28); // (10 + 5 + 1 + 3 + 1) * 1.4
+    });
+
+    test('Spell main-hand attack', () => {
+        const damageRange: DamageRange = { min: 20, max: 30, bonus: 2 };
+        const { min, max } = char.calcDamageRange({
+            attackType: AttackType.Spell,
+            damageRange,
+            spellPowerRatio: 0.5,
+            isOffHand: false
+        });
+
+        expect(min).toBeCloseTo(34.2); // (20 + 2 + 1 + (10 * 1.1 * 0.5)) * 1.2
+        expect(max).toBeCloseTo(46.2); // (30 + 2 + 1 + (10 * 1.1 * 0.5)) * 1.2
     });
 });
