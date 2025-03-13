@@ -267,7 +267,7 @@ export default class Character {
         return rollDice(dice['1d100']) <= blockChance;
     }
 
-    calcDamageRange({ attackType, damageRange, spellPowerRatio, isOffHand }: { attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean }): DamageRange {
+    calcDamageRange({ attackType, damageRange, spellPowerRatio, isOffHand }: { attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean }): { min: number, max: number } {
         let damageBonus = this.stats.damage + (isOffHand ? this.stats.getStat(StatType.OffHandDamage) : 0);
         let damagePercent = this.stats.getStat(StatType.DamagePercent);
         switch (attackType) {
@@ -285,11 +285,11 @@ export default class Character {
             default:
                 break;
         }
-        const spellDamage = spellPowerRatio ? Math.floor(this.stats.spellPower * spellPowerRatio) : 0;
+        const spellDamage = spellPowerRatio !== undefined ? this.stats.spellPower * spellPowerRatio : 0;
 
-        const minDamage = (damageRange.min + damageRange.bonus + damageBonus + spellDamage) * (1 + (damagePercent));
-        const maxDamage = (damageRange.max + damageRange.bonus + damageBonus + spellDamage) * (1 + (damagePercent));
-        return { min: minDamage, max: maxDamage, bonus: 0 };
+        const minDamage = (damageRange.min + damageRange.bonus + damageBonus + spellDamage) * (1 + damagePercent);
+        const maxDamage = (damageRange.max + damageRange.bonus + damageBonus + spellDamage) * (1 + damagePercent);
+        return { min: minDamage, max: maxDamage };
     }
 
     attack({ target, attackType, damageRange, spellPowerRatio, isOffHand, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean, abilityName?: string }): boolean {
