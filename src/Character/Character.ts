@@ -200,10 +200,9 @@ export default class Character {
     }
 
     usePotion(): void {
-        if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
-            const potionHeal = Math.round((rollDice(this.equipment.potion.dice) + this.equipment.potion.bonus + this.stats.getStat(StatType.PotionHealing)) * (1 + this.stats.getStat(StatType.PotionEffectiveness)));
+        if (this.equipment.potion) {
+            const potionHeal = (rollDice(this.equipment.potion.dice) + this.equipment.potion.bonus + this.stats.getStat(StatType.PotionHealing)) * (1 + this.stats.getStat(StatType.PotionEffectiveness));
             this.addHealth(potionHeal);
-            this.equipment.potion.charges -= 1;
             if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.equipment.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
         }
     }
@@ -214,7 +213,10 @@ export default class Character {
 
     doTurn(): void {
         this.statusEffectManager.onTurnStart();
-        this.usePotion();
+        if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
+            this.usePotion();
+            this.equipment.potion.charges -= 1;
+        }
 
         if (this.ability && this.currentMana >= this.stats.getStat(StatType.ManaCost)) {
             this.ability.func(this);
@@ -225,7 +227,6 @@ export default class Character {
         this.addMana(this.stats.getStat(StatType.ManaRegen));
         this.statusEffectManager.onTurnEnd();
     }
-
 
     hitRoll({ target, attackType, isOffHand }: { target: Character, attackType: AttackType, isOffHand: boolean }): boolean {
         if (isOffHand && !this.equipment.offHandWeapon) return false;
