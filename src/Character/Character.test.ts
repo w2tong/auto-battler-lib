@@ -5,6 +5,8 @@ import BuffId from '../StatusEffect/BuffId';
 import Battle from '../Battle';
 import AttackType from '../AttackType';
 import DamageRange from '../DamageRange';
+import { ItemType } from '../Equipment/Item';
+import { Potion } from '../Equipment/Potion';
 
 // TODO: add tests for following methods:
 /*
@@ -306,7 +308,13 @@ describe('calcDamageAfterBlock', () => {
 });
 
 describe('critRoll', () => {
-    const rollDiceSpy = jest.spyOn(diceModlue, 'rollDice');
+    let rollDiceSpy: jest.SpyInstance;
+    beforeEach(() => {
+        rollDiceSpy = jest.spyOn(diceModlue, 'rollDice');
+    });
+    afterEach(() => {
+        rollDiceSpy.mockRestore();
+    });
 
     describe('0% Crit Chance', () => {
         test('1 Roll = false', () => {
@@ -391,77 +399,83 @@ describe('critRoll', () => {
 });
 
 describe('blockRoll', () => {
-    const rollDiceSpy = jest.spyOn(diceModlue, 'rollDice');
+    let rollDiceSpy: jest.SpyInstance;
+    beforeEach(() => {
+        rollDiceSpy = jest.spyOn(diceModlue, 'rollDice');
+    });
+    afterEach(() => {
+        rollDiceSpy.mockRestore();
+    });
 
     describe('0% Block Chance', () => {
         test('1 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(1);
+            rollDiceSpy.mockReturnValueOnce(1);
             expect(Character.blockRoll(0)).toBe(false);
         });
         test('10 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(10);
+            rollDiceSpy.mockReturnValueOnce(10);
             expect(Character.blockRoll(0)).toBe(false);
         });
         test('50 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(50);
+            rollDiceSpy.mockReturnValueOnce(50);
             expect(Character.blockRoll(0)).toBe(false);
         });
         test('75 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(75);
+            rollDiceSpy.mockReturnValueOnce(75);
             expect(Character.blockRoll(0)).toBe(false);
         });
         test('100 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(100);
+            rollDiceSpy.mockReturnValueOnce(100);
             expect(Character.blockRoll(0)).toBe(false);
         });
     });
 
     describe('50% Block Chance', () => {
         test('1 Roll = true', () => {
-            rollDiceSpy.mockReturnValue(1);
+            rollDiceSpy.mockReturnValueOnce(1);
             expect(Character.blockRoll(50)).toBe(true);
         });
         test('10 Roll = true', () => {
-            rollDiceSpy.mockReturnValue(10);
+            rollDiceSpy.mockReturnValueOnce(10);
             expect(Character.blockRoll(50)).toBe(true);
         });
         test('50 Roll = true', () => {
-            rollDiceSpy.mockReturnValue(50);
+            rollDiceSpy.mockReturnValueOnce(50);
             expect(Character.blockRoll(50)).toBe(true);
         });
         test('51 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(51);
+            rollDiceSpy.mockReturnValueOnce(51);
             expect(Character.blockRoll(50)).toBe(false);
         });
         test('75 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(75);
+            rollDiceSpy.mockReturnValueOnce(75);
             expect(Character.blockRoll(50)).toBe(false);
         });
         test('100 Roll = false', () => {
-            rollDiceSpy.mockReturnValue(100);
+            rollDiceSpy.mockReturnValueOnce(100);
             expect(Character.blockRoll(50)).toBe(false);
         });
     });
 
     describe('100% Block Chance', () => {
         test('1 Roll = true', () => {
-            rollDiceSpy.mockReturnValue(1);
+            rollDiceSpy.mockReturnValueOnce(1);
             expect(Character.blockRoll(100)).toBe(true);
         });
         test('10 Roll = true', () => {
-            rollDiceSpy.mockReturnValue(10);
+            rollDiceSpy.mockReturnValueOnce(10);
             expect(Character.blockRoll(100)).toBe(true);
         });
         test('50 Roll = true', () => {
-            rollDiceSpy.mockReturnValue(50);
+            rollDiceSpy.mockReturnValueOnce(50);
             expect(Character.blockRoll(100)).toBe(true);
         });
         test('75 Roll = true', () => {
-            rollDiceSpy.mockReturnValue(75);
+            rollDiceSpy.mockReturnValueOnce(75);
             expect(Character.blockRoll(100)).toBe(true);
         });
         test('100 Roll = true', () => {
-            rollDiceSpy.mockReturnValue(100);
+            rollDiceSpy.mockReturnValueOnce(100);
             expect(Character.blockRoll(100)).toBe(true);
         });
     });
@@ -1046,5 +1060,89 @@ describe('calcDamageRange', () => {
 
         expect(min).toBeCloseTo(34.2); // (20 + 2 + 1 + (10 * 1.1 * 0.5)) * 1.2
         expect(max).toBeCloseTo(46.2); // (30 + 2 + 1 + (10 * 1.1 * 0.5)) * 1.2
+    });
+});
+
+describe('usePotion', () => {
+    let mathRandomSpy: jest.SpyInstance;
+    beforeEach(() => {
+        mathRandomSpy = jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
+    });
+    afterEach(() => {
+        mathRandomSpy.mockRestore();
+    });
+
+    let testPotion: Potion;
+    beforeEach(() => {
+        testPotion = {
+            id: 'test',
+            itemType: ItemType.Potion,
+            name: 'Test Healing Potion',
+            tier: 1,
+            img: 'potion-red.png',
+            dice: { num: 2, sides: 4 },
+            bonus: 2,
+            charges: 1
+        };
+    });
+
+    test('Use potion with full health', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 }
+            },
+            equipment: {
+                potion: testPotion
+            }
+        });
+        expect(char.currentHealth).toBe(100);
+        char.usePotion();
+        expect(char.currentHealth).toBe(100);
+        expect(char.equipment.potion?.charges).toBe(1);
+    });
+
+    test('Use potion with 50/100 health', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 }
+            },
+            equipment: {
+                potion: testPotion
+            },
+            options: {
+                currHealthPc: 0.5
+            }
+        });
+        expect(char.currentHealth).toBe(50);
+        char.usePotion();
+        expect(char.currentHealth).toBeCloseTo(58);
+    });
+
+    test('Use potion twice with 50/100 health', () => {
+        const char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 }
+            },
+            equipment: {
+                potion: testPotion
+            },
+            options: {
+                currHealthPc: 0.5
+            }
+        });
+        expect(char.currentHealth).toBe(50);
+        char.usePotion();
+        expect(char.currentHealth).toBeCloseTo(58);
+        char.usePotion();
+        expect(char.currentHealth).toBeCloseTo(66);
     });
 });
