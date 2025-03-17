@@ -228,9 +228,7 @@ export default class Character {
         this.statusEffectManager.onTurnEnd();
     }
 
-    hitRoll({ target, attackType, isOffHand }: { target: Character, attackType: AttackType, isOffHand: boolean }): boolean {
-        if (isOffHand && !this.equipment.offHandWeapon) return false;
-
+    hitRoll({ target, attackType, isOffHand = false }: { target: Character, attackType: AttackType, isOffHand?: boolean }): boolean {
         const roll = rollDice(dice['1d100']);
 
         // Rolling 1-5 always misses
