@@ -1146,3 +1146,713 @@ describe('usePotion', () => {
         expect(char.currentHealth).toBeCloseTo(66);
     });
 });
+
+describe('hitRoll', () => {
+    // Test Char
+    // Melee Hit Chance = 10 + 5 = 15
+    // Ranged Hit Chance = 10 + 10 = 20
+    // Spell Hit Chance = 10 + 15 = 25
+    // Melee Off-Hand Hit Chance = 10 + 5 - 20 = -5
+    // Ranged Off-Hand Hit Chance = 10 + 10 - 20 = 0
+    // Spell Off-Hand Hit Chance = 10 + 15 - 20 = 5
+
+    // Target
+    // Dodge Chance = 50 - 10 = 40
+    const char = new Character({
+        name: 'Test Char',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.HitChance]: { base: 10 },
+            [StatType.MeleeHitChance]: { base: 5 },
+            [StatType.RangedHitChance]: { base: 10 },
+            [StatType.SpellHitChance]: { base: 15 },
+            [StatType.OffHandHitChance]: { base: -20 },
+            [StatType.DodgeReduction]: { base: 10 },
+        },
+        equipment: {}
+    });
+    let target: Character;
+
+    describe('Normal Target', () => {
+        beforeEach(() => {
+            target = new Character({
+                name: 'Target',
+                level: 1,
+                attributes: {},
+                statTemplate: {
+                    [StatType.Dodge]: { base: 50 }
+                },
+                equipment: {}
+            });
+        });
+
+        describe('rollDice 1 (Always false)', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(1);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeFalsy();
+            });
+            test('Ranged Weapon Main-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeFalsy();
+            });
+            test('Spell Main-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeFalsy();
+            });
+            test('Melee Weapon Off-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Spell Off-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
+            });
+        });
+
+        describe('rollDice 5 (Always false)', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(5);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeFalsy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeFalsy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeFalsy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
+            });
+        });
+
+        describe('rollDice 15', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(15);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeFalsy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeFalsy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
+            });
+        });
+
+        describe('rollDice 20', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(20);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeFalsy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
+            });
+        });
+
+        describe('rollDice 25', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(25);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeTruthy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
+            });
+        });
+
+        describe('rollDice 35', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(35);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeTruthy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
+            });
+        });
+
+        describe('rollDice 40', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(40);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeTruthy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
+            });
+        });
+
+        describe('rollDice 45', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(45);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeTruthy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
+            });
+        });
+
+        describe('rollDice 96 (Always true)', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(96);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeTruthy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
+            });
+        });
+
+        describe('rollDice 100 (Always true)', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(100);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeTruthy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
+            });
+        });
+    });
+
+    describe('High Dodge Target', () => {
+        beforeEach(() => {
+            target = new Character({
+                name: 'Target',
+                level: 1,
+                attributes: {},
+                statTemplate: {
+                    [StatType.Dodge]: { base: 1000 }
+                },
+                equipment: {}
+            });
+        });
+
+        describe('rollDice 1 (Always false)', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(1);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeFalsy();
+            });
+            test('Ranged Weapon Main-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeFalsy();
+            });
+            test('Spell Main-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeFalsy();
+            });
+            test('Melee Weapon Off-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Spell Off-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
+            });
+        });
+
+        describe('rollDice 5 (Always false)', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(5);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeFalsy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeFalsy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeFalsy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
+            });
+        });
+
+        describe('rollDice 6', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(6);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeFalsy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeFalsy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeFalsy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
+            });
+        });
+
+        describe('rollDice 95', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(95);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeFalsy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeFalsy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeFalsy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
+            });
+        });
+
+        describe('rollDice 96 (Always true)', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(96);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeTruthy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
+            });
+        });
+
+        describe('rollDice 100 (Always true)', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(100);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeTruthy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
+            });
+        });
+
+    });
+
+    describe('0% Dodge Target', () => {
+        beforeEach(() => {
+            target = new Character({
+                name: 'Target',
+                level: 1,
+                attributes: {},
+                statTemplate: {
+                    [StatType.Dodge]: { base: 0 }
+                },
+                equipment: {}
+            });
+        });
+
+        describe('rollDice 1 (Always false)', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(1);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeFalsy();
+            });
+            test('Ranged Weapon Main-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeFalsy();
+            });
+            test('Spell Main-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeFalsy();
+            });
+            test('Melee Weapon Off-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Spell Off-Hand Attack = false', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
+            });
+        });
+
+        describe('rollDice 5 (Always false)', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(5);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeFalsy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeFalsy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeFalsy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
+            });
+        });
+
+        describe('rollDice 6', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(6);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeTruthy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
+            });
+        });
+
+        describe('rollDice 95', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(95);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeTruthy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
+            });
+        });
+
+        describe('rollDice 96 (Always true)', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(96);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeTruthy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
+            });
+        });
+
+        describe('rollDice 100 (Always true)', () => {
+            let rollDiceSpy: jest.SpyInstance;
+            beforeEach(() => {
+                rollDiceSpy = jest.spyOn(diceModlue, 'rollDice').mockReturnValue(100);
+            });
+            afterEach(() => {
+                rollDiceSpy.mockRestore();
+            });
+
+            test('Melee Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon })).toBeTruthy();
+            });
+            test('Ranged Weapon Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon })).toBeTruthy();
+            });
+            test('Spell Main-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell })).toBeTruthy();
+            });
+            test('Melee Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.MeleeWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Ranged Weapon Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeTruthy();
+            });
+            test('Spell Off-Hand Attack', () => {
+                expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
+            });
+        });
+
+    });
+});
