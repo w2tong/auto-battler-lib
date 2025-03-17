@@ -9,11 +9,11 @@ import debuffs from './debuffs';
 
 export default class StatusEffectManager {
     private char: Character;
-    private buffs: {[id in BuffId]?: Buff} = {};
-    private debuffs: {[id in DebuffId]?: Debuff} = {};
+    private buffs: { [id in BuffId]?: Buff } = {};
+    private debuffs: { [id in DebuffId]?: Debuff } = {};
 
-    private outgoingBuffs: {[key: string]: Buff} = {};
-    private outgoingDebuffs: {[key: string]: Debuff} = {};
+    private outgoingBuffs: { [key: string]: Buff } = {};
+    private outgoingDebuffs: { [key: string]: Debuff } = {};
 
     constructor(char: Character) {
         this.char = char;
@@ -23,7 +23,7 @@ export default class StatusEffectManager {
         return this.buffs[id]?.stacks ?? 0;
     }
 
-    getStatusEffectString(statusEffects: {[id in BuffId]?: Buff}|{[id in DebuffId]?: Debuff}) {
+    getStatusEffectString(statusEffects: { [id in BuffId]?: Buff } | { [id in DebuffId]?: Debuff }) {
         const arr: string[] = [];
         for (const statusEffect of Object.values(statusEffects)) {
             arr.push(`${statusEffect.symbol}(${statusEffect.stacks})`);
@@ -44,7 +44,7 @@ export default class StatusEffectManager {
         const buff = this.buffs[id];
         if (!buff) return;
         buff.add(getCharBattleId(source), source, stacks);
-        
+
         source.statusEffectManager.addOutgoingBuff(id, this.char, buff);
     }
 
@@ -87,7 +87,7 @@ export default class StatusEffectManager {
         for (const debuff of Object.values(this.debuffs)) debuff.onSourceTurnEnd(this.char);
     }
 
-    onAttack(hit : boolean) {
+    onAttack(hit: boolean) {
         for (const buff of Object.values(this.buffs)) buff.onAttack(hit);
         for (const debuff of Object.values(this.debuffs)) debuff.onAttack(hit);
     }

@@ -10,25 +10,24 @@ export default class Poison extends Debuff {
     static baseDamage = 1;
     static healthDamagePercent = 0.01;
 
-    onApply() {}
-    onExpire() {}
-    
-    onTurnStart() {}
+    onApply() { }
+    onExpire() { }
+
+    onTurnStart() { }
     onTurnEnd() {
         for (const [key, instance] of Object.entries(this.instances)) {
             this.char.takeDamage({
-                source: `${Poison.name} (${instance.source.name})`, 
+                source: `${Poison.name} (${instance.source.name})`,
                 damage: Poison.baseDamage + Math.floor(this.char.currentHealth * Poison.healthDamagePercent),
-                armourPenetration: instance.source.stats.getStat(StatType.ArmourPenetration),
-                addToLog: true
+                armourPenetration: instance.source.stats.getStat(StatType.ArmourPenetration)
             });
 
             instance.stacks -= 1;
             if (instance.stacks <= 0) this.remove(key);
         }
     }
-    onAttack() {}
+    onAttack() { }
 
-    onSourceTurnStart() {}
-    onSourceTurnEnd() {}
+    onSourceTurnStart() { }
+    onSourceTurnEnd() { }
 }

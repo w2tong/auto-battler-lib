@@ -42,8 +42,8 @@ interface LevelLine extends BaseLine {
 type LogLine = TextLine | LootLine | ExpLine | LevelLine;
 
 class Log {
-    
-    private _log: LogLine[][] = [];
+
+    private _log: LogLine[][] = [[]];
 
     get log() {
         return this._log;
@@ -54,7 +54,7 @@ class Log {
     }
 
     get last() {
-        return this.log[this.log.length-1];
+        return this.log[this.log.length - 1];
     }
 
     nextTurn() {
@@ -63,12 +63,12 @@ class Log {
 
     add(text: string) {
         this.last.push({
-            type: LineType.Text, 
+            type: LineType.Text,
             text
         });
     }
 
-    addAttack({charName, tarName, hitType, damage, sneak, blocked, abilityName}: {charName: string, tarName: string, hitType: HitType, damage: number, sneak: boolean, blocked: boolean, abilityName?: string}) {
+    addAttack({ charName, tarName, hitType, damage, sneak, blocked, abilityName }: { charName: string, tarName: string, hitType: HitType, damage: number, sneak: boolean, blocked: boolean, abilityName?: string }) {
         const attackName = abilityName ? `casted ${abilityName} on` : 'attacked';
         let attackStr = `${charName} ${attackName} ${tarName} and ${hitType}`;
         if (hitType !== HitType.Miss) {
@@ -80,7 +80,7 @@ class Log {
     }
 
     addDamage(name: string, source: string, damage: number) {
-        this.add( `${name} took ${damage.toLocaleString()} damage from ${source}.`);
+        this.add(`${name} took ${damage.toLocaleString()} damage from ${source}.`);
     }
 
     addLoot(name: string, itemId: string) {

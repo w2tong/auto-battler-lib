@@ -85,7 +85,7 @@ export default class Character {
             template: statTemplate
         });
         this.ability = ability ?? (className ? Classes[className].ability : null);
-        this._currentHealth = options?.currHealthPc ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
+        this._currentHealth = options?.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
 
         if (options?.userId) this.userId = options.userId;
@@ -200,10 +200,9 @@ export default class Character {
     }
 
     usePotion(): void {
-        if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
-            const potionHeal = Math.round((rollDice(this.equipment.potion.dice) + this.equipment.potion.bonus + this.stats.getStat(StatType.PotionHealing)) * (1 + this.stats.getStat(StatType.PotionEffectiveness)));
+        if (this.equipment.potion) {
+            const potionHeal = (rollDice(this.equipment.potion.dice) + this.equipment.potion.bonus + this.stats.getStat(StatType.PotionHealing)) * (1 + this.stats.getStat(StatType.PotionEffectiveness));
             this.addHealth(potionHeal);
-            this.equipment.potion.charges -= 1;
             if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.equipment.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
         }
     }
@@ -214,7 +213,10 @@ export default class Character {
 
     doTurn(): void {
         this.statusEffectManager.onTurnStart();
-        this.usePotion();
+        if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
+            this.usePotion();
+            this.equipment.potion.charges -= 1;
+        }
 
         if (this.ability && this.currentMana >= this.stats.getStat(StatType.ManaCost)) {
             this.ability.func(this);
@@ -226,10 +228,7 @@ export default class Character {
         this.statusEffectManager.onTurnEnd();
     }
 
-
-    hitRoll({ target, attackType, isOffHand }: { target: Character, attackType: AttackType, isOffHand: boolean }): boolean {
-        if (isOffHand && !this.equipment.offHandWeapon) return false;
-
+    hitRoll({ target, attackType, isOffHand = false }: { target: Character, attackType: AttackType, isOffHand?: boolean }): boolean {
         const roll = rollDice(dice['1d100']);
 
         // Rolling 1-5 always misses
@@ -267,7 +266,7 @@ export default class Character {
         return rollDice(dice['1d100']) <= blockChance;
     }
 
-    calcDamageRange({ attackType, damageRange, spellPowerRatio, isOffHand }: { attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean }): DamageRange {
+    calcDamageRange({ attackType, damageRange, spellPowerRatio, isOffHand }: { attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean }): { min: number, max: number } {
         let damageBonus = this.stats.damage + (isOffHand ? this.stats.getStat(StatType.OffHandDamage) : 0);
         let damagePercent = this.stats.getStat(StatType.DamagePercent);
         switch (attackType) {
@@ -285,11 +284,11 @@ export default class Character {
             default:
                 break;
         }
-        const spellDamage = spellPowerRatio ? Math.floor(this.stats.spellPower * spellPowerRatio) : 0;
+        const spellDamage = spellPowerRatio !== undefined ? this.stats.spellPower * spellPowerRatio : 0;
 
-        const minDamage = (damageRange.min + damageRange.bonus + damageBonus + spellDamage) * (1 + (damagePercent));
-        const maxDamage = (damageRange.max + damageRange.bonus + damageBonus + spellDamage) * (1 + (damagePercent));
-        return { min: minDamage, max: maxDamage, bonus: 0 };
+        const minDamage = (damageRange.min + damageRange.bonus + damageBonus + spellDamage) * (1 + damagePercent);
+        const maxDamage = (damageRange.max + damageRange.bonus + damageBonus + spellDamage) * (1 + damagePercent);
+        return { min: minDamage, max: maxDamage };
     }
 
     attack({ target, attackType, damageRange, spellPowerRatio, isOffHand, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand: boolean, abilityName?: string }): boolean {
@@ -353,7 +352,7 @@ export default class Character {
                 source: this.name,
                 damage,
                 armourPenetration: this.stats.armourPenetration,
-                addToLog: false
+                options: { addToLog: false }
             });
         }
 
@@ -377,15 +376,13 @@ export default class Character {
             this.takeDamage({
                 source: StatType.Thorns,
                 damage: target.stats.getStat(StatType.Thorns),
-                armourPenetration: target.stats.armourPenetration,
-                addToLog: true
+                armourPenetration: target.stats.armourPenetration
             });
         }
 
         return hit;
     }
 
-    // Add helper function for single weapon attack to use for both main-hand and off-hand attacks
     turnAttack(): void {
         if (!this.battle) return;
         this.setTarget();
@@ -414,9 +411,8 @@ export default class Character {
         }
     }
 
-    takeDamage({ source, damage, armourPenetration, addToLog }: { source: string, damage: number, armourPenetration: number, addToLog: boolean }): void {
-        if (!this.battle) return;
-
+    // TODO: Refactor to only take damage and move battle to other function
+    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean } }): void {
         let damageTaken = Math.max(damage, 0);
 
         if (damageTaken > 0) {
@@ -425,10 +421,12 @@ export default class Character {
             this._currentHealth -= damageTaken;
         }
 
-        if (addToLog) this.battle.ref.log.addDamage(this.name, source, damageTaken);
-        if (this.isDead()) {
-            this.battle.ref.setCharDead(this.battle.side, this.battle.index);
-            this.battle.ref.log.add(`${this.name} died.`);
+        if (this.battle) {
+            if (options?.addToLog === undefined || options?.addToLog === true) this.battle.ref.log.addDamage(this.name, source, damageTaken);
+            if (this.isDead()) {
+                this.battle.ref.setCharDead(this.battle.side, this.battle.index);
+                this.battle.ref.log.add(`${this.name} died.`);
+            }
         }
     }
 
