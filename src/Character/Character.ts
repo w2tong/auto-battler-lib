@@ -218,12 +218,14 @@ export default class Character {
             this.equipment.potion.charges -= 1;
         }
 
+        this.setTarget();
         if (this.ability && this.currentMana >= this.stats.getStat(StatType.ManaCost)) {
             this.ability.func(this);
         }
         else {
             this.turnAttack();
         }
+
         this.addMana(this.stats.getStat(StatType.ManaRegen));
         this.statusEffectManager.onTurnEnd();
     }
@@ -385,7 +387,6 @@ export default class Character {
 
     turnAttack(): void {
         if (!this.battle) return;
-        this.setTarget();
         if (!this.target) {
             this.battle.ref.log.add(`${this._name} has no target.`);
             return;

@@ -13,8 +13,6 @@ const Firebolt: Ability = {
     name: NAME,
     description: 'Attack your target and apply Burn.',
     func: (char) => {
-        if (!char.battle) return;
-        char.setTarget();
         if (char.target) {
             char.useAbilityMana();
             const hit = char.attack({
