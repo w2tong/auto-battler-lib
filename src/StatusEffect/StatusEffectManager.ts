@@ -9,14 +9,22 @@ import debuffs from './debuffs';
 
 export default class StatusEffectManager {
     private char: Character;
-    private buffs: { [id in BuffId]?: Buff } = {};
-    private debuffs: { [id in DebuffId]?: Debuff } = {};
+    private _buffs: { [id in BuffId]?: Buff } = {};
+    private _debuffs: { [id in DebuffId]?: Debuff } = {};
 
     private outgoingBuffs: { [key: string]: Buff } = {};
     private outgoingDebuffs: { [key: string]: Debuff } = {};
 
     constructor(char: Character) {
         this.char = char;
+    }
+
+    get buffs() {
+        return this._buffs;
+    }
+
+    get debuffs() {
+        return this._debuffs;
     }
 
     getBuffStacks(id: BuffId) {
