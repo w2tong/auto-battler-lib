@@ -18,7 +18,7 @@ export default class Burn extends Debuff {
         for (const [key, instance] of Object.entries(this.instances)) {
             this.char.takeDamage({
                 source: `${Burn.name} (${instance.source.name})`,
-                damage: Burn.baseDamage + Math.floor(instance.source.stats.spellPower * Burn.spellPowerRatio),
+                damage: Burn.baseDamage + instance.source.stats.spellPower * Burn.spellPowerRatio,
                 armourPenetration: instance.source.stats.getStat(StatType.ArmourPenetration)
             });
 
