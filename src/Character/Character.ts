@@ -386,17 +386,15 @@ export default class Character {
     }
 
     turnAttack(): void {
-        if (!this.battle) return;
         if (!this.target) {
-            this.battle.ref.log.add(`${this._name} has no target.`);
+            if (this.battle) this.battle.ref.log.add(`${this._name} has no target.`);
             return;
         }
-        if (this.target) {
-            // Main hand attack
-            this.weaponAttack(this.mainHand, this.target, false);
-            // Off-hand attack
-            if (this.equipment.offHandWeapon) this.weaponAttack(this.equipment.offHandWeapon, this.target, false);
-        }
+
+        // Main hand attack
+        this.weaponAttack(this.mainHand, this.target, false);
+        // Off-hand attack
+        if (this.equipment.offHandWeapon) this.weaponAttack(this.equipment.offHandWeapon, this.target, false);
     }
 
     weaponAttack(weapon: Weapon, target: Character, isOffHand: boolean): void {
