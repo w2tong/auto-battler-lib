@@ -48,6 +48,7 @@ export default class StatusEffectManager {
     }
 
     addBuff(id: BuffId, source: Character, stacks: number) {
+        if (stacks <= 0) return;
         if (!this.buffs[id]) this.buffs[id] = new buffs[id](this.char);
         const buff = this.buffs[id];
         if (!buff) return;
@@ -57,6 +58,7 @@ export default class StatusEffectManager {
     }
 
     addDebuff(id: DebuffId, source: Character, stacks: number) {
+        if (stacks <= 0) return;
         if (!this.debuffs[id]) this.debuffs[id] = new debuffs[id](this.char);
         const debuff = this.debuffs[id];
         if (!debuff) return;
