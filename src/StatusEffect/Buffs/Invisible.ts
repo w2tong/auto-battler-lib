@@ -8,17 +8,17 @@ export default class Invisible extends Buff {
 
     static damage = 2;
 
-    onApply() {}
-    onExpire() {}
+    onApply() { }
+    onExpire() { }
 
-    onTurnStart() {}
-    onTurnEnd() {}
+    onTurnStart() { }
+    onTurnEnd() { }
     onAttack() {
         for (const key of Object.keys(this.instances)) {
             this.remove(key);
         }
     }
-    
-    onSourceTurnStart() {}
-    onSourceTurnEnd() {}
+
+    onSourceTurnStart() { }
+    onSourceTurnEnd() { }
 }

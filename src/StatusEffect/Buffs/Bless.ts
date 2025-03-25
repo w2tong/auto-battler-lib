@@ -7,13 +7,13 @@ export default class Bless extends Buff {
     name = 'Bless';
     symbol = '🙏';
 
-    onApply() {}
-    onExpire() {}
+    onApply() { }
+    onExpire() { }
 
-    onTurnStart() {}
-    onTurnEnd() {}
-    onAttack() {}
-    
-    onSourceTurnStart() {}
-    onSourceTurnEnd() {}
+    onTurnStart() { }
+    onTurnEnd() { }
+    onAttack() { }
+
+    onSourceTurnStart() { }
+    onSourceTurnEnd() { }
 }
