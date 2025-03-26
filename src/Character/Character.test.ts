@@ -11,7 +11,7 @@ import { Potion } from '../Equipment/Potion';
 // TODO: add tests for following methods:
 /*
 Character constructor
-hitRoll
+attack
 */
 
 describe('calcCritDamage', () => {
@@ -982,87 +982,6 @@ describe('isInvisible', () => {
     });
 });
 
-describe('calcDamageRange', () => {
-    const char = new Character({
-        name: '',
-        level: 1,
-        attributes: {},
-        statTemplate: {
-            [StatType.Damage]: { base: 1 },
-            [StatType.DamagePercent]: { base: 0.2 },
-            [StatType.MeleeWeaponDamage]: { base: 2 },
-            [StatType.MeleeWeaponDamagePercent]: { base: 0.3 },
-            [StatType.RangedWeaponDamage]: { base: 3 },
-            [StatType.RangedWeaponDamagePercent]: { base: 0.2 },
-            [StatType.SpellPower]: { base: 10 },
-            [StatType.SpellPowerPercent]: { base: 0.1 },
-            [StatType.OffHandDamage]: { base: 1 }
-        },
-        equipment: {}
-    });
-
-    test('Melee weapon main-hand attack', () => {
-        const damageRange: DamageRange = { min: 10, max: 20, bonus: 5 };
-        const { min, max } = char.calcDamageRange({
-            attackType: AttackType.MeleeWeapon,
-            damageRange,
-            isOffHand: false
-        });
-
-        expect(min).toEqual(27); // (10 + 5 + 1 + 2) * 1.5
-        expect(max).toEqual(42); // (20 + 5 + 1 + 2) * 1.5
-    });
-
-    test('Melee weapon off-hand attack', () => {
-        const damageRange: DamageRange = { min: 10, max: 20, bonus: 5 };
-        const { min, max } = char.calcDamageRange({
-            attackType: AttackType.MeleeWeapon,
-            damageRange,
-            isOffHand: true
-        });
-
-        expect(min).toBeCloseTo(28.5); // (10 + 5 + 1 + 2 + 1) * 1.5
-        expect(max).toBeCloseTo(43.5); // (20 + 5 + 1 + 2 + 1) * 1.5
-    });
-
-    test('Ranged weapon main-hand attack', () => {
-        const damageRange: DamageRange = { min: 10, max: 20, bonus: 5 };
-        const { min, max } = char.calcDamageRange({
-            attackType: AttackType.RangedWeapon,
-            damageRange,
-            isOffHand: false
-        });
-
-        expect(min).toBeCloseTo(26.6); // (10 + 5 + 1 + 3) * 1.4
-        expect(max).toBeCloseTo(40.6); // (20 + 5 + 1 + 3) * 1.4
-    });
-
-    test('Ranged weapon off-hand attack', () => {
-        const damageRange: DamageRange = { min: 5, max: 10, bonus: 5 };
-        const { min, max } = char.calcDamageRange({
-            attackType: AttackType.RangedWeapon,
-            damageRange,
-            isOffHand: true
-        });
-
-        expect(min).toBeCloseTo(21); // (5 + 5 + 1 + 3 + 1) * 1.4
-        expect(max).toBeCloseTo(28); // (10 + 5 + 1 + 3 + 1) * 1.4
-    });
-
-    test('Spell main-hand attack', () => {
-        const damageRange: DamageRange = { min: 20, max: 30, bonus: 2 };
-        const { min, max } = char.calcDamageRange({
-            attackType: AttackType.Spell,
-            damageRange,
-            spellPowerRatio: 0.5,
-            isOffHand: false
-        });
-
-        expect(min).toBeCloseTo(34.2); // (20 + 2 + 1 + (10 * 1.1 * 0.5)) * 1.2
-        expect(max).toBeCloseTo(46.2); // (30 + 2 + 1 + (10 * 1.1 * 0.5)) * 1.2
-    });
-});
-
 describe('usePotion', () => {
     let mathRandomSpy: jest.SpyInstance;
     beforeEach(() => {
@@ -1856,3 +1775,261 @@ describe('hitRoll', () => {
 
     });
 });
+
+describe('calcDamage', () => {
+    const char = new Character({
+        name: '',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.Damage]: { base: 1 },
+            [StatType.DamagePercent]: { base: 0.2 },
+            [StatType.MeleeWeaponDamage]: { base: 2 },
+            [StatType.MeleeWeaponDamagePercent]: { base: 0.3 },
+            [StatType.RangedWeaponDamage]: { base: 3 },
+            [StatType.RangedWeaponDamagePercent]: { base: 0.2 },
+            [StatType.SpellPower]: { base: 10 },
+            [StatType.SpellPowerPercent]: { base: 0.1 },
+            [StatType.OffHandDamage]: { base: 1 }
+        },
+        equipment: {}
+    });
+
+    test('Melee weapon main-hand attack', () => {
+        const damage = char.calcDamage({
+            attackType: AttackType.MeleeWeapon,
+            damage: 10
+        });
+
+        expect(damage).toEqual(19.5); // (10 + 1 + 2) * 1.5
+    });
+
+    test('Melee weapon off-hand attack', () => {
+        const damage = char.calcDamage({
+            attackType: AttackType.MeleeWeapon,
+            damage: 10,
+            isOffHand: true
+        });
+
+        expect(damage).toBeCloseTo(21); // (10 + 1 + 2 + 1) * 1.5
+    });
+
+    test('Ranged weapon main-hand attack', () => {
+        const damage = char.calcDamage({
+            attackType: AttackType.RangedWeapon,
+            damage: 10
+        });
+
+        expect(damage).toBeCloseTo(19.6); // (10 + 1 + 3) * 1.4
+    });
+
+    test('Ranged weapon off-hand attack', () => {
+        const damage = char.calcDamage({
+            attackType: AttackType.RangedWeapon,
+            damage: 5,
+            isOffHand: true
+        });
+
+        expect(damage).toBeCloseTo(14); // (5 + 1 + 3 + 1) * 1.4
+    });
+
+    test('Spell main-hand attack', () => {
+        const damage = char.calcDamage({
+            attackType: AttackType.Spell,
+            damage: 20,
+            spellPowerRatio: 0.5
+        });
+
+        expect(damage).toBeCloseTo(31.8); // (20 + 1 + (10 * 1.1 * 0.5)) * 1.2
+    });
+
+    test('Melee weapon main-hand sneak attack (0 stacks)', () => {
+        const damage = char.calcDamage({
+            attackType: AttackType.MeleeWeapon,
+            damage: 10,
+            invisibleStacks: 0
+        });
+
+        expect(damage).toEqual(19.5); // (10 + 1 + 2 + 0) * 1.5
+    });
+
+    test('Melee weapon main-hand sneak attack (1 stack)', () => {
+        const damage = char.calcDamage({
+            attackType: AttackType.MeleeWeapon,
+            damage: 10,
+            invisibleStacks: 1
+        });
+
+        expect(damage).toEqual(25.5); // (10 + 1 + 2 + 4) * 1.5
+    });
+
+    test('Melee weapon main-hand sneak attack (10 stacks)', () => {
+        const damage = char.calcDamage({
+            attackType: AttackType.MeleeWeapon,
+            damage: 10,
+            invisibleStacks: 10
+        });
+
+        expect(damage).toEqual(79.5); // (10 + 1 + 2 + 40) * 1.5
+    });
+});
+
+describe('calcDamageRange', () => {
+    const char = new Character({
+        name: '',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.Damage]: { base: 1 },
+            [StatType.DamagePercent]: { base: 0.2 },
+            [StatType.MeleeWeaponDamage]: { base: 2 },
+            [StatType.MeleeWeaponDamagePercent]: { base: 0.3 },
+            [StatType.RangedWeaponDamage]: { base: 3 },
+            [StatType.RangedWeaponDamagePercent]: { base: 0.2 },
+            [StatType.SpellPower]: { base: 10 },
+            [StatType.SpellPowerPercent]: { base: 0.1 },
+            [StatType.OffHandDamage]: { base: 1 }
+        },
+        equipment: {}
+    });
+
+    test('Melee weapon main-hand attack', () => {
+        const damageRange: DamageRange = { min: 10, max: 20, bonus: 5 };
+        const { min, max } = char.calcDamageRange({
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            isOffHand: false
+        });
+
+        expect(min).toEqual(27); // (10 + 5 + 1 + 2) * 1.5
+        expect(max).toEqual(42); // (20 + 5 + 1 + 2) * 1.5
+    });
+
+    test('Melee weapon off-hand attack', () => {
+        const damageRange: DamageRange = { min: 10, max: 20, bonus: 5 };
+        const { min, max } = char.calcDamageRange({
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            isOffHand: true
+        });
+
+        expect(min).toBeCloseTo(28.5); // (10 + 5 + 1 + 2 + 1) * 1.5
+        expect(max).toBeCloseTo(43.5); // (20 + 5 + 1 + 2 + 1) * 1.5
+    });
+
+    test('Ranged weapon main-hand attack', () => {
+        const damageRange: DamageRange = { min: 10, max: 20, bonus: 5 };
+        const { min, max } = char.calcDamageRange({
+            attackType: AttackType.RangedWeapon,
+            damageRange,
+            isOffHand: false
+        });
+
+        expect(min).toBeCloseTo(26.6); // (10 + 5 + 1 + 3) * 1.4
+        expect(max).toBeCloseTo(40.6); // (20 + 5 + 1 + 3) * 1.4
+    });
+
+    test('Ranged weapon off-hand attack', () => {
+        const damageRange: DamageRange = { min: 5, max: 10, bonus: 5 };
+        const { min, max } = char.calcDamageRange({
+            attackType: AttackType.RangedWeapon,
+            damageRange,
+            isOffHand: true
+        });
+
+        expect(min).toBeCloseTo(21); // (5 + 5 + 1 + 3 + 1) * 1.4
+        expect(max).toBeCloseTo(28); // (10 + 5 + 1 + 3 + 1) * 1.4
+    });
+
+    test('Spell main-hand attack', () => {
+        const damageRange: DamageRange = { min: 20, max: 30, bonus: 2 };
+        const { min, max } = char.calcDamageRange({
+            attackType: AttackType.Spell,
+            damageRange,
+            spellPowerRatio: 0.5,
+            isOffHand: false
+        });
+
+        expect(min).toBeCloseTo(34.2); // (20 + 2 + 1 + (10 * 1.1 * 0.5)) * 1.2
+        expect(max).toBeCloseTo(46.2); // (30 + 2 + 1 + (10 * 1.1 * 0.5)) * 1.2
+    });
+});
+
+// describe('attack', () => {
+//     let char: Character;
+//     let target: Character;
+//     const damageRange: DamageRange = { min: 5, max: 5, bonus: 0 };
+
+//     beforeEach(() => {
+//         char = new Character({
+//             name: '',
+//             level: 1,
+//             attributes: {},
+//             statTemplate: {
+//                 [StatType.Damage]: { base: 1 },
+//                 [StatType.MeleeWeaponDamage]: { base: 2 },
+//                 [StatType.RangedWeaponDamage]: { base: 3 },
+//                 [StatType.SpellPower]: { base: 10 },
+//                 [StatType.OffHandDamage]: { base: 1 },
+//                 [StatType.DamagePercent]: { base: 0.2 },
+//                 [StatType.MeleeWeaponDamagePercent]: { base: 0.3 },
+//                 [StatType.RangedWeaponDamagePercent]: { base: 0.2 },
+//             },
+//             equipment: {}
+//         });
+
+//         target = new Character({
+//             name: '',
+//             level: 1,
+//             attributes: {},
+//             statTemplate: {
+//                 [StatType.MaxHealth]: { base: 100 },
+//                 [StatType.Dodge]: { base: 0 },
+//             },
+//             equipment: {}
+//         });
+//     });
+
+//     let mathRandomSpy: jest.SpyInstance;
+//     beforeEach(() => {
+//         mathRandomSpy = jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
+//     });
+//     afterEach(() => {
+//         mathRandomSpy.mockRestore();
+//     });
+
+//     // TODO: add test for Invisible
+//     // TODO: add test for different attack types
+//     test('Melee Main-hand Weapon Attack', () => {
+//         char.attack({
+//             target,
+//             attackType: AttackType.MeleeWeapon,
+//             damageRange,
+//             spellPowerRatio: 0.2,
+//             isOffHand: false
+//         });
+//         expect(target.currentHealth).toBe(85); // (5 + 1 + 2 + 2) * 1.5 = 15
+//     });
+//     test('Melee Off-hand Weapon Attack', () => {
+//         char.attack({
+//             target,
+//             attackType: AttackType.MeleeWeapon,
+//             damageRange,
+//             spellPowerRatio: 0.2,
+//             isOffHand: true
+//         });
+//         expect(target.currentHealth).toBe(83.5); // (5 + 1 + 2 + 2 + 1) * 1.5 = 16.5
+//     });
+
+//     test('Melee Main-hand Weapon Sneak Attack', () => {
+//         char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
+//         char.attack({
+//             target,
+//             attackType: AttackType.MeleeWeapon,
+//             damageRange,
+//             spellPowerRatio: 0.2,
+//             isOffHand: true
+//         });
+//         expect(target.currentHealth).toBe(83.5); // (5 + 1 + 2 + 2 + 1) * 1.5 = 16.5
+//     });
+// });
