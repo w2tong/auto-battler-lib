@@ -6,7 +6,7 @@ export default class Invisible extends Buff {
     name = 'Invisible';
     symbol = '☁️';
 
-    static damage = 2;
+    static damage = 4;
 
     onApply() { }
     onExpire() { }
