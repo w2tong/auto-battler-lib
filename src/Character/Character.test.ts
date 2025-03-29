@@ -1955,81 +1955,95 @@ describe('calcDamageRange', () => {
     });
 });
 
-// describe('attack', () => {
-//     let char: Character;
-//     let target: Character;
-//     const damageRange: DamageRange = { min: 5, max: 5, bonus: 0 };
+describe('attack', () => {
+    let char: Character;
+    let target: Character;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    let battle: Battle;
+    const damageRange: DamageRange = { min: 5, max: 5, bonus: 0 };
 
-//     beforeEach(() => {
-//         char = new Character({
-//             name: '',
-//             level: 1,
-//             attributes: {},
-//             statTemplate: {
-//                 [StatType.Damage]: { base: 1 },
-//                 [StatType.MeleeWeaponDamage]: { base: 2 },
-//                 [StatType.RangedWeaponDamage]: { base: 3 },
-//                 [StatType.SpellPower]: { base: 10 },
-//                 [StatType.OffHandDamage]: { base: 1 },
-//                 [StatType.DamagePercent]: { base: 0.2 },
-//                 [StatType.MeleeWeaponDamagePercent]: { base: 0.3 },
-//                 [StatType.RangedWeaponDamagePercent]: { base: 0.2 },
-//             },
-//             equipment: {}
-//         });
+    beforeEach(() => {
+        char = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.Damage]: { base: 1 },
+                [StatType.MeleeWeaponDamage]: { base: 2 },
+                [StatType.RangedWeaponDamage]: { base: 3 },
+                [StatType.SpellPower]: { base: 10 },
+                [StatType.OffHandDamage]: { base: 1 },
+                [StatType.DamagePercent]: { base: 0.2 },
+                [StatType.MeleeWeaponDamagePercent]: { base: 0.3 },
+                [StatType.RangedWeaponDamagePercent]: { base: 0.2 },
+                [StatType.CriticalDamage]: { base: 2 },
+            },
+            equipment: {}
+        });
 
-//         target = new Character({
-//             name: '',
-//             level: 1,
-//             attributes: {},
-//             statTemplate: {
-//                 [StatType.MaxHealth]: { base: 100 },
-//                 [StatType.Dodge]: { base: 0 },
-//             },
-//             equipment: {}
-//         });
-//     });
+        target = new Character({
+            name: '',
+            level: 1,
+            attributes: {},
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 },
+                [StatType.Dodge]: { base: 0 },
+                [StatType.BlockPower]: { base: 5 },
+            },
+            equipment: {}
+        });
 
-//     let mathRandomSpy: jest.SpyInstance;
-//     beforeEach(() => {
-//         mathRandomSpy = jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
-//     });
-//     afterEach(() => {
-//         mathRandomSpy.mockRestore();
-//     });
+        battle = new Battle([char], [target]);
+    });
 
-//     // TODO: add test for Invisible
-//     // TODO: add test for different attack types
-//     test('Melee Main-hand Weapon Attack', () => {
-//         char.attack({
-//             target,
-//             attackType: AttackType.MeleeWeapon,
-//             damageRange,
-//             spellPowerRatio: 0.2,
-//             isOffHand: false
-//         });
-//         expect(target.currentHealth).toBe(85); // (5 + 1 + 2 + 2) * 1.5 = 15
-//     });
-//     test('Melee Off-hand Weapon Attack', () => {
-//         char.attack({
-//             target,
-//             attackType: AttackType.MeleeWeapon,
-//             damageRange,
-//             spellPowerRatio: 0.2,
-//             isOffHand: true
-//         });
-//         expect(target.currentHealth).toBe(83.5); // (5 + 1 + 2 + 2 + 1) * 1.5 = 16.5
-//     });
+    let mathRandomSpy: jest.SpyInstance;
+    let critRollSpy: jest.SpyInstance;
+    let blockRollSpy: jest.SpyInstance;
+    beforeEach(() => {
+        mathRandomSpy = jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
+        critRollSpy = jest.spyOn(Character, 'critRoll').mockReturnValue(true);
+        blockRollSpy = jest.spyOn(Character, 'blockRoll').mockReturnValue(true);
+    });
+    afterEach(() => {
+        mathRandomSpy.mockRestore();
+        critRollSpy.mockRestore();
+        blockRollSpy.mockRestore();
+    });
 
-//     test('Melee Main-hand Weapon Sneak Attack', () => {
-//         char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
-//         char.attack({
-//             target,
-//             attackType: AttackType.MeleeWeapon,
-//             damageRange,
-//             spellPowerRatio: 0.2,
-//             isOffHand: true
-//         });
-//         expect(target.currentHealth).toBe(83.5); // (5 + 1 + 2 + 2 + 1) * 1.5 = 16.5
-//     });
-// });
+    // TODO: add test for Invisible
+    // TODO: add test for different attack types
+    test('Melee Main-hand Weapon Attack', () => {
+        char.attack({
+            target,
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            spellPowerRatio: 0.2
+        });
+        expect(target.currentHealth).toBe(75); // (5 + 1 + 2 + 2) * 1.5 * 2 - 5 = 25
+    });
+
+    test('Melee Off-hand Weapon Attack', () => {
+        char.attack({
+            target,
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            spellPowerRatio: 0.2,
+            isOffHand: true
+        });
+        expect(target.currentHealth).toBe(72); // (5 + 1 + 2 + 2 + 1) * 1.5 * 2 - 5 = 28
+    });
+
+    test('Melee Main-hand Weapon Sneak Attack', () => {
+        char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
+        char.attack({
+            target,
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            spellPowerRatio: 0.2
+        });
+        expect(target.currentHealth).toBe(63); // (5 + 1 + 2 + 2 + 4) * 1.5 * 2 - 5 = 37
+        expect(char.statusEffectManager.buffs[BuffId.Invisible]?.instances).toEqual({});
+    });
+
+    // TOOD: add tests for no block/no crit
+});
