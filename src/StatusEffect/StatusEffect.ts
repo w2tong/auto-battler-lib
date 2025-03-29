@@ -13,7 +13,7 @@ abstract class StatusEffect {
     abstract readonly name: string;
     abstract readonly symbol: string;
     readonly char: Character;
-    readonly instances: {[key: string]: {source: Character, stacks: number}} = {};
+    readonly instances: { [key: string]: { source: Character, stacks: number } } = {};
 
     constructor(char: Character) {
         this.char = char;
@@ -39,7 +39,7 @@ abstract class StatusEffect {
 
         if (this.instances[id]) this.instances[id].stacks += stacks;
         else {
-            this.instances[id] = {source, stacks};
+            this.instances[id] = { source, stacks };
             this.onApply();
         }
     }
@@ -50,7 +50,7 @@ abstract class StatusEffect {
         this.onExpire();
         if (this.id in BuffId) this.instances[id].source.statusEffectManager.removeOutgoingBuff(this.id as BuffId, this.char);
         else if (this.id in DebuffId) this.instances[id].source.statusEffectManager.removeOutgoingDebuff(this.id as DebuffId, this.char);
-        
+
         delete this.instances[id];
     }
 }
