@@ -85,16 +85,16 @@ export default class StatusEffectManager {
         for (const buff of Object.values(this.buffs)) buff.onTurnStart();
         for (const debuff of Object.values(this.debuffs)) debuff.onTurnStart();
 
-        for (const buff of Object.values(this.buffs)) buff.onSourceTurnStart(this.char);
-        for (const debuff of Object.values(this.debuffs)) debuff.onSourceTurnStart(this.char);
+        for (const buff of Object.values(this.outgoingBuffs)) buff.onSourceTurnStart(this.char);
+        for (const debuff of Object.values(this.outgoingDebuffs)) debuff.onSourceTurnStart(this.char);
     }
 
     onTurnEnd() {
         for (const buff of Object.values(this.buffs)) buff.onTurnEnd();
         for (const debuff of Object.values(this.debuffs)) debuff.onTurnEnd();
 
-        for (const buff of Object.values(this.buffs)) buff.onSourceTurnEnd(this.char);
-        for (const debuff of Object.values(this.debuffs)) debuff.onSourceTurnEnd(this.char);
+        for (const buff of Object.values(this.outgoingBuffs)) buff.onSourceTurnEnd(this.char);
+        for (const debuff of Object.values(this.outgoingDebuffs)) debuff.onSourceTurnEnd(this.char);
     }
 
     onAttack(hit: boolean) {
