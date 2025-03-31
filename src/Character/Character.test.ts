@@ -1977,6 +1977,7 @@ describe('attack', () => {
                 [StatType.MeleeWeaponDamagePercent]: { base: 0.3 },
                 [StatType.RangedWeaponDamagePercent]: { base: 0.2 },
                 [StatType.CriticalDamage]: { base: 2 },
+                [StatType.MaxHealth]: { base: 100 },
             },
             equipment: {}
         });
@@ -1989,6 +1990,7 @@ describe('attack', () => {
                 [StatType.MaxHealth]: { base: 100 },
                 [StatType.Dodge]: { base: 0 },
                 [StatType.BlockPower]: { base: 5 },
+                [StatType.Thorns]: { base: 1 },
             },
             equipment: {}
         });
@@ -2010,8 +2012,6 @@ describe('attack', () => {
         blockRollSpy.mockRestore();
     });
 
-    // TODO: add test for Invisible
-    // TODO: add test for different attack types
     test('Melee Main-hand Weapon Attack', () => {
         char.attack({
             target,
@@ -2020,6 +2020,7 @@ describe('attack', () => {
             spellPowerRatio: 0.2
         });
         expect(target.currentHealth).toBe(75); // (5 + 1 + 2 + 2) * 1.5 * 2 - 5 = 25
+        expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
     });
 
     test('Melee Off-hand Weapon Attack', () => {
@@ -2031,6 +2032,7 @@ describe('attack', () => {
             isOffHand: true
         });
         expect(target.currentHealth).toBe(72); // (5 + 1 + 2 + 2 + 1) * 1.5 * 2 - 5 = 28
+        expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
     });
 
     test('Melee Main-hand Weapon Sneak Attack', () => {
@@ -2043,7 +2045,46 @@ describe('attack', () => {
         });
         expect(target.currentHealth).toBe(63); // (5 + 1 + 2 + 2 + 4) * 1.5 * 2 - 5 = 37
         expect(char.statusEffectManager.buffs[BuffId.Invisible]?.instances).toEqual({});
+        expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
     });
 
-    // TOOD: add tests for no block/no crit
+    test('Melee Main-hand Weapon Attack, No Crit', () => {
+        critRollSpy.mockReturnValue(false);
+
+        char.attack({
+            target,
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            spellPowerRatio: 0.2
+        });
+        expect(target.currentHealth).toBe(90); // (5 + 1 + 2 + 2) * 1.5 - 5 = 10
+        expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+    });
+
+    test('Melee Main-hand Weapon Attack, No Block', () => {
+        blockRollSpy.mockReturnValue(false);
+
+        char.attack({
+            target,
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            spellPowerRatio: 0.2
+        });
+        expect(target.currentHealth).toBe(70); // (5 + 1 + 2 + 2) * 1.5 * 2 = 30
+        expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+    });
+
+    test('Melee Main-hand Weapon Attack, No Crit and Block', () => {
+        critRollSpy.mockReturnValue(false);
+        blockRollSpy.mockReturnValue(false);
+
+        char.attack({
+            target,
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            spellPowerRatio: 0.2
+        });
+        expect(target.currentHealth).toBe(85); // (5 + 1 + 2 + 2) * 1.5 = 15
+        expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+    });
 });
