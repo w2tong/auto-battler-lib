@@ -22,6 +22,11 @@ const source1Wisdom = 0;
 const source1Damage = Blessed.baseDamage + Blessed.damagePerLvl * source1Level + Blessed.damagePerWisdom * source1Wisdom;
 const source1HitChance = Blessed.baseHitChance + Blessed.hitChancePerLvl * source1Level + Blessed.hitChancePerWisdom * source1Wisdom;
 
+const source2Level = 10;
+const source2Wisdom = 5;
+const source2Damage = Blessed.baseDamage + Blessed.damagePerLvl * source2Level + Blessed.damagePerWisdom * source2Wisdom;
+const source2HitChance = Blessed.baseHitChance + Blessed.hitChancePerLvl * source2Level + Blessed.hitChancePerWisdom * source2Wisdom;
+
 beforeEach(() => {
     char = new Character({
         name: 'Test',
@@ -48,8 +53,10 @@ beforeEach(() => {
 
     source2 = new Character({
         name: 'Source 2',
-        level: 1,
-        attributes: {},
+        level: source2Level,
+        attributes: {
+            [AttributeType.Wisdom]: source2Wisdom
+        },
         statTemplate: {},
         equipment: {}
     });
@@ -111,6 +118,61 @@ test('Blessing - 2 sources, 1 stack each', () => {
     expect(char.stats.hitChance).toBeCloseTo(0);
 });
 
-// TODO: add 2 sources, mutiple stacks
-// 3 sources, 1 stack
-// 3 sources, multiple stacks
+test('Blessing - 2 sources, 2 stack each', () => {
+    char.statusEffectManager.addBuff(BuffId.Blessed, char, 2);
+    char.statusEffectManager.addBuff(BuffId.Blessed, source1, 2);
+
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.stacks).toBe(4);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(char)].stacks).toBe(2);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(source1)].stacks).toBe(2);
+    expect(char.stats.damage).toBeCloseTo(charDamage + source1Damage);
+    expect(char.stats.hitChance).toBeCloseTo(charHitChance + source1HitChance);
+
+    char.statusEffectManager.turnStart();
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.stacks).toBe(3);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(char)].stacks).toBe(1);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(source1)].stacks).toBe(2);
+    expect(char.stats.damage).toBeCloseTo(charDamage + source1Damage);
+    expect(char.stats.hitChance).toBeCloseTo(charHitChance + source1HitChance);
+
+    char.statusEffectManager.turnStart();
+    source1.statusEffectManager.turnStart();
+    source1.statusEffectManager.turnStart();
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances).toEqual({});
+    expect(char.stats.damage).toBeCloseTo(0);
+    expect(char.stats.hitChance).toBeCloseTo(0);
+});
+
+test('Blessing - 3 sources, 1 stack each', () => {
+    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
+    char.statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
+    char.statusEffectManager.addBuff(BuffId.Blessed, source2, 1);
+
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.stacks).toBe(3);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(char)].stacks).toBe(1);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(source1)].stacks).toBe(1);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(source2)].stacks).toBe(1);
+    expect(char.stats.damage).toBeCloseTo(charDamage + source1Damage + source2Damage);
+    expect(char.stats.hitChance).toBeCloseTo(charHitChance + source1HitChance + source2HitChance);
+
+    source1.statusEffectManager.turnStart();
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.stacks).toBe(2);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(char)].stacks).toBe(1);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(source1)]).toBeUndefined();
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(source2)].stacks).toBe(1);
+    expect(char.stats.damage).toBeCloseTo(charDamage + source2Damage);
+    expect(char.stats.hitChance).toBeCloseTo(charHitChance + source2HitChance);
+
+    source2.statusEffectManager.turnStart();
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.stacks).toBe(1);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(char)].stacks).toBe(1);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(source1)]).toBeUndefined();
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(source2)]).toBeUndefined();
+    expect(char.stats.damage).toBeCloseTo(charDamage);
+    expect(char.stats.hitChance).toBeCloseTo(charHitChance);
+
+    char.statusEffectManager.turnStart();
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances).toEqual({});
+    expect(char.stats.damage).toBeCloseTo(0);
+    expect(char.stats.hitChance).toBeCloseTo(0);
+});
