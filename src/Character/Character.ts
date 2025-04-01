@@ -390,7 +390,6 @@ export default class Character {
         }
     }
 
-    // TODO: Refactor to only take damage and move battle to other function
     takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean } }): void {
         let damageTaken = Math.max(damage, 0);
 
