@@ -60,7 +60,7 @@ test('Firebolt Hit', () => {
     Firebolt.func(char);
     expect(target.currentHealth).toBe(62);
     expect(char.currentMana).toBe(50);
-    expect(target.statusEffectManager.debuffs[DebuffId.Burn]?.instances).toHaveProperty(getCharBattleId(char), { source: char, stacks: 2 });
+    expect(target.statusEffectManager.debuffs[DebuffId.Burning]?.instances).toHaveProperty(getCharBattleId(char), { source: char, stacks: 2 });
 });
 
 test('Firebolt Miss', () => {
@@ -68,7 +68,7 @@ test('Firebolt Miss', () => {
     Firebolt.func(char);
     expect(target.currentHealth).toBe(100);
     expect(char.currentMana).toBe(50);
-    expect(target.statusEffectManager.debuffs[DebuffId.Burn]).toBeUndefined();
+    expect(target.statusEffectManager.debuffs[DebuffId.Burning]).toBeUndefined();
 });
 
 test('Firebolt No Target', () => {
@@ -76,5 +76,5 @@ test('Firebolt No Target', () => {
     Firebolt.func(char);
     expect(target.currentHealth).toBe(100);
     expect(char.currentMana).toBe(100);
-    expect(target.statusEffectManager.debuffs[DebuffId.Burn]).toBeUndefined();
+    expect(target.statusEffectManager.debuffs[DebuffId.Burning]).toBeUndefined();
 });

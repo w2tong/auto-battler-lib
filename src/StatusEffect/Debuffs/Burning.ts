@@ -3,8 +3,8 @@ import Debuff from '../Debuff';
 import DebuffId from '../DebuffId';
 
 export default class Burn extends Debuff {
-    id = DebuffId.Burn;
-    name: string = 'Burn';
+    id = DebuffId.Burning;
+    name: string = 'Burning';
     symbol: string = '🔥';
 
     static baseDamage = 1;

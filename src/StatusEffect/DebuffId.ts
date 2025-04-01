@@ -1,5 +1,5 @@
 enum DebuffId {
-    Burn = 'Burn',
+    Burning = 'Burning',
     Poison = 'Poison',
     Frozen = 'Frozen',
 }

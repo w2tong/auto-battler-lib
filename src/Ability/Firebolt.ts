@@ -29,7 +29,7 @@ const Firebolt: Ability = {
             });
 
             if (hit) {
-                char.target.statusEffectManager.addDebuff(DebuffId.Burn, char, 2);
+                char.target.statusEffectManager.addDebuff(DebuffId.Burning, char, 2);
             }
         }
     }
