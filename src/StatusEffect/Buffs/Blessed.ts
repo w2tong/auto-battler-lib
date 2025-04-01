@@ -5,7 +5,7 @@ import Buff from '../Buff';
 import BuffId from '../BuffId';
 
 export default class Bless extends Buff {
-    id = BuffId.Bless;
+    id = BuffId.Blessed;
     name = 'Bless';
     symbol = '🙏';
 

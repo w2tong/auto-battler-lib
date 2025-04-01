@@ -1,9 +1,9 @@
 import BuffId from './BuffId';
 
-import Bless from './Buffs/Bless';
+import Bless from './Buffs/Blessed';
 import Invisible from './Buffs/Invisible';
 
 export default {
     [BuffId.Invisible]: Invisible,
-    [BuffId.Bless]: Bless,
+    [BuffId.Blessed]: Bless,
 } as const;
