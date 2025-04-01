@@ -141,13 +141,15 @@ class Stats {
         }
     }
 
-    addStatusEffectStats(stats: { [type in StatType]?: number }) {
+    addStatusEffectStats(stats?: { [type in StatType]?: number }) {
+        if (!stats) return;
         for (const [type, val] of Object.entries(stats)) {
             this[type as StatType].bonus += val;
         }
     }
 
-    removeStatusEffectStats(stats: { [type in StatType]?: number }) {
+    removeStatusEffectStats(stats?: { [type in StatType]?: number }) {
+        if (!stats) return;
         for (const [type, val] of Object.entries(stats)) {
             this[type as StatType].bonus -= val;
         }
