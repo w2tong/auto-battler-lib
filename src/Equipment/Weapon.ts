@@ -16,19 +16,19 @@ enum WeaponType {
     Wand = 'Wand'
 }
 
-type WeaponId = 
-'unarmed0'
-| 'longsword0' | 'longsword1' | 'longsword2' | 'longsword3' | 'longsword4' | 'longsword5'
-| 'greatsword0' | 'greatsword1' | 'greatsword2' | 'greatsword3' | 'greatsword4' | 'greatsword5'
-| 'dagger0' | 'dagger1' | 'dagger2' |  'dagger3' |  'dagger4' |  'dagger5'
-| 'quarterstaff0' | 'quarterstaff1' | 'quarterstaff2' | 'quarterstaff3' | 'quarterstaff4' | 'quarterstaff5'
-| 'wand0' | 'wand1' | 'wand2' | 'wand3' | 'wand4' | 'wand5' 
-| 'poisonbite0' | 'poisonbite1';
+type WeaponId =
+    'unarmed0'
+    | 'longsword0' | 'longsword1' | 'longsword2' | 'longsword3' | 'longsword4' | 'longsword5'
+    | 'greatsword0' | 'greatsword1' | 'greatsword2' | 'greatsword3' | 'greatsword4' | 'greatsword5'
+    | 'dagger0' | 'dagger1' | 'dagger2' | 'dagger3' | 'dagger4' | 'dagger5'
+    | 'quarterstaff0' | 'quarterstaff1' | 'quarterstaff2' | 'quarterstaff3' | 'quarterstaff4' | 'quarterstaff5'
+    | 'wand0' | 'wand1' | 'wand2' | 'wand3' | 'wand4' | 'wand5'
+    | 'poisonbite0' | 'poisonbite1';
 
-const WeaponTypeProperties: {[type in WeaponType]: {
+const WeaponTypeProperties: { [type in WeaponType]: {
     twoHanded: boolean,
     light: boolean
-}} = {
+} } = {
     Unarmed: {
         twoHanded: false,
         light: true
@@ -71,7 +71,7 @@ interface Weapon extends Item {
     }
 }
 
-const weapons: {[id in WeaponId]: Weapon} = {
+const weapons: { [id in WeaponId]: Weapon } = {
     // Unarmed
     unarmed0: {
         id: 'unarmed0',
@@ -481,7 +481,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         damageRange: { min: 1, max: 3, bonus: 0 },
         spellPowerRatio: 0.1,
         stats: {
-            [StatType.SpellPower]: 5 
+            [StatType.SpellPower]: 5
         }
     },
     wand1: {
@@ -490,7 +490,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         name: 'Wand +1',
         tier: 1,
         img: 'weapon-wand.png',
-        
+
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
         damageType: DamageType.Magic,
@@ -500,7 +500,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
             [AttributeType.Intelligence]: 1
         },
         stats: {
-            [StatType.SpellPower]: 5 
+            [StatType.SpellPower]: 5
         }
     },
     wand2: {
@@ -509,7 +509,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         name: 'Wand +2',
         tier: 2,
         img: 'weapon-wand.png',
-        
+
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
         damageType: DamageType.Magic,
@@ -519,7 +519,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
             [AttributeType.Intelligence]: 2
         },
         stats: {
-            [StatType.SpellPower]: 5 
+            [StatType.SpellPower]: 5
         }
     },
     wand3: {
@@ -528,7 +528,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         name: 'Wand +3',
         tier: 3,
         img: 'weapon-wand.png',
-        
+
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
         damageType: DamageType.Magic,
@@ -538,7 +538,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
             [AttributeType.Intelligence]: 3
         },
         stats: {
-            [StatType.SpellPower]: 5 
+            [StatType.SpellPower]: 5
         }
     },
     wand4: {
@@ -547,7 +547,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         name: 'Wand +4',
         tier: 4,
         img: 'weapon-wand.png',
-        
+
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
         damageType: DamageType.Magic,
@@ -557,7 +557,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
             [AttributeType.Intelligence]: 4
         },
         stats: {
-            [StatType.SpellPower]: 5 
+            [StatType.SpellPower]: 5
         }
     },
     wand5: {
@@ -566,7 +566,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         name: 'Wand +5',
         tier: 5,
         img: 'weapon-wand.png',
-        
+
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
         damageType: DamageType.Magic,
@@ -576,7 +576,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
             [AttributeType.Intelligence]: 5
         },
         stats: {
-            [StatType.SpellPower]: 5 
+            [StatType.SpellPower]: 5
         }
     },
     // NPC Weapons
@@ -594,7 +594,7 @@ const weapons: {[id in WeaponId]: Weapon} = {
         damageRange: { min: 1, max: 3, bonus: 0 },
         onHit: {
             func: (self: Character, target: Character) => {
-                target.statusEffectManager.addDebuff(DebuffId.Poison, self, 2);
+                target.statusEffectManager.addDebuff(DebuffId.Poisoned, self, 2);
             },
             description: 'Inflict 1 Poison on hit.'
         }
@@ -605,14 +605,14 @@ const weapons: {[id in WeaponId]: Weapon} = {
         name: 'Poison Bite +1',
         tier: 1,
         img: '',
-        
+
         type: WeaponType.Unarmed,
         attackType: AttackType.MeleeWeapon,
         damageType: DamageType.Physical,
         damageRange: { min: 1, max: 3, bonus: 1 },
         onHit: {
             func: (self: Character, target: Character) => {
-                target.statusEffectManager.addDebuff(DebuffId.Poison, self, 2);
+                target.statusEffectManager.addDebuff(DebuffId.Poisoned, self, 2);
             },
             description: 'Inflict 2 Poison on hit.'
         }

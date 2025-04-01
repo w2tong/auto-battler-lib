@@ -2,8 +2,8 @@ import Debuff from '../Debuff';
 import DebuffId from '../DebuffId';
 
 export default class Poison extends Debuff {
-    id = DebuffId.Poison;
-    name: string = 'Poison';
+    id = DebuffId.Poisoned;
+    name: string = 'Poisoned';
     symbol: string = '🤢';
 
     static baseDamage = 1;
