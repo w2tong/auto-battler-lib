@@ -40,7 +40,7 @@ test('Poison - 0 stacks', () => {
 
     target.statusEffectManager.turnEnd();
     expect(target.currentHealth).toBe(100);
-    expect(target.statusEffectManager.debuffs[DebuffId.Burn]).toBeUndefined();
+    expect(target.statusEffectManager.debuffs[DebuffId.Poison]).toBeUndefined();
 });
 
 
