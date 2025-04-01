@@ -212,7 +212,7 @@ export default class Character {
     }
 
     doTurn(): void {
-        this.statusEffectManager.onTurnStart();
+        this.statusEffectManager.turnStart();
         if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
             this.usePotion();
             this.equipment.potion.charges -= 1;
@@ -227,7 +227,7 @@ export default class Character {
         }
 
         this.addMana(this.stats.getStat(StatType.ManaRegen));
-        this.statusEffectManager.onTurnEnd();
+        this.statusEffectManager.turnEnd();
     }
 
     hitRoll({ target, attackType, isOffHand = false }: { target: Character, attackType: AttackType, isOffHand?: boolean }): boolean {

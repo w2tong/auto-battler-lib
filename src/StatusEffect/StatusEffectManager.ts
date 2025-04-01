@@ -65,7 +65,7 @@ export default class StatusEffectManager {
         delete this.outgoingDebuffs[geOutgoingStatusEffectId(id, char)];
     }
 
-    onTurnStart() {
+    turnStart() {
         for (const buff of Object.values(this.buffs)) buff.onTurnStart();
         for (const debuff of Object.values(this.debuffs)) debuff.onTurnStart();
 
@@ -73,7 +73,7 @@ export default class StatusEffectManager {
         for (const debuff of Object.values(this.outgoingDebuffs)) debuff.onSourceTurnStart(this.char);
     }
 
-    onTurnEnd() {
+    turnEnd() {
         for (const buff of Object.values(this.buffs)) buff.onTurnEnd();
         for (const debuff of Object.values(this.debuffs)) debuff.onTurnEnd();
 

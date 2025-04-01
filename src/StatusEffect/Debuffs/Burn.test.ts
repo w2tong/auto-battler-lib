@@ -39,7 +39,7 @@ beforeEach(() => {
 test('Burn - 0 stacks', () => {
     target.statusEffectManager.addDebuff(DebuffId.Burn, char, 0);
 
-    target.statusEffectManager.onTurnEnd();
+    target.statusEffectManager.turnEnd();
     expect(target.currentHealth).toBe(100);
     expect(target.statusEffectManager.debuffs[DebuffId.Burn]).toBeUndefined();
 });
@@ -47,7 +47,7 @@ test('Burn - 0 stacks', () => {
 test('Burn - 1 stacks', () => {
     target.statusEffectManager.addDebuff(DebuffId.Burn, char, 1);
 
-    target.statusEffectManager.onTurnEnd();
+    target.statusEffectManager.turnEnd();
     expect(target.currentHealth).toBe(89.5);
     expect(target.statusEffectManager.debuffs[DebuffId.Burn]!.instances[getCharBattleId(char)]).toBeUndefined();
 });
@@ -55,11 +55,11 @@ test('Burn - 1 stacks', () => {
 test('Burn - 2 stacks', () => {
     target.statusEffectManager.addDebuff(DebuffId.Burn, char, 2);
 
-    target.statusEffectManager.onTurnEnd();
+    target.statusEffectManager.turnEnd();
     expect(target.currentHealth).toBe(89.5);
     expect(target.statusEffectManager.debuffs[DebuffId.Burn]!.instances[getCharBattleId(char)].stacks).toBe(1);
 
-    target.statusEffectManager.onTurnEnd();
+    target.statusEffectManager.turnEnd();
     expect(target.currentHealth).toBe(79);
     expect(target.statusEffectManager.debuffs[DebuffId.Burn]!.instances[getCharBattleId(char)]).toBeUndefined();
 });
