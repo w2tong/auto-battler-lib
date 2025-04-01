@@ -21,13 +21,13 @@ export { WeaponType, Weapon, WeaponId, WeaponTypeProperties, weapons } from './E
 import WeaponStyle from './WeaponStyle';
 export { WeaponStyle };
 
-import Battle, { Side, BattleJSON } from './Battle';
+import Battle, { Side, BattleJSON } from './Battle/Battle';
 export { Battle, Side, BattleJSON };
 
 import Character, { CharacterInfo, CharacterJSON } from './Character/Character';
 export { Character, CharacterInfo, CharacterJSON };
 
-import Log, { LogLine, LineType } from './Log';
+import Log, { LogLine, LineType } from './Battle/Log';
 export { Log, LogLine, LineType };
 
 import DamageType from './DamageType';

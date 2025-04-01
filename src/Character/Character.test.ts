@@ -2,7 +2,7 @@ import Character from './Character';
 import * as diceModlue from '../dice';
 import StatType from './Stats/StatType';
 import BuffId from '../StatusEffect/BuffId';
-import Battle from '../Battle';
+import Battle from '../Battle/Battle';
 import AttackType from '../AttackType';
 import DamageRange from '../DamageRange';
 import { ItemType } from '../Equipment/Item';

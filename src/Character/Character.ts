@@ -1,5 +1,5 @@
 import { getRandomRange } from '../util';
-import Battle, { Side } from '../Battle';
+import Battle, { Side } from '../Battle/Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
 import { Weapon, WeaponTypeProperties, weapons } from '../Equipment/Weapon';
 import { Equipment } from '../Equipment/Equipment';

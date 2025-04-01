@@ -1,4 +1,4 @@
-import Battle from '../Battle';
+import Battle from '../Battle/Battle';
 import AttributeType from '../Character/Attributes/AttributeType';
 import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';

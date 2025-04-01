@@ -1,4 +1,4 @@
-import HitType from './HitType';
+import HitType from '../HitType';
 
 enum LineType {
     // Text

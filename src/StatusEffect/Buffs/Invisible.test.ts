@@ -1,4 +1,4 @@
-import Battle from '../../Battle';
+import Battle from '../../Battle/Battle';
 import Character from '../../Character/Character';
 import { getCharBattleId } from '../../util';
 import BuffId from '../BuffId';
