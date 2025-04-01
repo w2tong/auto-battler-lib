@@ -1,5 +1,3 @@
-// TODO: test if all instances are removed on attack
-
 import Battle from '../../Battle';
 import Character from '../../Character/Character';
 import { getCharBattleId } from '../../util';
