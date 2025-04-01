@@ -141,6 +141,18 @@ class Stats {
         }
     }
 
+    addStatusEffectStats(stats: { [type in StatType]?: number }) {
+        for (const [type, val] of Object.entries(stats)) {
+            this[type as StatType].bonus += val;
+        }
+    }
+
+    removeStatusEffectStats(stats: { [type in StatType]?: number }) {
+        for (const [type, val] of Object.entries(stats)) {
+            this[type as StatType].bonus -= val;
+        }
+    }
+
     getTwoHandedMultiplier(): number {
         return 1 + (this.character.weaponStyle === WeaponStyle.TwoHanded ? Stats.TWO_HANDED_BONUS : 0);
     }

@@ -31,22 +31,6 @@ export default class StatusEffectManager {
         return this.buffs[id]?.stacks ?? 0;
     }
 
-    getStatusEffectString(statusEffects: { [id in BuffId]?: Buff } | { [id in DebuffId]?: Debuff }) {
-        const arr: string[] = [];
-        for (const statusEffect of Object.values(statusEffects)) {
-            arr.push(`${statusEffect.symbol}(${statusEffect.stacks})`);
-        }
-        return arr.join(' ');
-    }
-
-    getBuffString(): string {
-        return this.getStatusEffectString(this.buffs);
-    }
-
-    getDebuffString(): string {
-        return this.getStatusEffectString(this.debuffs);
-    }
-
     addBuff(id: BuffId, source: Character, stacks: number) {
         if (stacks <= 0) return;
         if (!this.buffs[id]) this.buffs[id] = new buffs[id](this.char);
@@ -100,5 +84,22 @@ export default class StatusEffectManager {
     onAttack(hit: boolean) {
         for (const buff of Object.values(this.buffs)) buff.onAttack(hit);
         for (const debuff of Object.values(this.debuffs)) debuff.onAttack(hit);
+    }
+
+    // TODO: move following methods to client
+    getStatusEffectString(statusEffects: { [id in BuffId]?: Buff } | { [id in DebuffId]?: Debuff }) {
+        const arr: string[] = [];
+        for (const statusEffect of Object.values(statusEffects)) {
+            arr.push(`${statusEffect.symbol}(${statusEffect.stacks})`);
+        }
+        return arr.join(' ');
+    }
+
+    getBuffString(): string {
+        return this.getStatusEffectString(this.buffs);
+    }
+
+    getDebuffString(): string {
+        return this.getStatusEffectString(this.debuffs);
     }
 }
