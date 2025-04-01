@@ -1,19 +1,15 @@
 import Firebolt from '../../Ability/Firebolt';
 import AttributeType from '../Attributes/AttributeType';
-import StatType from '../Stats/StatType';
-import Stats from '../Stats/Stats';
 import Class from './Class';
 
-const Wizard: Class =  {
+const Wizard: Class = {
     name: 'Wizard',
     description: 'Wizard Class description here.',
     attributes: {
-        [AttributeType.Intelligence]: 10,
+        [AttributeType.Intelligence]: 5,
         [AttributeType.Wisdom]: 5
     },
-    stats: {
-        [StatType.ManaCost]: Stats.DEFAULT_MANA_COST
-    },
+    stats: {},
     ability: Firebolt
 } as const;
 
