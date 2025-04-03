@@ -83,6 +83,7 @@ class Battle {
             this.rightAlive.delete(index);
         }
         this._turnOrder = this.turnOrder.filter(c => c.char !== char);
+        this._turnIndex--;
     }
 
     startCombat() {
