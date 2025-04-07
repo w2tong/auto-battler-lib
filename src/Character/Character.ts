@@ -224,7 +224,7 @@ export default class Character {
         // Rolling 96-100 always hits
         if (roll > 95) return true;
 
-        let hitChance = this.stats.getStat(StatType.HitChance);
+        let hitChance = this.stats.hitChance;
         // Add off-hand hit chance
         if (isOffHand) hitChance += this.stats.getStat(StatType.OffHandHitChance);
         // Add attack type hit chance
