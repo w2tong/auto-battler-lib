@@ -186,7 +186,7 @@ class Stats {
 
     // Hit Chance
     get hitChance() {
-        return this.getStat(StatType.HitChance) + (this.weaponStyle === WeaponStyle.DualWield ? Stats.DUAL_WIELD_HIT_CHANCE_PENALTY : 0);
+        return this.getStat(StatType.HitChance);
     }
 
     // Crit
