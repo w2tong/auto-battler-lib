@@ -6,8 +6,6 @@ import { getCharBattleId } from '../util';
 import Bless from './Bless';
 
 let char: Character;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let battle: Battle;
 
 beforeEach(() => {
     char = new Character({
@@ -21,7 +19,7 @@ beforeEach(() => {
         equipment: {}
     });
 
-    battle = new Battle([char], []);
+    new Battle([char], []);
 });
 
 test('Bless - 1 target', () => {

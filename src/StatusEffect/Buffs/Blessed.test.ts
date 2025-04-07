@@ -9,8 +9,6 @@ import Blessed from './Blessed';
 let char: Character;
 let source1: Character;
 let source2: Character;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let battle: Battle;
 
 const charLevel = 5;
 const charWisdom = 10;
@@ -61,7 +59,7 @@ beforeEach(() => {
         equipment: {}
     });
 
-    battle = new Battle([char, source1, source2], []);
+    new Battle([char, source1, source2], []);
 });
 
 test('Blessing - 1 source, 1 stack', () => {

@@ -6,8 +6,6 @@ import DebuffId from '../DebuffId';
 
 let char: Character;
 let target: Character;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let battle: Battle;
 
 beforeEach(() => {
     char = new Character({
@@ -31,7 +29,7 @@ beforeEach(() => {
         equipment: {}
     });
 
-    battle = new Battle([char], [target]);
+    new Battle([char], [target]);
 });
 
 // Poison damage is (1 + 1% current health) * stacks

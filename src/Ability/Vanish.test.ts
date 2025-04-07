@@ -7,8 +7,6 @@ import { getCharBattleId } from '../util';
 import Vanish from './Vanish';
 
 let char: Character;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let battle: Battle;
 
 test('Vanish - 0 Dexterity', () => {
     char = new Character({
@@ -24,8 +22,7 @@ test('Vanish - 0 Dexterity', () => {
         equipment: {},
         ability: Vanish
     });
-
-    battle = new Battle([char], []);
+    new Battle([char], []);
 
     Vanish.func(char);
     expect(char.statusEffectManager.buffs[BuffId.Invisible]?.instances).toHaveProperty(getCharBattleId(char), { source: char, stacks: 1 });
@@ -47,8 +44,7 @@ test('Vanish - 10 Dexterity', () => {
         equipment: {},
         ability: Vanish
     });
-
-    battle = new Battle([char], []);
+    new Battle([char], []);
 
     Vanish.func(char);
     expect(char.statusEffectManager.buffs[BuffId.Invisible]?.instances).toHaveProperty(getCharBattleId(char), { source: char, stacks: 1 });
@@ -70,8 +66,7 @@ test('Vanish - 20 Dexterity', () => {
         equipment: {},
         ability: Vanish
     });
-
-    battle = new Battle([char], []);
+    new Battle([char], []);
 
     Vanish.func(char);
     expect(char.statusEffectManager.buffs[BuffId.Invisible]?.instances).toHaveProperty(getCharBattleId(char), { source: char, stacks: 2 });
@@ -93,8 +88,7 @@ test('Vanish - 100 Dexterity', () => {
         equipment: {},
         ability: Vanish
     });
-
-    battle = new Battle([char], []);
+    new Battle([char], []);
 
     Vanish.func(char);
     expect(char.statusEffectManager.buffs[BuffId.Invisible]?.instances).toHaveProperty(getCharBattleId(char), { source: char, stacks: 10 });

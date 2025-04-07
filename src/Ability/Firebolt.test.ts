@@ -7,8 +7,6 @@ import Firebolt from './Firebolt';
 
 let char: Character;
 let target: Character;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let battle: Battle;
 
 beforeEach(() => {
     char = new Character({
@@ -36,7 +34,7 @@ beforeEach(() => {
     });
 
     char.target = target;
-    battle = new Battle([char], [target]);
+    new Battle([char], [target]);
 });
 
 let mathRandomSpy: jest.SpyInstance;
