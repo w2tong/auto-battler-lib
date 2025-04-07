@@ -177,15 +177,6 @@ export default class Character {
         return `${this.currentMana}/${this.stats.getStat(StatType.ManaCost)}`;
     }
 
-    setRandomTarget(chars: Character[]): void {
-        if (chars.length === 0) {
-            this.target = null;
-        }
-        else {
-            this.target = chars[getRandomRange(chars.length)];
-        }
-    }
-
     setTarget(): void {
         if (!this.battle) return;
         if (this.target?.isDead() || this.target?.isInvisible()) {
@@ -195,7 +186,13 @@ export default class Character {
             // TODO: add condition if this char can see invisible targets
             // Filter out invisble targets
             const targets = this.battle.ref.getTargets(this.battle.side).filter(char => !char.isInvisible());
-            this.setRandomTarget(targets);
+
+            if (targets.length === 0) {
+                this.target = null;
+            }
+            else {
+                this.target = targets[getRandomRange(targets.length)];
+            }
         }
     }
 
