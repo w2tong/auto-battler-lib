@@ -38,38 +38,73 @@ afterEach(() => {
     mathRandomSpy.mockRestore();
 });
 
-describe('startCombat', () => {
-    let left1: Character;
-    let right1: Character;
+describe('startCombat/turnOrder', () => {
+    const left1 = new Character({
+        name: 'Left 1',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.Initiative]: { base: 3 }
+        },
+        equipment: {}
+    });
+    const left2 = new Character({
+        name: 'Left 2',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.Initiative]: { base: 2 }
+        },
+        equipment: {}
+    });
+    const left3 = new Character({
+        name: 'Left 3',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.Initiative]: { base: 1 }
+        },
+        equipment: {}
+    });
+    const right1 = new Character({
+        name: 'Right 1',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.Initiative]: { base: 0 }
+        },
+        equipment: {}
+    });
+    const right2 = new Character({
+        name: 'Right 2',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.Initiative]: { base: -1 }
+        },
+        equipment: {}
+    });
     let battle: Battle;
 
-    beforeEach(() => {
-        left1 = new Character({
-            name: 'Left 1',
-            level: 1,
-            attributes: {},
-            statTemplate: {
-                [StatType.Initiative]: { base: 1 }
-            },
-            equipment: {}
-        });
-        right1 = new Character({
-            name: 'Right 1',
-            level: 1,
-            attributes: {},
-            statTemplate: {},
-            equipment: {}
-        });
-
-        battle = new Battle([left1], [right1]);
-    });
-
     test('2 chars', () => {
+        battle = new Battle([left1], [right1]);
         battle.startCombat();
-        expect(battle.turnOrder[0].char).toBe(left1);
-        expect(battle.turnOrder[0].init).toBe(12);
-        expect(battle.turnOrder[1].char).toBe(right1);
-        expect(battle.turnOrder[1].init).toBe(11);
+        expect(battle.turnOrder).toMatchObject([{ char: left1, init: 14 }, { char: right1, init: 11 }]);
+    });
+    test('3 chars', () => {
+        battle = new Battle([left1, left2], [right1]);
+        battle.startCombat();
+        expect(battle.turnOrder).toMatchObject([{ char: left1, init: 14 }, { char: left2, init: 13 }, { char: right1, init: 11 }]);
+    });
+    test('4 chars', () => {
+        battle = new Battle([left1, left2], [right1, right2]);
+        battle.startCombat();
+        expect(battle.turnOrder).toMatchObject([{ char: left1, init: 14 }, { char: left2, init: 13 }, { char: right1, init: 11 }, { char: right2, init: 10 }]);
+    });
+    test('5 chars', () => {
+        battle = new Battle([left1, left2, left3], [right1, right2]);
+        battle.startCombat();
+        expect(battle.turnOrder).toMatchObject([{ char: left1, init: 14 }, { char: left2, init: 13 }, { char: left3, init: 12 }, { char: right1, init: 11 }, { char: right2, init: 10 }]);
     });
 });
 
@@ -149,10 +184,7 @@ describe('turnIndex', () => {
         battle = new Battle([left1, left2], [right1, right2]);
         battle.startCombat();
 
-        expect(battle.turnOrder[0].char).toBe(left2);
-        expect(battle.turnOrder[1].char).toBe(left1);
-        expect(battle.turnOrder[2].char).toBe(right1);
-        expect(battle.turnOrder[3].char).toBe(right2);
+        expect(battle.turnOrder).toMatchObject([{ char: left2, init: 13 }, { char: left1, init: 12 }, { char: right1, init: 11 }, { char: right2, init: 10 }]);
         expect(battle.turnIndex).toBe(-1);
 
         battle.nextTurn();
@@ -297,5 +329,81 @@ describe('nextTurn', () => {
         });
         const res = battle.nextTurn();
         expect(res).toEqual({ combatEnded: true, winner: Side.Right });
+    });
+});
+
+describe('getAliveTargets', () => {
+    const left1 = new Character({
+        name: 'Left 1',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.Initiative]: { base: 1 }
+        },
+        equipment: {}
+    });
+    const left2 = new Character({
+        name: 'Left 2',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.Initiative]: { base: 2 }
+        },
+        equipment: {}
+    });
+    const right1 = new Character({
+        name: 'Right 1',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.Initiative]: { base: 0 }
+        },
+        equipment: {}
+    });
+    const right2 = new Character({
+        name: 'Right 2',
+        level: 1,
+        attributes: {},
+        statTemplate: {
+            [StatType.Initiative]: { base: -1 }
+        },
+        equipment: {}
+    });
+    let battle: Battle;
+
+    beforeEach(() => {
+        battle = new Battle([left1, left2], [right1, right2]);
+    });
+
+    test('Left Side, 2 alive', () => {
+        const targets = battle.getAliveTargets(Side.Left);
+        expect(targets).toMatchObject([left1, left2]);
+    });
+    test('Left Side, 1 alive', () => {
+        battle.setCharDead(Side.Left, 0);
+        const targets = battle.getAliveTargets(Side.Left);
+        expect(targets).toMatchObject([left2]);
+    });
+    test('Left Side, 0 alive', () => {
+        battle.setCharDead(Side.Left, 0);
+        battle.setCharDead(Side.Left, 1);
+        const targets = battle.getAliveTargets(Side.Left);
+        expect(targets).toMatchObject([]);
+    });
+
+    test('Right Side, 2 alive', () => {
+        const targets = battle.getAliveTargets(Side.Right);
+        expect(targets).toMatchObject([right1, right2]);
+    });
+    test('Right Side, 1 alive', () => {
+        battle.setCharDead(Side.Right, 1);
+        const targets = battle.getAliveTargets(Side.Right);
+        expect(targets).toMatchObject([right1]);
+    });
+    test('Right Side, 0 alive', () => {
+        battle.setCharDead(Side.Right, 0);
+        battle.setCharDead(Side.Right, 1);
+        const targets = battle.getAliveTargets(Side.Right);
+        expect(targets).toMatchObject([]);
     });
 });
