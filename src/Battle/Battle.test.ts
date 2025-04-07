@@ -73,7 +73,6 @@ describe('startCombat', () => {
     });
 });
 
-// TODO: add tests for turnIndex, and when chars die
 describe('turnIndex', () => {
     let left1: Character;
     let left2: Character;
@@ -164,6 +163,13 @@ describe('turnIndex', () => {
         expect(battle.turnIndex).toBe(0);
 
         battle.nextTurn();
+        expect(battle.turnIndex).toBe(1);
+        expect(battle.turnOrder[1].char).toBe(right1);
+
+        battle.nextTurn();
+        expect(battle.turnIndex).toBe(2);
+
+        battle.setCharDead(Side.Right, 1);
         expect(battle.turnIndex).toBe(1);
         expect(battle.turnOrder[1].char).toBe(right1);
     });
