@@ -67,7 +67,7 @@ class Battle {
         return this._turnOrder;
     }
 
-    getTargets(side: Side) {
+    getAliveTargets(side: Side) {
         // Get alive chars
         return side === Side.Left ? Array.from(this.rightAlive.values()).map(i => this.right[i]) : Array.from(this.leftAlive.values()).map(i => this.left[i]);
     }
