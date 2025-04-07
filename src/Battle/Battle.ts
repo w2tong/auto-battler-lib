@@ -68,8 +68,8 @@ class Battle {
     }
 
     getAliveTargets(side: Side) {
-        // Get alive chars
-        return side === Side.Left ? Array.from(this.rightAlive.values()).map(i => this.right[i]) : Array.from(this.leftAlive.values()).map(i => this.left[i]);
+        if (side === Side.Left) return Array.from(this.leftAlive.values()).map(i => this.left[i]);
+        return Array.from(this.rightAlive.values()).map(i => this.right[i]);
     }
 
     setCharDead(side: Side, index: number) {

@@ -174,7 +174,8 @@ export default class Character {
         if (!this.target) {
             // TODO: add condition if this char can see invisible targets
             // Filter out invisble targets
-            const targets = this.battle.ref.getAliveTargets(this.battle.side).filter(char => !char.isInvisible());
+            const enemySide = this.battle.side === Side.Left ? Side.Right : Side.Left;
+            const targets = this.battle.ref.getAliveTargets(enemySide).filter(char => !char.isInvisible());
 
             if (targets.length === 0) {
                 this.target = null;
