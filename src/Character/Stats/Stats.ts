@@ -1,8 +1,10 @@
+import { ArmourType } from '../../Equipment/Armour';
+import { Equipment } from '../../Equipment/Equipment';
 import { ItemStats } from '../../Equipment/Item';
-import WeaponStyle from '../../WeaponStyle';
+import WeaponStyle, { getWeaponStyle } from '../../WeaponStyle';
+import Attributes from '../Attributes/Attributes';
 import AttributeStatScaling from '../Attributes/AttributeStatScaling';
 import AttributeType from '../Attributes/AttributeType';
-import Character from '../Character';
 import ArmourTypeDodgeMultiplier from './ArmourTypeDodgeMultiplier';
 import Stat from './Stat';
 import { StatTemplate } from './StatTemplate';
@@ -24,7 +26,8 @@ class Stats {
     static DUAL_WIELD_HIT_CHANCE_PENALTY = -10;
     static OFF_HAND_HIT_CHANCE_PENALTY = -20;
 
-    character: Character;
+    armourType: ArmourType;
+    weaponStyle: WeaponStyle;
 
     // Defensive
     [StatType.MaxHealth]: Stat = { base: Stats.DEFAULT_MAX_HEALTH, attribute: 0, bonus: 0 };
@@ -80,19 +83,17 @@ class Stats {
     [StatType.PotionHealing]: Stat = { base: 0, attribute: 0, bonus: 0 };
     [StatType.PotionEffectiveness]: Stat = { base: 0, attribute: 0, bonus: 0 };
 
-    constructor({ character, template }: { character: Character, template: StatTemplate }) {
-        this.character = character;
-        const equipment = character.equipment;
+    constructor({ template, attributes, equipment, level }: { template: StatTemplate, attributes: Attributes, equipment: Equipment, level: number }) {
 
-        this[StatType.MaxHealth].base = Stats.DEFAULT_MAX_HEALTH + Stats.DEFAULT_MAX_HEALTH_PER_LVL * (character.level - 1);
+        this[StatType.MaxHealth].base = Stats.DEFAULT_MAX_HEALTH + Stats.DEFAULT_MAX_HEALTH_PER_LVL * (level - 1);
 
         // Set stats to template (sets MaxHealth if included in template)
         for (const [stat, { base, perLvl }] of Object.entries(template)) {
-            this[stat as StatType].base = base + (perLvl ? perLvl * (character.level - 1) : 0);
+            this[stat as StatType].base = base + (perLvl ? perLvl * (level - 1) : 0);
         }
 
         // Add stats from attributes
-        this.setStatsAttribute();
+        this.setStatsAttribute(attributes);
 
         // Add off-hand penalties
         if (equipment.offHandWeapon) {
@@ -100,10 +101,17 @@ class Stats {
             this[StatType.OffHandHitChance].bonus += Stats.OFF_HAND_HIT_CHANCE_PENALTY;
         }
 
+        this.armourType = equipment.armour?.type ?? ArmourType.Unarmoured;
+        this.weaponStyle = getWeaponStyle({
+            mainHand: equipment.mainHand,
+            offHand: equipment.offHandWeapon
+        });
+
         // Add stats from equipment
         if (equipment.armour) this.addItemStats(equipment.armour.stats);
         if (equipment.belt) this.addItemStats(equipment.belt.stats);
-        if (equipment.hands && ((equipment.hands.weaponStyle && equipment.hands.weaponStyle === character.weaponStyle) || !equipment.hands.weaponStyle)) {
+
+        if (equipment.hands && ((equipment.hands.weaponStyle && equipment.hands.weaponStyle === this.weaponStyle) || !equipment.hands.weaponStyle)) {
             this.addItemStats(equipment.hands.stats);
         }
         if (equipment.head) this.addItemStats(equipment.head.stats);
@@ -118,7 +126,7 @@ class Stats {
         // TODO: Math.floor stats that are needed
     }
 
-    setStatsAttribute(): void {
+    setStatsAttribute(attributes: Attributes): void {
         // Set attribute scaling stats to 0
         for (const stats of Object.values(AttributeStatScaling)) {
             for (const stat of Object.keys(stats)) {
@@ -127,7 +135,7 @@ class Stats {
         }
 
         // Calculate attribute scaling stats
-        for (const [type, { base, bonus }] of Object.entries(this.character.attributes)) {
+        for (const [type, { base, bonus }] of Object.entries(attributes)) {
             for (const [statType, scaling] of Object.entries(AttributeStatScaling[type as AttributeType])) {
                 this[statType as StatType].attribute += (base + bonus) * scaling;
             }
@@ -156,7 +164,7 @@ class Stats {
     }
 
     getTwoHandedMultiplier(): number {
-        return 1 + (this.character.weaponStyle === WeaponStyle.TwoHanded ? Stats.TWO_HANDED_BONUS : 0);
+        return 1 + (this.weaponStyle === WeaponStyle.TwoHanded ? Stats.TWO_HANDED_BONUS : 0);
     }
 
     getStat(type: StatType): number {
@@ -173,13 +181,12 @@ class Stats {
         );
     }
     get dodge() {
-        const armour = this.character.equipment.armour;
-        return this.getStat(StatType.Dodge) * (armour ? ArmourTypeDodgeMultiplier[armour.type] : 1);
+        return this.getStat(StatType.Dodge) * ArmourTypeDodgeMultiplier[this.armourType];
     }
 
     // Hit Chance
     get hitChance() {
-        return this.getStat(StatType.HitChance) + (this.character.weaponStyle === WeaponStyle.DualWield ? Stats.DUAL_WIELD_HIT_CHANCE_PENALTY : 0);
+        return this.getStat(StatType.HitChance) + (this.weaponStyle === WeaponStyle.DualWield ? Stats.DUAL_WIELD_HIT_CHANCE_PENALTY : 0);
     }
 
     // Crit

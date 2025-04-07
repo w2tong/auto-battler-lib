@@ -1,7 +1,7 @@
 import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle/Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
-import { Weapon, WeaponTypeProperties, weapons } from '../Equipment/Weapon';
+import { Weapon, weapons } from '../Equipment/Weapon';
 import { Equipment } from '../Equipment/Equipment';
 import HitType from '../HitType';
 import { dice, rollDice } from '../dice';
@@ -12,7 +12,6 @@ import Ability from '../Ability/Ability';
 import { StatTemplate } from './Stats/StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
 import { ClassName, Classes } from './Classes/classes';
-import WeaponStyle from '../WeaponStyle';
 import BuffId from '../StatusEffect/BuffId';
 import StatType from './Stats/StatType';
 import Attributes from './Attributes/Attributes';
@@ -81,8 +80,10 @@ export default class Character {
         // Attributes
         this._attributes = new Attributes(attributes, equipment);
         this._stats = new Stats({
-            character: this,
-            template: statTemplate
+            template: statTemplate,
+            attributes: this.attributes,
+            equipment,
+            level
         });
         this.ability = ability ?? (className ? Classes[className].ability : null);
         this._currentHealth = options?.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
@@ -121,18 +122,6 @@ export default class Character {
 
     get mainHand() {
         return this.equipment.mainHand ?? weapons.unarmed0;
-    }
-
-    get weaponStyle(): WeaponStyle {
-        if (this.equipment.mainHand && this.equipment.offHandWeapon) {
-            return WeaponStyle.DualWield;
-        }
-        else if (this.equipment.mainHand && WeaponTypeProperties[this.equipment.mainHand.type].twoHanded) {
-            return WeaponStyle.TwoHanded;
-        }
-        else {
-            return WeaponStyle.OneHanded;
-        }
     }
 
     get currentHealth() {
