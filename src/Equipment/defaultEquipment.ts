@@ -11,7 +11,8 @@ const defaultEquipment: { [name in ClassName]: Equipment } = {
         armour: armour.plateArmour0
     },
     [ClassName.Priest]: {
-        mainHand: weapons.quarterstaff0,
+        mainHand: weapons.mace0,
+        offHandShield: shields.buckler0,
         armour: armour.robe0
     },
     [ClassName.Rogue]: {
