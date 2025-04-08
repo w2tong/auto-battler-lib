@@ -88,7 +88,7 @@ test('Blessing - 1 source, 3 stacks', () => {
     // 0 stacks
     char.statusEffectManager.turnStart();
     char.statusEffectManager.turnStart();
-    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances).toEqual({});
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances).toStrictEqual({});
     expect(char.stats.damage).toBeCloseTo(0);
     expect(char.stats.hitChance).toBeCloseTo(0);
 });
@@ -111,7 +111,7 @@ test('Blessing - 2 sources, 1 stack each', () => {
     expect(char.stats.hitChance).toBeCloseTo(source1HitChance);
 
     source1.statusEffectManager.turnStart();
-    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances).toEqual({});
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances).toStrictEqual({});
     expect(char.stats.damage).toBeCloseTo(0);
     expect(char.stats.hitChance).toBeCloseTo(0);
 });
@@ -136,7 +136,7 @@ test('Blessing - 2 sources, 2 stack each', () => {
     char.statusEffectManager.turnStart();
     source1.statusEffectManager.turnStart();
     source1.statusEffectManager.turnStart();
-    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances).toEqual({});
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances).toStrictEqual({});
     expect(char.stats.damage).toBeCloseTo(0);
     expect(char.stats.hitChance).toBeCloseTo(0);
 });
@@ -170,7 +170,7 @@ test('Blessing - 3 sources, 1 stack each', () => {
     expect(char.stats.hitChance).toBeCloseTo(charHitChance);
 
     char.statusEffectManager.turnStart();
-    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances).toEqual({});
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances).toStrictEqual({});
     expect(char.stats.damage).toBeCloseTo(0);
     expect(char.stats.hitChance).toBeCloseTo(0);
 });

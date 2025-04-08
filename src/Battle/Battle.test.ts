@@ -89,22 +89,22 @@ describe('startCombat/turnOrder', () => {
     test('2 chars', () => {
         battle = new Battle([left1], [right1]);
         battle.startCombat();
-        expect(battle.turnOrder).toMatchObject([{ char: left1, init: 14 }, { char: right1, init: 11 }]);
+        expect(battle.turnOrder).toStrictEqual([{ char: left1, init: 14 }, { char: right1, init: 11 }]);
     });
     test('3 chars', () => {
         battle = new Battle([left1, left2], [right1]);
         battle.startCombat();
-        expect(battle.turnOrder).toMatchObject([{ char: left1, init: 14 }, { char: left2, init: 13 }, { char: right1, init: 11 }]);
+        expect(battle.turnOrder).toStrictEqual([{ char: left1, init: 14 }, { char: left2, init: 13 }, { char: right1, init: 11 }]);
     });
     test('4 chars', () => {
         battle = new Battle([left1, left2], [right1, right2]);
         battle.startCombat();
-        expect(battle.turnOrder).toMatchObject([{ char: left1, init: 14 }, { char: left2, init: 13 }, { char: right1, init: 11 }, { char: right2, init: 10 }]);
+        expect(battle.turnOrder).toStrictEqual([{ char: left1, init: 14 }, { char: left2, init: 13 }, { char: right1, init: 11 }, { char: right2, init: 10 }]);
     });
     test('5 chars', () => {
         battle = new Battle([left1, left2, left3], [right1, right2]);
         battle.startCombat();
-        expect(battle.turnOrder).toMatchObject([{ char: left1, init: 14 }, { char: left2, init: 13 }, { char: left3, init: 12 }, { char: right1, init: 11 }, { char: right2, init: 10 }]);
+        expect(battle.turnOrder).toStrictEqual([{ char: left1, init: 14 }, { char: left2, init: 13 }, { char: left3, init: 12 }, { char: right1, init: 11 }, { char: right2, init: 10 }]);
     });
 });
 
@@ -166,8 +166,7 @@ describe('turnIndex', () => {
         battle = new Battle([left1], [right1]);
         battle.startCombat();
 
-        expect(battle.turnOrder[0].char).toBe(left1);
-        expect(battle.turnOrder[1].char).toBe(right1);
+        expect(battle.turnOrder).toStrictEqual([{ char: left1, init: 12 }, { char: right1, init: 11 }]);
         expect(battle.turnIndex).toBe(-1);
 
         battle.nextTurn();
@@ -184,7 +183,7 @@ describe('turnIndex', () => {
         battle = new Battle([left1, left2], [right1, right2]);
         battle.startCombat();
 
-        expect(battle.turnOrder).toMatchObject([{ char: left2, init: 13 }, { char: left1, init: 12 }, { char: right1, init: 11 }, { char: right2, init: 10 }]);
+        expect(battle.turnOrder).toStrictEqual([{ char: left2, init: 13 }, { char: left1, init: 12 }, { char: right1, init: 11 }, { char: right2, init: 10 }]);
         expect(battle.turnIndex).toBe(-1);
 
         battle.nextTurn();
@@ -248,52 +247,52 @@ describe('nextTurn', () => {
 
         // left1 attack
         res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: false });
+        expect(res).toStrictEqual({ combatEnded: false });
         expect(right1.currentHealth).toBeCloseTo(16);
 
         // right1 attack
         res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: false });
+        expect(res).toStrictEqual({ combatEnded: false });
         expect(left1.currentHealth).toBeCloseTo(16);
 
         // left1 attack
         res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: false });
+        expect(res).toStrictEqual({ combatEnded: false });
         expect(right1.currentHealth).toBeCloseTo(12);
 
         // right1 attack
         res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: false });
+        expect(res).toStrictEqual({ combatEnded: false });
         expect(left1.currentHealth).toBeCloseTo(12);
 
         // left1 attack
         res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: false });
+        expect(res).toStrictEqual({ combatEnded: false });
         expect(right1.currentHealth).toBeCloseTo(8);
 
         // right1 attack
         res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: false });
+        expect(res).toStrictEqual({ combatEnded: false });
         expect(left1.currentHealth).toBeCloseTo(8);
 
         // left1 attack
         res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: false });
+        expect(res).toStrictEqual({ combatEnded: false });
         expect(right1.currentHealth).toBeCloseTo(4);
 
         // right1 attack
         res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: false });
+        expect(res).toStrictEqual({ combatEnded: false });
         expect(left1.currentHealth).toBeCloseTo(4);
 
         // left1 attack
         res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: false });
+        expect(res).toStrictEqual({ combatEnded: false });
         expect(right1.currentHealth).toBeCloseTo(0);
 
         // Battle over
         res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: true, winner: Side.Left });
+        expect(res).toStrictEqual({ combatEnded: true, winner: Side.Left });
     });
 
     test('Result: Tie', () => {
@@ -308,7 +307,7 @@ describe('nextTurn', () => {
             armourPenetration: 0,
         });
         const res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: true, winner: Side.Tie });
+        expect(res).toStrictEqual({ combatEnded: true, winner: Side.Tie });
     });
 
     test('Result: Left Win', () => {
@@ -318,7 +317,7 @@ describe('nextTurn', () => {
             armourPenetration: 0,
         });
         const res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: true, winner: Side.Left });
+        expect(res).toStrictEqual({ combatEnded: true, winner: Side.Left });
     });
 
     test('Result: Right Win', () => {
@@ -328,7 +327,7 @@ describe('nextTurn', () => {
             armourPenetration: 0,
         });
         const res = battle.nextTurn();
-        expect(res).toEqual({ combatEnded: true, winner: Side.Right });
+        expect(res).toStrictEqual({ combatEnded: true, winner: Side.Right });
     });
 });
 
@@ -377,33 +376,33 @@ describe('getAliveTargets', () => {
 
     test('Left Side, 2 alive', () => {
         const targets = battle.getAliveTargets(Side.Left);
-        expect(targets).toMatchObject([left1, left2]);
+        expect(targets).toStrictEqual([left1, left2]);
     });
     test('Left Side, 1 alive', () => {
         battle.setCharDead(Side.Left, 0);
         const targets = battle.getAliveTargets(Side.Left);
-        expect(targets).toMatchObject([left2]);
+        expect(targets).toStrictEqual([left2]);
     });
     test('Left Side, 0 alive', () => {
         battle.setCharDead(Side.Left, 0);
         battle.setCharDead(Side.Left, 1);
         const targets = battle.getAliveTargets(Side.Left);
-        expect(targets).toMatchObject([]);
+        expect(targets).toStrictEqual([]);
     });
 
     test('Right Side, 2 alive', () => {
         const targets = battle.getAliveTargets(Side.Right);
-        expect(targets).toMatchObject([right1, right2]);
+        expect(targets).toStrictEqual([right1, right2]);
     });
     test('Right Side, 1 alive', () => {
         battle.setCharDead(Side.Right, 1);
         const targets = battle.getAliveTargets(Side.Right);
-        expect(targets).toMatchObject([right1]);
+        expect(targets).toStrictEqual([right1]);
     });
     test('Right Side, 0 alive', () => {
         battle.setCharDead(Side.Right, 0);
         battle.setCharDead(Side.Right, 1);
         const targets = battle.getAliveTargets(Side.Right);
-        expect(targets).toMatchObject([]);
+        expect(targets).toStrictEqual([]);
     });
 });
