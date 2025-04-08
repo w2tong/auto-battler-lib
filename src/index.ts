@@ -16,7 +16,8 @@ export { Head, HeadId, heads } from './Equipment/Head';
 export { Potion, PotionId, potions } from './Equipment/Potion';
 export { Ring, RingId, rings } from './Equipment/Ring';
 export { Shield, ShieldId, shields } from './Equipment/Shield';
-export { WeaponType, Weapon, WeaponId, WeaponTypeProperties, weapons } from './Equipment/Weapon';
+export { WeaponType, Weapon, WeaponTypeProperties } from './Equipment/Weapon/Weapon';
+export { WeaponId, weapons } from './Equipment/Weapon/weapons';
 
 import WeaponStyle from './WeaponStyle';
 export { WeaponStyle };

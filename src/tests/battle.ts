@@ -2,7 +2,7 @@ import AttackType from '../AttackType';
 import Battle from '../Battle/Battle';
 import Character from '../Character/Character';
 import { getRandomEncounter } from '../encounters';
-import { weapons } from '../Equipment/Weapon';
+import { weapons } from '../Equipment/Weapon/weapons';
 
 const testChar = new Character({
     name: 'Test',

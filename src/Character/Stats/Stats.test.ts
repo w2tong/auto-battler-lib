@@ -1,5 +1,5 @@
 import { ArmourType, armour } from '../../Equipment/Armour';
-import { weapons } from '../../Equipment/Weapon';
+import { weapons } from '../../Equipment/Weapon/weapons';
 import { createCharacter, createCharacterWithEquipment, createCharacterWithTemplate } from '../../tests/util';
 import Character from '../Character';
 import ArmourTypeDodgeMultiplier from './ArmourTypeDodgeMultiplier';

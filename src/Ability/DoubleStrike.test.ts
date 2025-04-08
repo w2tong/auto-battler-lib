@@ -3,7 +3,7 @@ import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';
 import DamageType from '../DamageType';
 import { ItemType } from '../Equipment/Item';
-import { Weapon, WeaponType } from '../Equipment/Weapon';
+import { type Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
 import DoubleStrike from './DoubleStrike';
 
 let char: Character;

@@ -1,7 +1,7 @@
 import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle/Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
-import { Weapon, weapons } from '../Equipment/Weapon';
+import { weapons } from '../Equipment/Weapon/weapons';
 import { Equipment } from '../Equipment/Equipment';
 import HitType from '../HitType';
 import { dice, rollDice } from '../dice';
@@ -17,6 +17,7 @@ import StatType from './Stats/StatType';
 import Attributes from './Attributes/Attributes';
 import BaseAttributes from './Attributes/BaseAttributes';
 import AttackType from '../AttackType';
+import { type Weapon } from '../Equipment/Weapon/Weapon';
 
 type CharacterInfo = {
     name: string,
@@ -27,8 +28,8 @@ type CharacterInfo = {
     potion?: Potion,
 
     attributes: Attributes,
-    stats: Stats
-}
+    stats: Stats;
+};
 
 type CharacterJSON = {
     name: string;
@@ -40,7 +41,7 @@ type CharacterJSON = {
     manaCost: number;
     buffs: string;
     debuffs: string;
-}
+};
 
 // Crit chance, crit dmg, hit chance, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
 export default class Character {
@@ -68,9 +69,9 @@ export default class Character {
 
     // Battle Info
     protected _target: Character | null = null;
-    protected _battle: { ref: Battle, side: Side, index: number } | null = null;
+    protected _battle: { ref: Battle, side: Side, index: number; } | null = null;
 
-    constructor({ name, level, className, attributes, statTemplate, equipment, ability, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: Equipment, ability?: Ability, options?: { userId?: string, currHealthPc?: number, currManaPc?: number } }) {
+    constructor({ name, level, className, attributes, statTemplate, equipment, ability, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: Equipment, ability?: Ability, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
         this._name = name;
         this._level = level;
         this.className = className ?? null;
@@ -217,7 +218,7 @@ export default class Character {
         this.statusEffectManager.turnEnd();
     }
 
-    hitRoll({ target, attackType, isOffHand = false }: { target: Character, attackType: AttackType, isOffHand?: boolean }): boolean {
+    hitRoll({ target, attackType, isOffHand = false }: { target: Character, attackType: AttackType, isOffHand?: boolean; }): boolean {
         const roll = rollDice(dice['1d100']);
 
         // Rolling 1-5 always misses
@@ -255,7 +256,7 @@ export default class Character {
         return rollDice(dice['1d100']) <= blockChance;
     }
 
-    calcDamage({ attackType, damage, spellPowerRatio, isOffHand = false, invisibleStacks = 0 }: { attackType: AttackType, damage: number, spellPowerRatio?: number, isOffHand?: boolean, invisibleStacks?: number }): number {
+    calcDamage({ attackType, damage, spellPowerRatio, isOffHand = false, invisibleStacks = 0 }: { attackType: AttackType, damage: number, spellPowerRatio?: number, isOffHand?: boolean, invisibleStacks?: number; }): number {
         let damageBonus = this.stats.damage + (isOffHand ? this.stats.getStat(StatType.OffHandDamage) : 0);
         let damagePercent = this.stats.getStat(StatType.DamagePercent);
         switch (attackType) {
@@ -279,13 +280,13 @@ export default class Character {
         return (damage + damageBonus + spellDamage + sneakDamage) * (1 + damagePercent);
     }
 
-    calcDamageRange({ attackType, damageRange, spellPowerRatio, isOffHand = false }: { attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean }): { min: number, max: number } {
+    calcDamageRange({ attackType, damageRange, spellPowerRatio, isOffHand = false }: { attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean; }): { min: number, max: number; } {
         const min = this.calcDamage({ attackType, damage: damageRange.min + damageRange.bonus, spellPowerRatio, isOffHand });
         const max = this.calcDamage({ attackType, damage: damageRange.max + damageRange.bonus, spellPowerRatio, isOffHand });
         return { min, max };
     }
 
-    attack({ target, attackType, damageRange, spellPowerRatio, isOffHand = false, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean, abilityName?: string }): boolean {
+    attack({ target, attackType, damageRange, spellPowerRatio, isOffHand = false, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean, abilityName?: string; }): boolean {
 
         let hitType: HitType = HitType.Miss;
         let damage: number = 0;
@@ -377,7 +378,7 @@ export default class Character {
         }
     }
 
-    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean } }): void {
+    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean; }; }): void {
         let damageTaken = Math.max(damage, 0);
 
         if (damageTaken > 0) {

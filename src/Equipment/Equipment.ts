@@ -7,10 +7,10 @@ import { ItemType } from './Item';
 import { Potion, PotionId, potions } from './Potion';
 import { Ring, RingId, rings } from './Ring';
 import { Shield, ShieldId, shields } from './Shield';
-import { Weapon, WeaponId, WeaponTypeProperties, weapons } from './Weapon';
+import { Weapon, WeaponId, WeaponTypeProperties, weapons } from './Weapon/weapons';
 
 type Equip = Weapon | Shield | Armour | Head | Hands | Ring | Potion | Belt | Amulet;
-const equips: { [key: string]: Equip } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts, ...amulets } as const;
+const equips: { [key: string]: Equip; } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts, ...amulets } as const;
 
 type Equipment = {
     mainHand?: Weapon;
@@ -24,20 +24,20 @@ type Equipment = {
     potion?: Potion;
     belt?: Belt;
     amulet?: Amulet;
-}
+};
 
 type EquipmentItemIds = {
-    mainHand: string | null
-    offHand: string | null
-    head: string | null
-    amulet: string | null
-    armour: string | null
-    hands: string | null
-    belt: string | null
-    ring1: string | null
-    ring2: string | null
-    potion: string | null
-}
+    mainHand: string | null;
+    offHand: string | null;
+    head: string | null;
+    amulet: string | null;
+    armour: string | null;
+    hands: string | null;
+    belt: string | null;
+    ring1: string | null;
+    ring2: string | null;
+    potion: string | null;
+};
 
 enum EquipSlot {
     MainHand = 'Main Hand',
