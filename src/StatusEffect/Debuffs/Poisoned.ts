@@ -1,10 +1,9 @@
-import StatType from '../../Character/Stats/StatType';
 import Debuff from '../Debuff';
 import DebuffId from '../DebuffId';
 
 export default class Poison extends Debuff {
-    id = DebuffId.Poison;
-    name: string = 'Poison';
+    id = DebuffId.Poisoned;
+    name: string = 'Poisoned';
     symbol: string = '🤢';
 
     static baseDamage = 1;
@@ -18,8 +17,8 @@ export default class Poison extends Debuff {
         for (const [key, instance] of Object.entries(this.instances)) {
             this.char.takeDamage({
                 source: `${Poison.name} (${instance.source.name})`,
-                damage: Poison.baseDamage + Math.floor(this.char.currentHealth * Poison.healthDamagePercent),
-                armourPenetration: instance.source.stats.getStat(StatType.ArmourPenetration)
+                damage: (Poison.baseDamage + this.char.currentHealth * Poison.healthDamagePercent) * instance.stacks,
+                armourPenetration: Infinity
             });
 
             instance.stacks -= 1;

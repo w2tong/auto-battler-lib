@@ -9,8 +9,8 @@ import debuffs from './debuffs';
 
 export default class StatusEffectManager {
     private char: Character;
-    private buffs: { [id in BuffId]?: Buff } = {};
-    private debuffs: { [id in DebuffId]?: Debuff } = {};
+    private _buffs: { [id in BuffId]?: Buff } = {};
+    private _debuffs: { [id in DebuffId]?: Debuff } = {};
 
     private outgoingBuffs: { [key: string]: Buff } = {};
     private outgoingDebuffs: { [key: string]: Debuff } = {};
@@ -19,27 +19,20 @@ export default class StatusEffectManager {
         this.char = char;
     }
 
+    get buffs() {
+        return this._buffs;
+    }
+
+    get debuffs() {
+        return this._debuffs;
+    }
+
     getBuffStacks(id: BuffId) {
         return this.buffs[id]?.stacks ?? 0;
     }
 
-    getStatusEffectString(statusEffects: { [id in BuffId]?: Buff } | { [id in DebuffId]?: Debuff }) {
-        const arr: string[] = [];
-        for (const statusEffect of Object.values(statusEffects)) {
-            arr.push(`${statusEffect.symbol}(${statusEffect.stacks})`);
-        }
-        return arr.join(' ');
-    }
-
-    getBuffString(): string {
-        return this.getStatusEffectString(this.buffs);
-    }
-
-    getDebuffString(): string {
-        return this.getStatusEffectString(this.debuffs);
-    }
-
     addBuff(id: BuffId, source: Character, stacks: number) {
+        if (stacks <= 0) return;
         if (!this.buffs[id]) this.buffs[id] = new buffs[id](this.char);
         const buff = this.buffs[id];
         if (!buff) return;
@@ -49,6 +42,7 @@ export default class StatusEffectManager {
     }
 
     addDebuff(id: DebuffId, source: Character, stacks: number) {
+        if (stacks <= 0) return;
         if (!this.debuffs[id]) this.debuffs[id] = new debuffs[id](this.char);
         const debuff = this.debuffs[id];
         if (!debuff) return;
@@ -71,24 +65,41 @@ export default class StatusEffectManager {
         delete this.outgoingDebuffs[geOutgoingStatusEffectId(id, char)];
     }
 
-    onTurnStart() {
+    turnStart() {
         for (const buff of Object.values(this.buffs)) buff.onTurnStart();
         for (const debuff of Object.values(this.debuffs)) debuff.onTurnStart();
 
-        for (const buff of Object.values(this.buffs)) buff.onSourceTurnStart(this.char);
-        for (const debuff of Object.values(this.debuffs)) debuff.onSourceTurnStart(this.char);
+        for (const buff of Object.values(this.outgoingBuffs)) buff.onSourceTurnStart(this.char);
+        for (const debuff of Object.values(this.outgoingDebuffs)) debuff.onSourceTurnStart(this.char);
     }
 
-    onTurnEnd() {
+    turnEnd() {
         for (const buff of Object.values(this.buffs)) buff.onTurnEnd();
         for (const debuff of Object.values(this.debuffs)) debuff.onTurnEnd();
 
-        for (const buff of Object.values(this.buffs)) buff.onSourceTurnEnd(this.char);
-        for (const debuff of Object.values(this.debuffs)) debuff.onSourceTurnEnd(this.char);
+        for (const buff of Object.values(this.outgoingBuffs)) buff.onSourceTurnEnd(this.char);
+        for (const debuff of Object.values(this.outgoingDebuffs)) debuff.onSourceTurnEnd(this.char);
     }
 
     onAttack(hit: boolean) {
         for (const buff of Object.values(this.buffs)) buff.onAttack(hit);
         for (const debuff of Object.values(this.debuffs)) debuff.onAttack(hit);
+    }
+
+    // TODO: move following methods to client
+    getStatusEffectString(statusEffects: { [id in BuffId]?: Buff } | { [id in DebuffId]?: Debuff }) {
+        const arr: string[] = [];
+        for (const statusEffect of Object.values(statusEffects)) {
+            arr.push(`${statusEffect.symbol}(${statusEffect.stacks})`);
+        }
+        return arr.join(' ');
+    }
+
+    getBuffString(): string {
+        return this.getStatusEffectString(this.buffs);
+    }
+
+    getDebuffString(): string {
+        return this.getStatusEffectString(this.debuffs);
     }
 }

@@ -1,5 +1,5 @@
 import AttackType from '../AttackType';
-import Battle from '../Battle';
+import Battle from '../Battle/Battle';
 import Character from '../Character/Character';
 import { getRandomEncounter } from '../encounters';
 import { weapons } from '../Equipment/Weapon';
@@ -29,7 +29,7 @@ function displayCharacterStats(char: Character) {
         spellPowerRatio: weapon.spellPowerRatio,
         isOffHand: false
     });
-    
+
     console.log(`${char.name}
 Lvl. ${char.level}
 Health: ${char.currentHealth}

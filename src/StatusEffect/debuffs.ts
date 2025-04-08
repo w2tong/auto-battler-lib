@@ -1,11 +1,11 @@
 import DebuffId from './DebuffId';
 
-import Burn from './Debuffs/Burn';
+import Burning from './Debuffs/Burning';
 import Frozen from './Debuffs/Frozen';
-import Poison from './Debuffs/Poison';
+import Poisoned from './Debuffs/Poisoned';
 
 export default {
-    [DebuffId.Burn]: Burn,
-    [DebuffId.Poison]: Poison,
+    [DebuffId.Burning]: Burning,
+    [DebuffId.Poisoned]: Poisoned,
     [DebuffId.Frozen]: Frozen,
 } as const;

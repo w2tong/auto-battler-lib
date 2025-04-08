@@ -1,6 +1,6 @@
-import Character, { CharacterJSON } from './Character/Character';
+import Character, { CharacterJSON } from '../Character/Character';
 import Log from './Log';
-import { rollDice, dice } from './dice';
+import { rollDice, dice } from '../dice';
 
 enum Side {
     Left = 'Left',
@@ -16,7 +16,7 @@ type TurnRes = {
 type BattleJSON = {
     left: CharacterJSON[];
     right: CharacterJSON[];
-    turnOrder: {name: string, init: number}[];
+    turnOrder: { name: string, init: number }[];
     turnIndex: number;
 }
 
@@ -28,11 +28,11 @@ class Battle {
     private rightAlive: Set<number> = new Set();
 
     private _turnIndex = -1;
-    private _turnOrder: {char: Character, init: number}[] = [];
+    private _turnOrder: { char: Character, init: number }[] = [];
 
     private _log: Log;
 
-    private winner?: Side; 
+    private winner?: Side;
 
     constructor(left: Character[], right: Character[]) {
         this._left = left;
@@ -67,9 +67,9 @@ class Battle {
         return this._turnOrder;
     }
 
-    getTargets(side: Side) {
-        // Get alive chars
-        return side === Side.Left ? Array.from(this.rightAlive.values()).map(i => this.right[i]) : Array.from(this.leftAlive.values()).map(i => this.left[i]);
+    getAliveTargets(side: Side) {
+        if (side === Side.Left) return Array.from(this.leftAlive.values()).map(i => this.left[i]);
+        return Array.from(this.rightAlive.values()).map(i => this.right[i]);
     }
 
     setCharDead(side: Side, index: number) {
@@ -83,24 +83,25 @@ class Battle {
             this.rightAlive.delete(index);
         }
         this._turnOrder = this.turnOrder.filter(c => c.char !== char);
+        this._turnIndex--;
     }
 
     startCombat() {
         // Assign turn order for characters
         for (const char of this.left) {
             const init = rollDice(dice['1d20']) + char.initiative;
-            this.turnOrder.push({char, init});
+            this.turnOrder.push({ char, init });
         }
         for (const char of this.right) {
             const init = rollDice(dice['1d20']) + char.initiative;
-            this.turnOrder.push({char, init});
+            this.turnOrder.push({ char, init });
         }
         this.turnOrder.sort((a, b) => b.init - a.init);
     }
 
     nextTurn(): TurnRes {
         this.log.nextTurn();
-        const res: TurnRes = {combatEnded: false};
+        const res: TurnRes = { combatEnded: false };
         if (this.leftAlive.size === 0 && this.rightAlive.size === 0) {
             this.winner = Side.Tie;
             res.combatEnded = true;
@@ -125,7 +126,7 @@ class Battle {
             const char = this.turnOrder[this.turnIndex].char;
             char.doTurn();
 
-            return {combatEnded: false};
+            return { combatEnded: false };
         }
 
         return res;
@@ -135,7 +136,7 @@ class Battle {
         return {
             left: [...this.left.map(char => char.json())],
             right: [...this.right.map(char => char.json())],
-            turnOrder: this.turnOrder.map(charInit => {return {name: charInit.char.name, init: charInit.init};}),
+            turnOrder: this.turnOrder.map(charInit => { return { name: charInit.char.name, init: charInit.init }; }),
             turnIndex: this.turnIndex,
         };
     }

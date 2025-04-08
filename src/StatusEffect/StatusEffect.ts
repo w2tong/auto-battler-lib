@@ -1,4 +1,5 @@
 import Character from '../Character/Character';
+import StatType from '../Character/Stats/StatType';
 import BuffId from './BuffId';
 import DebuffId from './DebuffId';
 
@@ -13,15 +14,21 @@ abstract class StatusEffect {
     abstract readonly name: string;
     abstract readonly symbol: string;
     readonly char: Character;
-    readonly instances: {[key: string]: {source: Character, stacks: number}} = {};
+    readonly instances: {
+        [key: string]: {
+            source: Character,
+            stacks: number,
+            stats?: { [stat in StatType]?: number }
+        }
+    } = {};
 
     constructor(char: Character) {
         this.char = char;
     }
 
     // Status Effect events
-    abstract onApply(): void;
-    abstract onExpire(): void;
+    abstract onApply(id: string): void;
+    abstract onExpire(id: string): void;
     // Char events
     abstract onTurnStart(): void;
     abstract onTurnEnd(): void;
@@ -39,18 +46,18 @@ abstract class StatusEffect {
 
         if (this.instances[id]) this.instances[id].stacks += stacks;
         else {
-            this.instances[id] = {source, stacks};
-            this.onApply();
+            this.instances[id] = { source, stacks };
+            this.onApply(id);
         }
     }
 
     remove(id: string) {
         if (this.char.battle) this.char.battle.ref.log.add(`${this.char.name} lost ${this.name} from ${this.instances[id].source.name}.`);
 
-        this.onExpire();
+        this.onExpire(id);
         if (this.id in BuffId) this.instances[id].source.statusEffectManager.removeOutgoingBuff(this.id as BuffId, this.char);
         else if (this.id in DebuffId) this.instances[id].source.statusEffectManager.removeOutgoingDebuff(this.id as DebuffId, this.char);
-        
+
         delete this.instances[id];
     }
 }

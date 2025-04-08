@@ -13,8 +13,6 @@ const Firebolt: Ability = {
     name: NAME,
     description: 'Attack your target and apply Burn.',
     func: (char) => {
-        if (!char.battle) return;
-        char.setTarget();
         if (char.target) {
             char.useAbilityMana();
             const hit = char.attack({
@@ -31,7 +29,7 @@ const Firebolt: Ability = {
             });
 
             if (hit) {
-                char.target.statusEffectManager.addDebuff(DebuffId.Burn, char, 2);
+                char.target.statusEffectManager.addDebuff(DebuffId.Burning, char, 2);
             }
         }
     }

@@ -7,13 +7,13 @@ export default class Frozen extends Debuff {
     name: string = 'Frozen';
     symbol: string = '🧊';
 
-    onApply() {}
-    onExpire() {}
+    onApply() { }
+    onExpire() { }
 
-    onTurnStart() {}
-    onTurnEnd() {}
-    onAttack() {}
-    
-    onSourceTurnStart() {}
-    onSourceTurnEnd() {}
+    onTurnStart() { }
+    onTurnEnd() { }
+    onAttack() { }
+
+    onSourceTurnStart() { }
+    onSourceTurnEnd() { }
 }

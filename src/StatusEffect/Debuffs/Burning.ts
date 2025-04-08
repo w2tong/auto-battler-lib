@@ -3,8 +3,8 @@ import Debuff from '../Debuff';
 import DebuffId from '../DebuffId';
 
 export default class Burn extends Debuff {
-    id = DebuffId.Burn;
-    name: string = 'Burn';
+    id = DebuffId.Burning;
+    name: string = 'Burning';
     symbol: string = '🔥';
 
     static baseDamage = 1;
@@ -18,7 +18,7 @@ export default class Burn extends Debuff {
         for (const [key, instance] of Object.entries(this.instances)) {
             this.char.takeDamage({
                 source: `${Burn.name} (${instance.source.name})`,
-                damage: Burn.baseDamage + Math.floor(instance.source.stats.spellPower * Burn.spellPowerRatio),
+                damage: Burn.baseDamage + instance.source.stats.spellPower * Burn.spellPowerRatio,
                 armourPenetration: instance.source.stats.getStat(StatType.ArmourPenetration)
             });
 

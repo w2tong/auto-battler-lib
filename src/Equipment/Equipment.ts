@@ -9,8 +9,8 @@ import { Ring, RingId, rings } from './Ring';
 import { Shield, ShieldId, shields } from './Shield';
 import { Weapon, WeaponId, WeaponTypeProperties, weapons } from './Weapon';
 
-type Equip = Weapon|Shield|Armour|Head|Hands|Ring|Potion|Belt|Amulet;
-const equips: {[key: string]: Equip} = {...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts, ...amulets} as const;
+type Equip = Weapon | Shield | Armour | Head | Hands | Ring | Potion | Belt | Amulet;
+const equips: { [key: string]: Equip } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts, ...amulets } as const;
 
 type Equipment = {
     mainHand?: Weapon;
@@ -135,7 +135,7 @@ function createEquipment(equipmentItemIds: EquipmentItemIds): Equipment {
     if (equipmentItemIds.belt && equipmentItemIds.belt in belts) {
         equipment.belt = belts[equipmentItemIds.belt as BeltId];
     }
-    
+
     return equipment;
 }
 

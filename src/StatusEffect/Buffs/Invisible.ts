@@ -6,19 +6,19 @@ export default class Invisible extends Buff {
     name = 'Invisible';
     symbol = '☁️';
 
-    static damage = 2;
+    static damage = 4;
 
-    onApply() {}
-    onExpire() {}
+    onApply() { }
+    onExpire() { }
 
-    onTurnStart() {}
-    onTurnEnd() {}
+    onTurnStart() { }
+    onTurnEnd() { }
     onAttack() {
         for (const key of Object.keys(this.instances)) {
             this.remove(key);
         }
     }
-    
-    onSourceTurnStart() {}
-    onSourceTurnEnd() {}
+
+    onSourceTurnStart() { }
+    onSourceTurnEnd() { }
 }

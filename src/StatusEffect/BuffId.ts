@@ -1,6 +1,6 @@
 enum BuffId {
     Invisible = 'Invisible',
-    Bless = 'Bless',
+    Blessed = 'Blessed',
 }
 
 export default BuffId;
