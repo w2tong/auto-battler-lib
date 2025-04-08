@@ -7,7 +7,8 @@ import { ItemType } from './Item';
 import { Potion, PotionId, potions } from './Potion';
 import { Ring, RingId, rings } from './Ring';
 import { Shield, ShieldId, shields } from './Shield';
-import { Weapon, WeaponId, WeaponTypeProperties, weapons } from './Weapon/weapons';
+import { Weapon, WeaponTypeProperties } from './Weapon/Weapon';
+import { WeaponId, weapons } from './Weapon/weapons';
 
 type Equip = Weapon | Shield | Armour | Head | Hands | Ring | Potion | Belt | Amulet;
 const equips: { [key: string]: Equip; } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts, ...amulets } as const;
