@@ -93,6 +93,18 @@ test('Blessing - 1 source, 3 stacks', () => {
     expect(char.stats.hitChance).toBeCloseTo(0);
 });
 
+test('Blessing - 1 source, 1 stack per cast', () => {
+    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(char)].stacks).toBe(1);
+    expect(char.stats.damage).toBeCloseTo(charDamage);
+    expect(char.stats.hitChance).toBeCloseTo(charHitChance);
+
+    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(char)].stacks).toBe(2);
+    expect(char.stats.damage).toBeCloseTo(charDamage);
+    expect(char.stats.hitChance).toBeCloseTo(charHitChance);
+});
+
 test('Blessing - 2 sources, 1 stack each', () => {
     char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
     char.statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
