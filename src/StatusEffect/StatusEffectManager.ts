@@ -12,8 +12,8 @@ export default class StatusEffectManager {
     private _buffs: { [id in BuffId]?: Buff } = {};
     private _debuffs: { [id in DebuffId]?: Debuff } = {};
 
-    private outgoingBuffs: { [key: string]: Buff } = {};
-    private outgoingDebuffs: { [key: string]: Debuff } = {};
+    private outgoingBuffs: { [key: string]: Buff; } = {};
+    private outgoingDebuffs: { [key: string]: Debuff; } = {};
 
     constructor(char: Character) {
         this.char = char;
