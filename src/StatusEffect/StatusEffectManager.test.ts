@@ -1,5 +1,6 @@
 import Battle from '../Battle/Battle';
 import Character from '../Character/Character';
+import { getCharBattleId } from '../util';
 import BuffId from './BuffId';
 import StatusEffectManager from './StatusEffectManager';
 
@@ -27,6 +28,36 @@ beforeEach(() => {
     new Battle([source1, source2], []);
 });
 
+describe('addBuff', () => {
+    test('0 stacks', () => {
+        statusEffectManager.addBuff(BuffId.Blessed, source1, 0);
+        expect(statusEffectManager.buffs[BuffId.Blessed]).toBeUndefined();
+    });
+
+    test('1 source, 1 stack', () => {
+        statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
+        expect(statusEffectManager.buffs[BuffId.Blessed]?.instances[getCharBattleId(source1)].stacks).toBe(1);
+    });
+
+    test('1 source, 2 stack', () => {
+        statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
+        expect(statusEffectManager.buffs[BuffId.Blessed]?.instances[getCharBattleId(source1)].stacks).toBe(1);
+        statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
+        expect(statusEffectManager.buffs[BuffId.Blessed]?.instances[getCharBattleId(source1)].stacks).toBe(2);
+    });
+
+    test('1 source, 2 stack', () => {
+        statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
+        statusEffectManager.addBuff(BuffId.Blessed, source2, 2);
+        expect(statusEffectManager.buffs[BuffId.Blessed]?.instances[getCharBattleId(source1)].stacks).toBe(1);
+        expect(statusEffectManager.buffs[BuffId.Blessed]?.instances[getCharBattleId(source2)].stacks).toBe(2);
+    });
+});
+
+describe('addDebuff', () => {
+
+});
+
 describe('getBuffStacks', () => {
     test('0 stacks', () => {
         expect(statusEffectManager.getBuffStacks(BuffId.Blessed)).toBe(0);
@@ -50,14 +81,6 @@ describe('getBuffStacks', () => {
         statusEffectManager.addBuff(BuffId.Blessed, source2, 3);
         expect(statusEffectManager.getBuffStacks(BuffId.Blessed)).toBe(6);
     });
-});
-
-describe('addBuff', () => {
-
-});
-
-describe('addDebuff', () => {
-
 });
 
 /*
