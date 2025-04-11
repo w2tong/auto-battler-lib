@@ -2,6 +2,7 @@ import Battle from '../Battle/Battle';
 import Character from '../Character/Character';
 import { getCharBattleId } from '../util';
 import BuffId from './BuffId';
+import DebuffId from './DebuffId';
 import StatusEffectManager from './StatusEffectManager';
 
 let source1: Character;
@@ -32,6 +33,8 @@ describe('addBuff', () => {
     test('0 stacks', () => {
         statusEffectManager.addBuff(BuffId.Blessed, source1, 0);
         expect(statusEffectManager.buffs[BuffId.Blessed]).toBeUndefined();
+        statusEffectManager.addBuff(BuffId.Invisible, source1, 0);
+        expect(statusEffectManager.buffs[BuffId.Invisible]).toBeUndefined();
     });
 
     test('1 source, 1 stack', () => {
@@ -55,7 +58,33 @@ describe('addBuff', () => {
 });
 
 describe('addDebuff', () => {
+    test('0 stacks', () => {
+        statusEffectManager.addDebuff(DebuffId.Burning, source1, 0);
+        expect(statusEffectManager.debuffs[DebuffId.Burning]).toBeUndefined();
+        statusEffectManager.addDebuff(DebuffId.Frozen, source1, 0);
+        expect(statusEffectManager.debuffs[DebuffId.Frozen]).toBeUndefined();
+        statusEffectManager.addDebuff(DebuffId.Poisoned, source1, 0);
+        expect(statusEffectManager.debuffs[DebuffId.Poisoned]).toBeUndefined();
+    });
 
+    test('1 source, 1 stack', () => {
+        statusEffectManager.addDebuff(DebuffId.Burning, source1, 1);
+        expect(statusEffectManager.debuffs[DebuffId.Burning]?.instances[getCharBattleId(source1)].stacks).toBe(1);
+    });
+
+    test('1 source, 2 stacks', () => {
+        statusEffectManager.addDebuff(DebuffId.Burning, source1, 1);
+        expect(statusEffectManager.debuffs[DebuffId.Burning]?.instances[getCharBattleId(source1)].stacks).toBe(1);
+        statusEffectManager.addDebuff(DebuffId.Burning, source1, 1);
+        expect(statusEffectManager.debuffs[DebuffId.Burning]?.instances[getCharBattleId(source1)].stacks).toBe(2);
+    });
+
+    test('2 sources, 1 stack each', () => {
+        statusEffectManager.addDebuff(DebuffId.Burning, source1, 1);
+        statusEffectManager.addDebuff(DebuffId.Burning, source2, 2);
+        expect(statusEffectManager.debuffs[DebuffId.Burning]?.instances[getCharBattleId(source1)].stacks).toBe(1);
+        expect(statusEffectManager.debuffs[DebuffId.Burning]?.instances[getCharBattleId(source2)].stacks).toBe(2);
+    });
 });
 
 describe('getBuffStacks', () => {
