@@ -3,8 +3,7 @@ import { type Weapon, WeaponTypeProperties } from './Equipment/Weapon/Weapon';
 enum WeaponStyle {
     DualWield = 'Dual Wield',
     TwoHanded = 'Two-Handed',
-    OneHanded = 'One-Handed',
-    Ranged = 'Ranged'
+    OneHanded = 'One-Handed'
 }
 
 function getWeaponStyle({ mainHand, offHand }: { mainHand?: Weapon, offHand?: Weapon; }): WeaponStyle {
