@@ -18,13 +18,13 @@ function getCharBattleId(char: Character): string {
     return `${char.battle!.side}${char.battle!.index}`;
 }
 
-function geOutgoingStatusEffectId(id: BuffId | DebuffId, char: Character) {
+function getOutgoingStatusEffectId(id: BuffId | DebuffId, char: Character) {
     return `${id}-${getCharBattleId(char)}`;
 }
 
 function createNPCChar(npc: NPC, level: number, num?: number): Character {
     const attributes: BaseAttributes = {};
-    for (const [type, {base, perLvl}] of Object.entries(npc.attributes)) {
+    for (const [type, { base, perLvl }] of Object.entries(npc.attributes)) {
         attributes[type as AttributeType] = base + (perLvl ? perLvl * (level - 1) : 0);
     }
 
@@ -38,7 +38,7 @@ function createNPCChar(npc: NPC, level: number, num?: number): Character {
     });
 }
 
-function createPlayerChar({userId, name, level, className, attributes, statTemplate, equipment, ability}: {userId: string, name: string, level: number, className: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: Equipment, ability: Ability}): Character {
+function createPlayerChar({ userId, name, level, className, attributes, statTemplate, equipment, ability }: { userId: string, name: string, level: number, className: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: Equipment, ability: Ability; }): Character {
     // TODO: use class to calculate stuff
     return new Character({
         name,
@@ -54,4 +54,4 @@ function createPlayerChar({userId, name, level, className, attributes, statTempl
     });
 }
 
-export { getRandomRange, getCharBattleId, geOutgoingStatusEffectId, createNPCChar, createPlayerChar };
+export { getRandomRange, getCharBattleId, getOutgoingStatusEffectId, createNPCChar, createPlayerChar };

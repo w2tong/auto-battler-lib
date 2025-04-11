@@ -1,5 +1,5 @@
 import Character from '../Character/Character';
-import { geOutgoingStatusEffectId, getCharBattleId } from '../util';
+import { getOutgoingStatusEffectId, getCharBattleId } from '../util';
 import Buff from './Buff';
 import BuffId from './BuffId';
 import buffs from './buffs';
@@ -52,17 +52,17 @@ export default class StatusEffectManager {
     }
 
     addOutgoingBuff(id: BuffId, char: Character, ref: Buff) {
-        this.outgoingBuffs[geOutgoingStatusEffectId(id, char)] = ref;
+        this.outgoingBuffs[getOutgoingStatusEffectId(id, char)] = ref;
     }
     addOutgoingDebuff(id: DebuffId, char: Character, ref: Debuff) {
-        this.outgoingDebuffs[geOutgoingStatusEffectId(id, char)] = ref;
+        this.outgoingDebuffs[getOutgoingStatusEffectId(id, char)] = ref;
     }
 
     removeOutgoingBuff(id: BuffId, char: Character) {
-        delete this.outgoingBuffs[geOutgoingStatusEffectId(id, char)];
+        delete this.outgoingBuffs[getOutgoingStatusEffectId(id, char)];
     }
     removeOutgoingDebuff(id: DebuffId, char: Character) {
-        delete this.outgoingDebuffs[geOutgoingStatusEffectId(id, char)];
+        delete this.outgoingDebuffs[getOutgoingStatusEffectId(id, char)];
     }
 
     turnStart() {
