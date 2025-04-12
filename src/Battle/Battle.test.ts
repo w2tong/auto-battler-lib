@@ -4,19 +4,8 @@ import StatType from '../Character/Stats/StatType';
 import DamageType from '../DamageType';
 import { ItemType } from '../Equipment/Item';
 import { type Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
+import { createTestCharacter } from '../tests/util';
 import Battle, { Side } from './Battle';
-
-const zeroDamageWeapon: Weapon = {
-    id: 'longsword0',
-    itemType: ItemType.Weapon,
-    name: 'Longsword',
-    tier: 0,
-    img: 'weapon-longsword.png',
-    type: WeaponType.Longsword,
-    attackType: AttackType.MeleeWeapon,
-    damageType: DamageType.Physical,
-    damageRange: { min: 0, max: 0, bonus: 0 }
-};
 
 const testSword: Weapon = {
     id: 'longsword0',
@@ -116,50 +105,10 @@ describe('turnIndex', () => {
     let battle: Battle;
 
     beforeEach(() => {
-        left1 = new Character({
-            name: 'Left 1',
-            level: 1,
-            attributes: {},
-            statTemplate: {
-                [StatType.Initiative]: { base: 1 }
-            },
-            equipment: {
-                mainHand: zeroDamageWeapon
-            }
-        });
-        left2 = new Character({
-            name: 'Left 1',
-            level: 1,
-            attributes: {},
-            statTemplate: {
-                [StatType.Initiative]: { base: 2 }
-            },
-            equipment: {
-                mainHand: zeroDamageWeapon
-            }
-        });
-        right1 = new Character({
-            name: 'Right 1',
-            level: 1,
-            attributes: {},
-            statTemplate: {
-                [StatType.Initiative]: { base: 0 }
-            },
-            equipment: {
-                mainHand: zeroDamageWeapon
-            }
-        });
-        right2 = new Character({
-            name: 'Right 1',
-            level: 1,
-            attributes: {},
-            statTemplate: {
-                [StatType.Initiative]: { base: -1 }
-            },
-            equipment: {
-                mainHand: zeroDamageWeapon
-            }
-        });
+        left1 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 1 } } });
+        left2 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 2 } } });
+        right1 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 0 } } });
+        right2 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: -1 } } });
     });
 
     test('2 chars', () => {

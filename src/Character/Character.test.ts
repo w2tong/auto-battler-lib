@@ -8,6 +8,7 @@ import DamageRange from '../DamageRange';
 import { ItemType } from '../Equipment/Item';
 import { Potion } from '../Equipment/Potion';
 import * as utilModule from '../util';
+import { test1HWeapon } from '../tests/util';
 
 describe('calcCritDamage', () => {
     // 10 DMG
@@ -1082,7 +1083,9 @@ describe('hitRoll', () => {
             [StatType.OffHandHitChance]: { base: -20 },
             [StatType.DodgeReduction]: { base: 10 },
         },
-        equipment: {}
+        equipment: {
+            mainHand: test1HWeapon
+        }
     });
     let target: Character;
 

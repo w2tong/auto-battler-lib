@@ -2,6 +2,7 @@ import Battle from '../../Battle/Battle';
 import AttributeType from '../../Character/Attributes/AttributeType';
 import Character from '../../Character/Character';
 import StatType from '../../Character/Stats/StatType';
+import { createTestCharacter } from '../../tests/util';
 import { getCharBattleId } from '../../util';
 import BuffId from '../BuffId';
 import Blessed from './Blessed';
@@ -26,8 +27,7 @@ const source2Damage = Blessed.baseDamage + Blessed.damagePerLvl * source2Level +
 const source2HitChance = Blessed.baseHitChance + Blessed.hitChancePerLvl * source2Level + Blessed.hitChancePerWisdom * source2Wisdom;
 
 beforeEach(() => {
-    char = new Character({
-        name: 'Test',
+    char = createTestCharacter({
         level: charLevel,
         attributes: {
             [AttributeType.Wisdom]: charWisdom
@@ -35,8 +35,7 @@ beforeEach(() => {
         statTemplate: {
             [StatType.Damage]: { base: 0, perLvl: 0 },
             [StatType.HitChance]: { base: 0, perLvl: 0 },
-        },
-        equipment: {}
+        }
     });
 
     source1 = new Character({

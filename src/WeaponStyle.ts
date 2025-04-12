@@ -6,7 +6,7 @@ enum WeaponStyle {
     OneHanded = 'One-Handed'
 }
 
-function getWeaponStyle({ mainHand, offHand }: { mainHand?: Weapon, offHand?: Weapon; }): WeaponStyle {
+function getWeaponStyle({ mainHand, offHand }: { mainHand: Weapon, offHand?: Weapon; }): WeaponStyle {
     if (mainHand && offHand) {
         return WeaponStyle.DualWield;
     }

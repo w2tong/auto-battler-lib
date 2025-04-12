@@ -1,8 +1,7 @@
 import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle/Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
-import { weapons } from '../Equipment/Weapon/weapons';
-import { Equipment } from '../Equipment/Equipment';
+import { Equipment, EquipmentImport } from '../Equipment/Equipment';
 import HitType from '../HitType';
 import { dice, rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
@@ -71,19 +70,19 @@ export default class Character {
     protected _target: Character | null = null;
     protected _battle: { ref: Battle, side: Side, index: number; } | null = null;
 
-    constructor({ name, level, className, attributes, statTemplate, equipment, ability, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: Equipment, ability?: Ability, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
+    constructor({ name, level, className, attributes, statTemplate, equipment, ability, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
         this._name = name;
         this._level = level;
         this.className = className ?? null;
 
-        this._equipment = equipment;
+        this._equipment = new Equipment(equipment);
 
         // Attributes
-        this._attributes = new Attributes(attributes, equipment);
+        this._attributes = new Attributes(attributes, this._equipment);
         this._stats = new Stats({
             template: statTemplate,
             attributes: this.attributes,
-            equipment,
+            equipment: this._equipment,
             level
         });
         this.ability = ability ?? (className ? Classes[className].ability : null);
@@ -119,10 +118,6 @@ export default class Character {
 
     get equipment() {
         return this._equipment;
-    }
-
-    get mainHand() {
-        return this.equipment.mainHand ?? weapons.unarmed0;
     }
 
     get currentHealth() {
@@ -359,9 +354,7 @@ export default class Character {
             return;
         }
 
-        // Main hand attack
-        this.weaponAttack(this.mainHand, this.target, false);
-        // Off-hand attack
+        this.weaponAttack(this.equipment.mainHand, this.target, false);
         if (this.equipment.offHandWeapon) this.weaponAttack(this.equipment.offHandWeapon, this.target, false);
     }
 
@@ -417,7 +410,7 @@ export default class Character {
             name: this.name,
             className: this.className,
             level: this.level,
-            mainHand: this.mainHand,
+            mainHand: this.equipment.mainHand,
             offHandWeapon: this.equipment.offHandWeapon,
             potion: this.equipment.potion,
             attributes: this.attributes,
