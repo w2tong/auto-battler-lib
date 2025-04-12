@@ -38,24 +38,18 @@ beforeEach(() => {
         }
     });
 
-    source1 = new Character({
-        name: 'Source 1',
+    source1 = createTestCharacter({
         level: source1Level,
         attributes: {
             [AttributeType.Wisdom]: source1Wisdom
-        },
-        statTemplate: {},
-        equipment: {}
+        }
     });
 
-    source2 = new Character({
-        name: 'Source 2',
+    source2 = createTestCharacter({
         level: source2Level,
         attributes: {
             [AttributeType.Wisdom]: source2Wisdom
-        },
-        statTemplate: {},
-        equipment: {}
+        }
     });
 
     new Battle([char, source1, source2], []);

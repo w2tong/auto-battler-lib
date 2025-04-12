@@ -183,9 +183,10 @@ export default class Character {
     }
 
     usePotion(): void {
-        if (this.equipment.potion) {
+        if (this.equipment.potion && this.equipment.potion.charges > 0) {
             const potionHeal = (rollDice(this.equipment.potion.dice) + this.equipment.potion.bonus + this.stats.getStat(StatType.PotionHealing)) * (1 + this.stats.getStat(StatType.PotionEffectiveness));
             this.addHealth(potionHeal);
+            this.equipment.potion.charges -= 1;
             if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.equipment.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
         }
     }
@@ -198,7 +199,6 @@ export default class Character {
         this.statusEffectManager.turnStart();
         if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
             this.usePotion();
-            this.equipment.potion.charges -= 1;
         }
 
         this.setTarget();

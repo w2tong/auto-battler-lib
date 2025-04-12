@@ -1,5 +1,6 @@
 import Battle from '../Battle/Battle';
 import Character from '../Character/Character';
+import { createTestCharacter } from '../tests/util';
 import { getCharBattleId } from '../util';
 import BuffId from './BuffId';
 import DebuffId from './DebuffId';
@@ -10,20 +11,8 @@ let source2: Character;
 let statusEffectManager: StatusEffectManager;
 
 beforeEach(() => {
-    source1 = new Character({
-        name: 'Test',
-        level: 1,
-        attributes: {},
-        statTemplate: {},
-        equipment: {}
-    });
-    source2 = new Character({
-        name: 'Test',
-        level: 1,
-        attributes: {},
-        statTemplate: {},
-        equipment: {}
-    });
+    source1 = createTestCharacter({});
+    source2 = createTestCharacter({});
 
     statusEffectManager = source1.statusEffectManager;
     new Battle([source1, source2], []);

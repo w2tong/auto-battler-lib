@@ -28,51 +28,12 @@ afterEach(() => {
 });
 
 describe('startCombat/turnOrder', () => {
-    const left1 = new Character({
-        name: 'Left 1',
-        level: 1,
-        attributes: {},
-        statTemplate: {
-            [StatType.Initiative]: { base: 3 }
-        },
-        equipment: {}
-    });
-    const left2 = new Character({
-        name: 'Left 2',
-        level: 1,
-        attributes: {},
-        statTemplate: {
-            [StatType.Initiative]: { base: 2 }
-        },
-        equipment: {}
-    });
-    const left3 = new Character({
-        name: 'Left 3',
-        level: 1,
-        attributes: {},
-        statTemplate: {
-            [StatType.Initiative]: { base: 1 }
-        },
-        equipment: {}
-    });
-    const right1 = new Character({
-        name: 'Right 1',
-        level: 1,
-        attributes: {},
-        statTemplate: {
-            [StatType.Initiative]: { base: 0 }
-        },
-        equipment: {}
-    });
-    const right2 = new Character({
-        name: 'Right 2',
-        level: 1,
-        attributes: {},
-        statTemplate: {
-            [StatType.Initiative]: { base: -1 }
-        },
-        equipment: {}
-    });
+    const left1 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 3 } } });
+    const left2 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 2 } } });
+    const left3 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 1 } } });
+    const right1 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 0 } } });
+    const right2 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: -1 } } });
+
     let battle: Battle;
 
     test('2 chars', () => {
@@ -161,10 +122,7 @@ describe('nextTurn', () => {
     let battle: Battle;
 
     beforeEach(() => {
-        left1 = new Character({
-            name: 'Left 1',
-            level: 1,
-            attributes: {},
+        left1 = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 20 },
                 [StatType.Dodge]: { base: 0 },
@@ -174,10 +132,7 @@ describe('nextTurn', () => {
                 mainHand: testSword
             }
         });
-        right1 = new Character({
-            name: 'Right 1',
-            level: 1,
-            attributes: {},
+        right1 = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 20 },
                 [StatType.Dodge]: { base: 0 }
@@ -281,42 +236,11 @@ describe('nextTurn', () => {
 });
 
 describe('getAliveTargets', () => {
-    const left1 = new Character({
-        name: 'Left 1',
-        level: 1,
-        attributes: {},
-        statTemplate: {
-            [StatType.Initiative]: { base: 1 }
-        },
-        equipment: {}
-    });
-    const left2 = new Character({
-        name: 'Left 2',
-        level: 1,
-        attributes: {},
-        statTemplate: {
-            [StatType.Initiative]: { base: 2 }
-        },
-        equipment: {}
-    });
-    const right1 = new Character({
-        name: 'Right 1',
-        level: 1,
-        attributes: {},
-        statTemplate: {
-            [StatType.Initiative]: { base: 0 }
-        },
-        equipment: {}
-    });
-    const right2 = new Character({
-        name: 'Right 2',
-        level: 1,
-        attributes: {},
-        statTemplate: {
-            [StatType.Initiative]: { base: -1 }
-        },
-        equipment: {}
-    });
+    const left1 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 1 } } });
+    const left2 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 2 } } });
+    const right1 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 0 } } });
+    const right2 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: -1 } } });
+
     let battle: Battle;
 
     beforeEach(() => {

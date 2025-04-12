@@ -54,7 +54,7 @@ class Equipment {
         this.hands = equipmentImport.hands;
         this.ring1 = equipmentImport.ring1;
         this.ring2 = equipmentImport.ring2;
-        this.potion = equipmentImport.potion;
+        this.potion = structuredClone(equipmentImport.potion);
         this.belt = equipmentImport.belt;
         this.amulet = equipmentImport.amulet;
     }

@@ -1,6 +1,7 @@
 import Battle from '../../Battle/Battle';
 import Character from '../../Character/Character';
 import StatType from '../../Character/Stats/StatType';
+import { createTestCharacter } from '../../tests/util';
 import { getCharBattleId } from '../../util';
 import DebuffId from '../DebuffId';
 
@@ -8,28 +9,18 @@ let char: Character;
 let target: Character;
 
 beforeEach(() => {
-    char = new Character({
-        name: 'Test',
-        level: 1,
-        attributes: {},
+    char = createTestCharacter({
         statTemplate: {
             [StatType.SpellPower]: { base: 100 },
             [StatType.ArmourPenetration]: { base: 10 },
-        },
-        equipment: {}
+        }
     });
-
-    target = new Character({
-        name: 'Target',
-        level: 1,
-        attributes: {},
+    target = createTestCharacter({
         statTemplate: {
             [StatType.MaxHealth]: { base: 100 },
             [StatType.Armour]: { base: 60 }
-        },
-        equipment: {}
+        }
     });
-
     new Battle([char], [target]);
 });
 

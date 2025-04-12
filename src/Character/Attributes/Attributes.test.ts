@@ -1,11 +1,10 @@
+import { createTestCharacter } from '../../tests/util';
 import Character from '../Character';
 import AttributeType from './AttributeType';
 
 let char: Character;
 beforeEach(() => {
-    char = new Character({
-        name: 'Test',
-        level: 1,
+    char = createTestCharacter({
         attributes: {
             [AttributeType.WeaponSkill]: 5,
             [AttributeType.Strength]: 6,
@@ -14,9 +13,7 @@ beforeEach(() => {
             [AttributeType.Constitution]: 9,
             [AttributeType.Intelligence]: 10,
             [AttributeType.Wisdom]: 11,
-        },
-        statTemplate: {},
-        equipment: {}
+        }
     });
 });
 

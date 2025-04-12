@@ -1,5 +1,6 @@
 import Battle from '../../Battle/Battle';
 import Character from '../../Character/Character';
+import { createTestCharacter } from '../../tests/util';
 import { getCharBattleId } from '../../util';
 import BuffId from '../BuffId';
 
@@ -8,30 +9,9 @@ let source1: Character;
 let source2: Character;
 
 beforeEach(() => {
-    char = new Character({
-        name: 'Test',
-        level: 1,
-        attributes: {},
-        statTemplate: {},
-        equipment: {}
-    });
-
-    source1 = new Character({
-        name: 'Source 1',
-        level: 1,
-        attributes: {},
-        statTemplate: {},
-        equipment: {}
-    });
-
-    source2 = new Character({
-        name: 'Source 2',
-        level: 1,
-        attributes: {},
-        statTemplate: {},
-        equipment: {}
-    });
-
+    char = createTestCharacter({});
+    source1 = createTestCharacter({});
+    source2 = createTestCharacter({});
     new Battle([char, source1, source2], []);
 });
 
