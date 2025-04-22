@@ -33,7 +33,7 @@ function displayCharacterStats(char: Character) {
     console.log(`${char.name}
 Lvl. ${char.level}
 Health: ${char.currentHealth}
-Hit Chance: ${char.stats.hitChance}
+Accuracy: ${char.stats.accuracy}
 Dodge Chance: ${char.stats.dodge}
 Crit Chance: ${char.stats.critChance}
 Crit Damage: ${char.stats.critDamage}

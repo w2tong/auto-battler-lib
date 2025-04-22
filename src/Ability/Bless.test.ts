@@ -12,7 +12,7 @@ beforeEach(() => {
     char = createTestCharacter({
         statTemplate: {
             [StatType.Damage]: { base: 0, perLvl: 0 },
-            [StatType.HitChance]: { base: 0, perLvl: 0 },
+            [StatType.Accuracy]: { base: 0, perLvl: 0 },
         }
     });
 

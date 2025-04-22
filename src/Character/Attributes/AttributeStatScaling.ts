@@ -2,9 +2,9 @@ import StatType from '../Stats/StatType';
 import AttributeType from './AttributeType';
 
 // TODO: test if these changed values are being calculated correctly
-const AttributeStatScaling: {[key in AttributeType]: {[key in StatType]?: number}} = {
+const AttributeStatScaling: { [key in AttributeType]: { [key in StatType]?: number } } = {
     [AttributeType.WeaponSkill]: {
-        [StatType.HitChance]: 1,
+        [StatType.Accuracy]: 1,
     },
     [AttributeType.Strength]: {
         [StatType.MeleeWeaponDamagePercent]: 0.01,

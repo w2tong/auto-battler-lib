@@ -900,23 +900,23 @@ describe('usePotion', () => {
 
 describe('hitRoll', () => {
     // Test Char
-    // Melee Hit Chance = 10 + 5 = 15
-    // Ranged Hit Chance = 10 + 10 = 20
-    // Spell Hit Chance = 10 + 15 = 25
-    // Melee Off-Hand Hit Chance = 10 + 5 - 20 = -5
-    // Ranged Off-Hand Hit Chance = 10 + 10 - 20 = 0
-    // Spell Off-Hand Hit Chance = 10 + 15 - 20 = 5
+    // Melee Accuracy = 10 + 5 = 15
+    // Ranged Accuracy = 10 + 10 = 20
+    // Spell Accuracy = 10 + 15 = 25
+    // Melee Off-Hand Accuracy = 10 + 5 - 20 = -5
+    // Ranged Off-Hand Accuracy = 10 + 10 - 20 = 0
+    // Spell Off-Hand Accuracy = 10 + 15 - 20 = 5
 
     // Target
     // Dodge Chance = 50 - 10 = 40
     const char = createTestCharacter({
 
         statTemplate: {
-            [StatType.HitChance]: { base: 10 },
-            [StatType.MeleeHitChance]: { base: 5 },
-            [StatType.RangedHitChance]: { base: 10 },
-            [StatType.SpellHitChance]: { base: 15 },
-            [StatType.OffHandHitChance]: { base: -20 },
+            [StatType.Accuracy]: { base: 10 },
+            [StatType.MeleeAccuracy]: { base: 5 },
+            [StatType.RangedAccuracy]: { base: 10 },
+            [StatType.SpellAccuracy]: { base: 15 },
+            [StatType.OffHandAccuracy]: { base: -20 },
             [StatType.DodgeReduction]: { base: 10 },
         },
         equipment: {

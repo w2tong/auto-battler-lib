@@ -6,7 +6,7 @@ const STACKS = 3;
 
 const Bless: Ability = {
     name: NAME,
-    description: `Gain ${STACKS} ${BuffId.Blessed} stacks, increasing Damage and Hit Chance.`,
+    description: `Gain ${STACKS} ${BuffId.Blessed} stacks, increasing Damage and Accuracy.`,
     func: (char) => {
         char.useAbilityMana();
         if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME}.`);

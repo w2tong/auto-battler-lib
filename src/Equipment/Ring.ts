@@ -7,19 +7,19 @@ interface Ring extends Item {
     stats?: ItemStats;
 }
 
-type RingId = 
-'atkRing0' | 'atkRing1' | 'atkRing2'
-| 'dmgRing0' | 'dmgRing1' | 'dmgRing2'
-| 'critRing0' | 'critRing1' | 'critRing2'
-| 'critDmgRing0' | 'critDmgRing1' | 'critDmgRing2' 
-| 'dodgeRing0' | 'dodgeRing1' | 'dodgeRing2'
-| 'thornsRing0' | 'thornsRing1' | 'thornsRing2'
-| 'mpHitRing0' | 'mpHitRing1' | 'mpHitRing2'
-| 'mpRegenRing0' | 'mpRegenRing1' | 'mpRegenRing2'
-| 'mpCostRing0' | 'mpCostRing1' | 'mpCostRing2'
-;
+type RingId =
+    'atkRing0' | 'atkRing1' | 'atkRing2'
+    | 'dmgRing0' | 'dmgRing1' | 'dmgRing2'
+    | 'critRing0' | 'critRing1' | 'critRing2'
+    | 'critDmgRing0' | 'critDmgRing1' | 'critDmgRing2'
+    | 'dodgeRing0' | 'dodgeRing1' | 'dodgeRing2'
+    | 'thornsRing0' | 'thornsRing1' | 'thornsRing2'
+    | 'mpHitRing0' | 'mpHitRing1' | 'mpHitRing2'
+    | 'mpRegenRing0' | 'mpRegenRing1' | 'mpRegenRing2'
+    | 'mpCostRing0' | 'mpCostRing1' | 'mpCostRing2'
+    ;
 
-const rings: {[id in RingId]: Ring} = {
+const rings: { [id in RingId]: Ring } = {
     atkRing0: {
         id: 'atkRing0',
         itemType: ItemType.Ring,
@@ -28,7 +28,7 @@ const rings: {[id in RingId]: Ring} = {
         img: 'ring-red.png',
 
         stats: {
-            [StatType.HitChance]: 4
+            [StatType.Accuracy]: 4
         }
     },
     atkRing1: {
@@ -39,7 +39,7 @@ const rings: {[id in RingId]: Ring} = {
         img: 'ring-red.png',
 
         stats: {
-            [StatType.HitChance]: 7
+            [StatType.Accuracy]: 7
         }
     },
     atkRing2: {
@@ -48,9 +48,9 @@ const rings: {[id in RingId]: Ring} = {
         name: 'Ring of Greater Attack',
         tier: 0,
         img: 'ring-red.png',
-        
+
         stats: {
-            [StatType.HitChance]: 10
+            [StatType.Accuracy]: 10
         }
     },
     dmgRing0: {
@@ -70,7 +70,7 @@ const rings: {[id in RingId]: Ring} = {
         name: 'Ring of Damage',
         tier: 3,
         img: 'ring-orange.png',
-        
+
         stats: {
             [StatType.Damage]: 2
         }
@@ -81,7 +81,7 @@ const rings: {[id in RingId]: Ring} = {
         name: 'Ring of Greater Damage',
         tier: 5,
         img: 'ring-orange.png',
-        
+
         stats: {
             [StatType.Damage]: 3
         }
@@ -92,7 +92,7 @@ const rings: {[id in RingId]: Ring} = {
         name: 'Ring of Lesser Crit Chance',
         tier: 1,
         img: 'ring-black.png',
-        
+
         stats: {
             [StatType.CriticalChance]: 4
         }
@@ -103,7 +103,7 @@ const rings: {[id in RingId]: Ring} = {
         name: 'Ring of Crit Chance',
         tier: 3,
         img: 'ring-black.png',
-        
+
         stats: {
             [StatType.CriticalChance]: 7
         }
@@ -114,7 +114,7 @@ const rings: {[id in RingId]: Ring} = {
         name: 'Ring of Greater Crit Chance',
         tier: 5,
         img: 'ring-black.png',
-        
+
         stats: {
             [StatType.CriticalChance]: 10
         }
@@ -136,7 +136,7 @@ const rings: {[id in RingId]: Ring} = {
         name: 'Ring of Crit Damage',
         tier: 3,
         img: 'ring-grey.png',
-        
+
         stats: {
             [StatType.CriticalDamage]: 20
         }
@@ -147,7 +147,7 @@ const rings: {[id in RingId]: Ring} = {
         name: 'Ring of Greater Crit Damage',
         tier: 5,
         img: 'ring-grey.png',
-        
+
         stats: {
             [StatType.CriticalDamage]: 30
         }
@@ -191,7 +191,7 @@ const rings: {[id in RingId]: Ring} = {
         name: 'Ring of Lesser Thorns',
         tier: 1,
         img: 'ring-thorns.png',
-        
+
         stats: {
             [StatType.Thorns]: 1
         }
@@ -202,7 +202,7 @@ const rings: {[id in RingId]: Ring} = {
         name: 'Ring of Thorns',
         tier: 3,
         img: 'ring-thorns.png',
-        
+
         stats: {
             [StatType.Thorns]: 2
         }
@@ -213,7 +213,7 @@ const rings: {[id in RingId]: Ring} = {
         name: 'Ring of Greater Thorns',
         tier: 5,
         img: 'ring-thorns.png',
-        
+
         stats: {
             [StatType.Thorns]: 3
         }
@@ -224,7 +224,7 @@ const rings: {[id in RingId]: Ring} = {
         name: 'Ring of Lesser Mana Hit',
         tier: 1,
         img: 'ring-purple.png',
-                
+
         stats: {
             [StatType.ManaOnHit]: 1
         }

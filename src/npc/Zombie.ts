@@ -17,7 +17,7 @@ const Zombie: NPC = {
         [StatType.MaxHealth]: { base: 16, perLvl: 3.5 },
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 10 },
 
-        [StatType.HitChance]: { base: -10 },
+        [StatType.Accuracy]: { base: -10 },
 
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
 

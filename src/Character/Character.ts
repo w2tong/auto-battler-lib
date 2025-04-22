@@ -42,7 +42,7 @@ type CharacterJSON = {
     debuffs: string;
 };
 
-// Crit chance, crit dmg, hit chance, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
+// Crit chance, crit dmg, Accuracy, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
 export default class Character {
     private userId?: string;
 
@@ -221,24 +221,24 @@ export default class Character {
         // Rolling 96-100 always hits
         if (roll > 95) return true;
 
-        let hitChance = this.stats.hitChance;
-        // Add off-hand hit chance
-        if (isOffHand) hitChance += this.stats.getStat(StatType.OffHandHitChance);
-        // Add attack type hit chance
+        let accuracy = this.stats.accuracy;
+        // Add off-hand Accuracy
+        if (isOffHand) accuracy += this.stats.getStat(StatType.OffHandAccuracy);
+        // Add attack type Accuracy
         switch (attackType) {
             case AttackType.MeleeWeapon:
-                hitChance += this.stats.getStat(StatType.MeleeHitChance);
+                accuracy += this.stats.getStat(StatType.MeleeAccuracy);
                 break;
             case AttackType.RangedWeapon:
-                hitChance += this.stats.getStat(StatType.RangedHitChance);
+                accuracy += this.stats.getStat(StatType.RangedAccuracy);
                 break;
             case AttackType.Spell:
-                hitChance += this.stats.getStat(StatType.SpellHitChance);
+                accuracy += this.stats.getStat(StatType.SpellAccuracy);
                 break;
         }
         const targetDodgeChance = target.stats.dodge - this.stats.getStat(StatType.DodgeReduction);
 
-        return roll + hitChance >= targetDodgeChance;
+        return roll + accuracy >= targetDodgeChance;
     }
 
     static critRoll(critChance: number): boolean {

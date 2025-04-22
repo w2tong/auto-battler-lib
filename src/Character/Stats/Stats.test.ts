@@ -20,9 +20,9 @@ describe('Default Stats', () => {
         expect(char.stats[StatType.Dodge]).toStrictEqual({ base: Stats.DEFAULT_DODGE, attribute: 0, bonus: 0 });
     });
 
-    test('Level 1 Off-hand Hit Chance is Stats.OFF_HAND_HIT_CHANCE_PENALTY', () => {
+    test('Level 1 Off-hand Accuracy is Stats.OFF_HAND_ACCURACY_PENALTY', () => {
         const char = createTestCharacter({});
-        expect(char.stats[StatType.OffHandHitChance]).toStrictEqual({ base: Stats.OFF_HAND_HIT_CHANCE_PENALTY, attribute: 0, bonus: 0 });
+        expect(char.stats[StatType.OffHandAccuracy]).toStrictEqual({ base: Stats.OFF_HAND_ACCURACY_PENALTY, attribute: 0, bonus: 0 });
     });
 
     test('Level 1 Crit Chance is Stats.DEFAULT_CRIT_CHANCE', () => {
@@ -539,14 +539,14 @@ describe('Spell Power %', () => {
     });
 });
 
-describe('hitChance', () => {
+describe('accuracy', () => {
     test('One-hand Weapon', () => {
         const char = createTestCharacter({
             equipment: {
                 mainHand: test1HWeapon
             }
         });
-        expect(char.stats.hitChance).toBe(0);
+        expect(char.stats.accuracy).toBe(0);
     });
     test('Two-hand Weapon', () => {
         const char = createTestCharacter({
@@ -554,7 +554,7 @@ describe('hitChance', () => {
                 mainHand: test2HWeapon
             }
         });
-        expect(char.stats.hitChance).toBe(0);
+        expect(char.stats.accuracy).toBe(0);
     });
     test('Dual Wield Weapons', () => {
         const char = createTestCharacter({
@@ -563,6 +563,6 @@ describe('hitChance', () => {
                 offHandWeapon: test1HWeapon
             }
         });
-        expect(char.stats.hitChance).toBe(Stats.DUAL_WIELD_HIT_CHANCE_PENALTY);
+        expect(char.stats.accuracy).toBe(Stats.DUAL_WIELD_ACCURACY_PENALTY);
     });
 });
