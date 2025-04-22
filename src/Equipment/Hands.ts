@@ -3,21 +3,21 @@ import WeaponStyle from '../WeaponStyle';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Hands extends Item {
-    itemType: ItemType.Hands
+    itemType: ItemType.Hands;
     weaponStyle?: WeaponStyle;
 
     attributes?: ItemAttributes;
     stats?: ItemStats;
 }
 
-type HandsId = 
-'dwGloves0' | 'dwGloves1' | 'dwGloves2'
-| 'thGloves0' | 'thGloves1' | 'thGloves2'
-| 'ohGloves0' | 'ohGloves1' | 'ohGloves2'
-// | 'rGloves0'
-;
+type HandsId =
+    'dwGloves0' | 'dwGloves1' | 'dwGloves2'
+    | 'thGloves0' | 'thGloves1' | 'thGloves2'
+    | 'ohGloves0' | 'ohGloves1' | 'ohGloves2'
+    // | 'rGloves0'
+    ;
 
-const hands: {[id in HandsId]: Hands} = {
+const hands: { [id in HandsId]: Hands } = {
     dwGloves0: {
         id: 'dwGloves0',
         itemType: ItemType.Hands,
@@ -27,7 +27,7 @@ const hands: {[id in HandsId]: Hands} = {
 
         weaponStyle: WeaponStyle.DualWield,
         stats: {
-            [StatType.HitChance]: 5,
+            [StatType.Accuracy]: 5,
         }
     },
     dwGloves1: {
@@ -39,7 +39,7 @@ const hands: {[id in HandsId]: Hands} = {
 
         weaponStyle: WeaponStyle.DualWield,
         stats: {
-            [StatType.HitChance]: 10,
+            [StatType.Accuracy]: 10,
         }
     },
     dwGloves2: {
@@ -51,7 +51,7 @@ const hands: {[id in HandsId]: Hands} = {
 
         weaponStyle: WeaponStyle.DualWield,
         stats: {
-            [StatType.HitChance]: 15,
+            [StatType.Accuracy]: 15,
         }
     },
     thGloves0: {
@@ -98,7 +98,7 @@ const hands: {[id in HandsId]: Hands} = {
 
         weaponStyle: WeaponStyle.OneHanded,
         stats: {
-            [StatType.HitChance]: 3,
+            [StatType.Accuracy]: 3,
             [StatType.Damage]: 1,
         }
     },
@@ -111,7 +111,7 @@ const hands: {[id in HandsId]: Hands} = {
 
         weaponStyle: WeaponStyle.OneHanded,
         stats: {
-            [StatType.HitChance]: 6,
+            [StatType.Accuracy]: 6,
             [StatType.Damage]: 2,
         }
     },
@@ -124,7 +124,7 @@ const hands: {[id in HandsId]: Hands} = {
 
         weaponStyle: WeaponStyle.OneHanded,
         stats: {
-            [StatType.HitChance]: 9,
+            [StatType.Accuracy]: 9,
             [StatType.Damage]: 3,
         }
     },

@@ -23,8 +23,8 @@ class Stats {
     static DEFAULT_MANA_ON_HIT = 5;
     static DEFAULT_MANA_REGEN = 5;
 
-    static DUAL_WIELD_HIT_CHANCE_PENALTY = -10;
-    static OFF_HAND_HIT_CHANCE_PENALTY = -20;
+    static DUAL_WIELD_ACCURACY_PENALTY = -10;
+    static OFF_HAND_ACCURACY_PENALTY = -20;
 
     armourType: ArmourType;
     weaponStyle: WeaponStyle;
@@ -41,11 +41,11 @@ class Stats {
     [StatType.BlockChance]: Stat = { base: 0, attribute: 0, bonus: 0 };
     [StatType.BlockPower]: Stat = { base: 0, attribute: 0, bonus: 0 };
 
-    // Hit Chance
-    [StatType.HitChance]: Stat = { base: 0, attribute: 0, bonus: 0 };
-    [StatType.OffHandHitChance]: Stat = { base: Stats.OFF_HAND_HIT_CHANCE_PENALTY, attribute: 0, bonus: 0 };
-    [StatType.MeleeHitChance]: Stat = { base: 0, attribute: 0, bonus: 0 };
-    [StatType.RangedHitChance]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    // Accuracy
+    [StatType.Accuracy]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.OffHandAccuracy]: Stat = { base: Stats.OFF_HAND_ACCURACY_PENALTY, attribute: 0, bonus: 0 };
+    [StatType.MeleeAccuracy]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.RangedAccuracy]: Stat = { base: 0, attribute: 0, bonus: 0 };
 
     // Damage
     [StatType.Damage]: Stat = { base: 0, attribute: 0, bonus: 0 };
@@ -65,7 +65,7 @@ class Stats {
     [StatType.DodgeReduction]: Stat = { base: 0, attribute: 0, bonus: 0 };
 
     // Spell
-    [StatType.SpellHitChance]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.SpellAccuracy]: Stat = { base: 0, attribute: 0, bonus: 0 };
     [StatType.SpellPower]: Stat = { base: 0, attribute: 0, bonus: 0 };
     [StatType.SpellPowerPercent]: Stat = { base: 0, attribute: 0, bonus: 0 };
 
@@ -83,7 +83,7 @@ class Stats {
     [StatType.PotionHealing]: Stat = { base: 0, attribute: 0, bonus: 0 };
     [StatType.PotionEffectiveness]: Stat = { base: 0, attribute: 0, bonus: 0 };
 
-    constructor({ template, attributes, equipment, level }: { template: StatTemplate, attributes: Attributes, equipment: Equipment, level: number }) {
+    constructor({ template, attributes, equipment, level }: { template: StatTemplate, attributes: Attributes, equipment: Equipment, level: number; }) {
 
         this[StatType.MaxHealth].base = Stats.DEFAULT_MAX_HEALTH + Stats.DEFAULT_MAX_HEALTH_PER_LVL * (level - 1);
 
@@ -97,8 +97,8 @@ class Stats {
 
         // Add off-hand penalties
         if (equipment.offHandWeapon) {
-            this[StatType.HitChance].bonus += Stats.DUAL_WIELD_HIT_CHANCE_PENALTY;
-            this[StatType.OffHandHitChance].bonus += Stats.OFF_HAND_HIT_CHANCE_PENALTY;
+            this[StatType.Accuracy].bonus += Stats.DUAL_WIELD_ACCURACY_PENALTY;
+            this[StatType.OffHandAccuracy].bonus += Stats.OFF_HAND_ACCURACY_PENALTY;
         }
 
         this.armourType = equipment.armour?.type ?? ArmourType.Unarmoured;
@@ -184,9 +184,9 @@ class Stats {
         return this.getStat(StatType.Dodge) * ArmourTypeDodgeMultiplier[this.armourType];
     }
 
-    // Hit Chance
-    get hitChance() {
-        return this.getStat(StatType.HitChance);
+    // Accuracy
+    get accuracy() {
+        return this.getStat(StatType.Accuracy);
     }
 
     // Crit

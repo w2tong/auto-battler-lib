@@ -3,7 +3,8 @@ import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';
 import DamageType from '../DamageType';
 import { ItemType } from '../Equipment/Item';
-import { Weapon, WeaponType } from '../Equipment/Weapon';
+import { type Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
+import { createTestCharacter } from '../tests/util';
 import DoubleStrike from './DoubleStrike';
 
 let char: Character;
@@ -21,15 +22,11 @@ const testSword: Weapon = {
 };
 
 beforeEach(() => {
-    target = new Character({
-        name: 'Target',
-        level: 1,
-        attributes: {},
+    target = createTestCharacter({
         statTemplate: {
             [StatType.MaxHealth]: { base: 100 },
             [StatType.Dodge]: { base: 0 }
-        },
-        equipment: {}
+        }
     });
 });
 
@@ -42,10 +39,7 @@ afterEach(() => {
 });
 
 test('DoubleStrike with 10 ManaOnHit', () => {
-    char = new Character({
-        name: 'Test',
-        level: 1,
-        attributes: {},
+    char = createTestCharacter({
         statTemplate: {
             [StatType.MaxHealth]: { base: 100 },
             [StatType.SpellPower]: { base: 100 },
@@ -55,8 +49,7 @@ test('DoubleStrike with 10 ManaOnHit', () => {
         },
         equipment: {
             mainHand: testSword
-        },
-        ability: DoubleStrike
+        }
     });
     char.target = target;
 
@@ -66,10 +59,7 @@ test('DoubleStrike with 10 ManaOnHit', () => {
 });
 
 test('DoubleStrike with 0 ManaOnHit', () => {
-    char = new Character({
-        name: 'Test',
-        level: 1,
-        attributes: {},
+    char = createTestCharacter({
         statTemplate: {
             [StatType.MaxHealth]: { base: 100 },
             [StatType.SpellPower]: { base: 100 },
@@ -79,8 +69,7 @@ test('DoubleStrike with 0 ManaOnHit', () => {
         },
         equipment: {
             mainHand: testSword
-        },
-        ability: DoubleStrike
+        }
     });
     char.target = target;
 

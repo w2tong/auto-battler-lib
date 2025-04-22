@@ -12,10 +12,10 @@ enum StatType {
     BlockPower = 'Block Power',
 
     // Offensive Stats
-    HitChance = 'Hit Chance',
-    OffHandHitChance = 'Off-Hand Hit Chance',
-    MeleeHitChance = 'Melee Hit Chance',
-    RangedHitChance = 'Ranged Hit Chance',
+    Accuracy = 'Accuracy',
+    OffHandAccuracy = 'Off-Hand Accuracy',
+    MeleeAccuracy = 'Melee Accuracy',
+    RangedAccuracy = 'Ranged Accuracy',
 
     Damage = 'Damage',
     DamagePercent = '% Damage',
@@ -35,7 +35,7 @@ enum StatType {
     DodgeReduction = 'Dodge Reduction',
 
     // Spell
-    SpellHitChance = 'Spell Hit Chance',
+    SpellAccuracy = 'Spell Accuracy',
     SpellPower = 'Spell Power',
     SpellPowerPercent = '% Spell Power',
 

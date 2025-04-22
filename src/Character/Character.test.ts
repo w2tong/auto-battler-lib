@@ -5,9 +5,8 @@ import BuffId from '../StatusEffect/BuffId';
 import Battle, { Side } from '../Battle/Battle';
 import AttackType from '../AttackType';
 import DamageRange from '../DamageRange';
-import { ItemType } from '../Equipment/Item';
-import { Potion } from '../Equipment/Potion';
 import * as utilModule from '../util';
+import { createTestCharacter, test1HWeapon, testPotion } from '../tests/util';
 
 describe('calcCritDamage', () => {
     // 10 DMG
@@ -478,85 +477,61 @@ describe('blockRoll', () => {
 
 describe('useAbilityMana', () => {
     test('20 Starting Mana - 0 Mana Cost = 20', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.StartingMana]: { base: 20 },
                 [StatType.ManaCost]: { base: 0 }
-            },
-            equipment: {}
+            }
         });
         char.useAbilityMana();
         expect(char.currentMana).toBe(20);
     });
     test('20 Starting Mana - 5 Mana Cost = 15', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.StartingMana]: { base: 20 },
                 [StatType.ManaCost]: { base: 5 }
-            },
-            equipment: {}
+            }
         });
         char.useAbilityMana();
         expect(char.currentMana).toBe(15);
     });
     test('20 Starting Mana - 10 Mana Cost = 10', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.StartingMana]: { base: 20 },
                 [StatType.ManaCost]: { base: 10 }
-            },
-            equipment: {}
+            }
         });
         char.useAbilityMana();
         expect(char.currentMana).toBe(10);
     });
     test('20 Starting Mana - 20 Mana Cost = 0', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.StartingMana]: { base: 20 },
                 [StatType.ManaCost]: { base: 20 }
-            },
-            equipment: {}
+            }
         });
         char.useAbilityMana();
         expect(char.currentMana).toBe(0);
     });
     test('20 Starting Mana - 25 Mana Cost = -5', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.StartingMana]: { base: 20 },
                 [StatType.ManaCost]: { base: 25 }
-            },
-            equipment: {}
+            }
         });
         char.useAbilityMana();
         expect(char.currentMana).toBe(-5);
     });
     test('20 Starting Mana - -10 Mana Cost = 20', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.StartingMana]: { base: 20 },
                 [StatType.ManaCost]: { base: -10 }
-            },
-            equipment: {}
+            }
         });
         char.useAbilityMana();
         expect(char.currentMana).toBe(20);
@@ -565,79 +540,55 @@ describe('useAbilityMana', () => {
 
 describe('addMana', () => {
     test('10 + 0 = 10', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.StartingMana]: { base: 10 },
-            },
-            equipment: {}
+            }
         });
         char.addMana(0);
         expect(char.currentMana).toBe(10);
     });
     test('0 + 10 = 10', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.StartingMana]: { base: 0 },
-            },
-            equipment: {}
+            }
         });
         char.addMana(10);
         expect(char.currentMana).toBe(10);
     });
     test('10 + 100 = 10', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.StartingMana]: { base: 10 },
-            },
-            equipment: {}
+            }
         });
         char.addMana(100);
         expect(char.currentMana).toBe(110);
     });
     test('10 + 10000 = 10', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.StartingMana]: { base: 10 },
-            },
-            equipment: {}
+            }
         });
         char.addMana(10000);
         expect(char.currentMana).toBe(10010);
     });
     test('0 + -100 = 0', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.StartingMana]: { base: 0 },
-            },
-            equipment: {}
+            }
         });
         char.addMana(-100);
         expect(char.currentMana).toBe(0);
     });
     test('10 + -100 = 10', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.StartingMana]: { base: 10 },
-            },
-            equipment: {}
+            }
         });
         char.addMana(-100);
         expect(char.currentMana).toBe(10);
@@ -646,14 +597,10 @@ describe('addMana', () => {
 
 describe('addHealth', () => {
     test('50/100 Health + 0 = 50 Health', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 100 }
             },
-            equipment: {},
             options: {
                 currHealthPc: 0.5
             }
@@ -662,14 +609,10 @@ describe('addHealth', () => {
         expect(char.currentHealth).toBe(50);
     });
     test('50/100 Health + 10 = 60 Health', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 100 }
             },
-            equipment: {},
             options: {
                 currHealthPc: 0.5
             }
@@ -678,14 +621,10 @@ describe('addHealth', () => {
         expect(char.currentHealth).toBe(60);
     });
     test('50/100 Health + 10 = 100 Health', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 100 }
             },
-            equipment: {},
             options: {
                 currHealthPc: 0.5
             }
@@ -694,14 +633,10 @@ describe('addHealth', () => {
         expect(char.currentHealth).toBe(100);
     });
     test('50/100 Health + 10 = 100 Health', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 100 }
             },
-            equipment: {},
             options: {
                 currHealthPc: 0.5
             }
@@ -710,14 +645,10 @@ describe('addHealth', () => {
         expect(char.currentHealth).toBe(100);
     });
     test('50/100 Health + -10 = 50 Health', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 100 }
             },
-            equipment: {},
             options: {
                 currHealthPc: 0.5
             }
@@ -729,63 +660,41 @@ describe('addHealth', () => {
 
 describe('isDead', () => {
     test('Stat Template - 0 Max Health = true', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 0 }
-            },
-            equipment: {}
+            }
         });
         expect(char.isDead()).toBeTruthy();
     });
     test('Stat Template - 1 Max Health = false', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 1 }
-            },
-            equipment: {}
+            }
         });
         expect(char.isDead()).toBeFalsy();
     });
     test('Options - currHealthPc: 0 = true', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
-            statTemplate: {},
-            equipment: {},
+        const char = createTestCharacter({
             options: { currHealthPc: 0 }
         });
         expect(char.isDead()).toBeTruthy();
     });
     test('Options currHealthPc: 1 = false', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
-            statTemplate: {},
-            equipment: {},
+        const char = createTestCharacter({
             options: { currHealthPc: 1 }
         });
         expect(char.isDead()).toBeFalsy();
     });
 
     test('20 Max Health, Take 20 Damage = true', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 20 },
                 [StatType.Armour]: { base: 0 },
                 [StatType.Deflection]: { base: 0 }
-            },
-            equipment: {}
+            }
         });
         char.takeDamage({
             source: '',
@@ -796,16 +705,12 @@ describe('isDead', () => {
     });
 
     test('20 Max Health, Take 10 Damage = false', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 20 },
                 [StatType.Armour]: { base: 0 },
                 [StatType.Deflection]: { base: 0 }
-            },
-            equipment: {}
+            }
         });
         char.takeDamage({
             source: '',
@@ -816,16 +721,12 @@ describe('isDead', () => {
     });
 
     test('20 Max Health, Take 0 Damage', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 20 },
                 [StatType.Armour]: { base: 0 },
                 [StatType.Deflection]: { base: 0 }
-            },
-            equipment: {}
+            }
         });
         char.takeDamage({
             source: '',
@@ -836,16 +737,12 @@ describe('isDead', () => {
     });
 
     test('20 Max Health, Take 25 Damage', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 20 },
                 [StatType.Armour]: { base: 0 },
                 [StatType.Deflection]: { base: 0 }
-            },
-            equipment: {}
+            }
         });
         char.takeDamage({
             source: '',
@@ -858,16 +755,12 @@ describe('isDead', () => {
 
 describe('takeDamage', () => {
     test('20 Max Health - 10 Damage = 10 Current Health', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 20 },
                 [StatType.Armour]: { base: 0 },
                 [StatType.Deflection]: { base: 0 }
-            },
-            equipment: {}
+            }
         });
         char.takeDamage({
             source: '',
@@ -878,16 +771,12 @@ describe('takeDamage', () => {
     });
 
     test('20 Max Health - 20 Damage = 0 Current Health', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 20 },
                 [StatType.Armour]: { base: 0 },
                 [StatType.Deflection]: { base: 0 }
-            },
-            equipment: {}
+            }
         });
         char.takeDamage({
             source: '',
@@ -898,16 +787,12 @@ describe('takeDamage', () => {
     });
 
     test('20 Max Health - 25 Damage = -5 Current Health', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 20 },
                 [StatType.Armour]: { base: 0 },
                 [StatType.Deflection]: { base: 0 }
-            },
-            equipment: {}
+            }
         });
         char.takeDamage({
             source: '',
@@ -918,16 +803,12 @@ describe('takeDamage', () => {
     });
 
     test('20 Max Health - -10 Damage = 20 Current Health', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 20 },
                 [StatType.Armour]: { base: 0 },
                 [StatType.Deflection]: { base: 0 }
-            },
-            equipment: {}
+            }
         });
         char.takeDamage({
             source: '',
@@ -940,36 +821,17 @@ describe('takeDamage', () => {
 
 describe('isInvisible', () => {
     test('new char = false', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
-            statTemplate: {},
-            equipment: {}
-        });
-
+        const char = createTestCharacter({});
         expect(char.isInvisible()).toBeFalsy();
     });
     test('new char, add buff = true', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
-            statTemplate: {},
-            equipment: {}
-        });
+        const char = createTestCharacter({});
         new Battle([char], []);
         char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
         expect(char.isInvisible()).toBeTruthy();
     });
     test('new char, add buff = true', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
-            statTemplate: {},
-            equipment: {}
-        });
+        const char = createTestCharacter({});
         new Battle([char], []);
         char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
     });
@@ -984,25 +846,8 @@ describe('usePotion', () => {
         mathRandomSpy.mockRestore();
     });
 
-    let testPotion: Potion;
-    beforeEach(() => {
-        testPotion = {
-            id: 'test',
-            itemType: ItemType.Potion,
-            name: 'Test Healing Potion',
-            tier: 1,
-            img: 'potion-red.png',
-            dice: { num: 2, sides: 4 },
-            bonus: 2,
-            charges: 1
-        };
-    });
-
     test('Use potion with full health', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 100 }
             },
@@ -1010,17 +855,13 @@ describe('usePotion', () => {
                 potion: testPotion
             }
         });
-        expect(char.currentHealth).toBe(100);
         char.usePotion();
         expect(char.currentHealth).toBe(100);
-        expect(char.equipment.potion?.charges).toBe(1);
+        expect(char.equipment.potion!.charges).toBe(0);
     });
 
     test('Use potion with 50/100 health', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 100 }
             },
@@ -1031,16 +872,13 @@ describe('usePotion', () => {
                 currHealthPc: 0.5
             }
         });
-        expect(char.currentHealth).toBe(50);
         char.usePotion();
         expect(char.currentHealth).toBeCloseTo(58);
+        expect(char.equipment.potion!.charges).toBe(0);
     });
 
     test('Use potion twice with 50/100 health', () => {
-        const char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        const char = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 100 }
             },
@@ -1051,51 +889,48 @@ describe('usePotion', () => {
                 currHealthPc: 0.5
             }
         });
-        expect(char.currentHealth).toBe(50);
         char.usePotion();
         expect(char.currentHealth).toBeCloseTo(58);
+        expect(char.equipment.potion!.charges).toBe(0);
         char.usePotion();
-        expect(char.currentHealth).toBeCloseTo(66);
+        expect(char.currentHealth).toBeCloseTo(58);
+        expect(char.equipment.potion!.charges).toBe(0);
     });
 });
 
 describe('hitRoll', () => {
     // Test Char
-    // Melee Hit Chance = 10 + 5 = 15
-    // Ranged Hit Chance = 10 + 10 = 20
-    // Spell Hit Chance = 10 + 15 = 25
-    // Melee Off-Hand Hit Chance = 10 + 5 - 20 = -5
-    // Ranged Off-Hand Hit Chance = 10 + 10 - 20 = 0
-    // Spell Off-Hand Hit Chance = 10 + 15 - 20 = 5
+    // Melee Accuracy = 10 + 5 = 15
+    // Ranged Accuracy = 10 + 10 = 20
+    // Spell Accuracy = 10 + 15 = 25
+    // Melee Off-Hand Accuracy = 10 + 5 - 20 = -5
+    // Ranged Off-Hand Accuracy = 10 + 10 - 20 = 0
+    // Spell Off-Hand Accuracy = 10 + 15 - 20 = 5
 
     // Target
     // Dodge Chance = 50 - 10 = 40
-    const char = new Character({
-        name: 'Test Char',
-        level: 1,
-        attributes: {},
+    const char = createTestCharacter({
+
         statTemplate: {
-            [StatType.HitChance]: { base: 10 },
-            [StatType.MeleeHitChance]: { base: 5 },
-            [StatType.RangedHitChance]: { base: 10 },
-            [StatType.SpellHitChance]: { base: 15 },
-            [StatType.OffHandHitChance]: { base: -20 },
+            [StatType.Accuracy]: { base: 10 },
+            [StatType.MeleeAccuracy]: { base: 5 },
+            [StatType.RangedAccuracy]: { base: 10 },
+            [StatType.SpellAccuracy]: { base: 15 },
+            [StatType.OffHandAccuracy]: { base: -20 },
             [StatType.DodgeReduction]: { base: 10 },
         },
-        equipment: {}
+        equipment: {
+            mainHand: test1HWeapon
+        }
     });
     let target: Character;
 
     describe('Normal Target', () => {
         beforeEach(() => {
-            target = new Character({
-                name: 'Target',
-                level: 1,
-                attributes: {},
+            target = createTestCharacter({
                 statTemplate: {
                     [StatType.Dodge]: { base: 50 }
-                },
-                equipment: {}
+                }
             });
         });
 
@@ -1392,14 +1227,10 @@ describe('hitRoll', () => {
 
     describe('High Dodge Target', () => {
         beforeEach(() => {
-            target = new Character({
-                name: 'Target',
-                level: 1,
-                attributes: {},
+            target = createTestCharacter({
                 statTemplate: {
                     [StatType.Dodge]: { base: 1000 }
-                },
-                equipment: {}
+                }
             });
         });
 
@@ -1581,14 +1412,10 @@ describe('hitRoll', () => {
 
     describe('0% Dodge Target', () => {
         beforeEach(() => {
-            target = new Character({
-                name: 'Target',
-                level: 1,
-                attributes: {},
+            target = createTestCharacter({
                 statTemplate: {
                     [StatType.Dodge]: { base: 0 }
-                },
-                equipment: {}
+                }
             });
         });
 
@@ -1770,10 +1597,7 @@ describe('hitRoll', () => {
 });
 
 describe('calcDamage', () => {
-    const char = new Character({
-        name: '',
-        level: 1,
-        attributes: {},
+    const char = createTestCharacter({
         statTemplate: {
             [StatType.Damage]: { base: 1 },
             [StatType.DamagePercent]: { base: 0.2 },
@@ -1784,8 +1608,7 @@ describe('calcDamage', () => {
             [StatType.SpellPower]: { base: 10 },
             [StatType.SpellPowerPercent]: { base: 0.1 },
             [StatType.OffHandDamage]: { base: 1 }
-        },
-        equipment: {}
+        }
     });
 
     test('Melee weapon main-hand attack', () => {
@@ -1868,10 +1691,7 @@ describe('calcDamage', () => {
 });
 
 describe('calcDamageRange', () => {
-    const char = new Character({
-        name: '',
-        level: 1,
-        attributes: {},
+    const char = createTestCharacter({
         statTemplate: {
             [StatType.Damage]: { base: 1 },
             [StatType.DamagePercent]: { base: 0.2 },
@@ -1882,8 +1702,7 @@ describe('calcDamageRange', () => {
             [StatType.SpellPower]: { base: 10 },
             [StatType.SpellPowerPercent]: { base: 0.1 },
             [StatType.OffHandDamage]: { base: 1 }
-        },
-        equipment: {}
+        }
     });
 
     test('Melee weapon main-hand attack', () => {
@@ -1954,10 +1773,7 @@ describe('attack', () => {
     const damageRange: DamageRange = { min: 5, max: 5, bonus: 0 };
 
     beforeEach(() => {
-        char = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        char = createTestCharacter({
             statTemplate: {
                 [StatType.Damage]: { base: 1 },
                 [StatType.MeleeWeaponDamage]: { base: 2 },
@@ -1969,21 +1785,16 @@ describe('attack', () => {
                 [StatType.RangedWeaponDamagePercent]: { base: 0.2 },
                 [StatType.CriticalDamage]: { base: 2 },
                 [StatType.MaxHealth]: { base: 100 },
-            },
-            equipment: {}
+            }
         });
 
-        target = new Character({
-            name: '',
-            level: 1,
-            attributes: {},
+        target = createTestCharacter({
             statTemplate: {
                 [StatType.MaxHealth]: { base: 100 },
                 [StatType.Dodge]: { base: 0 },
                 [StatType.BlockPower]: { base: 5 },
                 [StatType.Thorns]: { base: 1 },
-            },
-            equipment: {}
+            }
         });
 
         new Battle([char], [target]);
@@ -2087,42 +1898,10 @@ describe('setTarget', () => {
     let right2: Character;
 
     beforeEach(() => {
-        left1 = new Character({
-            name: 'Left 1',
-            level: 1,
-            attributes: {},
-            statTemplate: {
-                [StatType.Initiative]: { base: 1 }
-            },
-            equipment: {}
-        });
-        left2 = new Character({
-            name: 'Left 2',
-            level: 1,
-            attributes: {},
-            statTemplate: {
-                [StatType.Initiative]: { base: 2 }
-            },
-            equipment: {}
-        });
-        right1 = new Character({
-            name: 'Right 1',
-            level: 1,
-            attributes: {},
-            statTemplate: {
-                [StatType.Initiative]: { base: 0 }
-            },
-            equipment: {}
-        });
-        right2 = new Character({
-            name: 'Right 2',
-            level: 1,
-            attributes: {},
-            statTemplate: {
-                [StatType.Initiative]: { base: -1 }
-            },
-            equipment: {}
-        });
+        left1 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 1 } } });
+        left2 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 2 } } });
+        right1 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: 0 } } });
+        right2 = createTestCharacter({ statTemplate: { [StatType.Initiative]: { base: -1 } } });
     });
 
     let mathRandomSpy: jest.SpyInstance;

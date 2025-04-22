@@ -1,13 +1,12 @@
-import { Weapon, WeaponTypeProperties } from './Equipment/Weapon';
+import { type Weapon, WeaponTypeProperties } from './Equipment/Weapon/Weapon';
 
 enum WeaponStyle {
     DualWield = 'Dual Wield',
     TwoHanded = 'Two-Handed',
-    OneHanded = 'One-Handed',
-    Ranged = 'Ranged'
+    OneHanded = 'One-Handed'
 }
 
-function getWeaponStyle({ mainHand, offHand }: { mainHand?: Weapon, offHand?: Weapon }): WeaponStyle {
+function getWeaponStyle({ mainHand, offHand }: { mainHand: Weapon, offHand?: Weapon; }): WeaponStyle {
     if (mainHand && offHand) {
         return WeaponStyle.DualWield;
     }

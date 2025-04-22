@@ -15,9 +15,9 @@ interface Shield extends Item {
 }
 
 type ShieldId = 'buckler0' | 'buckler1' | 'buckler2' | 'buckler3' | 'buckler4' | 'buckler5' |
-'spikedShield0' | 'spikedShield1' | 'spikedShield2' | 'spikedShield3' | 'spikedShield4' | 'spikedShield5' |
-'towerShield0' | 'towerShield1' | 'towerShield2' | 'towerShield3' | 'towerShield4' | 'towerShield5'
-const shields: {[id in ShieldId]: Shield} = {
+    'spikedShield0' | 'spikedShield1' | 'spikedShield2' | 'spikedShield3' | 'spikedShield4' | 'spikedShield5' |
+    'towerShield0' | 'towerShield1' | 'towerShield2' | 'towerShield3' | 'towerShield4' | 'towerShield5';
+const shields: { [id in ShieldId]: Shield } = {
     buckler0: {
         id: 'buckler0',
         name: 'Buckler',
@@ -189,7 +189,7 @@ const shields: {[id in ShieldId]: Shield} = {
         stats: {
             [StatType.BlockChance]: 60,
             [StatType.BlockPower]: 3,
-            [StatType.HitChance]: -10,
+            [StatType.Accuracy]: -10,
         }
     },
     towerShield1: {
@@ -203,7 +203,7 @@ const shields: {[id in ShieldId]: Shield} = {
         stats: {
             [StatType.BlockChance]: 60,
             [StatType.BlockPower]: 6,
-            [StatType.HitChance]: -10,
+            [StatType.Accuracy]: -10,
         }
     },
     towerShield2: {
@@ -217,7 +217,7 @@ const shields: {[id in ShieldId]: Shield} = {
         stats: {
             [StatType.BlockChance]: 60,
             [StatType.BlockPower]: 9,
-            [StatType.HitChance]: -10,
+            [StatType.Accuracy]: -10,
         }
     },
     towerShield3: {
@@ -231,7 +231,7 @@ const shields: {[id in ShieldId]: Shield} = {
         stats: {
             [StatType.BlockChance]: 60,
             [StatType.BlockPower]: 12,
-            [StatType.HitChance]: -10,
+            [StatType.Accuracy]: -10,
         }
     },
     towerShield4: {
@@ -245,7 +245,7 @@ const shields: {[id in ShieldId]: Shield} = {
         stats: {
             [StatType.BlockChance]: 60,
             [StatType.BlockPower]: 15,
-            [StatType.HitChance]: -10,
+            [StatType.Accuracy]: -10,
         }
     },
     towerShield5: {
@@ -259,7 +259,7 @@ const shields: {[id in ShieldId]: Shield} = {
         stats: {
             [StatType.BlockChance]: 60,
             [StatType.BlockPower]: 18,
-            [StatType.HitChance]: -10,
+            [StatType.Accuracy]: -10,
         }
     },
 };

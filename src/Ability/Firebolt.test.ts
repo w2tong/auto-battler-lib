@@ -2,6 +2,7 @@ import Battle from '../Battle/Battle';
 import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';
 import DebuffId from '../StatusEffect/DebuffId';
+import { createTestCharacter } from '../tests/util';
 import { getCharBattleId } from '../util';
 import Firebolt from './Firebolt';
 
@@ -9,28 +10,20 @@ let char: Character;
 let target: Character;
 
 beforeEach(() => {
-    char = new Character({
-        name: 'Test',
+    char = createTestCharacter({
         level: 10,
-        attributes: {},
         statTemplate: {
             [StatType.MaxHealth]: { base: 100 },
             [StatType.SpellPower]: { base: 100 },
             [StatType.StartingMana]: { base: 100 },
             [StatType.ManaCost]: { base: 50 }
-        },
-        equipment: {},
-        ability: Firebolt
+        }
     });
 
-    target = new Character({
-        name: 'Target',
-        level: 1,
-        attributes: {},
+    target = createTestCharacter({
         statTemplate: {
             [StatType.MaxHealth]: { base: 100 }
-        },
-        equipment: {}
+        }
     });
 
     char.target = target;

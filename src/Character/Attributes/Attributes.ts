@@ -9,13 +9,13 @@ function calcTotalAttribute(attribute: Attribute) {
 }
 
 class Attributes {
-    [AttributeType.WeaponSkill]: Attribute;
-    [AttributeType.Strength]: Attribute;
-    [AttributeType.Dexterity]: Attribute;
-    [AttributeType.Perception]: Attribute;
-    [AttributeType.Constitution]: Attribute;
-    [AttributeType.Intelligence]: Attribute;
-    [AttributeType.Wisdom]: Attribute;
+    private [AttributeType.WeaponSkill]: Attribute;
+    private [AttributeType.Strength]: Attribute;
+    private [AttributeType.Dexterity]: Attribute;
+    private [AttributeType.Perception]: Attribute;
+    private [AttributeType.Constitution]: Attribute;
+    private [AttributeType.Intelligence]: Attribute;
+    private [AttributeType.Wisdom]: Attribute;
 
     constructor(
         {

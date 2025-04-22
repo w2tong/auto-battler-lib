@@ -3,14 +3,14 @@ import AttributeType from '../Character/Attributes/AttributeType';
 import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';
 import BuffId from '../StatusEffect/BuffId';
+import { createTestCharacter } from '../tests/util';
 import { getCharBattleId } from '../util';
 import Vanish from './Vanish';
 
 let char: Character;
 
 test('Vanish - 0 Dexterity', () => {
-    char = new Character({
-        name: 'Test',
+    char = createTestCharacter({
         level: 10,
         attributes: {
             [AttributeType.Dexterity]: 0
@@ -18,9 +18,7 @@ test('Vanish - 0 Dexterity', () => {
         statTemplate: {
             [StatType.StartingMana]: { base: 100 },
             [StatType.ManaCost]: { base: 50 }
-        },
-        equipment: {},
-        ability: Vanish
+        }
     });
     new Battle([char], []);
 
@@ -31,8 +29,7 @@ test('Vanish - 0 Dexterity', () => {
 });
 
 test('Vanish - 10 Dexterity', () => {
-    char = new Character({
-        name: 'Test',
+    char = createTestCharacter({
         level: 10,
         attributes: {
             [AttributeType.Dexterity]: 10
@@ -40,9 +37,7 @@ test('Vanish - 10 Dexterity', () => {
         statTemplate: {
             [StatType.StartingMana]: { base: 100 },
             [StatType.ManaCost]: { base: 50 }
-        },
-        equipment: {},
-        ability: Vanish
+        }
     });
     new Battle([char], []);
 
@@ -53,8 +48,7 @@ test('Vanish - 10 Dexterity', () => {
 });
 
 test('Vanish - 20 Dexterity', () => {
-    char = new Character({
-        name: 'Test',
+    char = createTestCharacter({
         level: 10,
         attributes: {
             [AttributeType.Dexterity]: 20
@@ -62,9 +56,7 @@ test('Vanish - 20 Dexterity', () => {
         statTemplate: {
             [StatType.StartingMana]: { base: 100 },
             [StatType.ManaCost]: { base: 50 }
-        },
-        equipment: {},
-        ability: Vanish
+        }
     });
     new Battle([char], []);
 
@@ -75,8 +67,7 @@ test('Vanish - 20 Dexterity', () => {
 });
 
 test('Vanish - 100 Dexterity', () => {
-    char = new Character({
-        name: 'Test',
+    char = createTestCharacter({
         level: 10,
         attributes: {
             [AttributeType.Dexterity]: 100
@@ -84,9 +75,7 @@ test('Vanish - 100 Dexterity', () => {
         statTemplate: {
             [StatType.StartingMana]: { base: 100 },
             [StatType.ManaCost]: { base: 50 }
-        },
-        equipment: {},
-        ability: Vanish
+        }
     });
     new Battle([char], []);
 

@@ -1,8 +1,7 @@
 import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle/Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
-import { Weapon, weapons } from '../Equipment/Weapon';
-import { Equipment } from '../Equipment/Equipment';
+import { Equipment, EquipmentImport } from '../Equipment/Equipment';
 import HitType from '../HitType';
 import { dice, rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
@@ -17,6 +16,7 @@ import StatType from './Stats/StatType';
 import Attributes from './Attributes/Attributes';
 import BaseAttributes from './Attributes/BaseAttributes';
 import AttackType from '../AttackType';
+import { type Weapon } from '../Equipment/Weapon/Weapon';
 
 type CharacterInfo = {
     name: string,
@@ -27,8 +27,8 @@ type CharacterInfo = {
     potion?: Potion,
 
     attributes: Attributes,
-    stats: Stats
-}
+    stats: Stats;
+};
 
 type CharacterJSON = {
     name: string;
@@ -40,9 +40,9 @@ type CharacterJSON = {
     manaCost: number;
     buffs: string;
     debuffs: string;
-}
+};
 
-// Crit chance, crit dmg, hit chance, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
+// Crit chance, crit dmg, Accuracy, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
 export default class Character {
     private userId?: string;
 
@@ -68,21 +68,21 @@ export default class Character {
 
     // Battle Info
     protected _target: Character | null = null;
-    protected _battle: { ref: Battle, side: Side, index: number } | null = null;
+    protected _battle: { ref: Battle, side: Side, index: number; } | null = null;
 
-    constructor({ name, level, className, attributes, statTemplate, equipment, ability, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: Equipment, ability?: Ability, options?: { userId?: string, currHealthPc?: number, currManaPc?: number } }) {
+    constructor({ name, level, className, attributes, statTemplate, equipment, ability, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
         this._name = name;
         this._level = level;
         this.className = className ?? null;
 
-        this._equipment = equipment;
+        this._equipment = new Equipment(equipment);
 
         // Attributes
-        this._attributes = new Attributes(attributes, equipment);
+        this._attributes = new Attributes(attributes, this._equipment);
         this._stats = new Stats({
             template: statTemplate,
             attributes: this.attributes,
-            equipment,
+            equipment: this._equipment,
             level
         });
         this.ability = ability ?? (className ? Classes[className].ability : null);
@@ -118,10 +118,6 @@ export default class Character {
 
     get equipment() {
         return this._equipment;
-    }
-
-    get mainHand() {
-        return this.equipment.mainHand ?? weapons.unarmed0;
     }
 
     get currentHealth() {
@@ -187,9 +183,10 @@ export default class Character {
     }
 
     usePotion(): void {
-        if (this.equipment.potion) {
+        if (this.equipment.potion && this.equipment.potion.charges > 0) {
             const potionHeal = (rollDice(this.equipment.potion.dice) + this.equipment.potion.bonus + this.stats.getStat(StatType.PotionHealing)) * (1 + this.stats.getStat(StatType.PotionEffectiveness));
             this.addHealth(potionHeal);
+            this.equipment.potion.charges -= 1;
             if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.equipment.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
         }
     }
@@ -202,7 +199,6 @@ export default class Character {
         this.statusEffectManager.turnStart();
         if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
             this.usePotion();
-            this.equipment.potion.charges -= 1;
         }
 
         this.setTarget();
@@ -217,7 +213,7 @@ export default class Character {
         this.statusEffectManager.turnEnd();
     }
 
-    hitRoll({ target, attackType, isOffHand = false }: { target: Character, attackType: AttackType, isOffHand?: boolean }): boolean {
+    hitRoll({ target, attackType, isOffHand = false }: { target: Character, attackType: AttackType, isOffHand?: boolean; }): boolean {
         const roll = rollDice(dice['1d100']);
 
         // Rolling 1-5 always misses
@@ -225,24 +221,24 @@ export default class Character {
         // Rolling 96-100 always hits
         if (roll > 95) return true;
 
-        let hitChance = this.stats.hitChance;
-        // Add off-hand hit chance
-        if (isOffHand) hitChance += this.stats.getStat(StatType.OffHandHitChance);
-        // Add attack type hit chance
+        let accuracy = this.stats.accuracy;
+        // Add off-hand Accuracy
+        if (isOffHand) accuracy += this.stats.getStat(StatType.OffHandAccuracy);
+        // Add attack type Accuracy
         switch (attackType) {
             case AttackType.MeleeWeapon:
-                hitChance += this.stats.getStat(StatType.MeleeHitChance);
+                accuracy += this.stats.getStat(StatType.MeleeAccuracy);
                 break;
             case AttackType.RangedWeapon:
-                hitChance += this.stats.getStat(StatType.RangedHitChance);
+                accuracy += this.stats.getStat(StatType.RangedAccuracy);
                 break;
             case AttackType.Spell:
-                hitChance += this.stats.getStat(StatType.SpellHitChance);
+                accuracy += this.stats.getStat(StatType.SpellAccuracy);
                 break;
         }
         const targetDodgeChance = target.stats.dodge - this.stats.getStat(StatType.DodgeReduction);
 
-        return roll + hitChance >= targetDodgeChance;
+        return roll + accuracy >= targetDodgeChance;
     }
 
     static critRoll(critChance: number): boolean {
@@ -255,7 +251,7 @@ export default class Character {
         return rollDice(dice['1d100']) <= blockChance;
     }
 
-    calcDamage({ attackType, damage, spellPowerRatio, isOffHand = false, invisibleStacks = 0 }: { attackType: AttackType, damage: number, spellPowerRatio?: number, isOffHand?: boolean, invisibleStacks?: number }): number {
+    calcDamage({ attackType, damage, spellPowerRatio, isOffHand = false, invisibleStacks = 0 }: { attackType: AttackType, damage: number, spellPowerRatio?: number, isOffHand?: boolean, invisibleStacks?: number; }): number {
         let damageBonus = this.stats.damage + (isOffHand ? this.stats.getStat(StatType.OffHandDamage) : 0);
         let damagePercent = this.stats.getStat(StatType.DamagePercent);
         switch (attackType) {
@@ -279,13 +275,13 @@ export default class Character {
         return (damage + damageBonus + spellDamage + sneakDamage) * (1 + damagePercent);
     }
 
-    calcDamageRange({ attackType, damageRange, spellPowerRatio, isOffHand = false }: { attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean }): { min: number, max: number } {
+    calcDamageRange({ attackType, damageRange, spellPowerRatio, isOffHand = false }: { attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean; }): { min: number, max: number; } {
         const min = this.calcDamage({ attackType, damage: damageRange.min + damageRange.bonus, spellPowerRatio, isOffHand });
         const max = this.calcDamage({ attackType, damage: damageRange.max + damageRange.bonus, spellPowerRatio, isOffHand });
         return { min, max };
     }
 
-    attack({ target, attackType, damageRange, spellPowerRatio, isOffHand = false, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean, abilityName?: string }): boolean {
+    attack({ target, attackType, damageRange, spellPowerRatio, isOffHand = false, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean, abilityName?: string; }): boolean {
 
         let hitType: HitType = HitType.Miss;
         let damage: number = 0;
@@ -358,9 +354,7 @@ export default class Character {
             return;
         }
 
-        // Main hand attack
-        this.weaponAttack(this.mainHand, this.target, false);
-        // Off-hand attack
+        this.weaponAttack(this.equipment.mainHand, this.target, false);
         if (this.equipment.offHandWeapon) this.weaponAttack(this.equipment.offHandWeapon, this.target, false);
     }
 
@@ -377,7 +371,7 @@ export default class Character {
         }
     }
 
-    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean } }): void {
+    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean; }; }): void {
         let damageTaken = Math.max(damage, 0);
 
         if (damageTaken > 0) {
@@ -416,7 +410,7 @@ export default class Character {
             name: this.name,
             className: this.className,
             level: this.level,
-            mainHand: this.mainHand,
+            mainHand: this.equipment.mainHand,
             offHandWeapon: this.equipment.offHandWeapon,
             potion: this.equipment.potion,
             attributes: this.attributes,

@@ -2,21 +2,18 @@ import Battle from '../Battle/Battle';
 import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';
 import BuffId from '../StatusEffect/BuffId';
+import { createTestCharacter } from '../tests/util';
 import { getCharBattleId } from '../util';
 import Bless from './Bless';
 
 let char: Character;
 
 beforeEach(() => {
-    char = new Character({
-        name: 'Test',
-        level: 0,
-        attributes: {},
+    char = createTestCharacter({
         statTemplate: {
             [StatType.Damage]: { base: 0, perLvl: 0 },
-            [StatType.HitChance]: { base: 0, perLvl: 0 },
-        },
-        equipment: {}
+            [StatType.Accuracy]: { base: 0, perLvl: 0 },
+        }
     });
 
     new Battle([char], []);

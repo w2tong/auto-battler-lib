@@ -2,13 +2,13 @@ import { ArmourId } from './Equipment/Armour';
 import { HandsId } from './Equipment/Hands';
 import { HeadId } from './Equipment/Head';
 import { ShieldId } from './Equipment/Shield';
-import { WeaponId } from './Equipment/Weapon';
+import { WeaponId } from './Equipment/Weapon/weapons';
 import { RingId } from './Equipment/Ring';
 import { PotionId } from './Equipment/Potion';
 import { BeltId } from './Equipment/Belt';
-type LootTable = (WeaponId|ShieldId|HeadId|ArmourId|HandsId|RingId|PotionId|BeltId)[];
+type LootTable = (WeaponId | ShieldId | HeadId | ArmourId | HandsId | RingId | PotionId | BeltId)[];
 
-const lootTiers: {[tier: number]: LootTable} = {
+const lootTiers: { [tier: number]: LootTable; } = {
     0: [
         // Weapons
         'longsword0', 'greatsword0', 'dagger0', 'quarterstaff0', 'wand0',
@@ -22,7 +22,7 @@ const lootTiers: {[tier: number]: LootTable} = {
         'dwGloves0', 'thGloves0', 'ohGloves0',
         // Rings
         'atkRing0', 'dmgRing0', 'dodgeRing0'
-        
+
     ],
     1: [
         // Weapons
@@ -30,13 +30,13 @@ const lootTiers: {[tier: number]: LootTable} = {
         // Shields
         'buckler1', 'spikedShield1', 'towerShield1',
         // Armour
-        'robe1', 'leatherArmour1', 'mailArmour1', 'plateArmour1', 
+        'robe1', 'leatherArmour1', 'mailArmour1', 'plateArmour1',
         // Heads
         'helmet0', 'clothHood0',
         // Hands
         'dwGloves0', 'thGloves0', 'ohGloves0',
         // Rings
-        'atkRing0', 'dmgRing0', 'critRing0', 'dodgeRing0', 'thornsRing0', 'mpHitRing0', 'mpRegenRing0', 'mpCostRing0' ,
+        'atkRing0', 'dmgRing0', 'critRing0', 'dodgeRing0', 'thornsRing0', 'mpHitRing0', 'mpRegenRing0', 'mpCostRing0',
         // Potions
         'healingPotion0'
     ],
@@ -70,7 +70,7 @@ const lootTiers: {[tier: number]: LootTable} = {
         // Hands
         'dwGloves1', 'thGloves1', 'ohGloves1',
         // Rings
-        'atkRing1' , 'dmgRing1', 'critDmgRing1', 'dodgeRing1', 'thornsRing1', 'mpHitRing1', 'mpRegenRing1', 'mpCostRing1', 'critRing1',
+        'atkRing1', 'dmgRing1', 'critDmgRing1', 'dodgeRing1', 'thornsRing1', 'mpHitRing1', 'mpRegenRing1', 'mpCostRing1', 'critRing1',
         // Potions
         'healingPotion2',
         // Belts
@@ -94,7 +94,7 @@ const lootTiers: {[tier: number]: LootTable} = {
         // Belts
         'effBelt2', 'healBelt2', 'chargesBelt0',
     ],
-        
+
     5: [
         // Weapons
         'longsword5', 'greatsword5', 'dagger5', 'quarterstaff5', 'wand5',
@@ -115,27 +115,27 @@ const lootTiers: {[tier: number]: LootTable} = {
     ],
 };
 
-const lootTables: {[level: number]: {normal: LootTable, rare: LootTable, rareChance: number}} = {
-    1: {normal: lootTiers[0], rare: lootTiers[1], rareChance: 0.05},
-    2: {normal: lootTiers[0], rare: lootTiers[1], rareChance: 0.1},
-    3: {normal: lootTiers[0], rare: lootTiers[1], rareChance: 0.25},
-    4: {normal: lootTiers[0], rare: lootTiers[1], rareChance: 0.5},
-    5: {normal: lootTiers[1], rare: lootTiers[2], rareChance: 0.05},
-    6: {normal: lootTiers[1], rare: lootTiers[2], rareChance: 0.1},
-    7: {normal: lootTiers[1], rare: lootTiers[2], rareChance: 0.25},
-    8: {normal: lootTiers[1], rare: lootTiers[2], rareChance: 0.5},
-    9: {normal: lootTiers[2], rare: lootTiers[3], rareChance: 0.05},
-    10: {normal: lootTiers[2], rare: lootTiers[3], rareChance: 0.1},
-    11: {normal: lootTiers[2], rare: lootTiers[3], rareChance: 0.25},
-    12: {normal: lootTiers[2], rare: lootTiers[3], rareChance: 0.5},
-    13: {normal: lootTiers[3], rare: lootTiers[4], rareChance: 0.05},
-    14: {normal: lootTiers[3], rare: lootTiers[4], rareChance: 0.1},
-    15: {normal: lootTiers[3], rare: lootTiers[4], rareChance: 0.25},
-    16: {normal: lootTiers[3], rare: lootTiers[4], rareChance: 0.5},
-    17: {normal: lootTiers[4], rare: lootTiers[5], rareChance: 0.1},
-    18: {normal: lootTiers[4], rare: lootTiers[5], rareChance: 0.25},
-    19: {normal: lootTiers[4], rare: lootTiers[5], rareChance: 0.5},
-    20: {normal: lootTiers[5], rare: lootTiers[5], rareChance: 0},
+const lootTables: { [level: number]: { normal: LootTable, rare: LootTable, rareChance: number; }; } = {
+    1: { normal: lootTiers[0], rare: lootTiers[1], rareChance: 0.05 },
+    2: { normal: lootTiers[0], rare: lootTiers[1], rareChance: 0.1 },
+    3: { normal: lootTiers[0], rare: lootTiers[1], rareChance: 0.25 },
+    4: { normal: lootTiers[0], rare: lootTiers[1], rareChance: 0.5 },
+    5: { normal: lootTiers[1], rare: lootTiers[2], rareChance: 0.05 },
+    6: { normal: lootTiers[1], rare: lootTiers[2], rareChance: 0.1 },
+    7: { normal: lootTiers[1], rare: lootTiers[2], rareChance: 0.25 },
+    8: { normal: lootTiers[1], rare: lootTiers[2], rareChance: 0.5 },
+    9: { normal: lootTiers[2], rare: lootTiers[3], rareChance: 0.05 },
+    10: { normal: lootTiers[2], rare: lootTiers[3], rareChance: 0.1 },
+    11: { normal: lootTiers[2], rare: lootTiers[3], rareChance: 0.25 },
+    12: { normal: lootTiers[2], rare: lootTiers[3], rareChance: 0.5 },
+    13: { normal: lootTiers[3], rare: lootTiers[4], rareChance: 0.05 },
+    14: { normal: lootTiers[3], rare: lootTiers[4], rareChance: 0.1 },
+    15: { normal: lootTiers[3], rare: lootTiers[4], rareChance: 0.25 },
+    16: { normal: lootTiers[3], rare: lootTiers[4], rareChance: 0.5 },
+    17: { normal: lootTiers[4], rare: lootTiers[5], rareChance: 0.1 },
+    18: { normal: lootTiers[4], rare: lootTiers[5], rareChance: 0.25 },
+    19: { normal: lootTiers[4], rare: lootTiers[5], rareChance: 0.5 },
+    20: { normal: lootTiers[5], rare: lootTiers[5], rareChance: 0 },
 };
 
 export default lootTables;

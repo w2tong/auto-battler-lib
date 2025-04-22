@@ -3,30 +3,30 @@ import AttributeType from '../Character/Attributes/AttributeType';
 import StatType from '../Character/Stats/StatType';
 import Stats from '../Character/Stats/Stats';
 import { armour } from '../Equipment/Armour';
-import { weapons } from '../Equipment/Weapon';
+import { weapons } from '../Equipment/Weapon/weapons';
 import NPC from './NPC';
 
 const OgreFighter: NPC = {
     name: 'Ogre Fighter',
     attributes: {
-        [AttributeType.WeaponSkill]: {base: 0, perLvl: 1},
-        [AttributeType.Strength]: {base: 10, perLvl: 2},
-        [AttributeType.Dexterity]: {base: 0, perLvl: 0.5},
-        [AttributeType.Perception]: {base: 0, perLvl: 0.5},
-        [AttributeType.Constitution]: {base: 10, perLvl: 2},
+        [AttributeType.WeaponSkill]: { base: 0, perLvl: 1 },
+        [AttributeType.Strength]: { base: 10, perLvl: 2 },
+        [AttributeType.Dexterity]: { base: 0, perLvl: 0.5 },
+        [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
+        [AttributeType.Constitution]: { base: 10, perLvl: 2 },
     },
     stats: {
         [StatType.MaxHealth]: { base: 25, perLvl: 5 },
         [StatType.Armour]: { base: 0, perLvl: 0.8 },
-        [StatType.Deflection] : { base: 0, perLvl: 0.2 },
+        [StatType.Deflection]: { base: 0, perLvl: 0.2 },
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 20 },
-    
-        [StatType.HitChance]: { base: -10 },
+
+        [StatType.Accuracy]: { base: -10 },
 
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
 
         [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
-    
+
         [StatType.ManaCost]: { base: 100 }
     },
     equipment: {

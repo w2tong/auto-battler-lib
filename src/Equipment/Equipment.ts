@@ -7,12 +7,13 @@ import { ItemType } from './Item';
 import { Potion, PotionId, potions } from './Potion';
 import { Ring, RingId, rings } from './Ring';
 import { Shield, ShieldId, shields } from './Shield';
-import { Weapon, WeaponId, WeaponTypeProperties, weapons } from './Weapon';
+import { Weapon, WeaponTypeProperties } from './Weapon/Weapon';
+import { WeaponId, weapons } from './Weapon/weapons';
 
 type Equip = Weapon | Shield | Armour | Head | Hands | Ring | Potion | Belt | Amulet;
-const equips: { [key: string]: Equip } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts, ...amulets } as const;
+const equips: { [key: string]: Equip; } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts, ...amulets } as const;
 
-type Equipment = {
+type EquipmentImport = {
     mainHand?: Weapon;
     offHandWeapon?: Weapon;
     offHandShield?: Shield;
@@ -24,20 +25,53 @@ type Equipment = {
     potion?: Potion;
     belt?: Belt;
     amulet?: Amulet;
+};
+
+class Equipment {
+    mainHand: Weapon;
+    offHandWeapon?: Weapon;
+    offHandShield?: Shield;
+    armour?: Armour;
+    head?: Head;
+    hands?: Hands;
+    ring1?: Ring;
+    ring2?: Ring;
+    potion?: Potion;
+    belt?: Belt;
+    amulet?: Amulet;
+
+    constructor(equipmentImport: EquipmentImport) {
+
+        this.mainHand = equipmentImport.mainHand ?? weapons.unarmed0;
+        if (equipmentImport.mainHand === undefined && equipmentImport.offHandWeapon === undefined && this.offHandShield === undefined) {
+            this.offHandWeapon = weapons.unarmed0;
+        }
+        if (equipmentImport.offHandWeapon) this.offHandWeapon = equipmentImport.offHandWeapon;
+
+        this.offHandShield = equipmentImport.offHandShield;
+        this.armour = equipmentImport.armour;
+        this.head = equipmentImport.head;
+        this.hands = equipmentImport.hands;
+        this.ring1 = equipmentImport.ring1;
+        this.ring2 = equipmentImport.ring2;
+        this.potion = structuredClone(equipmentImport.potion);
+        this.belt = equipmentImport.belt;
+        this.amulet = equipmentImport.amulet;
+    }
 }
 
 type EquipmentItemIds = {
-    mainHand: string | null
-    offHand: string | null
-    head: string | null
-    amulet: string | null
-    armour: string | null
-    hands: string | null
-    belt: string | null
-    ring1: string | null
-    ring2: string | null
-    potion: string | null
-}
+    mainHand: string | null;
+    offHand: string | null;
+    head: string | null;
+    amulet: string | null;
+    armour: string | null;
+    hands: string | null;
+    belt: string | null;
+    ring1: string | null;
+    ring2: string | null;
+    potion: string | null;
+};
 
 enum EquipSlot {
     MainHand = 'Main Hand',
@@ -90,53 +124,53 @@ function isValidEquip(itemId: string, slot: EquipSlot): boolean {
     else return false;
 }
 
-function createEquipment(equipmentItemIds: EquipmentItemIds): Equipment {
-    const equipment: Equipment = {};
+function createEquipmentImport(equipmentItemIds: EquipmentItemIds): EquipmentImport {
+    const equipmentImport: EquipmentImport = {};
     // Main Hand
     if (equipmentItemIds.mainHand && equipmentItemIds.mainHand in weapons) {
-        equipment.mainHand = weapons[equipmentItemIds.mainHand as WeaponId];
+        equipmentImport.mainHand = weapons[equipmentItemIds.mainHand as WeaponId];
     }
     // Off Hand
     if (equipmentItemIds.offHand) {
         if (equipmentItemIds.offHand in weapons) {
-            equipment.offHandWeapon = weapons[equipmentItemIds.offHand as WeaponId];
+            equipmentImport.offHandWeapon = weapons[equipmentItemIds.offHand as WeaponId];
         }
         else if (equipmentItemIds.offHand in shields) {
-            equipment.offHandShield = shields[equipmentItemIds.offHand as ShieldId];
+            equipmentImport.offHandShield = shields[equipmentItemIds.offHand as ShieldId];
         }
     }
     // Armour
     if (equipmentItemIds.armour && equipmentItemIds.armour in armour) {
-        equipment.armour = armour[equipmentItemIds.armour as ArmourId];
+        equipmentImport.armour = armour[equipmentItemIds.armour as ArmourId];
     }
 
     // Head
     if (equipmentItemIds.head && equipmentItemIds.head in heads) {
-        equipment.head = heads[equipmentItemIds.head as HeadId];
+        equipmentImport.head = heads[equipmentItemIds.head as HeadId];
     }
 
     // Hands
     if (equipmentItemIds.hands && equipmentItemIds.hands in hands) {
-        equipment.hands = hands[equipmentItemIds.hands as HandsId];
+        equipmentImport.hands = hands[equipmentItemIds.hands as HandsId];
     }
 
     // Rings
     if (equipmentItemIds.ring1 && equipmentItemIds.ring1 in rings) {
-        equipment.ring1 = rings[equipmentItemIds.ring1 as RingId];
+        equipmentImport.ring1 = rings[equipmentItemIds.ring1 as RingId];
     }
     if (equipmentItemIds.ring2 && equipmentItemIds.ring2 in rings) {
-        equipment.ring2 = rings[equipmentItemIds.ring2 as RingId];
+        equipmentImport.ring2 = rings[equipmentItemIds.ring2 as RingId];
     }
 
     if (equipmentItemIds.potion && equipmentItemIds.potion in potions) {
-        equipment.potion = potions[equipmentItemIds.potion as PotionId];
+        equipmentImport.potion = potions[equipmentItemIds.potion as PotionId];
     }
 
     if (equipmentItemIds.belt && equipmentItemIds.belt in belts) {
-        equipment.belt = belts[equipmentItemIds.belt as BeltId];
+        equipmentImport.belt = belts[equipmentItemIds.belt as BeltId];
     }
 
-    return equipment;
+    return equipmentImport;
 }
 
-export { Equip, EquipmentItemIds, equips, Equipment, EquipSlot, isValidEquip, createEquipment };
+export { Equip, EquipmentItemIds, equips, EquipmentImport, Equipment, EquipSlot, isValidEquip, createEquipmentImport };
