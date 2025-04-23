@@ -1,7 +1,6 @@
 import StatType from '../Stats/StatType';
 import AttributeType from './AttributeType';
 
-// TODO: test if these changed values are being calculated correctly
 const AttributeStatScaling: { [key in AttributeType]: { [key in StatType]?: number } } = {
     [AttributeType.WeaponSkill]: {
         [StatType.Accuracy]: 1,
