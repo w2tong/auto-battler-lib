@@ -86,42 +86,31 @@ enum EquipSlot {
     Amulet = 'Amulet'
 }
 
-function isValidEquip(itemId: string, slot: EquipSlot): boolean {
-    const item = equips[itemId];
-    if (!item) return false;
-
-    if (slot === EquipSlot.MainHand) {
-        return item.itemType === ItemType.Weapon;
-    }
-    else if (slot === EquipSlot.OffHand) {
+const equipValidationMap: Record<EquipSlot, (item: Equip) => boolean> = {
+    [EquipSlot.MainHand]: (item) => item.itemType === ItemType.Weapon,
+    [EquipSlot.OffHand]: (item) => {
         if (item.itemType === ItemType.Weapon) {
             const { twoHanded, light } = WeaponTypeProperties[item.type];
             return twoHanded === false && light === true;
         }
         return item.itemType === ItemType.Shield;
-    }
-    else if (slot === EquipSlot.Armour) {
-        return item.itemType === ItemType.Armour;
-    }
-    else if (slot === EquipSlot.Head) {
-        return item.itemType === ItemType.Head;
-    }
-    else if (slot === EquipSlot.Hands) {
-        return item.itemType === ItemType.Hands;
-    }
-    else if (slot === EquipSlot.Ring1 || slot === EquipSlot.Ring2) {
-        return item.itemType === ItemType.Ring;
-    }
-    else if (slot === EquipSlot.Potion) {
-        return item.itemType === ItemType.Potion;
-    }
-    else if (slot === EquipSlot.Belt) {
-        return item.itemType === ItemType.Belt;
-    }
-    else if (slot === EquipSlot.Amulet) {
-        return item.itemType === ItemType.Amulet;
-    }
-    else return false;
+    },
+    [EquipSlot.Armour]: (item) => item.itemType === ItemType.Armour,
+    [EquipSlot.Head]: (item) => item.itemType === ItemType.Head,
+    [EquipSlot.Hands]: (item) => item.itemType === ItemType.Hands,
+    [EquipSlot.Ring1]: (item) => item.itemType === ItemType.Ring,
+    [EquipSlot.Ring2]: (item) => item.itemType === ItemType.Ring,
+    [EquipSlot.Potion]: (item) => item.itemType === ItemType.Potion,
+    [EquipSlot.Belt]: (item) => item.itemType === ItemType.Belt,
+    [EquipSlot.Amulet]: (item) => item.itemType === ItemType.Amulet,
+};
+
+function isValidEquip(itemId: string, slot: EquipSlot): boolean {
+    const item = equips[itemId];
+    if (!item) return false;
+
+    const validate = equipValidationMap[slot];
+    return validate ? validate(item) : false;
 }
 
 function createEquipmentImport(equipmentItemIds: EquipmentItemIds): EquipmentImport {
