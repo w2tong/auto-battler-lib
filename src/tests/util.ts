@@ -4,9 +4,15 @@ import BaseAttributes from '../Character/Attributes/BaseAttributes';
 import Character from '../Character/Character';
 import { StatTemplate } from '../Character/Stats/StatTemplate';
 import DamageType from '../DamageType';
+import { Amulet } from '../Equipment/Amulet';
+import { Armour, ArmourType } from '../Equipment/Armour';
+import { Belt } from '../Equipment/Belt';
 import { EquipmentImport } from '../Equipment/Equipment';
+import { Hands } from '../Equipment/Hands';
+import { Head } from '../Equipment/Head';
 import { ItemType } from '../Equipment/Item';
 import { Potion } from '../Equipment/Potion';
+import { Ring } from '../Equipment/Ring';
 import { Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
 
 function createTestCharacter({ level = 1, attributes = {}, statTemplate = {}, equipment = { mainHand: test1HWeapon }, ability, options }: {
@@ -47,6 +53,55 @@ const test2HWeapon: Weapon = {
     damageRange: { min: 0, max: 0, bonus: 0 },
 };
 
+const testHead: Head = {
+    id: '',
+    itemType: ItemType.Head,
+    name: '',
+    tier: 0,
+    img: ''
+};
+
+const testAmulet: Amulet = {
+    id: '',
+    itemType: ItemType.Amulet,
+    name: '',
+    tier: 0,
+    img: ''
+};
+
+const testArmour: Armour = {
+    id: '',
+    itemType: ItemType.Armour,
+    name: '',
+    tier: 0,
+    img: '',
+    type: ArmourType.Unarmoured,
+};
+
+const testHands: Hands = {
+    id: '',
+    itemType: ItemType.Hands,
+    name: '',
+    tier: 0,
+    img: ''
+};
+
+const testBelt: Belt = {
+    id: '',
+    itemType: ItemType.Belt,
+    name: '',
+    tier: 0,
+    img: ''
+};
+
+const testRing: Ring = {
+    id: '',
+    itemType: ItemType.Ring,
+    name: '',
+    tier: 0,
+    img: '',
+};
+
 const testPotion: Potion = {
     id: '',
     itemType: ItemType.Potion,
@@ -58,4 +113,4 @@ const testPotion: Potion = {
     charges: 1
 };
 
-export { createTestCharacter, test1HWeapon, test2HWeapon, testPotion };
+export { createTestCharacter, test1HWeapon, test2HWeapon, testHead, testAmulet, testArmour, testHands, testBelt, testRing, testPotion };
