@@ -39,7 +39,7 @@ const WeaponTypeProperties: { [type in WeaponType]: {
     },
     Longsword: {
         twoHanded: false,
-        light: true
+        light: false
     },
     Greatsword: {
         twoHanded: true,
