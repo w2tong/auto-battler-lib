@@ -2,18 +2,18 @@ import StatType from '../Character/Stats/StatType';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Head extends Item {
-    itemType: ItemType.Head
-    armourClass?: number
+    itemType: ItemType.Head;
+    armourClass?: number;
     attributes?: ItemAttributes;
-    stats: ItemStats;
+    stats?: ItemStats;
 }
 
-type HeadId = 
-'helmet0' | 'helmet1' | 'helmet2' |
-'clothHood0' | 'clothHood1' | 'clothHood2' 
-;
+type HeadId =
+    'helmet0' | 'helmet1' | 'helmet2' |
+    'clothHood0' | 'clothHood1' | 'clothHood2'
+    ;
 
-const heads: {[id in HeadId]: Head} = {
+const heads: { [id in HeadId]: Head } = {
     helmet0: {
         id: 'helmet0',
         itemType: ItemType.Head,
