@@ -11,14 +11,14 @@ enum Side {
 type TurnRes = {
     combatEnded: boolean;
     winner?: Side;
-}
+};
 
 type BattleJSON = {
     left: CharacterJSON[];
     right: CharacterJSON[];
-    turnOrder: { name: string, init: number }[];
+    turnOrder: { name: string, init: number; }[];
     turnIndex: number;
-}
+};
 
 class Battle {
     private _left: Character[] = [];
@@ -28,7 +28,7 @@ class Battle {
     private rightAlive: Set<number> = new Set();
 
     private _turnIndex = -1;
-    private _turnOrder: { char: Character, init: number }[] = [];
+    private _turnOrder: { char: Character, init: number; }[] = [];
 
     private _log: Log;
 
@@ -132,14 +132,14 @@ class Battle {
         return res;
     }
 
-    json(): BattleJSON {
-        return {
-            left: [...this.left.map(char => char.json())],
-            right: [...this.right.map(char => char.json())],
-            turnOrder: this.turnOrder.map(charInit => { return { name: charInit.char.name, init: charInit.init }; }),
-            turnIndex: this.turnIndex,
-        };
-    }
+    // json(): BattleJSON {
+    //     return {
+    //         left: [...this.left.map(char => char.json())],
+    //         right: [...this.right.map(char => char.json())],
+    //         turnOrder: this.turnOrder.map(charInit => { return { name: charInit.char.name, init: charInit.init }; }),
+    //         turnIndex: this.turnIndex,
+    //     };
+    // }
 }
 
 export default Battle;

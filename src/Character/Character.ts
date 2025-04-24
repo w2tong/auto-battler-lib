@@ -371,7 +371,7 @@ export default class Character {
         }
     }
 
-    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean; }; }): void {
+    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean; }; }): number {
         let damageTaken = Math.max(damage, 0);
 
         if (damageTaken > 0) {
@@ -387,6 +387,8 @@ export default class Character {
                 this.battle.ref.log.add(`${this.name} died.`);
             }
         }
+
+        return damageTaken;
     }
 
     addMana(mana: number): void {
@@ -419,19 +421,19 @@ export default class Character {
     }
 
     // Helper functions
-    json(): CharacterJSON {
-        return {
-            name: this._name,
-            className: this.className,
-            level: this.level,
-            currHealth: this.currentHealth,
-            maxHealth: this.stats.getStat(StatType.MaxHealth),
-            currMana: this.currentHealth,
-            manaCost: this.stats.getStat(StatType.ManaCost),
-            buffs: this.statusEffectManager.getBuffString(),
-            debuffs: this.statusEffectManager.getDebuffString()
-        };
-    }
+    // json(): CharacterJSON {
+    //     return {
+    //         name: this._name,
+    //         className: this.className,
+    //         level: this.level,
+    //         currHealth: this.currentHealth,
+    //         maxHealth: this.stats.getStat(StatType.MaxHealth),
+    //         currMana: this.currentHealth,
+    //         manaCost: this.stats.getStat(StatType.ManaCost),
+    //         buffs: this.statusEffectManager.getBuffString(),
+    //         debuffs: this.statusEffectManager.getDebuffString()
+    //     };
+    // }
 
     static calcCritDamage(damage: number, critDamage: number) {
         return Math.max(damage *= critDamage, 0);

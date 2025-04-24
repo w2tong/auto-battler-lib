@@ -15,16 +15,14 @@ export default class Bleeding extends Debuff {
     onTurnStart() { }
     onTurnEnd() {
         // TODO: change this to be different from poison
-        for (const [key, instance] of Object.entries(this.instances)) {
-            this.char.takeDamage({
-                source: `${Bleeding.name} (${instance.source.name})`,
-                damage: (Bleeding.baseDamage + this.char.currentHealth * Bleeding.healthDamagePercent) * instance.stacks,
-                armourPenetration: Infinity
-            });
+        this.char.takeDamage({
+            source: `${Bleeding.name} (${this.source.name})`,
+            damage: (Bleeding.baseDamage + this.char.currentHealth * Bleeding.healthDamagePercent) * this.stacks,
+            armourPenetration: Infinity
+        });
 
-            instance.stacks -= 1;
-            if (instance.stacks <= 0) this.remove(key);
-        }
+        this.stacks -= 1;
+        if (this.stacks <= 0) this.manager.removeDebuff(this.id, this.source);
     }
     onAttack() { }
 

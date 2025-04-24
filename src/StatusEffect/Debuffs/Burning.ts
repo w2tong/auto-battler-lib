@@ -15,16 +15,14 @@ export default class Burn extends Debuff {
 
     onTurnStart() { }
     onTurnEnd() {
-        for (const [key, instance] of Object.entries(this.instances)) {
-            this.char.takeDamage({
-                source: `${Burn.name} (${instance.source.name})`,
-                damage: Burn.baseDamage + instance.source.stats.spellPower * Burn.spellPowerRatio,
-                armourPenetration: instance.source.stats.getStat(StatType.ArmourPenetration)
-            });
+        this.char.takeDamage({
+            source: `${Burn.name} (${this.source.name})`,
+            damage: Burn.baseDamage + this.source.stats.spellPower * Burn.spellPowerRatio,
+            armourPenetration: this.source.stats.getStat(StatType.ArmourPenetration)
+        });
 
-            instance.stacks -= 1;
-            if (instance.stacks <= 0) this.remove(key);
-        }
+        this.stacks -= 1;
+        if (this.stacks <= 0) this.manager.removeDebuff(this.id, this.source);
     }
     onAttack() { }
 
