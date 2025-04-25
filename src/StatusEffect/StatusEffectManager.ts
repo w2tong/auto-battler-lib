@@ -58,7 +58,7 @@ export default class StatusEffectManager {
         if (!this.debuffs[id]) this.debuffs[id] = {};
         const debuff = this.debuffs[id]![getCharBattleId(source)];
         if (!debuff) {
-            this.debuffs[id]![getCharBattleId(source)] = new debuffs[id](this, this.char, source, stacks);
+            this.debuffs[id]![getCharBattleId(source)] = new debuffs[id](this, this.char, source, stacks, optional);
             source.statusEffectManager.addOutgoingDebuff(id, this.char, this.debuffs[id]![getCharBattleId(source)]);
             this.debuffs[id]![getCharBattleId(source)].onApply();
         }
