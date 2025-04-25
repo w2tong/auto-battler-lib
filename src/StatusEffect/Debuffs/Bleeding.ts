@@ -4,20 +4,16 @@ import DebuffId from '../DebuffId';
 export default class Bleeding extends Debuff {
     id = DebuffId.Bleeding;
     name: string = 'Bleeding';
-    symbol: string = '🤢';
-
-    static baseDamage = 1;
-    static healthDamagePercent = 0.01;
+    symbol: string = '🩸';
 
     onApply() { }
     onExpire() { }
 
     onTurnStart() { }
     onTurnEnd() {
-        // TODO: change this to be different from poison
         this.char.takeDamage({
             source: `${Bleeding.name} (${this.source.name})`,
-            damage: (Bleeding.baseDamage + this.char.currentHealth * Bleeding.healthDamagePercent) * this.stacks,
+            damage: this.remainingDamage ?? 0 / this.stacks,
             armourPenetration: Infinity
         });
 
