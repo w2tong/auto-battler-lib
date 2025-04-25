@@ -26,7 +26,8 @@ enum WeaponType {
     Dagger = 'Dagger',
     Quarterstaff = 'Quarterstaff',
     Wand = 'Wand',
-    Mace = 'Mace'
+    Mace = 'Mace',
+    Bow = 'Bow'
 }
 
 const WeaponTypeProperties: { [type in WeaponType]: {
@@ -59,6 +60,10 @@ const WeaponTypeProperties: { [type in WeaponType]: {
     },
     Mace: {
         twoHanded: false,
+        light: false
+    },
+    Bow: {
+        twoHanded: true,
         light: false
     }
 } as const;
