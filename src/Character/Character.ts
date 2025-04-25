@@ -281,12 +281,13 @@ export default class Character {
         return { min, max };
     }
 
-    attack({ target, attackType, damageRange, spellPowerRatio, isOffHand = false, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean, abilityName?: string; }): boolean {
+    attack({ target, attackType, damageRange, spellPowerRatio, isOffHand = false, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean, abilityName?: string; }): { hit: boolean, damageDone: number; } {
 
         let hitType: HitType = HitType.Miss;
         let damage: number = 0;
         let sneakAttack: boolean = false;
         let blocked: boolean = false;
+        let damageDone: number = 0;
 
         const hit = this.hitRoll({
             target,
@@ -338,14 +339,14 @@ export default class Character {
 
         // Deal thorns damage to this Character if target was hit
         if (hit && target.stats.getStat(StatType.Thorns) > 0) {
-            this.takeDamage({
+            damageDone = this.takeDamage({
                 source: StatType.Thorns,
                 damage: target.stats.getStat(StatType.Thorns),
                 armourPenetration: target.stats.armourPenetration
             });
         }
 
-        return hit;
+        return { hit, damageDone };
     }
 
     turnAttack(): void {
@@ -359,7 +360,7 @@ export default class Character {
     }
 
     weaponAttack(weapon: Weapon, target: Character, isOffHand: boolean): void {
-        const hit = this.attack({
+        const { hit } = this.attack({
             target: target,
             attackType: weapon.attackType,
             damageRange: weapon.damageRange,

@@ -6,6 +6,7 @@ import buffs from './buffs';
 import Debuff from './Debuff';
 import DebuffId from './DebuffId';
 import debuffs from './debuffs';
+import type { StatusEffectOptional } from './StatusEffect';
 
 export default class StatusEffectManager {
     private char: Character;
@@ -37,21 +38,22 @@ export default class StatusEffectManager {
         return count;
     }
 
-    addBuff(id: BuffId, source: Character, stacks: number) {
+    addBuff(id: BuffId, source: Character, stacks: number, optional?: StatusEffectOptional) {
         if (stacks <= 0) return;
         if (!this.buffs[id]) this.buffs[id] = {};
         const buff = this.buffs[id]![getCharBattleId(source)];
         if (!buff) {
-            this.buffs[id]![getCharBattleId(source)] = new buffs[id](this, this.char, source, stacks);
+            this.buffs[id]![getCharBattleId(source)] = new buffs[id](this, this.char, source, stacks, optional);
             source.statusEffectManager.addOutgoingBuff(id, this.char, this.buffs[id]![getCharBattleId(source)]);
             this.buffs[id]![getCharBattleId(source)].onApply();
         }
         else {
-            buff.addStacks(stacks);
+            buff.stacks += stacks;
+            if (buff.remainingDamage && optional?.remainingDamage) buff.remainingDamage += optional.remainingDamage;
         }
     }
 
-    addDebuff(id: DebuffId, source: Character, stacks: number) {
+    addDebuff(id: DebuffId, source: Character, stacks: number, optional?: StatusEffectOptional) {
         if (stacks <= 0) return;
         if (!this.debuffs[id]) this.debuffs[id] = {};
         const debuff = this.debuffs[id]![getCharBattleId(source)];
@@ -61,7 +63,8 @@ export default class StatusEffectManager {
             this.debuffs[id]![getCharBattleId(source)].onApply();
         }
         else {
-            debuff.addStacks(stacks);
+            debuff.stacks += stacks;
+            if (debuff.remainingDamage && optional?.remainingDamage) debuff.remainingDamage += optional.remainingDamage;
         }
     }
 

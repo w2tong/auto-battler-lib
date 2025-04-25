@@ -9,6 +9,8 @@ enum StatusEffectType {
     Debuff = 'Debuff'
 }
 
+type StatusEffectOptional = { stats?: { [stat in StatType]?: number }, remainingDamage: number; };
+
 abstract class StatusEffect {
     abstract readonly id: BuffId | DebuffId;
     abstract readonly type: StatusEffectType;
@@ -17,19 +19,31 @@ abstract class StatusEffect {
     readonly manager: StatusEffectManager;
     readonly char: Character;
     readonly source: Character;
-    stacks: number;
+    private _stacks: number;
     stats?: { [stat in StatType]?: number };
+    private _remainingDamage?: number;
 
-    constructor(manager: StatusEffectManager, char: Character, source: Character, stacks: number, optional?: { stats?: { [stat in StatType]?: number }; }) {
+    constructor(manager: StatusEffectManager, char: Character, source: Character, stacks: number, optional?: StatusEffectOptional) {
         this.manager = manager;
         this.char = char;
         this.source = source;
-        this.stacks = stacks;
+        this._stacks = stacks;
         if (optional?.stats) this.stats = optional.stats;
+        if (optional?.remainingDamage) this._remainingDamage = optional.remainingDamage;
     }
 
-    addStacks(stacks: number) {
-        this.stacks += stacks;
+    get stacks() {
+        return this._stacks;
+    }
+    set stacks(num: number) {
+        this._stacks = num;
+    }
+
+    get remainingDamage(): number | undefined {
+        return this._remainingDamage;
+    }
+    set remainingDamage(num: number) {
+        this._remainingDamage = num;
     }
 
     // Status Effect events
@@ -45,4 +59,5 @@ abstract class StatusEffect {
 }
 
 export default StatusEffect;
+export type { StatusEffectOptional };
 export { StatusEffectType };

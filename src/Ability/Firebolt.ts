@@ -15,7 +15,7 @@ const Firebolt: Ability = {
     func: (char) => {
         if (char.target) {
             char.useAbilityMana();
-            const hit = char.attack({
+            const { hit } = char.attack({
                 target: char.target,
                 attackType: AttackType.Spell,
                 damageRange: {
