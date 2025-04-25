@@ -46,29 +46,29 @@ type CharacterJSON = {
 export default class Character {
     private userId?: string;
 
-    protected _name: string;
-    protected className: ClassName | null;
+    private _name: string;
+    private className: ClassName | null;
 
-    protected _level: number;
+    private _level: number;
 
     // Equipment
-    protected _equipment: Equipment;
+    private _equipment: Equipment;
 
     // Attributes and Stats
-    protected _attributes: Attributes;
-    protected _stats: Stats;
-    protected _currentHealth: number;
-    protected _currentMana: number;
+    private _attributes: Attributes;
+    private _stats: Stats;
+    private _currentHealth: number;
+    private _currentMana: number;
 
     // Ability
-    protected ability: Ability | null;
+    private ability: Ability | null;
 
     // Buffs/Debuffs
-    protected _statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
+    private _statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
 
     // Battle Info
-    protected _target: Character | null = null;
-    protected _battle: { ref: Battle, side: Side, index: number; } | null = null;
+    private _target: Character | null = null;
+    private _battle: { ref: Battle, side: Side, index: number; } | null = null;
 
     constructor({ name, level, className, attributes, statTemplate, equipment, ability, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
         this._name = name;
