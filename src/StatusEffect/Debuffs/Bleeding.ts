@@ -11,11 +11,15 @@ export default class Bleeding extends Debuff {
 
     onTurnStart() { }
     onTurnEnd() {
-        this.char.takeDamage({
-            source: `${Bleeding.name} (${this.source.name})`,
-            damage: this.remainingDamage ?? 0 / this.stacks,
-            armourPenetration: Infinity
-        });
+        if (this.remainingDamage) {
+            const damage = this.remainingDamage / this.stacks;
+            this.char.takeDamage({
+                source: `${Bleeding.name} (${this.source.name})`,
+                damage,
+                armourPenetration: Infinity
+            });
+            this.remainingDamage -= damage;
+        }
 
         this.stacks -= 1;
         if (this.stacks <= 0) this.manager.removeDebuff(this.id, this.source);
