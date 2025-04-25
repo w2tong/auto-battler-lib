@@ -3,7 +3,7 @@ import DebuffId from '../StatusEffect/DebuffId';
 import Ability from './Ability';
 
 const NAME = 'Wounding Shot';
-const BONUS_DMG = 0.25;
+const BONUS_DMG = 0.5;
 const BLEED_STACKS = 3;
 const DMG_PER_TURN = 0.2;
 
