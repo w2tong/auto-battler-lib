@@ -20,60 +20,96 @@ beforeEach(() => {
 
 // TODO: update tests to include checks for outgoing(de)buffs
 describe('addBuff', () => {
-    test('0 stacks', () => {
-        statusEffectManager.addBuff(BuffId.Blessed, source1, 0);
-        expect(statusEffectManager.buffs[BuffId.Blessed]).toBeUndefined();
-        statusEffectManager.addBuff(BuffId.Invisible, source1, 0);
-        expect(statusEffectManager.buffs[BuffId.Invisible]).toBeUndefined();
+    describe('stacks', () => {
+        test('0 stacks', () => {
+            statusEffectManager.addBuff(BuffId.Blessed, source1, 0);
+            expect(statusEffectManager.buffs[BuffId.Blessed]).toBeUndefined();
+            statusEffectManager.addBuff(BuffId.Invisible, source1, 0);
+            expect(statusEffectManager.buffs[BuffId.Invisible]).toBeUndefined();
+        });
+        test('1 source, 1 stack', () => {
+            statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
+            expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(1);
+        });
+        test('1 source, 2 stack', () => {
+            statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
+            statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
+            expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(2);
+        });
+        test('1 source, 2 stack', () => {
+            statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
+            statusEffectManager.addBuff(BuffId.Blessed, source2, 2);
+            expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(1);
+            expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source2)].stacks).toBe(2);
+        });
     });
 
-    test('1 source, 1 stack', () => {
-        statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
-        expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(1);
-    });
-
-    test('1 source, 2 stack', () => {
-        statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
-        expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(1);
-        statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
-        expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(2);
-    });
-
-    test('1 source, 2 stack', () => {
-        statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
-        statusEffectManager.addBuff(BuffId.Blessed, source2, 2);
-        expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(1);
-        expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source2)].stacks).toBe(2);
+    describe('remainingDamage', () => {
+        test('0 remainingDamage, 0 stacks', () => {
+            statusEffectManager.addBuff(BuffId.Blessed, source1, 0, { remainingDamage: 0 });
+            expect(statusEffectManager.buffs[BuffId.Blessed]).toBeUndefined();
+        });
+        test('0 remainingDamage', () => {
+            statusEffectManager.addBuff(BuffId.Blessed, source1, 1, { remainingDamage: 0 });
+            expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].remainingDamage).toBeUndefined();
+        });
+        test('100 remainingDamage', () => {
+            statusEffectManager.addBuff(BuffId.Blessed, source1, 1, { remainingDamage: 100 });
+            expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].remainingDamage).toBe(100);
+        });
+        test('50+50 remainingDamage', () => {
+            statusEffectManager.addBuff(BuffId.Blessed, source1, 1, { remainingDamage: 50 });
+            statusEffectManager.addBuff(BuffId.Blessed, source1, 1, { remainingDamage: 50 });
+            expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].remainingDamage).toBe(100);
+        });
     });
 });
 
 describe('addDebuff', () => {
-    test('0 stacks', () => {
-        statusEffectManager.addDebuff(DebuffId.Burning, source1, 0);
-        expect(statusEffectManager.debuffs[DebuffId.Burning]).toBeUndefined();
-        statusEffectManager.addDebuff(DebuffId.Frozen, source1, 0);
-        expect(statusEffectManager.debuffs[DebuffId.Frozen]).toBeUndefined();
-        statusEffectManager.addDebuff(DebuffId.Poisoned, source1, 0);
-        expect(statusEffectManager.debuffs[DebuffId.Poisoned]).toBeUndefined();
+    describe('stacks', () => {
+        test('0 stacks', () => {
+            statusEffectManager.addDebuff(DebuffId.Burning, source1, 0);
+            expect(statusEffectManager.debuffs[DebuffId.Burning]).toBeUndefined();
+            statusEffectManager.addDebuff(DebuffId.Frozen, source1, 0);
+            expect(statusEffectManager.debuffs[DebuffId.Frozen]).toBeUndefined();
+            statusEffectManager.addDebuff(DebuffId.Poisoned, source1, 0);
+            expect(statusEffectManager.debuffs[DebuffId.Poisoned]).toBeUndefined();
+        });
+        test('1 source, 1 stack', () => {
+            statusEffectManager.addDebuff(DebuffId.Burning, source1, 1);
+            expect(statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(source1)].stacks).toBe(1);
+        });
+        test('1 source, 2 stacks', () => {
+            statusEffectManager.addDebuff(DebuffId.Burning, source1, 1);
+            statusEffectManager.addDebuff(DebuffId.Burning, source1, 1);
+            expect(statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(source1)].stacks).toBe(2);
+        });
+        test('2 sources, 1 stack each', () => {
+            statusEffectManager.addDebuff(DebuffId.Burning, source1, 1);
+            statusEffectManager.addDebuff(DebuffId.Burning, source2, 2);
+            expect(statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(source1)].stacks).toBe(1);
+            expect(statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(source2)].stacks).toBe(2);
+        });
     });
 
-    test('1 source, 1 stack', () => {
-        statusEffectManager.addDebuff(DebuffId.Burning, source1, 1);
-        expect(statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(source1)].stacks).toBe(1);
-    });
-
-    test('1 source, 2 stacks', () => {
-        statusEffectManager.addDebuff(DebuffId.Burning, source1, 1);
-        expect(statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(source1)].stacks).toBe(1);
-        statusEffectManager.addDebuff(DebuffId.Burning, source1, 1);
-        expect(statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(source1)].stacks).toBe(2);
-    });
-
-    test('2 sources, 1 stack each', () => {
-        statusEffectManager.addDebuff(DebuffId.Burning, source1, 1);
-        statusEffectManager.addDebuff(DebuffId.Burning, source2, 2);
-        expect(statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(source1)].stacks).toBe(1);
-        expect(statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(source2)].stacks).toBe(2);
+    describe('remainingDamage', () => {
+        test('0 remainingDamage, 0 stacks', () => {
+            statusEffectManager.addDebuff(DebuffId.Bleeding, source1, 0, { remainingDamage: 0 });
+            expect(statusEffectManager.debuffs[DebuffId.Bleeding]).toBeUndefined();
+        });
+        test('0 remainingDamage', () => {
+            statusEffectManager.addDebuff(DebuffId.Bleeding, source1, 1, { remainingDamage: 0 });
+            expect(statusEffectManager.debuffs[DebuffId.Bleeding]![getCharBattleId(source1)].remainingDamage).toBeUndefined();
+        });
+        test('100 remainingDamage', () => {
+            statusEffectManager.addDebuff(DebuffId.Bleeding, source1, 1, { remainingDamage: 100 });
+            expect(statusEffectManager.debuffs[DebuffId.Bleeding]![getCharBattleId(source1)].remainingDamage).toBe(100);
+        });
+        test('50+50 remainingDamage', () => {
+            statusEffectManager.addDebuff(DebuffId.Bleeding, source1, 1, { remainingDamage: 50 });
+            statusEffectManager.addDebuff(DebuffId.Bleeding, source1, 1, { remainingDamage: 50 });
+            expect(statusEffectManager.debuffs[DebuffId.Bleeding]![getCharBattleId(source1)].remainingDamage).toBe(100);
+        });
     });
 });
 
