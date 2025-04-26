@@ -35,19 +35,28 @@ class Battle {
     private winner?: Side;
 
     constructor(left: Character[], right: Character[]) {
-        this._left = left;
+        this._left = this.getCharsWithPets(left);
         this.leftAlive = new Set(Array(left.length).keys());
         for (let i = 0; i < this.left.length; i++) {
             this.left[i].setBattle(this, Side.Left, i);
         }
 
-        this._right = right;
+        this._right = this.getCharsWithPets(right);
         this.rightAlive = new Set(Array(right.length).keys());
         for (let i = 0; i < this.right.length; i++) {
             this.right[i].setBattle(this, Side.Right, i);
         }
 
         this._log = new Log();
+    }
+
+    getCharsWithPets(chars: Character[]) {
+        const res: Character[] = [];
+        for (const char of chars) {
+            res.push(char);
+            if (char.pet !== null) res.push(char.pet);
+        }
+        return res;
     }
 
     get log() {

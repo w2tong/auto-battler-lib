@@ -17,6 +17,7 @@ import Attributes from './Attributes/Attributes';
 import BaseAttributes from './Attributes/BaseAttributes';
 import AttackType from '../AttackType';
 import { type Weapon } from '../Equipment/Weapon/Weapon';
+import { createPet, PetId } from './Pet';
 
 type CharacterInfo = {
     name: string,
@@ -66,11 +67,14 @@ export default class Character {
     // Buffs/Debuffs
     private _statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
 
+    // Pet
+    private _pet: Character | null;
+
     // Battle Info
     private _target: Character | null = null;
     private _battle: { ref: Battle, side: Side, index: number; } | null = null;
 
-    constructor({ name, level, className, attributes, statTemplate, equipment, ability, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
+    constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, petId?: PetId, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
         this._name = name;
         this._level = level;
         this.className = className ?? null;
@@ -88,6 +92,8 @@ export default class Character {
         this.ability = ability ?? (className ? Classes[className].ability : null);
         this._currentHealth = options?.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
+
+        this._pet = petId ? createPet(this, petId) : null;
 
         if (options?.userId) this.userId = options.userId;
     }
@@ -146,6 +152,10 @@ export default class Character {
 
     get statusEffectManager() {
         return this._statusEffectManager;
+    }
+
+    get pet() {
+        return this._pet;
     }
 
     getName(): string {
