@@ -1,5 +1,6 @@
 import AttackType from '../AttackType';
 import Character from '../Character/Character';
+import { PetId } from '../Character/Pet';
 import StatType from '../Character/Stats/StatType';
 import DamageType from '../DamageType';
 import { ItemType } from '../Equipment/Item';
@@ -277,5 +278,26 @@ describe('getAliveTargets', () => {
         battle.setCharDead(Side.Right, 1);
         const targets = battle.getAliveTargets(Side.Right);
         expect(targets).toStrictEqual([]);
+    });
+});
+
+describe('pets', () => {
+    test('left 1 pet', () => {
+        const char = createTestCharacter({ petId: PetId.Wolf });
+        const battle = new Battle([char], []);
+        expect(battle.left[0]).toBe(char);
+        expect(battle.left[1]).toBe(char.pet);
+    });
+    test('left 2 pets, right 1 pet', () => {
+        const left1 = createTestCharacter({ petId: PetId.Wolf });
+        const left2 = createTestCharacter({ petId: PetId.Wolf });
+        const right1 = createTestCharacter({ petId: PetId.Wolf });
+        const battle = new Battle([left1, left2], [right1]);
+        expect(battle.left[0]).toBe(left1);
+        expect(battle.left[1]).toBe(left1.pet);
+        expect(battle.left[2]).toBe(left2);
+        expect(battle.left[3]).toBe(left2.pet);
+        expect(battle.right[0]).toBe(right1);
+        expect(battle.right[1]).toBe(right1.pet);
     });
 });

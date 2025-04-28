@@ -26,7 +26,9 @@ enum WeaponType {
     Dagger = 'Dagger',
     Quarterstaff = 'Quarterstaff',
     Wand = 'Wand',
-    Mace = 'Mace'
+    Mace = 'Mace',
+    Bow = 'Bow',
+    Bite = 'Bite',
 }
 
 const WeaponTypeProperties: { [type in WeaponType]: {
@@ -39,7 +41,7 @@ const WeaponTypeProperties: { [type in WeaponType]: {
     },
     Longsword: {
         twoHanded: false,
-        light: true
+        light: false
     },
     Greatsword: {
         twoHanded: true,
@@ -59,6 +61,14 @@ const WeaponTypeProperties: { [type in WeaponType]: {
     },
     Mace: {
         twoHanded: false,
+        light: false
+    },
+    Bow: {
+        twoHanded: true,
+        light: false
+    },
+    Bite: {
+        twoHanded: true,
         light: false
     }
 } as const;

@@ -1846,7 +1846,7 @@ describe('attack', () => {
             spellPowerRatio: 0.2
         });
         expect(target.currentHealth).toBe(63); // (5 + 1 + 2 + 2 + 4) * 1.5 * 2 - 5 = 37
-        expect(char.statusEffectManager.buffs[BuffId.Invisible]?.instances).toStrictEqual({});
+        expect(char.statusEffectManager.buffs[BuffId.Invisible]).toStrictEqual({});
         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
     });
 

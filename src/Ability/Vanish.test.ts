@@ -23,7 +23,7 @@ test('Vanish - 0 Dexterity', () => {
     new Battle([char], []);
 
     Vanish.func(char);
-    expect(char.statusEffectManager.buffs[BuffId.Invisible]?.instances).toHaveProperty(getCharBattleId(char), { source: char, stacks: 1 });
+    expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(1);
     expect(char.isInvisible()).toBe(true);
     expect(char.currentMana).toBe(50);
 });
@@ -42,7 +42,7 @@ test('Vanish - 10 Dexterity', () => {
     new Battle([char], []);
 
     Vanish.func(char);
-    expect(char.statusEffectManager.buffs[BuffId.Invisible]?.instances).toHaveProperty(getCharBattleId(char), { source: char, stacks: 1 });
+    expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(1);
     expect(char.isInvisible()).toBe(true);
     expect(char.currentMana).toBe(50);
 });
@@ -61,7 +61,7 @@ test('Vanish - 20 Dexterity', () => {
     new Battle([char], []);
 
     Vanish.func(char);
-    expect(char.statusEffectManager.buffs[BuffId.Invisible]?.instances).toHaveProperty(getCharBattleId(char), { source: char, stacks: 2 });
+    expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(2);
     expect(char.isInvisible()).toBe(true);
     expect(char.currentMana).toBe(50);
 });
@@ -80,7 +80,7 @@ test('Vanish - 100 Dexterity', () => {
     new Battle([char], []);
 
     Vanish.func(char);
-    expect(char.statusEffectManager.buffs[BuffId.Invisible]?.instances).toHaveProperty(getCharBattleId(char), { source: char, stacks: 10 });
+    expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(10);
     expect(char.isInvisible()).toBe(true);
     expect(char.currentMana).toBe(50);
 });

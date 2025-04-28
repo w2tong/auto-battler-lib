@@ -8,7 +8,7 @@ interface Ring extends Item {
 }
 
 type RingId =
-    'atkRing0' | 'atkRing1' | 'atkRing2'
+    'accRing0' | 'accRing1' | 'accRing2'
     | 'dmgRing0' | 'dmgRing1' | 'dmgRing2'
     | 'critRing0' | 'critRing1' | 'critRing2'
     | 'critDmgRing0' | 'critDmgRing1' | 'critDmgRing2'
@@ -20,10 +20,10 @@ type RingId =
     ;
 
 const rings: { [id in RingId]: Ring } = {
-    atkRing0: {
-        id: 'atkRing0',
+    accRing0: {
+        id: 'accRing0',
         itemType: ItemType.Ring,
-        name: 'Ring of Lesser Attack',
+        name: 'Ring of Lesser Accuracy',
         tier: 0,
         img: 'ring-red.png',
 
@@ -31,10 +31,10 @@ const rings: { [id in RingId]: Ring } = {
             [StatType.Accuracy]: 4
         }
     },
-    atkRing1: {
-        id: 'atkRing1',
+    accRing1: {
+        id: 'accRing1',
         itemType: ItemType.Ring,
-        name: 'Ring of Attack',
+        name: 'Ring of Accuracy',
         tier: 3,
         img: 'ring-red.png',
 
@@ -42,10 +42,10 @@ const rings: { [id in RingId]: Ring } = {
             [StatType.Accuracy]: 7
         }
     },
-    atkRing2: {
-        id: 'atkRing2',
+    accRing2: {
+        id: 'accRing2',
         itemType: ItemType.Ring,
-        name: 'Ring of Greater Attack',
+        name: 'Ring of Greater Accuracy',
         tier: 0,
         img: 'ring-red.png',
 

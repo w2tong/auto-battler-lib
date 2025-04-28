@@ -38,7 +38,7 @@ test('Burn - 1 stacks', () => {
 
     target.statusEffectManager.turnEnd();
     expect(target.currentHealth).toBe(89.5);
-    expect(target.statusEffectManager.debuffs[DebuffId.Burning]!.instances[getCharBattleId(char)]).toBeUndefined();
+    expect(target.statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(char)]).toBeUndefined();
 });
 
 test('Burn - 2 stacks', () => {
@@ -46,9 +46,9 @@ test('Burn - 2 stacks', () => {
 
     target.statusEffectManager.turnEnd();
     expect(target.currentHealth).toBe(89.5);
-    expect(target.statusEffectManager.debuffs[DebuffId.Burning]!.instances[getCharBattleId(char)].stacks).toBe(1);
+    expect(target.statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(char)].stacks).toBe(1);
 
     target.statusEffectManager.turnEnd();
     expect(target.currentHealth).toBe(79);
-    expect(target.statusEffectManager.debuffs[DebuffId.Burning]!.instances[getCharBattleId(char)]).toBeUndefined();
+    expect(target.statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(char)]).toBeUndefined();
 });

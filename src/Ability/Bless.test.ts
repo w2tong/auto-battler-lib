@@ -21,5 +21,5 @@ beforeEach(() => {
 
 test('Bless - 1 target', () => {
     Bless.func(char);
-    expect(char.statusEffectManager.buffs[BuffId.Blessed]!.instances[getCharBattleId(char)].stacks).toBe(3);
+    expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(3);
 });

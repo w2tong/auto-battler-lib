@@ -7,8 +7,9 @@ import { type WandId, wands } from './weapons/wands';
 import { type UnarmedId, unarmed } from './weapons/unarmed';
 import { type BiteId, bites, } from './weapons/bites';
 import { type MaceId, maces } from './weapons/maces';
+import { type BowId, bows } from './weapons/bows';
 
-type WeaponId = UnarmedId | LongswordId | GreatswordId | DaggerId | QuarterstaffId | WandId | BiteId | MaceId;
+type WeaponId = UnarmedId | LongswordId | GreatswordId | DaggerId | QuarterstaffId | WandId | BiteId | MaceId | BowId;
 
 const weapons: { [id in WeaponId]: Weapon } = {
     ...unarmed,
@@ -19,6 +20,7 @@ const weapons: { [id in WeaponId]: Weapon } = {
     ...wands,
     ...maces,
     ...bites,
+    ...bows
 } as const;
 
 export { WeaponId, weapons };

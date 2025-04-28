@@ -11,11 +11,11 @@ const SPELLPOWER_RATIO = 0.34;
 
 const Firebolt: Ability = {
     name: NAME,
-    description: 'Attack your target and apply Burn.',
+    description: 'Attack your target and apply Burning.',
     func: (char) => {
         if (char.target) {
             char.useAbilityMana();
-            const hit = char.attack({
+            const { hit } = char.attack({
                 target: char.target,
                 attackType: AttackType.Spell,
                 damageRange: {

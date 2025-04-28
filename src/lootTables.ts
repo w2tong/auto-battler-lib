@@ -21,7 +21,7 @@ const lootTiers: { [tier: number]: LootTable; } = {
         // Hands
         'dwGloves0', 'thGloves0', 'ohGloves0',
         // Rings
-        'atkRing0', 'dmgRing0', 'dodgeRing0'
+        'accRing0', 'dmgRing0', 'dodgeRing0'
 
     ],
     1: [
@@ -36,7 +36,7 @@ const lootTiers: { [tier: number]: LootTable; } = {
         // Hands
         'dwGloves0', 'thGloves0', 'ohGloves0',
         // Rings
-        'atkRing0', 'dmgRing0', 'critRing0', 'dodgeRing0', 'thornsRing0', 'mpHitRing0', 'mpRegenRing0', 'mpCostRing0',
+        'accRing0', 'dmgRing0', 'critRing0', 'dodgeRing0', 'thornsRing0', 'mpHitRing0', 'mpRegenRing0', 'mpCostRing0',
         // Potions
         'healingPotion0'
     ],
@@ -52,7 +52,7 @@ const lootTiers: { [tier: number]: LootTable; } = {
         // Hands
         'dwGloves0', 'thGloves0', 'ohGloves0',
         // Rings
-        'atkRing0', 'dmgRing0', 'critRing0', 'dodgeRing0', 'thornsRing0', 'mpHitRing0', 'mpRegenRing0', 'mpCostRing0',
+        'accRing0', 'dmgRing0', 'critRing0', 'dodgeRing0', 'thornsRing0', 'mpHitRing0', 'mpRegenRing0', 'mpCostRing0',
         // Potions
         'healingPotion1',
         // Belts
@@ -70,7 +70,7 @@ const lootTiers: { [tier: number]: LootTable; } = {
         // Hands
         'dwGloves1', 'thGloves1', 'ohGloves1',
         // Rings
-        'atkRing1', 'dmgRing1', 'critDmgRing1', 'dodgeRing1', 'thornsRing1', 'mpHitRing1', 'mpRegenRing1', 'mpCostRing1', 'critRing1',
+        'accRing1', 'dmgRing1', 'critDmgRing1', 'dodgeRing1', 'thornsRing1', 'mpHitRing1', 'mpRegenRing1', 'mpCostRing1', 'critRing1',
         // Potions
         'healingPotion2',
         // Belts
@@ -88,7 +88,7 @@ const lootTiers: { [tier: number]: LootTable; } = {
         // Hands
         'dwGloves1', 'thGloves1', 'ohGloves1',
         // Rings
-        'atkRing1', 'dmgRing1', 'critDmgRing1', 'dodgeRing1', 'thornsRing1', 'mpHitRing1', 'mpRegenRing1', 'mpCostRing1', 'critRing1',
+        'accRing1', 'dmgRing1', 'critDmgRing1', 'dodgeRing1', 'thornsRing1', 'mpHitRing1', 'mpRegenRing1', 'mpCostRing1', 'critRing1',
         // Potions
         'healingPotion3',
         // Belts
@@ -107,7 +107,7 @@ const lootTiers: { [tier: number]: LootTable; } = {
         // Hands
         'dwGloves2', 'thGloves2', 'ohGloves2',
         // Rings
-        'atkRing2', 'dmgRing2', 'critDmgRing2', 'dodgeRing2', 'thornsRing2', 'mpHitRing2', 'mpRegenRing2', 'mpCostRing2', 'critRing2',
+        'accRing2', 'dmgRing2', 'critDmgRing2', 'dodgeRing2', 'thornsRing2', 'mpHitRing2', 'mpRegenRing2', 'mpCostRing2', 'critRing2',
         // Potions
         'healingPotion4',
         // Belts

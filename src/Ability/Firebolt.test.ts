@@ -51,7 +51,7 @@ test('Firebolt Hit', () => {
     Firebolt.func(char);
     expect(target.currentHealth).toBe(62);
     expect(char.currentMana).toBe(50);
-    expect(target.statusEffectManager.debuffs[DebuffId.Burning]?.instances).toHaveProperty(getCharBattleId(char), { source: char, stacks: 2 });
+    expect(target.statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(char)].stacks).toBe(2);
 });
 
 test('Firebolt Miss', () => {

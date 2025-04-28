@@ -5,9 +5,21 @@ import DebuffId from '../../../StatusEffect/DebuffId';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 
-type BiteId = 'poisonbite0' | 'poisonbite1';
+type BiteId = 'bite0' | 'poisonbite0' | 'poisonbite1';
 
 const bites: { [id in BiteId]: Weapon } = {
+    bite0: {
+        id: 'bite0',
+        itemType: ItemType.Weapon,
+        name: 'Bite',
+        tier: 0,
+        img: '',
+
+        type: WeaponType.Bite,
+        attackType: AttackType.MeleeWeapon,
+        damageType: DamageType.Physical,
+        damageRange: { min: 2, max: 3, bonus: 0 }
+    },
     poisonbite0: {
         id: 'poisonbite0',
         itemType: ItemType.Weapon,
@@ -15,7 +27,7 @@ const bites: { [id in BiteId]: Weapon } = {
         tier: 0,
         img: '',
 
-        type: WeaponType.Unarmed,
+        type: WeaponType.Bite,
         attackType: AttackType.MeleeWeapon,
         damageType: DamageType.Physical,
         damageRange: { min: 1, max: 3, bonus: 0 },
@@ -33,7 +45,7 @@ const bites: { [id in BiteId]: Weapon } = {
         tier: 1,
         img: '',
 
-        type: WeaponType.Unarmed,
+        type: WeaponType.Bite,
         attackType: AttackType.MeleeWeapon,
         damageType: DamageType.Physical,
         damageRange: { min: 1, max: 3, bonus: 1 },

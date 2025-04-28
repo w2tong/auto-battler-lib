@@ -4,16 +4,16 @@ import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 interface Belt extends Item {
     itemType: ItemType.Belt;
     attributes?: ItemAttributes;
-    stats: ItemStats;
+    stats?: ItemStats;
 }
 
-type BeltId = 
-'chargesBelt0' | 'chargesBelt1'
-| 'effBelt0' | 'effBelt1' | 'effBelt2' | 'effBelt3'
-| 'healBelt0' | 'healBelt1' | 'healBelt2' | 'healBelt3'
-;
+type BeltId =
+    'chargesBelt0' | 'chargesBelt1'
+    | 'effBelt0' | 'effBelt1' | 'effBelt2' | 'effBelt3'
+    | 'healBelt0' | 'healBelt1' | 'healBelt2' | 'healBelt3'
+    ;
 
-const belts: {[id in BeltId]: Belt} = {
+const belts: { [id in BeltId]: Belt } = {
     chargesBelt0: {
         id: 'chargesBelt0',
         itemType: ItemType.Belt,
@@ -53,7 +53,7 @@ const belts: {[id in BeltId]: Belt} = {
         name: 'Belt of Greater Effectiveness',
         tier: 3,
         img: 'belt-red-pot.png',
-        
+
         stats: {
             [StatType.PotionEffectiveness]: 0.50
         }
@@ -64,7 +64,7 @@ const belts: {[id in BeltId]: Belt} = {
         name: 'Belt of Superior Effectiveness',
         tier: 4,
         img: 'belt-red-pot.png',
-        
+
         stats: {
             [StatType.PotionEffectiveness]: 0.75
         }
@@ -75,7 +75,7 @@ const belts: {[id in BeltId]: Belt} = {
         name: 'Belt of Supreme Effectiveness',
         tier: 5,
         img: 'belt-red-pot.png',
-        
+
         stats: {
             [StatType.PotionEffectiveness]: 1.00
         }
@@ -86,7 +86,7 @@ const belts: {[id in BeltId]: Belt} = {
         name: 'Belt of Healing',
         tier: 2,
         img: 'belt-green-pot.png',
-        
+
         stats: {
             [StatType.PotionHealing]: 5
         }

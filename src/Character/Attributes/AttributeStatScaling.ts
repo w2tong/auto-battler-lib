@@ -1,8 +1,44 @@
 import StatType from '../Stats/StatType';
 import AttributeType from './AttributeType';
 
-// TODO: test if these changed values are being calculated correctly
-const AttributeStatScaling: { [key in AttributeType]: { [key in StatType]?: number } } = {
+const AttributeStatScaling: {
+    [AttributeType.WeaponSkill]: {
+        [StatType.Accuracy]: number;
+    },
+    [AttributeType.Strength]: {
+        [StatType.MeleeWeaponDamagePercent]: number,
+        [StatType.BlockPower]: number,
+        [StatType.MaxHealth]: number;
+    },
+    [AttributeType.Dexterity]: {
+        [StatType.Dodge]: number,
+        [StatType.RangedWeaponDamagePercent]: number,
+        [StatType.MeleeWeaponDamagePercent]: number,
+        [StatType.Initiative]: number;
+    },
+    [AttributeType.Perception]: {
+        [StatType.DodgeReduction]: number,
+        [StatType.CriticalDamage]: number,
+        [StatType.ArmourPenetration]: number;
+    },
+    [AttributeType.Constitution]: {
+        [StatType.HealthPercent]: number,
+        [StatType.StatusResistance]: number,
+        [StatType.Armour]: number;
+    },
+    [AttributeType.Intelligence]: {
+        [StatType.SpellPower]: number,
+        [StatType.Armour]: number,
+        [StatType.ManaOnHit]: number;
+    },
+    [AttributeType.Wisdom]: {
+        [StatType.ManaRegen]: number,
+        [StatType.ManaOnHit]: number,
+        [StatType.StartingMana]: number,
+        [StatType.Initiative]: number,
+        [StatType.StatusResistance]: number;
+    },
+} = {
     [AttributeType.WeaponSkill]: {
         [StatType.Accuracy]: 1,
     },

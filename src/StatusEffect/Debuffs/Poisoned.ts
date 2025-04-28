@@ -14,16 +14,14 @@ export default class Poison extends Debuff {
 
     onTurnStart() { }
     onTurnEnd() {
-        for (const [key, instance] of Object.entries(this.instances)) {
-            this.char.takeDamage({
-                source: `${Poison.name} (${instance.source.name})`,
-                damage: (Poison.baseDamage + this.char.currentHealth * Poison.healthDamagePercent) * instance.stacks,
-                armourPenetration: Infinity
-            });
+        this.char.takeDamage({
+            source: `${Poison.name} (${this.source.name})`,
+            damage: (Poison.baseDamage + this.char.currentHealth * Poison.healthDamagePercent) * this.stacks,
+            armourPenetration: Infinity
+        });
 
-            instance.stacks -= 1;
-            if (instance.stacks <= 0) this.remove(key);
-        }
+        this.stacks -= 1;
+        if (this.stacks <= 0) this.manager.removeDebuff(this.id, this.source);
     }
     onAttack() { }
 

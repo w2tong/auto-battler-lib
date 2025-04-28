@@ -122,8 +122,6 @@ class Stats {
         else if (equipment.offHandShield) this.addItemStats(equipment.offHandShield.stats);
 
         // Add stats from talents
-
-        // TODO: Math.floor stats that are needed
     }
 
     setStatsAttribute(attributes: Attributes): void {

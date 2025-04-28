@@ -1,6 +1,4 @@
-import Character from '../../Character/Character';
 import StatType from '../../Character/Stats/StatType';
-import { getCharBattleId } from '../../util';
 import Buff from '../Buff';
 import BuffId from '../BuffId';
 
@@ -17,39 +15,31 @@ export default class Bless extends Buff {
     static accuracyPerLvl = 0.5;
     static accuracyPerWisdom = 0.2;
 
-    onApply(id: string) {
-        const source = this.instances[id].source;
+    onApply() {
+        const damagePerLvl = Bless.damagePerLvl * this.source.level;
+        const damagePerWisdom = Bless.damagePerWisdom * this.source.attributes.wisdom;
+        const accuracyPerLvl = Bless.accuracyPerLvl * this.source.level;
+        const accuracyPerWisdom = Bless.accuracyPerWisdom * this.source.attributes.wisdom;
 
-        const damagePerLvl = Bless.damagePerLvl * source.level;
-        const damagePerWisdom = Bless.damagePerWisdom * source.attributes.wisdom;
-        const accuracyPerLvl = Bless.accuracyPerLvl * source.level;
-        const accuracyPerWisdom = Bless.accuracyPerWisdom * source.attributes.wisdom;
-
-        this.instances[id].stats = {
+        this.stats = {
             [StatType.Damage]: Bless.baseDamage + damagePerLvl + damagePerWisdom,
             [StatType.Accuracy]: Bless.baseAccuracy + accuracyPerLvl + accuracyPerWisdom
         };
 
-        this.char.stats.addStatusEffectStats(this.instances[id].stats);
+        this.char.stats.addStatusEffectStats(this.stats);
 
     }
-    onExpire(id: string) {
-        if (this.instances[id].stats) {
-            this.char.stats.removeStatusEffectStats(this.instances[id].stats);
-        }
+    onExpire() {
+        this.char.stats.removeStatusEffectStats(this.stats);
     }
 
     onTurnStart() { }
     onTurnEnd() { }
     onAttack() { }
 
-    onSourceTurnStart(source: Character) {
-        const id = getCharBattleId(source);
-        const instance = this.instances[id];
-        instance.stacks -= 1;
-        if (instance.stacks <= 0) {
-            this.remove(id);
-        }
+    onSourceTurnStart() {
+        this.stacks -= 1;
+        if (this.stacks <= 0) this.manager.removeBuff(this.id, this.source);
     }
     onSourceTurnEnd() { }
 }

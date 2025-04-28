@@ -17,6 +17,7 @@ import Attributes from './Attributes/Attributes';
 import BaseAttributes from './Attributes/BaseAttributes';
 import AttackType from '../AttackType';
 import { type Weapon } from '../Equipment/Weapon/Weapon';
+import { createPet, PetId } from './Pet';
 
 type CharacterInfo = {
     name: string,
@@ -46,31 +47,34 @@ type CharacterJSON = {
 export default class Character {
     private userId?: string;
 
-    protected _name: string;
-    protected className: ClassName | null;
+    private _name: string;
+    private className: ClassName | null;
 
-    protected _level: number;
+    private _level: number;
 
     // Equipment
-    protected _equipment: Equipment;
+    private _equipment: Equipment;
 
     // Attributes and Stats
-    protected _attributes: Attributes;
-    protected _stats: Stats;
-    protected _currentHealth: number;
-    protected _currentMana: number;
+    private _attributes: Attributes;
+    private _stats: Stats;
+    private _currentHealth: number;
+    private _currentMana: number;
 
     // Ability
-    protected ability: Ability | null;
+    private ability: Ability | null;
 
     // Buffs/Debuffs
-    protected _statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
+    private _statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
+
+    // Pet
+    private _pet: Character | null;
 
     // Battle Info
-    protected _target: Character | null = null;
-    protected _battle: { ref: Battle, side: Side, index: number; } | null = null;
+    private _target: Character | null = null;
+    private _battle: { ref: Battle, side: Side, index: number; } | null = null;
 
-    constructor({ name, level, className, attributes, statTemplate, equipment, ability, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
+    constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, petId?: PetId, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
         this._name = name;
         this._level = level;
         this.className = className ?? null;
@@ -88,6 +92,8 @@ export default class Character {
         this.ability = ability ?? (className ? Classes[className].ability : null);
         this._currentHealth = options?.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
+
+        this._pet = petId ? createPet(this, petId) : null;
 
         if (options?.userId) this.userId = options.userId;
     }
@@ -146,6 +152,10 @@ export default class Character {
 
     get statusEffectManager() {
         return this._statusEffectManager;
+    }
+
+    get pet() {
+        return this._pet;
     }
 
     getName(): string {
@@ -281,12 +291,13 @@ export default class Character {
         return { min, max };
     }
 
-    attack({ target, attackType, damageRange, spellPowerRatio, isOffHand = false, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean, abilityName?: string; }): boolean {
+    attack({ target, attackType, damageRange, spellPowerRatio, isOffHand = false, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean, abilityName?: string; }): { hit: boolean, damageDone: number; } {
 
         let hitType: HitType = HitType.Miss;
         let damage: number = 0;
         let sneakAttack: boolean = false;
         let blocked: boolean = false;
+        let damageDone: number = 0;
 
         const hit = this.hitRoll({
             target,
@@ -338,14 +349,14 @@ export default class Character {
 
         // Deal thorns damage to this Character if target was hit
         if (hit && target.stats.getStat(StatType.Thorns) > 0) {
-            this.takeDamage({
+            damageDone = this.takeDamage({
                 source: StatType.Thorns,
                 damage: target.stats.getStat(StatType.Thorns),
                 armourPenetration: target.stats.armourPenetration
             });
         }
 
-        return hit;
+        return { hit, damageDone };
     }
 
     turnAttack(): void {
@@ -359,7 +370,7 @@ export default class Character {
     }
 
     weaponAttack(weapon: Weapon, target: Character, isOffHand: boolean): void {
-        const hit = this.attack({
+        const { hit } = this.attack({
             target: target,
             attackType: weapon.attackType,
             damageRange: weapon.damageRange,
@@ -371,7 +382,7 @@ export default class Character {
         }
     }
 
-    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean; }; }): void {
+    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean; }; }): number {
         let damageTaken = Math.max(damage, 0);
 
         if (damageTaken > 0) {
@@ -387,6 +398,8 @@ export default class Character {
                 this.battle.ref.log.add(`${this.name} died.`);
             }
         }
+
+        return damageTaken;
     }
 
     addMana(mana: number): void {
@@ -419,19 +432,19 @@ export default class Character {
     }
 
     // Helper functions
-    json(): CharacterJSON {
-        return {
-            name: this._name,
-            className: this.className,
-            level: this.level,
-            currHealth: this.currentHealth,
-            maxHealth: this.stats.getStat(StatType.MaxHealth),
-            currMana: this.currentHealth,
-            manaCost: this.stats.getStat(StatType.ManaCost),
-            buffs: this.statusEffectManager.getBuffString(),
-            debuffs: this.statusEffectManager.getDebuffString()
-        };
-    }
+    // json(): CharacterJSON {
+    //     return {
+    //         name: this._name,
+    //         className: this.className,
+    //         level: this.level,
+    //         currHealth: this.currentHealth,
+    //         maxHealth: this.stats.getStat(StatType.MaxHealth),
+    //         currMana: this.currentHealth,
+    //         manaCost: this.stats.getStat(StatType.ManaCost),
+    //         buffs: this.statusEffectManager.getBuffString(),
+    //         debuffs: this.statusEffectManager.getDebuffString()
+    //     };
+    // }
 
     static calcCritDamage(damage: number, critDamage: number) {
         return Math.max(damage *= critDamage, 0);
