@@ -36,18 +36,18 @@ const AttributeStatScaling: {
     },
     [AttributeType.Dexterity]: {
         [StatType.DamagePercent]: 0.005,
-        [StatType.Dodge]: 1,
+        [StatType.Dodge]: 0.5,
         [StatType.Initiative]: 0.2
     },
     [AttributeType.Perception]: {
         [StatType.Accuracy]: 1
     },
     [AttributeType.Constitution]: {
-        [StatType.HealthPercent]: 0.01,
+        [StatType.HealthPercent]: 0.02,
         [StatType.StatusResistance]: 0.2
     },
     [AttributeType.Intelligence]: {
-        [StatType.SpellPower]: 1,
+        [StatType.SpellPower]: 2,
         [StatType.ManaOnHit]: 0.1
     },
     [AttributeType.Wisdom]: {
