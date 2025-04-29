@@ -33,19 +33,22 @@ import ArmourTypeDodgeMultiplier from './Character/Stats/ArmourTypeDodgeMultipli
 import StatType from './Character/Stats/StatType';
 export { ArmourTypeDodgeMultiplier, StatType };
 
+import AttackType from './AttackType';
+export { AttackType };
+
+import DamageType from './DamageType';
+export { DamageType };
+
 import BuffId from './StatusEffect/BuffId';
 import buffs from './StatusEffect/buffs';
 import DebuffId from './StatusEffect/DebuffId';
 import debuffs from './StatusEffect/debuffs';
 export { BuffId, buffs, DebuffId, debuffs };
 
+export { Dice, dice, rollDice } from './dice';
+
 import Log, { LogLine, LineType } from './Battle/Log';
 export { Log, LogLine, LineType };
-
-import DamageType from './DamageType';
-export { DamageType };
-
-export { Dice, dice, rollDice } from './dice';
 
 export { getRandomEncounter } from './encounters';
 
