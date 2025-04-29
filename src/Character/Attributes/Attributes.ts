@@ -9,7 +9,6 @@ function calcTotalAttribute(attribute: Attribute) {
 }
 
 class Attributes {
-    private [AttributeType.WeaponSkill]: Attribute;
     private [AttributeType.Strength]: Attribute;
     private [AttributeType.Dexterity]: Attribute;
     private [AttributeType.Perception]: Attribute;
@@ -19,7 +18,6 @@ class Attributes {
 
     constructor(
         {
-            [AttributeType.WeaponSkill]: weaponSkill = 0,
             [AttributeType.Strength]: strength = 0,
             [AttributeType.Dexterity]: dexterity = 0,
             [AttributeType.Perception]: perception = 0,
@@ -29,7 +27,6 @@ class Attributes {
         }: BaseAttributes,
         equipment: Equipment
     ) {
-        this[AttributeType.WeaponSkill] = { base: weaponSkill, bonus: 0 };
         this[AttributeType.Strength] = { base: strength, bonus: 0 };
         this[AttributeType.Dexterity] = { base: dexterity, bonus: 0 };
         this[AttributeType.Perception] = { base: perception, bonus: 0 };
@@ -48,9 +45,6 @@ class Attributes {
         else if (equipment.offHandShield) this.addItemAttributes(equipment.offHandShield.attributes);
     }
 
-    get weaponSkill() {
-        return calcTotalAttribute(this[AttributeType.WeaponSkill]);
-    }
     get strength() {
         return calcTotalAttribute(this[AttributeType.Strength]);
     }

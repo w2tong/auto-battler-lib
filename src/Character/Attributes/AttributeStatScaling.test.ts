@@ -4,19 +4,6 @@ import AttributeStatScaling from './AttributeStatScaling';
 import AttributeType from './AttributeType';
 
 describe('Single Attribute', () => {
-    test('10 WEA', () => {
-        const num = 10;
-        const char = createTestCharacter({
-            attributes: {
-                [AttributeType.WeaponSkill]: num
-            }
-        });
-
-        for (const [type, scaling] of Object.entries(AttributeStatScaling[AttributeType.WeaponSkill])) {
-            expect(char.stats[type as StatType].attribute).toBeCloseTo(num * scaling);
-        }
-    });
-
     test('10 STR', () => {
         const num = 10;
         const char = createTestCharacter({
@@ -119,18 +106,6 @@ describe('Overlapping Attributes', () => {
         });
 
         expect(char.stats[StatType.Initiative].attribute).toBeCloseTo((AttributeStatScaling.Dexterity[StatType.Initiative] ?? 0) * num + (AttributeStatScaling.Wisdom[StatType.Initiative] ?? 0) * num);
-    });
-
-    test('10 CON, 10 INT - Armour', () => {
-        const num = 10;
-        const char = createTestCharacter({
-            attributes: {
-                [AttributeType.Constitution]: num,
-                [AttributeType.Intelligence]: num,
-            }
-        });
-
-        expect(char.stats[StatType.Armour].attribute).toBeCloseTo((AttributeStatScaling.Constitution[StatType.Armour] ?? 0) * num + (AttributeStatScaling.Intelligence[StatType.Armour] ?? 0) * num);
     });
 
     test('10 INT, 10 WIS - ManaOnHit', () => {
