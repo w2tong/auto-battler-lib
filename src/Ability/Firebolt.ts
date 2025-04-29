@@ -23,6 +23,7 @@ const Firebolt: Ability = {
                     max: MAX_BASE + char.level * MAX_PER_LVL,
                     bonus: 0
                 },
+                weaponAttack: false,
                 spellPowerRatio: SPELLPOWER_RATIO,
                 isOffHand: false,
                 abilityName: NAME

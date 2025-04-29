@@ -196,22 +196,22 @@ class Stats {
     }
 
     // Damage
-    get damage() {
-        const damage = this.getStat(StatType.Damage);
-        if (damage < 0) return damage;
-        return damage * this.getTwoHandedMultiplier();
+    // get damage() {
+    //     const damage = this.getStat(StatType.Damage);
+    //     if (damage < 0) return damage;
+    //     return damage * this.getTwoHandedMultiplier();
 
-    }
-    get meleeWeaponDamage() {
-        const meleeWeaponDamage = this.getStat(StatType.MeleeWeaponDamage);
-        if (meleeWeaponDamage < 0) return meleeWeaponDamage;
-        return meleeWeaponDamage * this.getTwoHandedMultiplier();
-    }
-    get rangedWeaponDamage() {
-        const rangedDamage = this.getStat(StatType.RangedWeaponDamage);
-        if (rangedDamage < 0) return rangedDamage;
-        return rangedDamage * this.getTwoHandedMultiplier();
-    }
+    // }
+    // get meleeWeaponDamage() {
+    //     const meleeWeaponDamage = this.getStat(StatType.MeleeWeaponDamage);
+    //     if (meleeWeaponDamage < 0) return meleeWeaponDamage;
+    //     return meleeWeaponDamage * this.getTwoHandedMultiplier();
+    // }
+    // get rangedWeaponDamage() {
+    //     const rangedDamage = this.getStat(StatType.RangedWeaponDamage);
+    //     if (rangedDamage < 0) return rangedDamage;
+    //     return rangedDamage * this.getTwoHandedMultiplier();
+    // }
 
     get armourPenetration() {
         return this.getStat(StatType.ArmourPenetration);

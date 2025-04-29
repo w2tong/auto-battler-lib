@@ -21,6 +21,7 @@ const FerociousBite: Ability = {
                     max: char.equipment.mainHand.damageRange.max * (1 + BONUS_DMG),
                     bonus: char.equipment.mainHand.damageRange.bonus * (1 + BONUS_DMG)
                 },
+                weaponAttack: true,
                 isOffHand: false,
                 abilityName: NAME
             });

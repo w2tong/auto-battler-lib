@@ -1596,6 +1596,8 @@ describe('hitRoll', () => {
     });
 });
 
+// TODO: add tests for two-handed multiplier
+// TODO: add tests for negative damages to test (to test two-handed penalty)
 describe('calcDamage', () => {
     const char = createTestCharacter({
         statTemplate: {
@@ -1614,7 +1616,8 @@ describe('calcDamage', () => {
     test('Melee weapon main-hand attack', () => {
         const damage = char.calcDamage({
             attackType: AttackType.MeleeWeapon,
-            damage: 10
+            damage: 10,
+            weaponAttack: true
         });
 
         expect(damage).toBeCloseTo(19.5); // (10 + 1 + 2) * 1.5
@@ -1624,6 +1627,7 @@ describe('calcDamage', () => {
         const damage = char.calcDamage({
             attackType: AttackType.MeleeWeapon,
             damage: 10,
+            weaponAttack: true,
             isOffHand: true
         });
 
@@ -1633,7 +1637,8 @@ describe('calcDamage', () => {
     test('Ranged weapon main-hand attack', () => {
         const damage = char.calcDamage({
             attackType: AttackType.RangedWeapon,
-            damage: 10
+            damage: 10,
+            weaponAttack: true
         });
 
         expect(damage).toBeCloseTo(19.6); // (10 + 1 + 3) * 1.4
@@ -1643,7 +1648,8 @@ describe('calcDamage', () => {
         const damage = char.calcDamage({
             attackType: AttackType.RangedWeapon,
             damage: 5,
-            isOffHand: true
+            isOffHand: true,
+            weaponAttack: true
         });
 
         expect(damage).toBeCloseTo(14); // (5 + 1 + 3 + 1) * 1.4
@@ -1653,7 +1659,8 @@ describe('calcDamage', () => {
         const damage = char.calcDamage({
             attackType: AttackType.Spell,
             damage: 20,
-            spellPowerRatio: 0.5
+            spellPowerRatio: 0.5,
+            weaponAttack: true
         });
 
         expect(damage).toBeCloseTo(31.8); // (20 + 1 + (10 * 1.1 * 0.5)) * 1.2
@@ -1663,6 +1670,7 @@ describe('calcDamage', () => {
         const damage = char.calcDamage({
             attackType: AttackType.MeleeWeapon,
             damage: 10,
+            weaponAttack: true,
             invisibleStacks: 0
         });
 
@@ -1673,6 +1681,7 @@ describe('calcDamage', () => {
         const damage = char.calcDamage({
             attackType: AttackType.MeleeWeapon,
             damage: 10,
+            weaponAttack: true,
             invisibleStacks: 1
         });
 
@@ -1683,6 +1692,7 @@ describe('calcDamage', () => {
         const damage = char.calcDamage({
             attackType: AttackType.MeleeWeapon,
             damage: 10,
+            weaponAttack: true,
             invisibleStacks: 10
         });
 
@@ -1710,6 +1720,7 @@ describe('calcDamageRange', () => {
         const { min, max } = char.calcDamageRange({
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             isOffHand: false
         });
 
@@ -1722,6 +1733,7 @@ describe('calcDamageRange', () => {
         const { min, max } = char.calcDamageRange({
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             isOffHand: true
         });
 
@@ -1734,6 +1746,7 @@ describe('calcDamageRange', () => {
         const { min, max } = char.calcDamageRange({
             attackType: AttackType.RangedWeapon,
             damageRange,
+            weaponAttack: true,
             isOffHand: false
         });
 
@@ -1746,6 +1759,7 @@ describe('calcDamageRange', () => {
         const { min, max } = char.calcDamageRange({
             attackType: AttackType.RangedWeapon,
             damageRange,
+            weaponAttack: true,
             isOffHand: true
         });
 
@@ -1758,6 +1772,7 @@ describe('calcDamageRange', () => {
         const { min, max } = char.calcDamageRange({
             attackType: AttackType.Spell,
             damageRange,
+            weaponAttack: true,
             spellPowerRatio: 0.5,
             isOffHand: false
         });
@@ -1819,6 +1834,7 @@ describe('attack', () => {
             target,
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             spellPowerRatio: 0.2
         });
         expect(target.currentHealth).toBe(75); // (5 + 1 + 2 + 2) * 1.5 * 2 - 5 = 25
@@ -1830,6 +1846,7 @@ describe('attack', () => {
             target,
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             spellPowerRatio: 0.2,
             isOffHand: true
         });
@@ -1843,6 +1860,7 @@ describe('attack', () => {
             target,
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             spellPowerRatio: 0.2
         });
         expect(target.currentHealth).toBe(63); // (5 + 1 + 2 + 2 + 4) * 1.5 * 2 - 5 = 37
@@ -1857,6 +1875,7 @@ describe('attack', () => {
             target,
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             spellPowerRatio: 0.2
         });
         expect(target.currentHealth).toBe(90); // (5 + 1 + 2 + 2) * 1.5 - 5 = 10
@@ -1870,6 +1889,7 @@ describe('attack', () => {
             target,
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             spellPowerRatio: 0.2
         });
         expect(target.currentHealth).toBe(70); // (5 + 1 + 2 + 2) * 1.5 * 2 = 30
@@ -1884,6 +1904,7 @@ describe('attack', () => {
             target,
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             spellPowerRatio: 0.2
         });
         expect(target.currentHealth).toBe(85); // (5 + 1 + 2 + 2) * 1.5 = 15
