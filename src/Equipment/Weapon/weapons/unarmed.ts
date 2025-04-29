@@ -3,13 +3,13 @@ import DamageType from '../../../DamageType';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 
-type UnarmedId = 'unarmed0';
+type UnarmedId = 'fist';
 
 const unarmed: { [id in UnarmedId]: Weapon } = {
-    unarmed0: {
-        id: 'unarmed0',
+    fist: {
+        id: 'fist',
         itemType: ItemType.Weapon,
-        name: 'Unarmed',
+        name: 'Fist',
         tier: 0,
         img: '',
 
