@@ -1,3 +1,4 @@
+import AttackType from '../../AttackType';
 import { ArmourType } from '../../Equipment/Armour';
 import { Equipment } from '../../Equipment/Equipment';
 import { ItemStats } from '../../Equipment/Item';
@@ -178,8 +179,12 @@ class Stats {
     }
 
     // Accuracy
-    get accuracy() {
-        return this.getStat(StatType.Accuracy);
+    getAccuracy(type: AttackType) {
+        let accuracy = this.getStat(StatType.Accuracy);
+        if (type === AttackType.MeleeWeapon) accuracy += this.getStat(StatType.MeleeAccuracy);
+        else if (type === AttackType.RangedWeapon) accuracy += this.getStat(StatType.RangedAccuracy);
+        else if (type === AttackType.Spell) accuracy += this.getStat(StatType.SpellAccuracy);
+        return accuracy;
     }
 
     // Crit

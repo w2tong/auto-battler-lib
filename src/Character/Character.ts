@@ -231,21 +231,9 @@ export default class Character {
         // Rolling 96-100 always hits
         if (roll > 95) return true;
 
-        let accuracy = this.stats.accuracy;
-        // Add off-hand Accuracy
+        let accuracy = this.stats.getAccuracy(attackType);
         if (isOffHand) accuracy += this.stats.getStat(StatType.OffHandAccuracy);
-        // Add attack type Accuracy
-        switch (attackType) {
-            case AttackType.MeleeWeapon:
-                accuracy += this.stats.getStat(StatType.MeleeAccuracy);
-                break;
-            case AttackType.RangedWeapon:
-                accuracy += this.stats.getStat(StatType.RangedAccuracy);
-                break;
-            case AttackType.Spell:
-                accuracy += this.stats.getStat(StatType.SpellAccuracy);
-                break;
-        }
+
         const targetDodgeChance = target.stats.dodge - this.stats.getStat(StatType.DodgeReduction);
 
         return roll + accuracy >= targetDodgeChance;
