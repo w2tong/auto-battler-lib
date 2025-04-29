@@ -2,9 +2,6 @@
 // export { Buffs, BuffId } from './StatusEffect/buffs';
 // export { Debuffs, DebuffId } from './StatusEffect/debuffs';
 
-import BuffTracker from './StatusEffect/StatusEffectManager';
-export { BuffTracker };
-
 export { ClassName, Classes } from './Character/Classes/classes';
 
 export { Equip, Equipment, EquipmentItemIds, EquipSlot, equips, isValidEquip, createEquipmentImport } from './Equipment/Equipment';
@@ -27,6 +24,20 @@ export { Battle, Side, BattleJSON };
 
 import Character, { CharacterInfo, CharacterJSON } from './Character/Character';
 export { Character, CharacterInfo, CharacterJSON };
+
+import AttributeStatScaling from './Character/Attributes/AttributeStatScaling';
+import AttributeType from './Character/Attributes/AttributeType';
+export { AttributeStatScaling, AttributeType };
+
+import ArmourTypeDodgeMultiplier from './Character/Stats/ArmourTypeDodgeMultiplier';
+import StatType from './Character/Stats/StatType';
+export { ArmourTypeDodgeMultiplier, StatType };
+
+import BuffId from './StatusEffect/BuffId';
+import buffs from './StatusEffect/buffs';
+import DebuffId from './StatusEffect/DebuffId';
+import debuffs from './StatusEffect/debuffs';
+export { BuffId, buffs, DebuffId, debuffs };
 
 import Log, { LogLine, LineType } from './Battle/Log';
 export { Log, LogLine, LineType };
