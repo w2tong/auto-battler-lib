@@ -45,8 +45,7 @@ describe('createPet', () => {
             [StatType.Damage]: { base: 0, attribute: 0, bonus: 0 },
             [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base, attribute: 0, bonus: 0 },
             [StatType.Dodge]: { base: Stats.DEFAULT_DODGE, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.Dodge] * num * PET_STAT_RATIO },
-            [StatType.RangedWeaponDamagePercent]: { base: 0, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.RangedWeaponDamagePercent] * num * PET_STAT_RATIO },
-            [StatType.MeleeWeaponDamagePercent]: { base: 0, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.MeleeWeaponDamagePercent] * num * PET_STAT_RATIO },
+            [StatType.DamagePercent]: { base: 0, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.DamagePercent] * num * PET_STAT_RATIO },
             [StatType.Initiative]: { base: 0, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.Initiative] * num * PET_STAT_RATIO }
         }, char.level));
     });

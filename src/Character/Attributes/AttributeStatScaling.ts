@@ -6,14 +6,13 @@ const AttributeStatScaling: {
         [StatType.Accuracy]: number;
     },
     [AttributeType.Strength]: {
-        [StatType.MeleeWeaponDamagePercent]: number,
+        [StatType.DamagePercent]: number,
         [StatType.BlockPower]: number,
         [StatType.MaxHealth]: number;
     },
     [AttributeType.Dexterity]: {
+        [StatType.DamagePercent]: number,
         [StatType.Dodge]: number,
-        [StatType.RangedWeaponDamagePercent]: number,
-        [StatType.MeleeWeaponDamagePercent]: number,
         [StatType.Initiative]: number;
     },
     [AttributeType.Perception]: {
@@ -43,14 +42,13 @@ const AttributeStatScaling: {
         [StatType.Accuracy]: 1,
     },
     [AttributeType.Strength]: {
-        [StatType.MeleeWeaponDamagePercent]: 0.01,
+        [StatType.DamagePercent]: 0.01,
         [StatType.BlockPower]: 0.2,
         [StatType.MaxHealth]: 0.5
     },
     [AttributeType.Dexterity]: {
+        [StatType.DamagePercent]: 0.005,
         [StatType.Dodge]: 1,
-        [StatType.RangedWeaponDamagePercent]: 0.01,
-        [StatType.MeleeWeaponDamagePercent]: 0.005,
         [StatType.Initiative]: 0.2
     },
     [AttributeType.Perception]: {

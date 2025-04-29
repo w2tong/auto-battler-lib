@@ -2,7 +2,6 @@ import { createTestCharacter } from '../../tests/util';
 import StatType from '../Stats/StatType';
 import AttributeStatScaling from './AttributeStatScaling';
 import AttributeType from './AttributeType';
-import BaseAttributes from './BaseAttributes';
 
 describe('Single Attribute', () => {
     test('10 WEA', () => {
@@ -98,7 +97,7 @@ describe('Single Attribute', () => {
 });
 
 describe('Overlapping Attributes', () => {
-    test('10 STR, 10 DEX - MeleeWeaponDamagePercent', () => {
+    test('10 STR, 10 DEX - DamagePercent', () => {
         const num = 10;
         const char = createTestCharacter({
             attributes: {
@@ -107,7 +106,7 @@ describe('Overlapping Attributes', () => {
             }
         });
 
-        expect(char.stats[StatType.MeleeWeaponDamagePercent].attribute).toBeCloseTo((AttributeStatScaling.Strength[StatType.MeleeWeaponDamagePercent] ?? 0) * num + (AttributeStatScaling.Dexterity[StatType.MeleeWeaponDamagePercent] ?? 0) * num);
+        expect(char.stats[StatType.DamagePercent].attribute).toBeCloseTo((AttributeStatScaling.Strength[StatType.DamagePercent] ?? 0) * num + (AttributeStatScaling.Dexterity[StatType.DamagePercent] ?? 0) * num);
     });
 
     test('10 DEX, 10 WIS - Initiative', () => {

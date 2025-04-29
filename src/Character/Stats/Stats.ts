@@ -50,11 +50,6 @@ class Stats {
     // Damage
     [StatType.Damage]: Stat = { base: 0, attribute: 0, bonus: 0 };
     [StatType.DamagePercent]: Stat = { base: 0, attribute: 0, bonus: 0 };
-    [StatType.OffHandDamage]: Stat = { base: 0, attribute: 0, bonus: 0 };
-    [StatType.MeleeWeaponDamage]: Stat = { base: 0, attribute: 0, bonus: 0 };
-    [StatType.MeleeWeaponDamagePercent]: Stat = { base: 0, attribute: 0, bonus: 0 };
-    [StatType.RangedWeaponDamage]: Stat = { base: 0, attribute: 0, bonus: 0 };
-    [StatType.RangedWeaponDamagePercent]: Stat = { base: 0, attribute: 0, bonus: 0 };
 
     // Critical
     [StatType.CriticalChance]: Stat = { base: Stats.DEFAULT_CRIT_CHANCE, attribute: 0, bonus: 0 };

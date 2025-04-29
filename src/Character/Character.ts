@@ -261,38 +261,22 @@ export default class Character {
         return rollDice(dice['1d100']) <= blockChance;
     }
 
-    calcDamage({ attackType, damage, weaponAttack, spellPowerRatio, isOffHand = false, invisibleStacks = 0 }: { attackType: AttackType, damage: number, weaponAttack: boolean, spellPowerRatio?: number, isOffHand?: boolean, invisibleStacks?: number; }): number {
+    calcDamage({ damage, weaponAttack, spellPowerRatio, invisibleStacks = 0 }: { damage: number, weaponAttack: boolean, spellPowerRatio?: number, invisibleStacks?: number; }): number {
         const statDamage = this.stats.getStat(StatType.Damage);
-        const meleeWeaponDamage = this.stats.getStat(StatType.MeleeWeaponDamage);
-        const rangedWeaponDamage = this.stats.getStat(StatType.RangedWeaponDamage);
         const twoHandedMultiplier = this.stats.getTwoHandedMultiplier();
 
-        let damageBonus = (weaponAttack && statDamage > 0 ? statDamage * twoHandedMultiplier : this.stats.getStat(StatType.Damage)) + (isOffHand ? this.stats.getStat(StatType.OffHandDamage) : 0);
-        let damagePercent = this.stats.getStat(StatType.DamagePercent);
-        switch (attackType) {
-            case AttackType.MeleeWeapon:
-                damageBonus += weaponAttack && meleeWeaponDamage > 0 ? meleeWeaponDamage * twoHandedMultiplier : meleeWeaponDamage;
-                damagePercent += this.stats.getStat(StatType.MeleeWeaponDamagePercent);
-                break;
-            case AttackType.RangedWeapon:
-                damageBonus += weaponAttack && rangedWeaponDamage > 0 ? rangedWeaponDamage * twoHandedMultiplier : rangedWeaponDamage;
-                damagePercent += this.stats.getStat(StatType.RangedWeaponDamagePercent);
-                break;
-            case AttackType.Spell:
-                // do nothing
-                break;
-            default:
-                break;
-        }
+        const damageBonus = (weaponAttack && statDamage > 0 ? statDamage * twoHandedMultiplier : this.stats.getStat(StatType.Damage));
+        const damagePercent = this.stats.getStat(StatType.DamagePercent);
+
         const spellDamage = spellPowerRatio !== undefined ? this.stats.spellPower * spellPowerRatio : 0;
-        const sneakDamage = Invisible.damage * invisibleStacks;
+        const sneakDamage = Invisible.damage * invisibleStacks * (weaponAttack ? twoHandedMultiplier : 1);
 
         return (damage + damageBonus + spellDamage + sneakDamage) * (1 + damagePercent);
     }
 
-    calcDamageRange({ attackType, damageRange, weaponAttack, spellPowerRatio, isOffHand = false }: { attackType: AttackType, damageRange: DamageRange, weaponAttack: boolean, spellPowerRatio?: number, isOffHand?: boolean; }): { min: number, max: number; } {
-        const min = this.calcDamage({ attackType, damage: damageRange.min + damageRange.bonus, weaponAttack, spellPowerRatio, isOffHand });
-        const max = this.calcDamage({ attackType, damage: damageRange.max + damageRange.bonus, weaponAttack, spellPowerRatio, isOffHand });
+    calcDamageRange({ damageRange, weaponAttack, spellPowerRatio }: { damageRange: DamageRange, weaponAttack: boolean, spellPowerRatio?: number; }): { min: number, max: number; } {
+        const min = this.calcDamage({ damage: damageRange.min + damageRange.bonus, weaponAttack, spellPowerRatio });
+        const max = this.calcDamage({ damage: damageRange.max + damageRange.bonus, weaponAttack, spellPowerRatio });
         return { min, max };
     }
 
@@ -315,7 +299,7 @@ export default class Character {
             hitType = HitType.Hit;
             if (this.statusEffectManager.getBuffStacks(BuffId.Invisible) > 0) sneakAttack = true;
 
-            damage = this.calcDamage({ attackType, damage: damageRoll(damageRange), weaponAttack, spellPowerRatio, isOffHand, invisibleStacks: this.statusEffectManager.getBuffStacks(BuffId.Invisible) });
+            damage = this.calcDamage({ damage: damageRoll(damageRange), weaponAttack, spellPowerRatio, invisibleStacks: this.statusEffectManager.getBuffStacks(BuffId.Invisible) });
 
             const crit = Character.critRoll(this.stats.critChance);
             if (crit) {
