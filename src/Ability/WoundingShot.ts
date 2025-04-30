@@ -13,15 +13,17 @@ const WoundingShot: Ability = {
     func: (char) => {
         if (char.target) {
             char.useAbilityMana();
+            const mainHand = char.equipment.mainHand;
             const { hit, damageDone } = char.attack({
                 target: char.target,
                 attackType: AttackType.RangedWeapon,
                 damageRange: {
-                    min: char.equipment.mainHand.damageRange.min * (1 + BONUS_DMG),
-                    max: char.equipment.mainHand.damageRange.max * (1 + BONUS_DMG),
-                    bonus: char.equipment.mainHand.damageRange.bonus * (1 + BONUS_DMG)
+                    min: mainHand.damageRange.min * (1 + BONUS_DMG),
+                    max: mainHand.damageRange.max * (1 + BONUS_DMG),
+                    bonus: mainHand.damageRange.bonus * (1 + BONUS_DMG)
                 },
                 weaponAttack: true,
+                spellPowerRatio: mainHand.spellPowerRatio,
                 isOffHand: false,
                 abilityName: NAME
             });
