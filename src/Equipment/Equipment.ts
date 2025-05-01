@@ -42,9 +42,9 @@ class Equipment {
 
     constructor(equipmentImport: EquipmentImport) {
 
-        this.mainHand = equipmentImport.mainHand ?? weapons.unarmed0;
+        this.mainHand = equipmentImport.mainHand ?? weapons.fist;
         if (equipmentImport.mainHand === undefined && equipmentImport.offHandWeapon === undefined && this.offHandShield === undefined) {
-            this.offHandWeapon = weapons.unarmed0;
+            this.offHandWeapon = weapons.fist;
         }
         if (equipmentImport.offHandWeapon) this.offHandWeapon = equipmentImport.offHandWeapon;
 
