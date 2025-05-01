@@ -9,7 +9,7 @@ const DMG_PER_TURN = 0.2;
 
 const WoundingShot: Ability = {
     name: NAME,
-    description: 'Attack your target and apply Bleeding.',
+    description: `Attack your target for Weapon Damage + ${BONUS_DMG * 100}% and apply Bleeding.`,
     func: (char) => {
         if (char.target) {
             char.useAbilityMana();
@@ -23,7 +23,7 @@ const WoundingShot: Ability = {
                     bonus: mainHand.damageRange.bonus * (1 + BONUS_DMG)
                 },
                 weaponAttack: true,
-                spellPowerRatio: mainHand.spellPowerRatio,
+                spellPowerRatio: mainHand.spellPowerRatio ? mainHand.spellPowerRatio * (1 + BONUS_DMG) : mainHand.spellPowerRatio,
                 isOffHand: false,
                 abilityName: NAME
             });
