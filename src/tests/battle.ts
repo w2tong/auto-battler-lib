@@ -1,4 +1,3 @@
-import AttackType from '../AttackType';
 import Battle from '../Battle/Battle';
 import Character from '../Character/Character';
 import { getRandomEncounter } from '../encounters';
@@ -22,18 +21,17 @@ const left = battle.left[0];
 const right = battle.right[0];
 
 function displayCharacterStats(char: Character) {
-    const weapon = char.equipment.mainHand ?? weapons.unarmed0;
+    const weapon = char.equipment.mainHand ?? weapons.fist;
     const damageRange = char.calcDamageRange({
-        attackType: weapon.attackType ?? AttackType.MeleeWeapon,
         damageRange: weapon.damageRange,
-        spellPowerRatio: weapon.spellPowerRatio,
-        isOffHand: false
+        weaponAttack: true,
+        spellPowerRatio: weapon.spellPowerRatio
     });
 
     console.log(`${char.name}
 Lvl. ${char.level}
 Health: ${char.currentHealth}
-Accuracy: ${char.stats.accuracy}
+Accuracy: ${char.stats.getAccuracy(char.equipment.mainHand.attackType)}
 Dodge Chance: ${char.stats.dodge}
 Crit Chance: ${char.stats.critChance}
 Crit Damage: ${char.stats.critDamage}
