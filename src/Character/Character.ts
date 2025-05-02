@@ -48,7 +48,7 @@ export default class Character {
     private userId?: string;
 
     private _name: string;
-    private className: ClassName | null;
+    private _className: ClassName | null;
 
     private _level: number;
 
@@ -77,7 +77,7 @@ export default class Character {
     constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, petId?: PetId, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
         this._name = name;
         this._level = level;
-        this.className = className ?? null;
+        this._className = className ?? null;
 
         this._equipment = new Equipment(equipment);
 
@@ -108,6 +108,10 @@ export default class Character {
 
     get name() {
         return this._name;
+    }
+
+    get className() {
+        return this._className;
     }
 
     get level() {
@@ -399,7 +403,7 @@ export default class Character {
     info(): CharacterInfo {
         return {
             name: this.name,
-            className: this.className,
+            className: this._className,
             level: this.level,
             mainHand: this.equipment.mainHand,
             offHandWeapon: this.equipment.offHandWeapon,
