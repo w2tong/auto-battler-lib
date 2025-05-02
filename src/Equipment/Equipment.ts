@@ -14,17 +14,16 @@ type Equip = Weapon | Shield | Armour | Head | Hands | Ring | Potion | Belt | Am
 const equips: { [key: string]: Equip; } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts, ...amulets } as const;
 
 type EquipmentImport = {
-    mainHand?: Weapon;
-    offHandWeapon?: Weapon;
-    offHandShield?: Shield;
-    armour?: Armour;
-    head?: Head;
-    hands?: Hands;
-    ring1?: Ring;
-    ring2?: Ring;
-    potion?: Potion;
-    belt?: Belt;
-    amulet?: Amulet;
+    [EquipSlot.MainHand]?: Weapon,
+    [EquipSlot.OffHand]?: Weapon | Shield,
+    [EquipSlot.Head]?: Head,
+    [EquipSlot.Armour]?: Armour,
+    [EquipSlot.Hands]?: Hands,
+    [EquipSlot.Belt]?: Belt,
+    [EquipSlot.Ring1]?: Ring,
+    [EquipSlot.Ring2]?: Ring,
+    [EquipSlot.Potion]?: Potion,
+    [EquipSlot.Amulet]?: Amulet;
 };
 
 class Equipment {
@@ -42,36 +41,27 @@ class Equipment {
 
     constructor(equipmentImport: EquipmentImport) {
 
-        this.mainHand = equipmentImport.mainHand ?? weapons.fist;
-        if (equipmentImport.mainHand === undefined && equipmentImport.offHandWeapon === undefined && this.offHandShield === undefined) {
+        this.mainHand = equipmentImport[EquipSlot.MainHand] ?? weapons.fist;
+        if (equipmentImport[EquipSlot.MainHand] === undefined && equipmentImport[EquipSlot.OffHand] === undefined) {
             this.offHandWeapon = weapons.fist;
         }
-        if (equipmentImport.offHandWeapon) this.offHandWeapon = equipmentImport.offHandWeapon;
+        if (equipmentImport[EquipSlot.OffHand]) {
+            if (equipmentImport[EquipSlot.OffHand].itemType === ItemType.Weapon) this.offHandWeapon = equipmentImport[EquipSlot.OffHand];
+            else if (equipmentImport[EquipSlot.OffHand].itemType === ItemType.Shield) this.offHandShield = equipmentImport[EquipSlot.OffHand];
+        }
 
-        this.offHandShield = equipmentImport.offHandShield;
-        this.armour = equipmentImport.armour;
-        this.head = equipmentImport.head;
-        this.hands = equipmentImport.hands;
-        this.ring1 = equipmentImport.ring1;
-        this.ring2 = equipmentImport.ring2;
-        this.potion = structuredClone(equipmentImport.potion);
-        this.belt = equipmentImport.belt;
-        this.amulet = equipmentImport.amulet;
+        this.armour = equipmentImport[EquipSlot.Armour];
+        this.head = equipmentImport[EquipSlot.Head];
+        this.hands = equipmentImport[EquipSlot.Hands];
+        this.ring1 = equipmentImport[EquipSlot.Ring1];
+        this.ring2 = equipmentImport[EquipSlot.Ring2];
+        this.potion = structuredClone(equipmentImport[EquipSlot.Potion]);
+        this.belt = equipmentImport[EquipSlot.Belt];
+        this.amulet = equipmentImport[EquipSlot.Amulet];
     }
 }
 
-type EquipmentItemIds = {
-    [EquipSlot.MainHand]: string | null;
-    [EquipSlot.OffHand]: string | null;
-    [EquipSlot.Head]: string | null;
-    [EquipSlot.Armour]: string | null;
-    [EquipSlot.Hands]: string | null;
-    [EquipSlot.Belt]: string | null;
-    [EquipSlot.Ring1]: string | null;
-    [EquipSlot.Ring2]: string | null;
-    [EquipSlot.Potion]: string | null;
-    [EquipSlot.Amulet]: string | null;
-};
+type EquipmentItemIds = Record<EquipSlot, string | null>;
 
 enum EquipSlot {
     MainHand = 'Main Hand',
@@ -117,47 +107,47 @@ function createEquipmentImport(equipmentItemIds: EquipmentItemIds): EquipmentImp
     const equipmentImport: EquipmentImport = {};
     // Main Hand
     if (equipmentItemIds[EquipSlot.MainHand] && equipmentItemIds[EquipSlot.MainHand] in weapons) {
-        equipmentImport.mainHand = weapons[equipmentItemIds[EquipSlot.MainHand] as WeaponId];
+        equipmentImport[EquipSlot.MainHand] = weapons[equipmentItemIds[EquipSlot.MainHand] as WeaponId];
     }
     // Off Hand
     if (equipmentItemIds[EquipSlot.OffHand]) {
         if (equipmentItemIds[EquipSlot.OffHand] in weapons) {
-            equipmentImport.offHandWeapon = weapons[equipmentItemIds[EquipSlot.OffHand] as WeaponId];
+            equipmentImport[EquipSlot.OffHand] = weapons[equipmentItemIds[EquipSlot.OffHand] as WeaponId];
         }
         else if (equipmentItemIds[EquipSlot.OffHand] in shields) {
-            equipmentImport.offHandShield = shields[equipmentItemIds[EquipSlot.OffHand] as ShieldId];
+            equipmentImport[EquipSlot.OffHand] = shields[equipmentItemIds[EquipSlot.OffHand] as ShieldId];
         }
     }
 
     // Armour
     if (equipmentItemIds[EquipSlot.Armour] && equipmentItemIds[EquipSlot.Armour] in armour) {
-        equipmentImport.armour = armour[equipmentItemIds[EquipSlot.Armour] as ArmourId];
+        equipmentImport[EquipSlot.Armour] = armour[equipmentItemIds[EquipSlot.Armour] as ArmourId];
     }
 
     // Head
     if (equipmentItemIds[EquipSlot.Head] && equipmentItemIds[EquipSlot.Head] in heads) {
-        equipmentImport.head = heads[equipmentItemIds[EquipSlot.Head] as HeadId];
+        equipmentImport[EquipSlot.Head] = heads[equipmentItemIds[EquipSlot.Head] as HeadId];
     }
 
     // Hands
     if (equipmentItemIds[EquipSlot.Hands] && equipmentItemIds[EquipSlot.Hands] in hands) {
-        equipmentImport.hands = hands[equipmentItemIds[EquipSlot.Hands] as HandsId];
+        equipmentImport[EquipSlot.Hands] = hands[equipmentItemIds[EquipSlot.Hands] as HandsId];
     }
 
     // Rings
     if (equipmentItemIds[EquipSlot.Ring1] && equipmentItemIds[EquipSlot.Ring1] in rings) {
-        equipmentImport.ring1 = rings[equipmentItemIds[EquipSlot.Ring1] as RingId];
+        equipmentImport[EquipSlot.Ring1] = rings[equipmentItemIds[EquipSlot.Ring1] as RingId];
     }
     if (equipmentItemIds[EquipSlot.Ring2] && equipmentItemIds[EquipSlot.Ring2] in rings) {
-        equipmentImport.ring2 = rings[equipmentItemIds[EquipSlot.Ring2] as RingId];
+        equipmentImport[EquipSlot.Ring2] = rings[equipmentItemIds[EquipSlot.Ring2] as RingId];
     }
 
     if (equipmentItemIds[EquipSlot.Potion] && equipmentItemIds[EquipSlot.Potion] in potions) {
-        equipmentImport.potion = potions[equipmentItemIds[EquipSlot.Potion] as PotionId];
+        equipmentImport[EquipSlot.Potion] = potions[equipmentItemIds[EquipSlot.Potion] as PotionId];
     }
 
     if (equipmentItemIds[EquipSlot.Belt] && equipmentItemIds[EquipSlot.Belt] in belts) {
-        equipmentImport.belt = belts[equipmentItemIds[EquipSlot.Belt] as BeltId];
+        equipmentImport[EquipSlot.Belt] = belts[equipmentItemIds[EquipSlot.Belt] as BeltId];
     }
 
     return equipmentImport;

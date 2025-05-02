@@ -1,4 +1,5 @@
 import { ArmourType, armour } from '../../Equipment/Armour';
+import { EquipSlot } from '../../Equipment/Equipment';
 import { createTestCharacter, test1HWeapon, test2HWeapon } from '../../tests/util';
 import ArmourTypeDodgeMultiplier from './ArmourTypeDodgeMultiplier'; import StatType from './StatType';
 import Stats from './Stats';
@@ -58,22 +59,22 @@ describe('Dodge with Armour Type Penalty', () => {
     });
 
     test('Dodge with Unarmoured Armour is Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Unarmoured]', () => {
-        const char = createTestCharacter({ equipment: { armour: armour.robe0 } });
+        const char = createTestCharacter({ equipment: { [EquipSlot.Armour]: armour.robe0 } });
         expect(char.stats.dodge).toBeCloseTo(Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Unarmoured]);
     });
 
     test('Dodge with Light Armour is Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Light]', () => {
-        const char = createTestCharacter({ equipment: { armour: armour.leatherArmour0 } });
+        const char = createTestCharacter({ equipment: { [EquipSlot.Armour]: armour.leatherArmour0 } });
         expect(char.stats.dodge).toBeCloseTo(Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Light]);
     });
 
     test('Dodge with Medium Armour is Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Medium]', () => {
-        const char = createTestCharacter({ equipment: { armour: armour.mailArmour0 } });
+        const char = createTestCharacter({ equipment: { [EquipSlot.Armour]: armour.mailArmour0 } });
         expect(char.stats.dodge).toBeCloseTo(Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Medium]);
     });
 
     test('Dodge with Heavy Armour is Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Heavy]', () => {
-        const char = createTestCharacter({ equipment: { armour: armour.plateArmour0 } });
+        const char = createTestCharacter({ equipment: { [EquipSlot.Armour]: armour.plateArmour0 } });
         expect(char.stats.dodge).toBeCloseTo(Stats.DEFAULT_DODGE * ArmourTypeDodgeMultiplier[ArmourType.Heavy]);
     });
 });
@@ -543,7 +544,7 @@ describe('accuracy', () => {
     test('One-hand Weapon', () => {
         const char = createTestCharacter({
             equipment: {
-                mainHand: test1HWeapon
+                [EquipSlot.MainHand]: test1HWeapon
             }
         });
         expect(char.stats.getStat(StatType.Accuracy)).toBe(0);
@@ -551,7 +552,7 @@ describe('accuracy', () => {
     test('Two-hand Weapon', () => {
         const char = createTestCharacter({
             equipment: {
-                mainHand: test2HWeapon
+                [EquipSlot.MainHand]: test2HWeapon
             }
         });
         expect(char.stats.getStat(StatType.Accuracy)).toBe(0);
@@ -559,8 +560,8 @@ describe('accuracy', () => {
     test('Dual Wield Weapons', () => {
         const char = createTestCharacter({
             equipment: {
-                mainHand: test1HWeapon,
-                offHandWeapon: test1HWeapon
+                [EquipSlot.MainHand]: test1HWeapon,
+                [EquipSlot.OffHand]: test1HWeapon
             }
         });
         expect(char.stats.getStat(StatType.Accuracy)).toBe(Stats.DUAL_WIELD_ACCURACY_PENALTY);

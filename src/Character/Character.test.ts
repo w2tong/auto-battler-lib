@@ -8,6 +8,7 @@ import * as utilModule from '../util';
 import { createTestCharacter, test1HWeapon, test2HWeapon, testPotion } from '../tests/util';
 import Stats from './Stats/Stats';
 import Invisible from '../StatusEffect/Buffs/Invisible';
+import { EquipSlot } from '../Equipment/Equipment';
 
 describe('calcCritDamage', () => {
     // 10 DMG
@@ -853,7 +854,7 @@ describe('usePotion', () => {
                 [StatType.MaxHealth]: { base: 100 }
             },
             equipment: {
-                potion: testPotion
+                [EquipSlot.Potion]: testPotion
             }
         });
         char.usePotion();
@@ -867,7 +868,7 @@ describe('usePotion', () => {
                 [StatType.MaxHealth]: { base: 100 }
             },
             equipment: {
-                potion: testPotion
+                [EquipSlot.Potion]: testPotion
             },
             options: {
                 currHealthPc: 0.5
@@ -884,7 +885,7 @@ describe('usePotion', () => {
                 [StatType.MaxHealth]: { base: 100 }
             },
             equipment: {
-                potion: testPotion
+                [EquipSlot.Potion]: testPotion
             },
             options: {
                 currHealthPc: 0.5
@@ -921,7 +922,7 @@ describe('hitRoll', () => {
             [StatType.DodgeReduction]: { base: 10 },
         },
         equipment: {
-            mainHand: test1HWeapon
+            [EquipSlot.MainHand]: test1HWeapon
         }
     });
     let target: Character;
@@ -1759,7 +1760,7 @@ describe('calcDamage', () => {
                 [StatType.SpellPowerPercent]: { base: spellPowerPercent }
             },
             equipment: {
-                mainHand: test2HWeapon
+                [EquipSlot.MainHand]: test2HWeapon
             }
         });
 
@@ -1831,7 +1832,7 @@ describe('calcDamage', () => {
                 [StatType.SpellPower]: { base: spellPower }
             },
             equipment: {
-                mainHand: test2HWeapon
+                [EquipSlot.MainHand]: test2HWeapon
             }
         });
 

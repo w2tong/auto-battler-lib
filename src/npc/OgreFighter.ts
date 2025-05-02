@@ -3,6 +3,7 @@ import AttributeType from '../Character/Attributes/AttributeType';
 import StatType from '../Character/Stats/StatType';
 import Stats from '../Character/Stats/Stats';
 import { armour } from '../Equipment/Armour';
+import { EquipSlot } from '../Equipment/Equipment';
 import { weapons } from '../Equipment/Weapon/weapons';
 import NPC from './NPC';
 
@@ -29,8 +30,8 @@ const OgreFighter: NPC = {
         [StatType.ManaCost]: { base: 100 }
     },
     equipment: {
-        mainHand: weapons.greatsword0,
-        armour: armour.leatherArmour0
+        [EquipSlot.MainHand]: weapons.greatsword0,
+        [EquipSlot.Armour]: armour.leatherArmour0
     },
     ability: DoubleStrike
 };

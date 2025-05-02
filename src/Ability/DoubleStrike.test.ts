@@ -2,6 +2,7 @@ import AttackType from '../AttackType';
 import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';
 import DamageType from '../DamageType';
+import { EquipSlot } from '../Equipment/Equipment';
 import { ItemType } from '../Equipment/Item';
 import { type Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
 import { createTestCharacter } from '../tests/util';
@@ -48,7 +49,7 @@ test('DoubleStrike with 10 ManaOnHit', () => {
             [StatType.ManaOnHit]: { base: 10 }
         },
         equipment: {
-            mainHand: testSword
+            [EquipSlot.MainHand]: testSword
         }
     });
     char.target = target;
@@ -68,7 +69,7 @@ test('DoubleStrike with 0 ManaOnHit', () => {
             [StatType.ManaOnHit]: { base: 0 }
         },
         equipment: {
-            mainHand: testSword
+            [EquipSlot.MainHand]: testSword
         }
     });
     char.target = target;

@@ -2,6 +2,7 @@ import DoubleStrike from '../Ability/DoubleStrike';
 import AttributeType from '../Character/Attributes/AttributeType';
 import StatType from '../Character/Stats/StatType';
 import { armour } from '../Equipment/Armour';
+import { EquipSlot } from '../Equipment/Equipment';
 import { weapons } from '../Equipment/Weapon/weapons';
 import NPC from './NPC';
 
@@ -25,9 +26,9 @@ const GoblinRogue: NPC = {
         [StatType.ManaCost]: { base: 100 }
     },
     equipment: {
-        mainHand: weapons.dagger0,
-        offHandWeapon: weapons.dagger0,
-        armour: armour.leatherArmour0
+        [EquipSlot.MainHand]: weapons.dagger0,
+        [EquipSlot.OffHand]: weapons.dagger0,
+        [EquipSlot.Armour]: armour.leatherArmour0
     },
     ability: DoubleStrike
 };

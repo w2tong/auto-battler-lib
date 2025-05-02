@@ -1,6 +1,7 @@
 import AttributeType from '../Character/Attributes/AttributeType';
 import StatType from '../Character/Stats/StatType';
 import Stats from '../Character/Stats/Stats';
+import { EquipSlot } from '../Equipment/Equipment';
 import { weapons } from '../Equipment/Weapon/weapons';
 import NPC from './NPC';
 
@@ -23,7 +24,7 @@ const Zombie: NPC = {
         [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
     },
     equipment: {
-        mainHand: weapons.poisonbite0
+        [EquipSlot.MainHand]: weapons.poisonbite0
     }
 };
 

@@ -1,13 +1,13 @@
 import Ability from '../Ability/Ability';
 import AttributeTemplate from '../Character/Attributes/AttributeTemplate';
 import { StatTemplate } from '../Character/Stats/StatTemplate';
-import { Equipment } from '../Equipment/Equipment';
+import { EquipmentImport } from '../Equipment/Equipment';
 
 interface NPC {
     name: string;
     attributes: AttributeTemplate;
     stats: StatTemplate;
-    equipment: Equipment;
+    equipment: EquipmentImport;
     ability?: Ability;
 }
 

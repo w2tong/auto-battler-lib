@@ -11,15 +11,16 @@ import DamageType from '../DamageType';
 import { Amulet } from '../Equipment/Amulet';
 import { Armour, ArmourType } from '../Equipment/Armour';
 import { Belt } from '../Equipment/Belt';
-import { EquipmentImport } from '../Equipment/Equipment';
+import { EquipmentImport, EquipSlot } from '../Equipment/Equipment';
 import { Hands } from '../Equipment/Hands';
 import { Head } from '../Equipment/Head';
 import { ItemType } from '../Equipment/Item';
 import { Potion } from '../Equipment/Potion';
 import { Ring } from '../Equipment/Ring';
+import { Shield, ShieldType } from '../Equipment/Shield';
 import { Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
 
-function createTestCharacter({ level = 1, attributes = {}, statTemplate = {}, equipment = { mainHand: test1HWeapon }, ability, petId, options }: {
+function createTestCharacter({ level = 1, attributes = {}, statTemplate = {}, equipment = { [EquipSlot.MainHand]: test1HWeapon }, ability, petId, options }: {
     level?: number, attributes?: BaseAttributes, statTemplate?: StatTemplate, equipment?: EquipmentImport, ability?: Ability, petId?: PetId, options?: { currHealthPc?: number, currManaPc?: number; };
 }): Character {
     return new Character({
@@ -89,6 +90,19 @@ const test2HWeapon: Weapon = {
     damageType: DamageType.Physical,
     damageRange: { min: 0, max: 0, bonus: 0 },
 };
+const testShield: Shield = {
+    id: '',
+    name: '',
+    itemType: ItemType.Shield,
+    tier: 0,
+    img: '',
+
+    type: ShieldType.Light,
+    stats: {
+        [StatType.BlockChance]: 45,
+        [StatType.BlockPower]: 2
+    }
+};
 const testHead: Head = {
     id: '',
     itemType: ItemType.Head,
@@ -143,4 +157,4 @@ const testPotion: Potion = {
     charges: 1
 };
 
-export { createTestCharacter, createTestStats, test1HWeapon, test2HWeapon, testHead, testAmulet, testArmour, testHands, testBelt, testRing, testPotion };
+export { createTestCharacter, createTestStats, test1HWeapon, test2HWeapon, testShield, testHead, testAmulet, testArmour, testHands, testBelt, testRing, testPotion };

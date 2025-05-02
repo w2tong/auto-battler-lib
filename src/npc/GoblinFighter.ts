@@ -2,6 +2,7 @@ import DoubleStrike from '../Ability/DoubleStrike';
 import AttributeType from '../Character/Attributes/AttributeType';
 import StatType from '../Character/Stats/StatType';
 import { armour } from '../Equipment/Armour';
+import { EquipSlot } from '../Equipment/Equipment';
 import { shields } from '../Equipment/Shield';
 import { weapons } from '../Equipment/Weapon/weapons';
 import NPC from './NPC';
@@ -28,9 +29,9 @@ const GoblinFighter: NPC = {
         [StatType.ManaCost]: { base: 100 }
     },
     equipment: {
-        mainHand: weapons.longsword0,
-        offHandShield: shields.buckler0,
-        armour: armour.mailArmour0
+        [EquipSlot.MainHand]: weapons.longsword0,
+        [EquipSlot.OffHand]: shields.buckler0,
+        [EquipSlot.Armour]: armour.mailArmour0
     },
     ability: DoubleStrike
 };

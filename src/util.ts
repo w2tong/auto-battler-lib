@@ -4,7 +4,7 @@ import BaseAttributes from './Character/Attributes/BaseAttributes';
 import Character from './Character/Character';
 import { ClassName } from './Character/Classes/classes';
 import { StatTemplate } from './Character/Stats/StatTemplate';
-import { Equipment } from './Equipment/Equipment';
+import { EquipmentImport } from './Equipment/Equipment';
 import BuffId from './StatusEffect/BuffId';
 import DebuffId from './StatusEffect/DebuffId';
 import NPC from './npc/NPC';
@@ -38,7 +38,7 @@ function createNPCChar(npc: NPC, level: number, num?: number): Character {
     });
 }
 
-function createPlayerChar({ userId, name, level, className, attributes, statTemplate, equipment, ability }: { userId: string, name: string, level: number, className: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: Equipment, ability: Ability; }): Character {
+function createPlayerChar({ userId, name, level, className, attributes, statTemplate, equipment, ability }: { userId: string, name: string, level: number, className: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability: Ability; }): Character {
     // TODO: use class to calculate stuff
     return new Character({
         name,

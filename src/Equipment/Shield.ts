@@ -264,4 +264,4 @@ const shields: { [id in ShieldId]: Shield } = {
     },
 };
 
-export { Shield, ShieldId, shields };
+export { ShieldType, Shield, ShieldId, shields };

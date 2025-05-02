@@ -1,33 +1,33 @@
 import { ClassName } from '../Character/Classes/classes';
 import { armour } from './Armour';
-import { Equipment } from './Equipment';
+import { EquipmentImport, EquipSlot } from './Equipment';
 import { shields } from './Shield';
 import { weapons } from './Weapon/weapons';
 
-const defaultEquipment: { [name in ClassName]: Equipment } = {
+const defaultEquipment: { [name in ClassName]: EquipmentImport } = {
     [ClassName.Fighter]: {
-        mainHand: weapons.longsword0,
-        offHandShield: shields.buckler0,
-        armour: armour.plateArmour0
+        [EquipSlot.MainHand]: weapons.longsword0,
+        [EquipSlot.OffHand]: shields.buckler0,
+        [EquipSlot.Armour]: armour.plateArmour0
     },
     [ClassName.Priest]: {
-        mainHand: weapons.mace0,
-        offHandShield: shields.buckler0,
-        armour: armour.robe0
+        [EquipSlot.MainHand]: weapons.mace0,
+        [EquipSlot.OffHand]: shields.buckler0,
+        [EquipSlot.Armour]: armour.robe0
     },
     [ClassName.Ranger]: {
-        mainHand: weapons.longbow0,
-        armour: armour.leatherArmour0
+        [EquipSlot.MainHand]: weapons.longbow0,
+        [EquipSlot.Armour]: armour.leatherArmour0
     },
     [ClassName.Rogue]: {
-        mainHand: weapons.dagger0,
-        offHandWeapon: weapons.dagger0,
-        armour: armour.leatherArmour0
+        [EquipSlot.MainHand]: weapons.dagger0,
+        [EquipSlot.OffHand]: weapons.dagger0,
+        [EquipSlot.Armour]: armour.leatherArmour0
     },
     [ClassName.Wizard]: {
-        mainHand: weapons.wand0,
-        offHandShield: shields.buckler0,
-        armour: armour.robe0
+        [EquipSlot.MainHand]: weapons.wand0,
+        [EquipSlot.OffHand]: shields.buckler0,
+        [EquipSlot.Armour]: armour.robe0
     }
 };
 
