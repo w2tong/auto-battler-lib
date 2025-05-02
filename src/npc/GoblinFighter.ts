@@ -9,7 +9,6 @@ import NPC from './NPC';
 const GoblinFighter: NPC = {
     name: 'Goblin Fighter',
     attributes: {
-        [AttributeType.WeaponSkill]: { base: 0, perLvl: 1 },
         [AttributeType.Strength]: { base: 10, perLvl: 1.25 },
         [AttributeType.Dexterity]: { base: 5, perLvl: 0.75 },
         [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
@@ -21,6 +20,7 @@ const GoblinFighter: NPC = {
         [StatType.Deflection]: { base: 0, perLvl: 0.1 },
         [StatType.BlockPower]: { base: 0, perLvl: 0.1 },
 
+        [StatType.Accuracy]: { base: 0, perLvl: 1 },
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
 
         [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },

@@ -7,7 +7,6 @@ import NPC from './NPC';
 const Zombie: NPC = {
     name: 'Zombie',
     attributes: {
-        [AttributeType.WeaponSkill]: { base: 0, perLvl: 0.75 },
         [AttributeType.Strength]: { base: 0, perLvl: 1 },
         [AttributeType.Dexterity]: { base: 0, perLvl: 0.5 },
         [AttributeType.Perception]: { base: 0, perLvl: 0.25 },
@@ -17,7 +16,7 @@ const Zombie: NPC = {
         [StatType.MaxHealth]: { base: 16, perLvl: 3.5 },
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 10 },
 
-        [StatType.Accuracy]: { base: -10 },
+        [StatType.Accuracy]: { base: -10, perLvl: 1 },
 
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
 

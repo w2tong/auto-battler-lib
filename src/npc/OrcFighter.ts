@@ -9,7 +9,6 @@ import NPC from './NPC';
 const OrcFighter: NPC = {
     name: 'Orc Fighter',
     attributes: {
-        [AttributeType.WeaponSkill]: { base: 0, perLvl: 1 },
         [AttributeType.Strength]: { base: 10, perLvl: 1.75 },
         [AttributeType.Dexterity]: { base: 0, perLvl: 0.5 },
         [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
@@ -21,6 +20,7 @@ const OrcFighter: NPC = {
         [StatType.Deflection]: { base: 0, perLvl: 0.2 },
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 10 },
 
+        [StatType.Accuracy]: { base: 0, perLvl: 1 },
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
 
         [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },

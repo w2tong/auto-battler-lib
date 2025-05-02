@@ -8,7 +8,6 @@ import NPC from './NPC';
 const GoblinRogue: NPC = {
     name: 'Goblin Rogue',
     attributes: {
-        [AttributeType.WeaponSkill]: { base: 0, perLvl: 1 },
         [AttributeType.Strength]: { base: 10, perLvl: 1 },
         [AttributeType.Dexterity]: { base: 5, perLvl: 1 },
         [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
@@ -18,6 +17,7 @@ const GoblinRogue: NPC = {
         [StatType.MaxHealth]: { base: 12, perLvl: 3 },
         [StatType.Armour]: { base: 0, perLvl: 0.8 },
 
+        [StatType.Accuracy]: { base: 0, perLvl: 1 },
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
 
         [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
