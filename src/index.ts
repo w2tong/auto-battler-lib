@@ -59,3 +59,6 @@ export { HitType };
 
 import lootTables from './lootTables';
 export { lootTables };
+
+import defaultEquipment from './Equipment/defaultEquipment';
+export { defaultEquipment };
