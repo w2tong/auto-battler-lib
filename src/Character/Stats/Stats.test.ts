@@ -567,3 +567,15 @@ describe('accuracy', () => {
         expect(char.stats.getStat(StatType.Accuracy)).toBe(Stats.DUAL_WIELD_ACCURACY_PENALTY);
     });
 });
+
+describe('constructor', () => {
+    test('plateArmour0 = 40 armour, 2 deflection', () => {
+        const char = createTestCharacter({
+            equipment: {
+                [EquipSlot.Armour]: armour.plateArmour0
+            }
+        });
+        expect(char.stats.getStat(StatType.Armour)).toBe(40);
+        expect(char.stats.getStat(StatType.Deflection)).toBe(2);
+    });
+});
