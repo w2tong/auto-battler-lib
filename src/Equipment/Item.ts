@@ -7,13 +7,13 @@ enum ItemType {
     Head = 'Head',
     Armour = 'Armour',
     Hands = 'Hands',
-    Belt = 'Belt',
+    Waist = 'Waist',
     Ring = 'Ring',
     Potion = 'Potion',
     Amulet = 'Amulet'
 }
 
-type Tier = 0|1|2|3|4|5;
+type Tier = 0 | 1 | 2 | 3 | 4 | 5;
 
 interface Item {
     id: string;
@@ -23,8 +23,8 @@ interface Item {
     img: string;
 }
 
-type ItemAttributes = {[type in AttributeType]?: number}
-type ItemStats = {[type in StatType]?: number}
+type ItemAttributes = { [type in AttributeType]?: number };
+type ItemStats = { [type in StatType]?: number };
 
 export { Item, ItemType };
 export type { Tier, ItemAttributes, ItemStats };

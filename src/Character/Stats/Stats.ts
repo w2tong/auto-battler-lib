@@ -105,7 +105,7 @@ class Stats {
 
         // Add stats from equipment
         if (equipment.armour) this.addItemStats(equipment.armour.stats);
-        if (equipment.belt) this.addItemStats(equipment.belt.stats);
+        if (equipment.waist) this.addItemStats(equipment.waist.stats);
 
         if (equipment.hands && ((equipment.hands.weaponStyle && equipment.hands.weaponStyle === this.weaponStyle) || !equipment.hands.weaponStyle)) {
             this.addItemStats(equipment.hands.stats);

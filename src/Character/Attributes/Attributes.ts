@@ -35,7 +35,7 @@ class Attributes {
         this[AttributeType.Wisdom] = { base: wisdom, bonus: 0 };
 
         if (equipment.armour) this.addItemAttributes(equipment.armour.attributes);
-        if (equipment.belt) this.addItemAttributes(equipment.belt.attributes);
+        if (equipment.waist) this.addItemAttributes(equipment.waist.attributes);
         if (equipment.hands) this.addItemAttributes(equipment.hands.attributes);
         if (equipment.head) this.addItemAttributes(equipment.head.attributes);
         if (equipment.ring1) this.addItemAttributes(equipment.ring1.attributes);

@@ -1,6 +1,6 @@
 import { Amulet, amulets } from './Amulet';
 import { Armour, ArmourId, armour } from './Armour';
-import { Belt, BeltId, belts } from './Belt';
+import { Waist, WaistId, waists } from './Waist';
 import { Hands, HandsId, hands } from './Hands';
 import { Head, HeadId, heads } from './Head';
 import { ItemType } from './Item';
@@ -10,8 +10,8 @@ import { Shield, ShieldId, shields } from './Shield';
 import { Weapon, WeaponTypeProperties } from './Weapon/Weapon';
 import { WeaponId, weapons } from './Weapon/weapons';
 
-type Equip = Weapon | Shield | Armour | Head | Hands | Ring | Potion | Belt | Amulet;
-const equips: { [key: string]: Equip; } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...belts, ...amulets } as const;
+type Equip = Weapon | Shield | Armour | Head | Hands | Ring | Potion | Waist | Amulet;
+const equips: { [key: string]: Equip; } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...waists, ...amulets } as const;
 
 type EquipmentImport = {
     [EquipSlot.MainHand]?: Weapon,
@@ -19,7 +19,7 @@ type EquipmentImport = {
     [EquipSlot.Head]?: Head,
     [EquipSlot.Armour]?: Armour,
     [EquipSlot.Hands]?: Hands,
-    [EquipSlot.Belt]?: Belt,
+    [EquipSlot.Waist]?: Waist,
     [EquipSlot.Ring1]?: Ring,
     [EquipSlot.Ring2]?: Ring,
     [EquipSlot.Potion]?: Potion,
@@ -36,7 +36,7 @@ class Equipment {
     ring1?: Ring;
     ring2?: Ring;
     potion?: Potion;
-    belt?: Belt;
+    waist?: Waist;
     amulet?: Amulet;
 
     constructor(equipmentImport: EquipmentImport) {
@@ -56,7 +56,7 @@ class Equipment {
         this.ring1 = equipmentImport[EquipSlot.Ring1];
         this.ring2 = equipmentImport[EquipSlot.Ring2];
         this.potion = structuredClone(equipmentImport[EquipSlot.Potion]);
-        this.belt = equipmentImport[EquipSlot.Belt];
+        this.waist = equipmentImport[EquipSlot.Waist];
         this.amulet = equipmentImport[EquipSlot.Amulet];
     }
 }
@@ -69,7 +69,7 @@ enum EquipSlot {
     Head = 'Head',
     Armour = 'Armour',
     Hands = 'Hands',
-    Belt = 'Belt',
+    Waist = 'Waist',
     Ring1 = 'Ring 1',
     Ring2 = 'Ring 2',
     Potion = 'Potion',
@@ -91,7 +91,7 @@ const equipValidationMap: Record<EquipSlot, (item: Equip) => boolean> = {
     [EquipSlot.Ring1]: (item) => item.itemType === ItemType.Ring,
     [EquipSlot.Ring2]: (item) => item.itemType === ItemType.Ring,
     [EquipSlot.Potion]: (item) => item.itemType === ItemType.Potion,
-    [EquipSlot.Belt]: (item) => item.itemType === ItemType.Belt,
+    [EquipSlot.Waist]: (item) => item.itemType === ItemType.Waist,
     [EquipSlot.Amulet]: (item) => item.itemType === ItemType.Amulet,
 };
 
@@ -146,8 +146,8 @@ function createEquipmentImport(equipmentItemIds: EquipmentItemIds): EquipmentImp
         equipmentImport[EquipSlot.Potion] = potions[equipmentItemIds[EquipSlot.Potion] as PotionId];
     }
 
-    if (equipmentItemIds[EquipSlot.Belt] && equipmentItemIds[EquipSlot.Belt] in belts) {
-        equipmentImport[EquipSlot.Belt] = belts[equipmentItemIds[EquipSlot.Belt] as BeltId];
+    if (equipmentItemIds[EquipSlot.Waist] && equipmentItemIds[EquipSlot.Waist] in waists) {
+        equipmentImport[EquipSlot.Waist] = waists[equipmentItemIds[EquipSlot.Waist] as WaistId];
     }
 
     return equipmentImport;

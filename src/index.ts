@@ -7,7 +7,7 @@ export { ClassName, Classes } from './Character/Classes/classes';
 export { Equip, Equipment, EquipmentImport, EquipmentItemIds, EquipSlot, equips, isValidEquip, createEquipmentImport } from './Equipment/Equipment';
 export { Item, ItemType, Tier, ItemAttributes, ItemStats } from './Equipment/Item';
 export { Armour, ArmourId, armour } from './Equipment/Armour';
-export { Belt, BeltId, belts } from './Equipment/Belt';
+export { Waist, WaistId, waists } from './Equipment/Waist';
 export { Hands, HandsId, hands } from './Equipment/Hands';
 export { Head, HeadId, heads } from './Equipment/Head';
 export { Potion, PotionId, potions } from './Equipment/Potion';

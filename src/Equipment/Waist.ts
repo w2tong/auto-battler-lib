@@ -1,36 +1,36 @@
 import StatType from '../Character/Stats/StatType';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
-interface Belt extends Item {
-    itemType: ItemType.Belt;
+interface Waist extends Item {
+    itemType: ItemType.Waist;
     attributes?: ItemAttributes;
     stats?: ItemStats;
 }
 
-type BeltId =
+type WaistId =
     'chargesBelt0' | 'chargesBelt1'
     | 'effBelt0' | 'effBelt1' | 'effBelt2' | 'effBelt3'
     | 'healBelt0' | 'healBelt1' | 'healBelt2' | 'healBelt3'
     ;
 
-const belts: { [id in BeltId]: Belt } = {
+const waists: { [id in WaistId]: Waist } = {
     chargesBelt0: {
         id: 'chargesBelt0',
-        itemType: ItemType.Belt,
-        name: 'Belt of Charges',
+        itemType: ItemType.Waist,
+        name: 'Waist of Charges',
         tier: 4,
-        img: 'belt-multi.png',
+        img: 'waist-multi.png',
 
         stats: {
             [StatType.PotionCharges]: 1
         }
     },
     chargesBelt1: {
-        id: 'belt',
-        itemType: ItemType.Belt,
-        name: 'Belt of Greater Charges',
+        id: 'waist',
+        itemType: ItemType.Waist,
+        name: 'Waist of Greater Charges',
         tier: 5,
-        img: 'belt-multi.png',
+        img: 'waist-multi.png',
 
         stats: {
             [StatType.PotionCharges]: 2
@@ -38,10 +38,10 @@ const belts: { [id in BeltId]: Belt } = {
     },
     effBelt0: {
         id: 'effBelt0',
-        itemType: ItemType.Belt,
-        name: 'Belt of Effectiveness',
+        itemType: ItemType.Waist,
+        name: 'Waist of Effectiveness',
         tier: 2,
-        img: 'belt-red-pot.png',
+        img: 'waist-red-pot.png',
 
         stats: {
             [StatType.PotionEffectiveness]: 0.25
@@ -49,10 +49,10 @@ const belts: { [id in BeltId]: Belt } = {
     },
     effBelt1: {
         id: 'effBelt1',
-        itemType: ItemType.Belt,
-        name: 'Belt of Greater Effectiveness',
+        itemType: ItemType.Waist,
+        name: 'Waist of Greater Effectiveness',
         tier: 3,
-        img: 'belt-red-pot.png',
+        img: 'waist-red-pot.png',
 
         stats: {
             [StatType.PotionEffectiveness]: 0.50
@@ -60,10 +60,10 @@ const belts: { [id in BeltId]: Belt } = {
     },
     effBelt2: {
         id: 'effBelt2',
-        itemType: ItemType.Belt,
-        name: 'Belt of Superior Effectiveness',
+        itemType: ItemType.Waist,
+        name: 'Waist of Superior Effectiveness',
         tier: 4,
-        img: 'belt-red-pot.png',
+        img: 'waist-red-pot.png',
 
         stats: {
             [StatType.PotionEffectiveness]: 0.75
@@ -71,10 +71,10 @@ const belts: { [id in BeltId]: Belt } = {
     },
     effBelt3: {
         id: 'effBelt3',
-        itemType: ItemType.Belt,
-        name: 'Belt of Supreme Effectiveness',
+        itemType: ItemType.Waist,
+        name: 'Waist of Supreme Effectiveness',
         tier: 5,
-        img: 'belt-red-pot.png',
+        img: 'waist-red-pot.png',
 
         stats: {
             [StatType.PotionEffectiveness]: 1.00
@@ -82,10 +82,10 @@ const belts: { [id in BeltId]: Belt } = {
     },
     healBelt0: {
         id: 'healBelt0',
-        itemType: ItemType.Belt,
-        name: 'Belt of Healing',
+        itemType: ItemType.Waist,
+        name: 'Waist of Healing',
         tier: 2,
-        img: 'belt-green-pot.png',
+        img: 'waist-green-pot.png',
 
         stats: {
             [StatType.PotionHealing]: 5
@@ -93,10 +93,10 @@ const belts: { [id in BeltId]: Belt } = {
     },
     healBelt1: {
         id: 'healBelt1',
-        itemType: ItemType.Belt,
-        name: 'Belt of Greater Healing',
+        itemType: ItemType.Waist,
+        name: 'Waist of Greater Healing',
         tier: 3,
-        img: 'belt-green-pot.png',
+        img: 'waist-green-pot.png',
 
         stats: {
             [StatType.PotionHealing]: 10
@@ -104,10 +104,10 @@ const belts: { [id in BeltId]: Belt } = {
     },
     healBelt2: {
         id: 'healBelt2',
-        itemType: ItemType.Belt,
-        name: 'Belt of Superior Healing',
+        itemType: ItemType.Waist,
+        name: 'Waist of Superior Healing',
         tier: 4,
-        img: 'belt-green-pot.png',
+        img: 'waist-green-pot.png',
 
         stats: {
             [StatType.PotionHealing]: 20
@@ -115,10 +115,10 @@ const belts: { [id in BeltId]: Belt } = {
     },
     healBelt3: {
         id: 'healBelt3',
-        itemType: ItemType.Belt,
-        name: 'Belt of Supreme Healing',
+        itemType: ItemType.Waist,
+        name: 'Waist of Supreme Healing',
         tier: 5,
-        img: 'belt-green-pot.png',
+        img: 'waist-green-pot.png',
 
         stats: {
             [StatType.PotionHealing]: 40
@@ -127,4 +127,4 @@ const belts: { [id in BeltId]: Belt } = {
 
 } as const;
 
-export { Belt, BeltId, belts };
+export { Waist, WaistId, waists };
