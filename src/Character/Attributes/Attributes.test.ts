@@ -1,3 +1,5 @@
+import { EquipSlot } from '../../Equipment/Equipment';
+import { quarterstaffs } from '../../Equipment/Weapon/weapons/quarterstaffs';
 import { createTestCharacter } from '../../tests/util';
 import Character from '../Character';
 import AttributeType from './AttributeType';
@@ -65,4 +67,15 @@ test('addItemAttributes', () => {
     expect(char.attributes.constitution).toBe(34); // 9 + 25
     expect(char.attributes.intelligence).toBe(40); // 10 + 30
     expect(char.attributes.wisdom).toBe(46); // 11 + 35
+});
+
+describe('constructor - equipment', () => {
+    test('quarterstaff1', () => {
+        const char = createTestCharacter({
+            equipment: {
+                [EquipSlot.MainHand]: quarterstaffs.quarterstaff1
+            }
+        });
+        expect(char.attributes.wisdom).toBe(1);
+    });
 });
