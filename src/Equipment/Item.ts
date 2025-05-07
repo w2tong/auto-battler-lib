@@ -10,7 +10,7 @@ enum ItemType {
     Waist = 'Waist',
     Ring = 'Ring',
     Potion = 'Potion',
-    Amulet = 'Amulet'
+    Neck = 'Neck'
 }
 
 type Tier = 0 | 1 | 2 | 3 | 4 | 5;

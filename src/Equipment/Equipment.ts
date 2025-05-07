@@ -1,4 +1,4 @@
-import { Amulet, amulets } from './Amulet';
+import { Neck, necks } from './Neck';
 import { Armour, ArmourId, armour } from './Armour';
 import { Waist, WaistId, waists } from './Waist';
 import { Hands, HandsId, hands } from './Hands';
@@ -10,8 +10,8 @@ import { Shield, ShieldId, shields } from './Shield';
 import { Weapon, WeaponTypeProperties } from './Weapon/Weapon';
 import { WeaponId, weapons } from './Weapon/weapons';
 
-type Equip = Weapon | Shield | Armour | Head | Hands | Ring | Potion | Waist | Amulet;
-const equips: { [key: string]: Equip; } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...waists, ...amulets } as const;
+type Equip = Weapon | Shield | Armour | Head | Hands | Ring | Potion | Waist | Neck;
+const equips: { [key: string]: Equip; } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...waists, ...necks } as const;
 
 type EquipmentImport = {
     [EquipSlot.MainHand]?: Weapon,
@@ -23,7 +23,7 @@ type EquipmentImport = {
     [EquipSlot.Ring1]?: Ring,
     [EquipSlot.Ring2]?: Ring,
     [EquipSlot.Potion]?: Potion,
-    [EquipSlot.Amulet]?: Amulet;
+    [EquipSlot.Neck]?: Neck;
 };
 
 class Equipment {
@@ -37,7 +37,7 @@ class Equipment {
     ring2?: Ring;
     potion?: Potion;
     waist?: Waist;
-    amulet?: Amulet;
+    neck?: Neck;
 
     constructor(equipmentImport: EquipmentImport) {
 
@@ -57,7 +57,7 @@ class Equipment {
         this.ring2 = equipmentImport[EquipSlot.Ring2];
         this.potion = structuredClone(equipmentImport[EquipSlot.Potion]);
         this.waist = equipmentImport[EquipSlot.Waist];
-        this.amulet = equipmentImport[EquipSlot.Amulet];
+        this.neck = equipmentImport[EquipSlot.Neck];
     }
 }
 
@@ -73,7 +73,7 @@ enum EquipSlot {
     Ring1 = 'Ring 1',
     Ring2 = 'Ring 2',
     Potion = 'Potion',
-    Amulet = 'Amulet'
+    Neck = 'Neck'
 }
 
 const equipValidationMap: Record<EquipSlot, (item: Equip) => boolean> = {
@@ -92,7 +92,7 @@ const equipValidationMap: Record<EquipSlot, (item: Equip) => boolean> = {
     [EquipSlot.Ring2]: (item) => item.itemType === ItemType.Ring,
     [EquipSlot.Potion]: (item) => item.itemType === ItemType.Potion,
     [EquipSlot.Waist]: (item) => item.itemType === ItemType.Waist,
-    [EquipSlot.Amulet]: (item) => item.itemType === ItemType.Amulet,
+    [EquipSlot.Neck]: (item) => item.itemType === ItemType.Neck,
 };
 
 function isValidEquip(itemId: string, slot: EquipSlot): boolean {

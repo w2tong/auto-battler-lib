@@ -13,7 +13,7 @@ import { isValidEquip, EquipSlot, equips } from './Equipment';
 //     Ring1 = 'Ring 1',
 //     Ring2 = 'Ring 2',
 //     Potion = 'Potion',
-//     Amulet = 'Amulet'
+//     Neck = 'Neck'
 
 describe('isValidEquip', () => {
     describe('EquipSlot MainHand', () => {
@@ -47,8 +47,8 @@ describe('isValidEquip', () => {
         test('healingPotion0 = false', () => {
             expect(isValidEquip(equips.healingPotion0.id, EquipSlot.MainHand)).toBe(false);
         });
-        test('amulet = false', () => {
-            expect(isValidEquip(equips.amulet.id, EquipSlot.MainHand)).toBe(false);
+        test('neck = false', () => {
+            expect(isValidEquip(equips.neck.id, EquipSlot.MainHand)).toBe(false);
         });
     });
 
@@ -83,8 +83,8 @@ describe('isValidEquip', () => {
         test('healingPotion0 = false', () => {
             expect(isValidEquip(equips.healingPotion0.id, EquipSlot.OffHand)).toBe(false);
         });
-        test('amulet = false', () => {
-            expect(isValidEquip(equips.amulet.id, EquipSlot.OffHand)).toBe(false);
+        test('neck = false', () => {
+            expect(isValidEquip(equips.neck.id, EquipSlot.OffHand)).toBe(false);
         });
     });
 
@@ -119,8 +119,8 @@ describe('isValidEquip', () => {
         test('healingPotion0 = false', () => {
             expect(isValidEquip(equips.healingPotion0.id, EquipSlot.Head)).toBe(false);
         });
-        test('amulet = false', () => {
-            expect(isValidEquip(equips.amulet.id, EquipSlot.Head)).toBe(false);
+        test('neck = false', () => {
+            expect(isValidEquip(equips.neck.id, EquipSlot.Head)).toBe(false);
         });
     });
 
@@ -155,8 +155,8 @@ describe('isValidEquip', () => {
         test('healingPotion0 = false', () => {
             expect(isValidEquip(equips.healingPotion0.id, EquipSlot.Armour)).toBe(false);
         });
-        test('amulet = false', () => {
-            expect(isValidEquip(equips.amulet.id, EquipSlot.Armour)).toBe(false);
+        test('neck = false', () => {
+            expect(isValidEquip(equips.neck.id, EquipSlot.Armour)).toBe(false);
         });
     });
 
@@ -191,8 +191,8 @@ describe('isValidEquip', () => {
         test('healingPotion0 = false', () => {
             expect(isValidEquip(equips.healingPotion0.id, EquipSlot.Hands)).toBe(false);
         });
-        test('amulet = false', () => {
-            expect(isValidEquip(equips.amulet.id, EquipSlot.Hands)).toBe(false);
+        test('neck = false', () => {
+            expect(isValidEquip(equips.neck.id, EquipSlot.Hands)).toBe(false);
         });
     });
 
@@ -227,8 +227,8 @@ describe('isValidEquip', () => {
         test('healingPotion0 = false', () => {
             expect(isValidEquip(equips.healingPotion0.id, EquipSlot.Waist)).toBe(false);
         });
-        test('amulet = false', () => {
-            expect(isValidEquip(equips.amulet.id, EquipSlot.Waist)).toBe(false);
+        test('neck = false', () => {
+            expect(isValidEquip(equips.neck.id, EquipSlot.Waist)).toBe(false);
         });
     });
 
@@ -263,8 +263,8 @@ describe('isValidEquip', () => {
         test('healingPotion0 = false', () => {
             expect(isValidEquip(equips.healingPotion0.id, EquipSlot.Ring1)).toBe(false);
         });
-        test('amulet = false', () => {
-            expect(isValidEquip(equips.amulet.id, EquipSlot.Ring1)).toBe(false);
+        test('neck = false', () => {
+            expect(isValidEquip(equips.neck.id, EquipSlot.Ring1)).toBe(false);
         });
     });
 
@@ -299,8 +299,8 @@ describe('isValidEquip', () => {
         test('healingPotion0 = false', () => {
             expect(isValidEquip(equips.healingPotion0.id, EquipSlot.Ring2)).toBe(false);
         });
-        test('amulet = false', () => {
-            expect(isValidEquip(equips.amulet.id, EquipSlot.Ring2)).toBe(false);
+        test('neck = false', () => {
+            expect(isValidEquip(equips.neck.id, EquipSlot.Ring2)).toBe(false);
         });
     });
 
@@ -335,44 +335,44 @@ describe('isValidEquip', () => {
         test('healingPotion0 = true', () => {
             expect(isValidEquip(equips.healingPotion0.id, EquipSlot.Potion)).toBe(true);
         });
-        test('amulet = false', () => {
-            expect(isValidEquip(equips.amulet.id, EquipSlot.Potion)).toBe(false);
+        test('neck = false', () => {
+            expect(isValidEquip(equips.neck.id, EquipSlot.Potion)).toBe(false);
         });
     });
 
-    describe('EquipSlot Amulet', () => {
+    describe('EquipSlot Neck', () => {
         test('longsword0 = false', () => {
-            expect(isValidEquip(equips.longsword0.id, EquipSlot.Amulet)).toBe(false);
+            expect(isValidEquip(equips.longsword0.id, EquipSlot.Neck)).toBe(false);
         });
         test('dagger0 = false', () => {
-            expect(isValidEquip(equips.dagger0.id, EquipSlot.Amulet)).toBe(false);
+            expect(isValidEquip(equips.dagger0.id, EquipSlot.Neck)).toBe(false);
         });
         test('greatsword0 = false', () => {
-            expect(isValidEquip(equips.greatsword0.id, EquipSlot.Amulet)).toBe(false);
+            expect(isValidEquip(equips.greatsword0.id, EquipSlot.Neck)).toBe(false);
         });
         test('buckler0 = false', () => {
-            expect(isValidEquip(equips.buckler0.id, EquipSlot.Amulet)).toBe(false);
+            expect(isValidEquip(equips.buckler0.id, EquipSlot.Neck)).toBe(false);
         });
         test('clothHood0 = false', () => {
-            expect(isValidEquip(equips.clothHood0.id, EquipSlot.Amulet)).toBe(false);
+            expect(isValidEquip(equips.clothHood0.id, EquipSlot.Neck)).toBe(false);
         });
         test('robe0 = false', () => {
-            expect(isValidEquip(equips.robe0.id, EquipSlot.Amulet)).toBe(false);
+            expect(isValidEquip(equips.robe0.id, EquipSlot.Neck)).toBe(false);
         });
         test('dwGloves0 = false', () => {
-            expect(isValidEquip(equips.dwGloves0.id, EquipSlot.Amulet)).toBe(false);
+            expect(isValidEquip(equips.dwGloves0.id, EquipSlot.Neck)).toBe(false);
         });
         test('chargesBelt0 = false', () => {
-            expect(isValidEquip(equips.chargesBelt0.id, EquipSlot.Amulet)).toBe(false);
+            expect(isValidEquip(equips.chargesBelt0.id, EquipSlot.Neck)).toBe(false);
         });
         test('accRing0 = false', () => {
-            expect(isValidEquip(equips.accRing0.id, EquipSlot.Amulet)).toBe(false);
+            expect(isValidEquip(equips.accRing0.id, EquipSlot.Neck)).toBe(false);
         });
         test('healingPotion0 = false', () => {
-            expect(isValidEquip(equips.healingPotion0.id, EquipSlot.Amulet)).toBe(false);
+            expect(isValidEquip(equips.healingPotion0.id, EquipSlot.Neck)).toBe(false);
         });
-        test('amulet = true', () => {
-            expect(isValidEquip(equips.amulet.id, EquipSlot.Amulet)).toBe(true);
+        test('neck = true', () => {
+            expect(isValidEquip(equips.neck.id, EquipSlot.Neck)).toBe(true);
         });
     });
 });

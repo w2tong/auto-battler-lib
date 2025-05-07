@@ -8,7 +8,7 @@ import Stats from '../Character/Stats/Stats';
 import { StatTemplate } from '../Character/Stats/StatTemplate';
 import StatType from '../Character/Stats/StatType';
 import DamageType from '../DamageType';
-import { Amulet } from '../Equipment/Amulet';
+import { Neck } from '../Equipment/Neck';
 import { Armour, ArmourType } from '../Equipment/Armour';
 import { Waist } from '../Equipment/Waist';
 import { EquipmentImport, EquipSlot } from '../Equipment/Equipment';
@@ -110,9 +110,9 @@ const testHead: Head = {
     tier: 0,
     img: ''
 };
-const testAmulet: Amulet = {
+const testNeck: Neck = {
     id: '',
-    itemType: ItemType.Amulet,
+    itemType: ItemType.Neck,
     name: '',
     tier: 0,
     img: ''
@@ -157,4 +157,4 @@ const testPotion: Potion = {
     charges: 1
 };
 
-export { createTestCharacter, createTestStats, test1HWeapon, test2HWeapon, testShield, testHead, testAmulet, testArmour, testHands, testWaist, testRing, testPotion };
+export { createTestCharacter, createTestStats, test1HWeapon, test2HWeapon, testShield, testHead, testNeck, testArmour, testHands, testWaist, testRing, testPotion };
