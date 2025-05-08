@@ -28,6 +28,7 @@ export { Character, CharacterInfo, CharacterJSON };
 import AttributeStatScaling from './Character/Attributes/AttributeStatScaling';
 import AttributeType from './Character/Attributes/AttributeType';
 export { AttributeStatScaling, AttributeType };
+export { STARTING_POINTS, POINTS_PER_LEVEL, LEVEL_CAPS } from './Character/Attributes/PlayerAttributes';
 
 import ArmourTypeDodgeMultiplier from './Character/Stats/ArmourTypeDodgeMultiplier';
 import StatType from './Character/Stats/StatType';
