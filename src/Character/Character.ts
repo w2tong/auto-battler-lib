@@ -18,6 +18,7 @@ import BaseAttributes from './Attributes/BaseAttributes';
 import AttackType from '../types/AttackType';
 import { type Weapon } from '../Equipment/Weapon/Weapon';
 import { createPet, PetId } from './Pet';
+import AttributeType from './Attributes/AttributeType';
 
 type CharacterInfo = {
     name: string,
@@ -83,12 +84,20 @@ export default class Character {
 
         // Attributes
         this._attributes = new Attributes(attributes, this._equipment);
+        if (className) {
+            for (const [attr, val] of Object.entries(Classes[className].attributes)) {
+                this._attributes.addBonus(attr as AttributeType, val);
+            }
+        }
+
+        // Stats
         this._stats = new Stats({
             template: statTemplate,
             attributes: this.attributes,
             equipment: this._equipment,
             level
         });
+
         this.ability = ability ?? (className ? Classes[className].ability : null);
         this._currentHealth = options?.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
