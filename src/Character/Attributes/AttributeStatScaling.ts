@@ -51,10 +51,10 @@ const AttributeStatScaling: {
         [StatType.ManaOnHit]: 0.1
     },
     [AttributeType.Wisdom]: {
-        [StatType.ManaRegen]: 0.5,
-        [StatType.ManaOnHit]: 0.5,
-        [StatType.StartingMana]: 2,
-        [StatType.Initiative]: 0.2,
+        [StatType.ManaRegen]: 0.2,
+        [StatType.ManaOnHit]: 0.2,
+        [StatType.StartingMana]: 5,
+        [StatType.Initiative]: 0.4,
         [StatType.StatusResistance]: 0.2
     },
 } as const;
