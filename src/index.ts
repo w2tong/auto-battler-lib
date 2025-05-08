@@ -25,6 +25,9 @@ export { Battle, Side, BattleJSON };
 import Character, { CharacterInfo, CharacterJSON } from './Character/Character';
 export { Character, CharacterInfo, CharacterJSON };
 
+import Attributes from './Character/Attributes/Attributes';
+export { Attributes };
+
 import AttributeStatScaling from './Character/Attributes/AttributeStatScaling';
 import AttributeType from './Character/Attributes/AttributeType';
 export { AttributeStatScaling, AttributeType };
