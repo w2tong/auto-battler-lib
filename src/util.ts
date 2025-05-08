@@ -1,12 +1,12 @@
-import Ability from './Ability/Ability';
-import BaseAttributes from './Character/Attributes/BaseAttributes';
+import type Ability from './Ability/Ability';
+import type BaseAttributes from './Character/Attributes/BaseAttributes';
 import Character from './Character/Character';
-import { ClassName } from './Character/Classes/classes';
-import { StatTemplate } from './Character/Stats/StatTemplate';
-import { EquipmentImport } from './Equipment/Equipment';
-import BuffId from './StatusEffect/BuffId';
-import DebuffId from './StatusEffect/DebuffId';
-import LevelRange from './types/LevelRange';
+import { type ClassName } from './Character/Classes/classes';
+import { type StatTemplate } from './Character/Stats/StatTemplate';
+import { type EquipmentImport } from './Equipment/Equipment';
+import type BuffId from './StatusEffect/BuffId';
+import type DebuffId from './StatusEffect/DebuffId';
+import type LevelRange from './types/LevelRange';
 
 // Random integer between 0 and max
 function getRandomRange(max: number): number {
