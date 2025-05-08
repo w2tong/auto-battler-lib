@@ -131,7 +131,7 @@ class Stats {
         // Calculate attribute scaling stats
         for (const [type, { base, bonus }] of Object.entries(attributes)) {
             for (const [statType, scaling] of Object.entries(AttributeStatScaling[type as AttributeType])) {
-                this[statType as StatType].attribute += (base + bonus) * scaling;
+                this[statType as StatType].attribute += (-Attributes.DEFAULT_VALUE + base + bonus) * scaling;
             }
         }
     }

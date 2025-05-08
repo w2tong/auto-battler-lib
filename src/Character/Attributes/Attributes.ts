@@ -9,6 +9,7 @@ function calcTotalAttribute(attribute: Attribute) {
 }
 
 class Attributes {
+    static DEFAULT_VALUE = 10;
     private [AttributeType.Strength]: Attribute;
     private [AttributeType.Dexterity]: Attribute;
     private [AttributeType.Perception]: Attribute;
@@ -18,12 +19,12 @@ class Attributes {
 
     constructor(
         {
-            [AttributeType.Strength]: strength = 0,
-            [AttributeType.Dexterity]: dexterity = 0,
-            [AttributeType.Perception]: perception = 0,
-            [AttributeType.Constitution]: constitution = 0,
-            [AttributeType.Intelligence]: intelligence = 0,
-            [AttributeType.Wisdom]: wisdom = 0,
+            [AttributeType.Strength]: strength = Attributes.DEFAULT_VALUE,
+            [AttributeType.Dexterity]: dexterity = Attributes.DEFAULT_VALUE,
+            [AttributeType.Perception]: perception = Attributes.DEFAULT_VALUE,
+            [AttributeType.Constitution]: constitution = Attributes.DEFAULT_VALUE,
+            [AttributeType.Intelligence]: intelligence = Attributes.DEFAULT_VALUE,
+            [AttributeType.Wisdom]: wisdom = Attributes.DEFAULT_VALUE,
         }: BaseAttributes,
         equipment: Equipment
     ) {
