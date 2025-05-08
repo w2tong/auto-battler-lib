@@ -6,6 +6,7 @@ import { WeaponId } from './Equipment/Weapon/weapons';
 import { RingId } from './Equipment/Ring';
 import { PotionId } from './Equipment/Potion';
 import { WaistId } from './Equipment/Waist';
+import LevelRange from './types/LevelRange';
 type LootTable = (WeaponId | ShieldId | HeadId | ArmourId | HandsId | RingId | PotionId | WaistId)[];
 
 const lootTiers: { [tier: number]: LootTable; } = {
@@ -115,7 +116,7 @@ const lootTiers: { [tier: number]: LootTable; } = {
     ],
 };
 
-const lootTables: { [level: number]: { normal: LootTable, rare: LootTable, rareChance: number; }; } = {
+const lootTables: Record<LevelRange, { normal: LootTable, rare: LootTable, rareChance: number; }> = {
     1: { normal: lootTiers[0], rare: lootTiers[1], rareChance: 0.05 },
     2: { normal: lootTiers[0], rare: lootTiers[1], rareChance: 0.1 },
     3: { normal: lootTiers[0], rare: lootTiers[1], rareChance: 0.25 },

@@ -1,5 +1,5 @@
 import Ability from '../Ability/Ability';
-import AttackType from '../AttackType';
+import AttackType from '../types/AttackType';
 import BaseAttributes from '../Character/Attributes/BaseAttributes';
 import Character from '../Character/Character';
 import { PetId } from '../Character/Pet';
@@ -7,7 +7,7 @@ import Stat from '../Character/Stats/Stat';
 import Stats from '../Character/Stats/Stats';
 import { StatTemplate } from '../Character/Stats/StatTemplate';
 import StatType from '../Character/Stats/StatType';
-import DamageType from '../DamageType';
+import DamageType from '../types/DamageType';
 import { Neck } from '../Equipment/Neck';
 import { Armour, ArmourType } from '../Equipment/Armour';
 import { Waist } from '../Equipment/Waist';

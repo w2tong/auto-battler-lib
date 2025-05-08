@@ -1,4 +1,4 @@
-import { createNPCChar, getRandomRange } from './util';
+import { getRandomRange } from './util';
 import Character from './Character/Character';
 import NPC from './npc/NPC';
 import Fighter from './npc/Fighter';
@@ -10,9 +10,12 @@ import GoblinRogue from './npc/GoblinRogue';
 import OrcFighter from './npc/OrcFighter';
 import Zombie from './npc/Zombie';
 import OgreFighter from './npc/OgreFighter';
+import LevelRange from './types/LevelRange';
+import AttributeType from './Character/Attributes/AttributeType';
+import BaseAttributes from './Character/Attributes/BaseAttributes';
 
 type EncounterGroup = NPC[];
-const groups: {[name: string]: NPC[]} = {
+const groups: { [name: string]: NPC[]; } = {
     fighter: [Fighter],
     rogue: [Rogue],
     wizard: [Wizard],
@@ -23,10 +26,7 @@ const groups: {[name: string]: NPC[]} = {
     ogreFighter: [OgreFighter]
 };
 
-const leveledEncounters: {[level: number]: {group: EncounterGroup, level?: number, count?: number}[]} = {
-    0: [
-        { group: groups.zombie, level: 1 }
-    ],
+const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: number, count?: number; }[]> = {
     1: [
         { group: groups.fighter },
         { group: groups.rogue },
@@ -201,6 +201,22 @@ const leveledEncounters: {[level: number]: {group: EncounterGroup, level?: numbe
     ],
 };
 
+function createNPCChar(npc: NPC, level: number, num?: number): Character {
+    const attributes: BaseAttributes = {};
+    for (const [type, { base, perLvl }] of Object.entries(npc.attributes)) {
+        attributes[type as AttributeType] = base + (perLvl ? perLvl * (level - 1) : 0);
+    }
+
+    return new Character({
+        name: num ? `${npc.name} ${num}` : npc.name,
+        level,
+        attributes,
+        statTemplate: npc.stats,
+        equipment: npc.equipment,
+        ability: npc.ability
+    });
+}
+
 function createNPCChars(npcs: NPC[], level: number, count: number = 1): Character[] {
     const chars: Character[] = [];
 
@@ -216,12 +232,12 @@ function createNPCChars(npcs: NPC[], level: number, count: number = 1): Characte
             }
         }
     }
-    
+
     return chars;
 }
 
 
-function getRandomEncounter(level: number): Character[] {
+function getRandomEncounter(level: LevelRange): Character[] {
     const encounters = leveledEncounters[level];
     const encounter = encounters[getRandomRange(encounters.length)];
 

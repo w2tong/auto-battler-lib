@@ -1,6 +1,6 @@
-import AttackType from '../../../AttackType';
+import AttackType from '../../../types/AttackType';
 import Character from '../../../Character/Character';
-import DamageType from '../../../DamageType';
+import DamageType from '../../../types/DamageType';
 import DebuffId from '../../../StatusEffect/DebuffId';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';

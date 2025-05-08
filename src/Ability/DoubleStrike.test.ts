@@ -1,7 +1,7 @@
-import AttackType from '../AttackType';
+import AttackType from '../types/AttackType';
 import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';
-import DamageType from '../DamageType';
+import DamageType from '../types/DamageType';
 import { EquipSlot } from '../Equipment/Equipment';
 import { ItemType } from '../Equipment/Item';
 import { type Weapon, WeaponType } from '../Equipment/Weapon/Weapon';

@@ -1,5 +1,5 @@
-import AttackType from '../../../AttackType';
-import DamageType from '../../../DamageType';
+import AttackType from '../../../types/AttackType';
+import DamageType from '../../../types/DamageType';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 

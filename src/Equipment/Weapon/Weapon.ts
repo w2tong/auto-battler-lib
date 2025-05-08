@@ -1,7 +1,7 @@
-import AttackType from '../../AttackType';
+import AttackType from '../../types/AttackType';
 import Character from '../../Character/Character';
 import DamageRange from '../../DamageRange';
-import DamageType from '../../DamageType';
+import DamageType from '../../types/DamageType';
 import { Item, ItemType, ItemAttributes, ItemStats } from '../Item';
 
 interface Weapon extends Item {

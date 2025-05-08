@@ -2,7 +2,7 @@ import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle/Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
 import { Equipment, EquipmentImport } from '../Equipment/Equipment';
-import HitType from '../HitType';
+import HitType from '../types/HitType';
 import { dice, rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
 import Stats from './Stats/Stats';
@@ -15,7 +15,7 @@ import BuffId from '../StatusEffect/BuffId';
 import StatType from './Stats/StatType';
 import Attributes from './Attributes/Attributes';
 import BaseAttributes from './Attributes/BaseAttributes';
-import AttackType from '../AttackType';
+import AttackType from '../types/AttackType';
 import { type Weapon } from '../Equipment/Weapon/Weapon';
 import { createPet, PetId } from './Pet';
 

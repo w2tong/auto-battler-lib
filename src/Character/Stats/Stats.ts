@@ -1,4 +1,4 @@
-import AttackType from '../../AttackType';
+import AttackType from '../../types/AttackType';
 import { ArmourType } from '../../Equipment/Armour';
 import { Equipment } from '../../Equipment/Equipment';
 import { ItemStats } from '../../Equipment/Item';

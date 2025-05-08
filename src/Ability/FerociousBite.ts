@@ -1,4 +1,4 @@
-import AttackType from '../AttackType';
+import AttackType from '../types/AttackType';
 import DebuffId from '../StatusEffect/DebuffId';
 import Ability from './Ability';
 

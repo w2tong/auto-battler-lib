@@ -3,7 +3,7 @@ import * as diceModule from '../dice';
 import StatType from './Stats/StatType';
 import BuffId from '../StatusEffect/BuffId';
 import Battle, { Side } from '../Battle/Battle';
-import AttackType from '../AttackType';
+import AttackType from '../types/AttackType';
 import * as utilModule from '../util';
 import { createTestCharacter, test1HWeapon, test2HWeapon, testPotion } from '../tests/util';
 import Stats from './Stats/Stats';

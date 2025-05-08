@@ -34,11 +34,17 @@ import ArmourTypeDodgeMultiplier from './Character/Stats/ArmourTypeDodgeMultipli
 import StatType from './Character/Stats/StatType';
 export { ArmourTypeDodgeMultiplier, StatType };
 
-import AttackType from './AttackType';
+import AttackType from './types/AttackType';
 export { AttackType };
 
-import DamageType from './DamageType';
+import DamageType from './types/DamageType';
 export { DamageType };
+
+import HitType from './types/HitType';
+export { HitType };
+
+import LevelRange from './types/LevelRange';
+export { LevelRange };
 
 import BuffId from './StatusEffect/BuffId';
 import buffs from './StatusEffect/buffs';
@@ -54,9 +60,6 @@ export { Log, LogLine, LineType };
 export { getRandomEncounter } from './encounters';
 
 export { levelExp, encounterExp } from './experience';
-
-import HitType from './HitType';
-export { HitType };
 
 import lootTables from './lootTables';
 export { lootTables };

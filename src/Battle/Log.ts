@@ -1,4 +1,4 @@
-import HitType from '../HitType';
+import HitType from '../types/HitType';
 
 enum LineType {
     // Text
@@ -14,7 +14,7 @@ enum LineType {
 
 type BaseLine = {
     type: LineType;
-}
+};
 
 interface TextLine extends BaseLine {
     type: LineType.Text;
@@ -68,7 +68,7 @@ class Log {
         });
     }
 
-    addAttack({ charName, tarName, hitType, damage, sneak, blocked, abilityName }: { charName: string, tarName: string, hitType: HitType, damage: number, sneak: boolean, blocked: boolean, abilityName?: string }) {
+    addAttack({ charName, tarName, hitType, damage, sneak, blocked, abilityName }: { charName: string, tarName: string, hitType: HitType, damage: number, sneak: boolean, blocked: boolean, abilityName?: string; }) {
         const attackName = abilityName ? `casted ${abilityName} on` : 'attacked';
         let attackStr = `${charName} ${attackName} ${tarName} and ${hitType}`;
         if (hitType !== HitType.Miss) {
