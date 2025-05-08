@@ -10,6 +10,8 @@ function calcTotalAttribute(attribute: Attribute) {
 
 class Attributes {
     static DEFAULT_VALUE = 10;
+    static MIN_VALUE = 5;
+
     private [AttributeType.Strength]: Attribute;
     private [AttributeType.Dexterity]: Attribute;
     private [AttributeType.Perception]: Attribute;
