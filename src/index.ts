@@ -35,7 +35,8 @@ export { STARTING_POINTS, POINTS_PER_LEVEL, LEVEL_CAPS } from './Character/Attri
 
 import ArmourTypeDodgeMultiplier from './Character/Stats/ArmourTypeDodgeMultiplier';
 import StatType from './Character/Stats/StatType';
-export { ArmourTypeDodgeMultiplier, StatType };
+import StatDescriptions from './Character/Stats/StatDescriptions';
+export { ArmourTypeDodgeMultiplier, StatType, StatDescriptions };
 
 import AttackType from './types/AttackType';
 export { AttackType };
