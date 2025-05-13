@@ -2,9 +2,9 @@ import StatType from '../../Character/Stats/StatType';
 import Buff from '../Buff';
 import BuffId from '../BuffId';
 
-export default class Bless extends Buff {
+export default class Blessed extends Buff {
     id = BuffId.Blessed;
-    name = 'Bless';
+    name = 'Blessed';
     symbol = '🙏';
 
     static baseDamage = 4;
@@ -16,14 +16,14 @@ export default class Bless extends Buff {
     static accuracyPerWisdom = 0.2;
 
     onApply() {
-        const damagePerLvl = Bless.damagePerLvl * this.source.level;
-        const damagePerWisdom = Bless.damagePerWisdom * this.source.attributes.wisdom;
-        const accuracyPerLvl = Bless.accuracyPerLvl * this.source.level;
-        const accuracyPerWisdom = Bless.accuracyPerWisdom * this.source.attributes.wisdom;
+        const damagePerLvl = Blessed.damagePerLvl * this.source.level;
+        const damagePerWisdom = Blessed.damagePerWisdom * this.source.attributes.wisdom;
+        const accuracyPerLvl = Blessed.accuracyPerLvl * this.source.level;
+        const accuracyPerWisdom = Blessed.accuracyPerWisdom * this.source.attributes.wisdom;
 
         this.stats = {
-            [StatType.Damage]: Bless.baseDamage + damagePerLvl + damagePerWisdom,
-            [StatType.Accuracy]: Bless.baseAccuracy + accuracyPerLvl + accuracyPerWisdom
+            [StatType.Damage]: Blessed.baseDamage + damagePerLvl + damagePerWisdom,
+            [StatType.Accuracy]: Blessed.baseAccuracy + accuracyPerLvl + accuracyPerWisdom
         };
 
         this.char.stats.addStatusEffectStats(this.stats);

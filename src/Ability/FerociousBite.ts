@@ -5,11 +5,21 @@ import Ability from './Ability';
 const NAME = 'Ferocious Bite';
 const BONUS_DMG = 0.25;
 const BLEED_STACKS = 2;
-const DMG_PER_TURN = 0.1;
+const DMG_PER_TURN = 0.15;
 
 const FerociousBite: Ability = {
     name: NAME,
-    description: 'Attack your target and apply Bleeding.',
+    description: (char) => {
+        const damageRange = char ? char.calcDamageRange({
+            damageRange: {
+                min: char.equipment.mainHand.damageRange.min * (1 + BONUS_DMG),
+                max: char.equipment.mainHand.damageRange.max * (1 + BONUS_DMG),
+                bonus: char.equipment.mainHand.damageRange.bonus * (1 + BONUS_DMG)
+            },
+            weaponAttack: true
+        }) : null;
+        return `Deals ${damageRange ? `${damageRange.min} - ${damageRange.max} ` : ''}damage and applies Bleed dealing ${DMG_PER_TURN * BLEED_STACKS * 100}% of the damage dealt over ${BLEED_STACKS} turns.`;
+    },
     func: (char) => {
         if (char.target) {
             char.useAbilityMana();
