@@ -1,15 +1,20 @@
+import ArmourTypeDodgeMultiplier from './ArmourTypeDodgeMultiplier';
 import StatType from './StatType';
 
+// TODO: fix null coalese (change to if shorthand)
+const dodgeDescription: string = Object.entries(ArmourTypeDodgeMultiplier).reduce((str, curr) => str + `\n${curr[0]}: ${curr[1] * 100}%`, '\nThe character\'s dodge is multipled by the value corresponding to the armour worn.');
+
 const StatDescriptions: Record<StatType, (num?: number) => string> = {
-    [StatType.MaxHealth]: (num) => `Increases health by ${num ?? 'a flat amount'}.`,
+    // Doesn't make sense in character sheet
+    [StatType.MaxHealth]: () => 'Amount of health the character has at the start of combat.',
     [StatType.HealthPercent]: (num) => `Increases health by ${num ? `${num}%` : 'a percentage'}.`,
     [StatType.Armour]: (num) => `Reduces damage taken by ${num ? `${num}%` : 'a percentage'}.`,
     [StatType.Deflection]: (num) => `Reduces damage taken by ${num ?? 'a flat amount'}.`,
-    [StatType.Dodge]: () => 'Affects the chance of avoiding an incoming attack.',
+    [StatType.Dodge]: () => 'Affects the chance of avoiding an incoming attack. Dodge is affected by the type of armour the character is wearing.' + '\n' + dodgeDescription,
     [StatType.StatusResistance]: (num) => `Reduces the chance of receiving debuffs${num ? ` by ${num}%` : ''}.`,
     [StatType.Thorns]: (num) => `Attackers take ${num ? `${num} ` : ''}damage when hit.`,
     // Block
-    [StatType.BlockChance]: () => 'Chance to block an attack.',
+    [StatType.BlockChance]: (num) => `Grants the character a ${num ? `${num} ` : ''}chance to block attacks, reducing damage taken.`,
     [StatType.BlockPower]: (num) => `Reduces damage taken from attacks ${num} when blocking.`,
 
     // Accuracy
@@ -29,7 +34,7 @@ const StatDescriptions: Record<StatType, (num?: number) => string> = {
 
     // Defense Reduction
     [StatType.ArmourPenetration]: (num) => `When dealing damage to the target, reduce the target's armour by ${num}, to a minimum of 0 armour.`,
-    [StatType.DodgeReduction]: (num) => `When attacking, reduces dodge of the target by ${num}`,
+    [StatType.DodgeReduction]: (num) => `When attacking, reduces dodge of the target by ${num}.`,
 
     // Spell
     [StatType.SpellPower]: () => 'Affects attacks, abilities and status effects that have spell power ratios.',
@@ -46,7 +51,7 @@ const StatDescriptions: Record<StatType, (num?: number) => string> = {
 
     // Potion
     [StatType.PotionCharges]: (num) => `Increases number of potion charges by ${num}.`,
-    [StatType.PotionHealing]: (num) => `Increases potion healing by ${num ?? 'a flat amount'}.`,
+    [StatType.PotionHealing]: (num) => `Increases potion healing by ${num ? num : 'a flat amount'}.`,
     [StatType.PotionEffectiveness]: (num) => `Increases potion healing by ${num ? `${num}%` : 'a percentage'}.`,
 } as const;
 
