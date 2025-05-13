@@ -205,10 +205,20 @@ export default class Character {
         }
     }
 
+    calcPotionHealing(heal: number): number {
+        return (heal + this.stats.getStat(StatType.PotionHealing)) * (1 + this.stats.getStat(StatType.PotionEffectiveness));
+    }
+
+    calcPotionHealingRange(healingRange: NumberRange): { min: number, max: number; } {
+        return {
+            min: this.calcPotionHealing(healingRange.min + healingRange.bonus),
+            max: this.calcPotionHealing(healingRange.max + healingRange.bonus)
+        };
+    }
+
     usePotion(): void {
         if (this.equipment.potion && this.equipment.potion.charges > 0) {
-            const potionHeal = (rollDice(this.equipment.potion.dice) + this.equipment.potion.bonus + this.stats.getStat(StatType.PotionHealing)) * (1 + this.stats.getStat(StatType.PotionEffectiveness));
-            this.addHealth(potionHeal);
+            const potionHeal = this.calcPotionHealing(numberRoll(this.equipment.potion.healingRange));
             this.equipment.potion.charges -= 1;
             if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.equipment.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
         }
