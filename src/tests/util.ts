@@ -149,8 +149,7 @@ const testPotion: Potion = {
     name: '',
     tier: 0,
     img: '',
-    dice: { num: 2, sides: 4 },
-    bonus: 2,
+    healingRange: { min: 1, max: 6, bonus: 0 },
     charges: 1
 };
 
