@@ -6,7 +6,7 @@ import HitType from '../types/HitType';
 import { dice, rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
 import Stats from './Stats/Stats';
-import DamageRange, { damageRoll } from '../DamageRange';
+import NumberRange, { numberRoll } from '../NumberRange';
 import Ability from '../Ability/Ability';
 import { StatTemplate } from './Stats/StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
@@ -275,13 +275,13 @@ export default class Character {
         return (damage + damageBonus + spellDamage + sneakDamage) * (1 + damagePercent);
     }
 
-    calcDamageRange({ damageRange, weaponAttack, spellPowerRatio }: { damageRange: DamageRange, weaponAttack: boolean, spellPowerRatio?: number; }): { min: number, max: number; } {
+    calcDamageRange({ damageRange, weaponAttack, spellPowerRatio }: { damageRange: NumberRange, weaponAttack: boolean, spellPowerRatio?: number; }): { min: number, max: number; } {
         const min = this.calcDamage({ damage: damageRange.min + damageRange.bonus, weaponAttack, spellPowerRatio });
         const max = this.calcDamage({ damage: damageRange.max + damageRange.bonus, weaponAttack, spellPowerRatio });
         return { min, max };
     }
 
-    attack({ target, attackType, damageRange, weaponAttack, spellPowerRatio, isOffHand = false, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, weaponAttack: boolean, spellPowerRatio?: number, isOffHand?: boolean, abilityName?: string; }): { hit: boolean, damageDone: number; } {
+    attack({ target, attackType, damageRange, weaponAttack, spellPowerRatio, isOffHand = false, abilityName }: { target: Character, attackType: AttackType, damageRange: NumberRange, weaponAttack: boolean, spellPowerRatio?: number, isOffHand?: boolean, abilityName?: string; }): { hit: boolean, damageDone: number; } {
 
         let hitType: HitType = HitType.Miss;
         let damage: number = 0;
@@ -300,7 +300,7 @@ export default class Character {
             hitType = HitType.Hit;
             if (this.statusEffectManager.getBuffStacks(BuffId.Invisible) > 0) sneakAttack = true;
 
-            damage = this.calcDamage({ damage: damageRoll(damageRange), weaponAttack, spellPowerRatio, invisibleStacks: this.statusEffectManager.getBuffStacks(BuffId.Invisible) });
+            damage = this.calcDamage({ damage: numberRoll(damageRange), weaponAttack, spellPowerRatio, invisibleStacks: this.statusEffectManager.getBuffStacks(BuffId.Invisible) });
 
             const crit = Character.critRoll(this.stats.critChance);
             if (crit) {
