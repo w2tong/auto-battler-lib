@@ -1,5 +1,4 @@
 import AttackType from '../../../types/AttackType';
-import DamageType from '../../../types/DamageType';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 
@@ -15,7 +14,6 @@ const unarmed: { [id in UnarmedId]: Weapon } = {
 
         type: WeaponType.Unarmed,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 2, max: 4, bonus: 0 },
     },
 } as const;

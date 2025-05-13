@@ -1,6 +1,5 @@
 import AttackType from '../../../types/AttackType';
 import StatType from '../../../Character/Stats/StatType';
-import DamageType from '../../../types/DamageType';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 
@@ -16,7 +15,6 @@ const bows: { [id in BowId]: Weapon } = {
 
         type: WeaponType.Bow,
         attackType: AttackType.RangedWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 0 },
         stats: {
             [StatType.RangedAccuracy]: 5
@@ -31,7 +29,6 @@ const bows: { [id in BowId]: Weapon } = {
 
         type: WeaponType.Bow,
         attackType: AttackType.RangedWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 0 },
         stats: {
             [StatType.ArmourPenetration]: 5

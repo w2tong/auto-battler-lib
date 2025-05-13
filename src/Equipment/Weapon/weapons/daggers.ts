@@ -1,6 +1,5 @@
 import AttackType from '../../../types/AttackType';
 import StatType from '../../../Character/Stats/StatType';
-import DamageType from '../../../types/DamageType';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 
@@ -16,7 +15,6 @@ const daggers: { [id in DaggerId]: Weapon } = {
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 2, max: 5, bonus: 0 },
         stats: {
             [StatType.CriticalChance]: 5
@@ -31,7 +29,6 @@ const daggers: { [id in DaggerId]: Weapon } = {
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 2, max: 5, bonus: 1 },
         stats: {
             [StatType.CriticalChance]: 5
@@ -46,7 +43,6 @@ const daggers: { [id in DaggerId]: Weapon } = {
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 2, max: 5, bonus: 2 },
         stats: {
             [StatType.CriticalChance]: 5
@@ -61,7 +57,6 @@ const daggers: { [id in DaggerId]: Weapon } = {
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 2, max: 5, bonus: 3 },
         stats: {
             [StatType.CriticalChance]: 5
@@ -76,7 +71,6 @@ const daggers: { [id in DaggerId]: Weapon } = {
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 2, max: 5, bonus: 4 },
         stats: {
             [StatType.CriticalChance]: 5
@@ -91,7 +85,6 @@ const daggers: { [id in DaggerId]: Weapon } = {
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 2, max: 5, bonus: 5 },
         stats: {
             [StatType.CriticalChance]: 5

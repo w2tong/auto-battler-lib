@@ -1,7 +1,6 @@
 import AttackType from '../../../types/AttackType';
 import AttributeType from '../../../Character/Attributes/AttributeType';
 import StatType from '../../../Character/Stats/StatType';
-import DamageType from '../../../types/DamageType';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 
@@ -17,7 +16,6 @@ const wands: { [id in WandId]: Weapon } = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        damageType: DamageType.Magic,
         damageRange: { min: 1, max: 3, bonus: 0 },
         spellPowerRatio: 0.1,
         stats: {
@@ -33,7 +31,6 @@ const wands: { [id in WandId]: Weapon } = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        damageType: DamageType.Magic,
         damageRange: { min: 1, max: 3, bonus: 1 },
         spellPowerRatio: 0.1,
         attributes: {
@@ -52,7 +49,6 @@ const wands: { [id in WandId]: Weapon } = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        damageType: DamageType.Magic,
         damageRange: { min: 1, max: 3, bonus: 2 },
         spellPowerRatio: 0.1,
         attributes: {
@@ -71,7 +67,6 @@ const wands: { [id in WandId]: Weapon } = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        damageType: DamageType.Magic,
         damageRange: { min: 1, max: 3, bonus: 3 },
         spellPowerRatio: 0.1,
         attributes: {
@@ -90,7 +85,6 @@ const wands: { [id in WandId]: Weapon } = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        damageType: DamageType.Magic,
         damageRange: { min: 1, max: 3, bonus: 4 },
         spellPowerRatio: 0.1,
         attributes: {
@@ -109,7 +103,6 @@ const wands: { [id in WandId]: Weapon } = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        damageType: DamageType.Magic,
         damageRange: { min: 1, max: 3, bonus: 5 },
         spellPowerRatio: 0.1,
         attributes: {

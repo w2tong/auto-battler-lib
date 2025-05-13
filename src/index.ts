@@ -41,9 +41,6 @@ export { ArmourTypeDodgeMultiplier, StatType, StatDescriptions };
 import AttackType from './types/AttackType';
 export { AttackType };
 
-import DamageType from './types/DamageType';
-export { DamageType };
-
 import HitType from './types/HitType';
 export { HitType };
 

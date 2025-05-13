@@ -1,6 +1,5 @@
 import AttackType from '../../../types/AttackType';
 import Character from '../../../Character/Character';
-import DamageType from '../../../types/DamageType';
 import DebuffId from '../../../StatusEffect/DebuffId';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
@@ -17,7 +16,6 @@ const bites: { [id in BiteId]: Weapon } = {
 
         type: WeaponType.Bite,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 2, max: 3, bonus: 0 }
     },
     poisonbite0: {
@@ -29,7 +27,6 @@ const bites: { [id in BiteId]: Weapon } = {
 
         type: WeaponType.Bite,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 1, max: 3, bonus: 0 },
         onHit: {
             func: (self: Character, target: Character) => {
@@ -47,7 +44,6 @@ const bites: { [id in BiteId]: Weapon } = {
 
         type: WeaponType.Bite,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 1, max: 3, bonus: 1 },
         onHit: {
             func: (self: Character, target: Character) => {

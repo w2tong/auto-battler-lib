@@ -1,6 +1,5 @@
 import AttackType from '../../../types/AttackType';
 import StatType from '../../../Character/Stats/StatType';
-import DamageType from '../../../types/DamageType';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 
@@ -16,7 +15,6 @@ const maces: { [id in MaceId]: Weapon } = {
 
         type: WeaponType.Mace,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 0 },
         stats: {
             [StatType.ArmourPenetration]: 10

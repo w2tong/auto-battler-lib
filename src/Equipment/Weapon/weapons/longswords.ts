@@ -1,5 +1,4 @@
 import AttackType from '../../../types/AttackType';
-import DamageType from '../../../types/DamageType';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 
@@ -15,7 +14,6 @@ const longswords: { [id in LongswordId]: Weapon } = {
 
         type: WeaponType.Longsword,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 0 },
     },
     longsword1: {
@@ -27,7 +25,6 @@ const longswords: { [id in LongswordId]: Weapon } = {
 
         type: WeaponType.Longsword,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 1 },
     },
     longsword2: {
@@ -39,7 +36,6 @@ const longswords: { [id in LongswordId]: Weapon } = {
 
         type: WeaponType.Longsword,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 2 },
     },
     longsword3: {
@@ -51,7 +47,6 @@ const longswords: { [id in LongswordId]: Weapon } = {
 
         type: WeaponType.Longsword,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 3 },
     },
     longsword4: {
@@ -63,7 +58,6 @@ const longswords: { [id in LongswordId]: Weapon } = {
 
         type: WeaponType.Longsword,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 4 },
     },
     longsword5: {
@@ -75,7 +69,6 @@ const longswords: { [id in LongswordId]: Weapon } = {
 
         type: WeaponType.Longsword,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 3, max: 6, bonus: 5 },
     },
 } as const;

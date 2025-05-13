@@ -2,7 +2,6 @@ import AttackType from '../types/AttackType';
 import Character from '../Character/Character';
 import { PetId } from '../Character/Pet';
 import StatType from '../Character/Stats/StatType';
-import DamageType from '../types/DamageType';
 import { EquipSlot } from '../Equipment/Equipment';
 import { ItemType } from '../Equipment/Item';
 import { type Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
@@ -17,7 +16,6 @@ const testSword: Weapon = {
     img: 'weapon-longsword.png',
     type: WeaponType.Longsword,
     attackType: AttackType.MeleeWeapon,
-    damageType: DamageType.Physical,
     damageRange: { min: 4, max: 4, bonus: 0 }
 };
 

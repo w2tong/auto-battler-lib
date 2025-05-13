@@ -7,7 +7,6 @@ import Stat from '../Character/Stats/Stat';
 import Stats from '../Character/Stats/Stats';
 import { StatTemplate } from '../Character/Stats/StatTemplate';
 import StatType from '../Character/Stats/StatType';
-import DamageType from '../types/DamageType';
 import { Neck } from '../Equipment/Neck';
 import { Armour, ArmourType } from '../Equipment/Armour';
 import { Waist } from '../Equipment/Waist';
@@ -76,7 +75,6 @@ const test1HWeapon: Weapon = {
     img: '',
     type: WeaponType.Longsword,
     attackType: AttackType.MeleeWeapon,
-    damageType: DamageType.Physical,
     damageRange: { min: 0, max: 0, bonus: 0 },
 };
 const test2HWeapon: Weapon = {
@@ -87,7 +85,6 @@ const test2HWeapon: Weapon = {
     img: '',
     type: WeaponType.Greatsword,
     attackType: AttackType.MeleeWeapon,
-    damageType: DamageType.Physical,
     damageRange: { min: 0, max: 0, bonus: 0 },
 };
 const testShield: Shield = {
