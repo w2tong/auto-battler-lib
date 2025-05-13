@@ -2,7 +2,7 @@ import ArmourTypeDodgeMultiplier from './ArmourTypeDodgeMultiplier';
 import StatType from './StatType';
 
 // TODO: fix null coalese (change to if shorthand)
-const dodgeDescription: string = Object.entries(ArmourTypeDodgeMultiplier).reduce((str, curr) => str + `\n${curr[0]}: ${curr[1] * 100}%`, '\nThe character\'s dodge is multipled by the value corresponding to the armour worn.');
+const dodgeDescription: string = Object.entries(ArmourTypeDodgeMultiplier).reduce((str, curr) => str + `\n${curr[0]}: ${curr[1] * 100}%`, '\nThe character\'s dodge is multipled by value of the armour worn.');
 
 const StatDescriptions: Record<StatType, (num?: number) => string> = {
     // Doesn't make sense in character sheet
