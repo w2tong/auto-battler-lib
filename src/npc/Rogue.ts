@@ -1,7 +1,7 @@
-import Vanish from '../Ability/Vanish';
 import AttributeType from '../Character/Attributes/AttributeType';
+import { ClassName } from '../Character/Classes/classes';
+import { startingAbility, startingEquipment } from '../Character/Classes/classLoadouts';
 import StatType from '../Character/Stats/StatType';
-import defaultEquipment from '../Equipment/defaultEquipment';
 import NPC from './NPC';
 
 const Rogue: NPC = {
@@ -22,8 +22,8 @@ const Rogue: NPC = {
 
         [StatType.ManaCost]: { base: 100 }
     },
-    equipment: defaultEquipment.Rogue,
-    ability: Vanish
+    equipment: startingEquipment[ClassName.Rogue],
+    ability: startingAbility[ClassName.Rogue]
 };
 
 export default Rogue;

@@ -1,11 +1,11 @@
-import Firebolt from '../Ability/Firebolt';
 import AttributeType from '../Character/Attributes/AttributeType';
+import { ClassName } from '../Character/Classes/classes';
+import { startingAbility, startingEquipment } from '../Character/Classes/classLoadouts';
 import StatType from '../Character/Stats/StatType';
-import defaultEquipment from '../Equipment/defaultEquipment';
 import NPC from './NPC';
 
 const Rogue: NPC = {
-    name: 'Rogue',
+    name: 'Wizard',
     attributes: {
         [AttributeType.Dexterity]: { base: 0, perLvl: 0.5 },
         [AttributeType.Perception]: { base: 0, perLvl: 1 },
@@ -25,8 +25,8 @@ const Rogue: NPC = {
 
         [StatType.ManaCost]: { base: 100 }
     },
-    equipment: defaultEquipment.Wizard,
-    ability: Firebolt
+    equipment: startingEquipment[ClassName.Wizard],
+    ability: startingAbility[ClassName.Wizard]
 };
 
 export default Rogue;

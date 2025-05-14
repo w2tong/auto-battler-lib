@@ -1,7 +1,7 @@
-import DoubleStrike from '../Ability/DoubleStrike';
+import { startingAbility, startingEquipment } from '../Character/Classes/classLoadouts';
 import AttributeType from '../Character/Attributes/AttributeType';
+import { ClassName } from '../Character/Classes/classes';
 import StatType from '../Character/Stats/StatType';
-import defaultEquipment from '../Equipment/defaultEquipment';
 import NPC from './NPC';
 
 const Fighter: NPC = {
@@ -24,8 +24,8 @@ const Fighter: NPC = {
 
         [StatType.ManaCost]: { base: 100 }
     },
-    equipment: defaultEquipment.Fighter,
-    ability: DoubleStrike
+    equipment: startingEquipment[ClassName.Fighter],
+    ability: startingAbility[ClassName.Fighter]
 };
 
 export default Fighter;

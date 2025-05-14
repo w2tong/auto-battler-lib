@@ -65,5 +65,4 @@ export { levelExp, encounterExp } from './experience';
 import lootTables from './lootTables';
 export { lootTables };
 
-import defaultEquipment from './Equipment/defaultEquipment';
-export { defaultEquipment };
+export { startingAbility, startingEquipment } from './Character/Classes/classLoadouts';
