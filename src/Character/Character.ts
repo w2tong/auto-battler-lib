@@ -219,6 +219,7 @@ export default class Character {
     usePotion(): void {
         if (this.equipment.potion && this.equipment.potion.charges > 0) {
             const potionHeal = this.calcPotionHealing(numberRoll(this.equipment.potion.healingRange));
+            this.addHealth(potionHeal);
             this.equipment.potion.charges -= 1;
             if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.equipment.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
         }
