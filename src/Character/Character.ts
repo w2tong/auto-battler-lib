@@ -63,7 +63,7 @@ export default class Character {
     private _currentMana: number;
 
     // Ability
-    private ability: Ability | null;
+    private _ability: Ability | null;
 
     // Buffs/Debuffs
     private _statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
@@ -98,7 +98,7 @@ export default class Character {
             level
         });
 
-        this.ability = ability ?? (className ? Classes[className].ability : null);
+        this._ability = ability ?? (className ? Classes[className].ability : null);
         this._currentHealth = options?.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
 
@@ -169,6 +169,14 @@ export default class Character {
 
     get pet() {
         return this._pet;
+    }
+
+    get ability(): Ability | null {
+        return this._ability;
+    }
+
+    set ability(ability: Ability | null) {
+        this.ability = ability;
     }
 
     getName(): string {
