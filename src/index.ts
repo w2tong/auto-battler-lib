@@ -25,6 +25,9 @@ export { Battle, Side, BattleJSON };
 import Character, { CharacterInfo, CharacterJSON } from './Character/Character';
 export { Character, CharacterInfo, CharacterJSON };
 
+import Ability from './Ability/Ability';
+export { Ability };
+
 import Attributes from './Character/Attributes/Attributes';
 export { Attributes };
 
