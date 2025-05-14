@@ -4,7 +4,7 @@ const NAME = 'Double Strike';
 
 const DoubleStrike: Ability = {
     name: NAME,
-    description: () => 'Attack an enemy twice with your weapon.',
+    description: () => 'Attack an enemy twice with your weapon(s).',
     func: (char) => {
         if (char.target) {
             if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME}.`);
