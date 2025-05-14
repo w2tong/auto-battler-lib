@@ -149,7 +149,7 @@ const testPotion: Potion = {
     name: '',
     tier: 0,
     img: '',
-    healingRange: { min: 1, max: 6, bonus: 0 },
+    healingRange: { min: 4, max: 8, bonus: 2 },
     charges: 1
 };
 
