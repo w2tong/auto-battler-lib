@@ -104,6 +104,10 @@ export default class Character {
 
         this._pet = petId ? createPet(this, petId) : null;
 
+        if (this.equipment.potion) {
+            this.equipment.potion.charges += this.stats.getStat(StatType.PotionCharges);
+        }
+
         if (options?.userId) this.userId = options.userId;
     }
 
