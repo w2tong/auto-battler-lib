@@ -7,7 +7,7 @@ const AttributeStatScaling: {
         [StatType.BlockPower]: number;
     },
     [AttributeType.Dexterity]: {
-        [StatType.DamagePercent]: number,
+        [StatType.CriticalChance]: number,
         [StatType.Dodge]: number,
         [StatType.Initiative]: number;
     },
@@ -15,6 +15,7 @@ const AttributeStatScaling: {
         [StatType.Accuracy]: number;
     },
     [AttributeType.Constitution]: {
+        [StatType.MaxHealth]: number,
         [StatType.HealthPercent]: number,
         [StatType.StatusResistance]: number;
     },
@@ -24,7 +25,6 @@ const AttributeStatScaling: {
     },
     [AttributeType.Wisdom]: {
         [StatType.ManaRegen]: number,
-        [StatType.ManaOnHit]: number,
         [StatType.StartingMana]: number,
         [StatType.Initiative]: number,
         [StatType.StatusResistance]: number;
@@ -35,7 +35,7 @@ const AttributeStatScaling: {
         [StatType.BlockPower]: 0.2,
     },
     [AttributeType.Dexterity]: {
-        [StatType.DamagePercent]: 0.005,
+        [StatType.CriticalChance]: 0.5,
         [StatType.Dodge]: 0.5,
         [StatType.Initiative]: 0.2
     },
@@ -43,6 +43,7 @@ const AttributeStatScaling: {
         [StatType.Accuracy]: 1
     },
     [AttributeType.Constitution]: {
+        [StatType.MaxHealth]: 1,
         [StatType.HealthPercent]: 0.02,
         [StatType.StatusResistance]: 0.2
     },
@@ -52,7 +53,6 @@ const AttributeStatScaling: {
     },
     [AttributeType.Wisdom]: {
         [StatType.ManaRegen]: 0.2,
-        [StatType.ManaOnHit]: 0.2,
         [StatType.StartingMana]: 5,
         [StatType.Initiative]: 0.4,
         [StatType.StatusResistance]: 0.2
