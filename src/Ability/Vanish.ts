@@ -9,7 +9,7 @@ const Vanish: Ability = {
     name: NAME,
     description: (char) => {
         const stacks = char ? Math.max(Math.floor(char.attributes.dexterity * DEX_RATIO), 1) : null;
-        return `Gain ${stacks} (${DEX_RATIO * 100}% DEX) ${BuffId.Invisible} stacks, causing your next attack to be a sneak attack, dealing ${Invisible.damage} per stack.`;
+        return `Gain ${stacks} (${DEX_RATIO * 100}% DEX) ${BuffId.Invisible} stacks, causing your next attack to be a sneak attack, dealing ${Invisible.damage} per ${BuffId.Invisible} stack.`;
     },
     func: (char) => {
         char.useAbilityMana();
