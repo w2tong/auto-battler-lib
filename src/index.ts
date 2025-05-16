@@ -56,6 +56,8 @@ import DebuffId from './StatusEffect/DebuffId';
 import debuffs from './StatusEffect/debuffs';
 export { BuffId, buffs, DebuffId, debuffs };
 
+export { PetId } from './Character/Pet';
+
 export { Dice, dice, rollDice } from './dice';
 
 import Log, { LogLine, LineType } from './Battle/Log';

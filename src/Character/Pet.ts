@@ -43,4 +43,4 @@ function createPet(char: Character, petId: PetId): Character {
     return pet;
 }
 
-export { PET_STAT_RATIO, PetId, petTemplates, createPet };
+export { PetId, PET_STAT_RATIO, petTemplates, createPet };
