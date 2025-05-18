@@ -8,10 +8,10 @@ import NPC from './NPC';
 const Rat: NPC = {
     name: 'Rat',
     attributes: {
-        [AttributeType.Strength]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Dexterity]: { base: 0, perLvl: 1 },
-        [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Constitution]: { base: 0, perLvl: 0.25 }
+        [AttributeType.Strength]: { perLvl: 0.5 },
+        [AttributeType.Dexterity]: { perLvl: 1 },
+        [AttributeType.Perception]: { perLvl: 0.5 },
+        [AttributeType.Constitution]: { perLvl: 0.25 }
     },
     stats: {
         [StatType.MaxHealth]: { base: 5, perLvl: 2 },

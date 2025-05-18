@@ -11,8 +11,8 @@ import OrcFighter from './npc/OrcFighter';
 import Zombie from './npc/Zombie';
 import OgreFighter from './npc/OgreFighter';
 import LevelRange from './types/LevelRange';
-import AttributeType from './Character/Attributes/AttributeType';
 import BaseAttributes from './Character/Attributes/BaseAttributes';
+import { calculateBaseAttributes } from './npc/util';
 
 type EncounterGroup = NPC[];
 const groups: { [name: string]: NPC[]; } = {
@@ -202,10 +202,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
 };
 
 function createNPCChar(npc: NPC, level: number, num?: number): Character {
-    const attributes: BaseAttributes = {};
-    for (const [type, { base, perLvl }] of Object.entries(npc.attributes)) {
-        attributes[type as AttributeType] = base + (perLvl ? perLvl * (level - 1) : 0);
-    }
+    const attributes: BaseAttributes = calculateBaseAttributes(npc.attributes, level);
 
     return new Character({
         name: num ? `${npc.name} ${num}` : npc.name,

@@ -1,5 +1,6 @@
-import DoubleStrike from '../Ability/DoubleStrike';
 import AttributeType from '../Character/Attributes/AttributeType';
+import { startingAbility } from '../Character/Classes/classLoadouts';
+import { ClassName } from '../Character/Classes/classes';
 import StatType from '../Character/Stats/StatType';
 import Stats from '../Character/Stats/Stats';
 import { armour } from '../Equipment/Armour';
@@ -9,11 +10,12 @@ import NPC from './NPC';
 
 const OgreFighter: NPC = {
     name: 'Ogre Fighter',
+    className: ClassName.Fighter,
     attributes: {
-        [AttributeType.Strength]: { base: 10, perLvl: 2 },
-        [AttributeType.Dexterity]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Constitution]: { base: 10, perLvl: 2 },
+        [AttributeType.Strength]: { base: 15, perLvl: 2 },
+        [AttributeType.Dexterity]: { perLvl: 0.5 },
+        [AttributeType.Perception]: { perLvl: 0.5 },
+        [AttributeType.Constitution]: { base: 15, perLvl: 2 },
     },
     stats: {
         [StatType.MaxHealth]: { base: 25, perLvl: 5 },
@@ -33,7 +35,7 @@ const OgreFighter: NPC = {
         [EquipSlot.MainHand]: weapons.greatsword0,
         [EquipSlot.Armour]: armour.leatherArmour0
     },
-    ability: DoubleStrike
+    ability: startingAbility[ClassName.Fighter]
 };
 
 export default OgreFighter;

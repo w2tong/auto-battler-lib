@@ -1,5 +1,6 @@
-import DoubleStrike from '../Ability/DoubleStrike';
 import AttributeType from '../Character/Attributes/AttributeType';
+import { startingAbility } from '../Character/Classes/classLoadouts';
+import { ClassName } from '../Character/Classes/classes';
 import StatType from '../Character/Stats/StatType';
 import Stats from '../Character/Stats/Stats';
 import { armour } from '../Equipment/Armour';
@@ -9,11 +10,12 @@ import NPC from './NPC';
 
 const OrcFighter: NPC = {
     name: 'Orc Fighter',
+    className: ClassName.Fighter,
     attributes: {
-        [AttributeType.Strength]: { base: 10, perLvl: 1.75 },
-        [AttributeType.Dexterity]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Constitution]: { base: 10, perLvl: 1.75 },
+        [AttributeType.Strength]: { base: 13, perLvl: 1.75 },
+        [AttributeType.Dexterity]: { perLvl: 0.5 },
+        [AttributeType.Perception]: { perLvl: 0.5 },
+        [AttributeType.Constitution]: { base: 13, perLvl: 1.75 },
     },
     stats: {
         [StatType.MaxHealth]: { base: 24, perLvl: 4 },
@@ -32,7 +34,7 @@ const OrcFighter: NPC = {
         [EquipSlot.MainHand]: weapons.greatsword0,
         [EquipSlot.Armour]: armour.mailArmour0
     },
-    ability: DoubleStrike
+    ability: startingAbility[ClassName.Fighter]
 };
 
 export default OrcFighter;

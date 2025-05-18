@@ -6,11 +6,12 @@ import NPC from './NPC';
 
 const Rogue: NPC = {
     name: 'Rogue',
+    className: ClassName.Rogue,
     attributes: {
-        [AttributeType.Strength]: { base: 10, perLvl: 1 },
-        [AttributeType.Dexterity]: { base: 0, perLvl: 1.5 },
-        [AttributeType.Perception]: { base: 0, perLvl: 0.75 },
-        [AttributeType.Constitution]: { base: 5, perLvl: 0.75 },
+        [AttributeType.Strength]: { perLvl: 1 },
+        [AttributeType.Dexterity]: { perLvl: 1.5 },
+        [AttributeType.Perception]: { perLvl: 0.75 },
+        [AttributeType.Constitution]: { perLvl: 0.75 },
     },
     stats: {
         [StatType.Armour]: { base: 0, perLvl: 0.8 },

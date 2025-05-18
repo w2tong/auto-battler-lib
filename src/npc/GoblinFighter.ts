@@ -1,5 +1,6 @@
-import DoubleStrike from '../Ability/DoubleStrike';
 import AttributeType from '../Character/Attributes/AttributeType';
+import { ClassName } from '../Character/Classes/classes';
+import { startingAbility } from '../Character/Classes/classLoadouts';
 import StatType from '../Character/Stats/StatType';
 import { armour } from '../Equipment/Armour';
 import { EquipSlot } from '../Equipment/Equipment';
@@ -9,11 +10,12 @@ import NPC from './NPC';
 
 const GoblinFighter: NPC = {
     name: 'Goblin Fighter',
+    className: ClassName.Fighter,
     attributes: {
-        [AttributeType.Strength]: { base: 10, perLvl: 1.25 },
-        [AttributeType.Dexterity]: { base: 5, perLvl: 0.75 },
-        [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Constitution]: { base: 0, perLvl: 1 },
+        [AttributeType.Strength]: { perLvl: 1.25 },
+        [AttributeType.Dexterity]: { perLvl: 0.75 },
+        [AttributeType.Perception]: { perLvl: 0.5 },
+        [AttributeType.Constitution]: { perLvl: 1 },
     },
     stats: {
         [StatType.MaxHealth]: { base: 14, perLvl: 3 },
@@ -33,7 +35,7 @@ const GoblinFighter: NPC = {
         [EquipSlot.OffHand]: shields.buckler0,
         [EquipSlot.Armour]: armour.mailArmour0
     },
-    ability: DoubleStrike
+    ability: startingAbility[ClassName.Fighter]
 };
 
 export default GoblinFighter;

@@ -4,14 +4,15 @@ import { startingAbility, startingEquipment } from '../Character/Classes/classLo
 import StatType from '../Character/Stats/StatType';
 import NPC from './NPC';
 
-const Rogue: NPC = {
+const Wizard: NPC = {
     name: 'Wizard',
+    className: ClassName.Wizard,
     attributes: {
-        [AttributeType.Dexterity]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Perception]: { base: 0, perLvl: 1 },
-        [AttributeType.Constitution]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Intelligence]: { base: 10, perLvl: 1.5 },
-        [AttributeType.Wisdom]: { base: 5, perLvl: 0.5 },
+        [AttributeType.Dexterity]: { perLvl: 0.5 },
+        [AttributeType.Perception]: { perLvl: 1 },
+        [AttributeType.Constitution]: { perLvl: 0.5 },
+        [AttributeType.Intelligence]: { perLvl: 1.5 },
+        [AttributeType.Wisdom]: { perLvl: 0.5 },
     },
     stats: {
         [StatType.Armour]: { base: 0, perLvl: 1 },
@@ -29,5 +30,5 @@ const Rogue: NPC = {
     ability: startingAbility[ClassName.Wizard]
 };
 
-export default Rogue;
+export default Wizard;
 

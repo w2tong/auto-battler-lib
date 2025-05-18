@@ -1,5 +1,6 @@
-import DoubleStrike from '../Ability/DoubleStrike';
 import AttributeType from '../Character/Attributes/AttributeType';
+import { ClassName } from '../Character/Classes/classes';
+import { startingAbility } from '../Character/Classes/classLoadouts';
 import StatType from '../Character/Stats/StatType';
 import { armour } from '../Equipment/Armour';
 import { EquipSlot } from '../Equipment/Equipment';
@@ -8,11 +9,12 @@ import NPC from './NPC';
 
 const GoblinRogue: NPC = {
     name: 'Goblin Rogue',
+    className: ClassName.Rogue,
     attributes: {
-        [AttributeType.Strength]: { base: 10, perLvl: 1 },
-        [AttributeType.Dexterity]: { base: 5, perLvl: 1 },
-        [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Constitution]: { base: 0, perLvl: 0.75 },
+        [AttributeType.Strength]: { perLvl: 1 },
+        [AttributeType.Dexterity]: { perLvl: 1 },
+        [AttributeType.Perception]: { perLvl: 0.5 },
+        [AttributeType.Constitution]: { perLvl: 0.75 },
     },
     stats: {
         [StatType.MaxHealth]: { base: 12, perLvl: 3 },
@@ -30,7 +32,7 @@ const GoblinRogue: NPC = {
         [EquipSlot.OffHand]: weapons.dagger0,
         [EquipSlot.Armour]: armour.leatherArmour0
     },
-    ability: DoubleStrike
+    ability: startingAbility[ClassName.Rogue]
 };
 
 export default GoblinRogue;

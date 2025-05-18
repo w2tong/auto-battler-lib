@@ -6,11 +6,12 @@ import NPC from './NPC';
 
 const Fighter: NPC = {
     name: 'Fighter',
+    className: ClassName.Fighter,
     attributes: {
-        [AttributeType.Strength]: { base: 10, perLvl: 1.5 },
-        [AttributeType.Dexterity]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Constitution]: { base: 5, perLvl: 1.5 },
+        [AttributeType.Strength]: { perLvl: 1.5 },
+        [AttributeType.Dexterity]: { perLvl: 0.5 },
+        [AttributeType.Perception]: { perLvl: 0.5 },
+        [AttributeType.Constitution]: { perLvl: 1.5 },
     },
     stats: {
         [StatType.Armour]: { base: 0, perLvl: 1.2 },
