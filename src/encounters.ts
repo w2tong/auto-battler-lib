@@ -223,7 +223,7 @@ function createNPCChars(npcs: NPC[], level: number, count: number = 1): Characte
         }
     }
     else {
-        for (let i = 0; i < count; i++) {
+        for (let i = 1; i <= count; i++) {
             for (const npc of npcs) {
                 chars.push(createNPCChar(npc, level, i));
             }
@@ -241,4 +241,4 @@ function getRandomEncounter(level: LevelRange): Character[] {
     return createNPCChars(encounter.group, encounter.level ?? level, encounter.count);
 }
 
-export { getRandomEncounter };
+export { getRandomEncounter, createNPCChars };
