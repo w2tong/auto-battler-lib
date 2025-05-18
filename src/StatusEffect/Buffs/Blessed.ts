@@ -4,8 +4,6 @@ import BuffId from '../BuffId';
 
 export default class Blessed extends Buff {
     id = BuffId.Blessed;
-    name = 'Blessed';
-    symbol = '🙏';
 
     static baseDamage = 4;
     static damagePerLvl = 1;
