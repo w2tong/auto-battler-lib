@@ -85,21 +85,6 @@ describe('Single Attribute', () => {
 });
 
 describe('Overlapping Attributes', () => {
-    test('20 STR, 20 DEX - DamagePercent', () => {
-        const num = 20;
-        const char = createTestCharacter({
-            attributes: {
-                [AttributeType.Strength]: num,
-                [AttributeType.Dexterity]: num,
-            }
-        });
-
-        expect(char.stats[StatType.DamagePercent].attribute).toBeCloseTo(
-            (AttributeStatScaling.Strength[StatType.DamagePercent] ?? 0) * (num - Attributes.DEFAULT_VALUE) +
-            (AttributeStatScaling.Dexterity[StatType.DamagePercent] ?? 0) * (num - Attributes.DEFAULT_VALUE)
-        );
-    });
-
     test('20 DEX, 20 WIS - Initiative', () => {
         const num = 20;
         const char = createTestCharacter({
@@ -112,21 +97,6 @@ describe('Overlapping Attributes', () => {
         expect(char.stats[StatType.Initiative].attribute).toBeCloseTo(
             (AttributeStatScaling.Dexterity[StatType.Initiative] ?? 0) * (num - Attributes.DEFAULT_VALUE) +
             (AttributeStatScaling.Wisdom[StatType.Initiative] ?? 0) * (num - Attributes.DEFAULT_VALUE)
-        );
-    });
-
-    test('20 INT, 20 WIS - ManaOnHit', () => {
-        const num = 20;
-        const char = createTestCharacter({
-            attributes: {
-                [AttributeType.Intelligence]: num,
-                [AttributeType.Wisdom]: num,
-            }
-        });
-
-        expect(char.stats[StatType.ManaOnHit].attribute).toBeCloseTo(
-            (AttributeStatScaling.Intelligence[StatType.ManaOnHit] ?? 0) * (num - Attributes.DEFAULT_VALUE) +
-            (AttributeStatScaling.Wisdom[StatType.ManaOnHit] ?? 0) * (num - Attributes.DEFAULT_VALUE)
         );
     });
 });
