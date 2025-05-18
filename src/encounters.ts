@@ -15,7 +15,17 @@ import BaseAttributes from './Character/Attributes/BaseAttributes';
 import { calculateBaseAttributes } from './npc/util';
 
 type EncounterGroup = NPC[];
-const groups: { [name: string]: NPC[]; } = {
+type GroupKey =
+    | 'fighter'
+    | 'rogue'
+    | 'wizard'
+    | 'rat'
+    | 'goblinDuo'
+    | 'orcFighter'
+    | 'zombie'
+    | 'ogreFighter';
+
+const groups: Record<GroupKey, NPC[]> = {
     fighter: [Fighter],
     rogue: [Rogue],
     wizard: [Wizard],
@@ -62,7 +72,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie },
         { group: groups.goblinDuo, level: 4 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     6: [
         { group: groups.fighter },
@@ -71,7 +81,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie },
         { group: groups.goblinDuo, level: 5 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     7: [
         { group: groups.fighter },
@@ -80,7 +90,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie },
         { group: groups.goblinDuo, level: 6 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     8: [
         { group: groups.fighter },
@@ -89,7 +99,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie },
         { group: groups.goblinDuo, level: 7 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     9: [
         { group: groups.fighter },
@@ -98,7 +108,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie },
         { group: groups.goblinDuo, level: 8 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     10: [
         { group: groups.fighter },
@@ -107,7 +117,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie },
         { group: groups.goblinDuo, level: 9 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     11: [
         { group: groups.fighter },
@@ -116,7 +126,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie, count: 2 },
         { group: groups.goblinDuo, level: 10 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     12: [
         { group: groups.fighter },
@@ -125,7 +135,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie, count: 2 },
         { group: groups.goblinDuo, level: 11 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     13: [
         { group: groups.fighter },
@@ -134,7 +144,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie, count: 2 },
         { group: groups.goblinDuo, level: 12 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     14: [
         { group: groups.fighter },
@@ -143,7 +153,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie, count: 2 },
         { group: groups.goblinDuo, level: 13 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     15: [
         { group: groups.fighter },
@@ -152,7 +162,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie, count: 2 },
         { group: groups.goblinDuo, level: 14 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     16: [
         { group: groups.fighter },
@@ -161,7 +171,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie, count: 2 },
         { group: groups.goblinDuo, level: 15 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     17: [
         { group: groups.fighter },
@@ -170,7 +180,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie, count: 2 },
         { group: groups.goblinDuo, level: 16 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     18: [
         { group: groups.fighter },
@@ -179,7 +189,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie, count: 2 },
         { group: groups.goblinDuo, level: 17 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     19: [
         { group: groups.fighter },
@@ -188,7 +198,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie, count: 2 },
         { group: groups.goblinDuo, level: 18 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
     20: [
         { group: groups.fighter },
@@ -197,7 +207,7 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
         { group: groups.zombie, count: 2 },
         { group: groups.goblinDuo, level: 19 },
         { group: groups.orcFighter },
-        { group: groups.ogreEncounter },
+        { group: groups.ogreFighter },
     ],
 };
 
@@ -237,8 +247,8 @@ function createNPCChars(npcs: NPC[], level: number, count: number = 1): Characte
 function getRandomEncounter(level: LevelRange): Character[] {
     const encounters = leveledEncounters[level];
     const encounter = encounters[getRandomRange(encounters.length)];
-
-    return createNPCChars(encounter.group, encounter.level ?? level, encounter.count);
+    console.log(level, encounters, encounter);
+    return createNPCChars(encounter.group, encounter.level ? encounter.level : level, encounter.count);
 }
 
 export { getRandomEncounter, createNPCChars };
