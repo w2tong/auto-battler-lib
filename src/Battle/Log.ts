@@ -72,7 +72,7 @@ class Log {
         const attackName = abilityName ? `casted ${abilityName} on` : 'attacked';
         let attackStr = `${charName} ${attackName} ${tarName} and ${hitType}`;
         if (hitType !== HitType.Miss) {
-            attackStr += ` for ${damage} damage`;
+            attackStr += ` for ${Number(damage.toFixed(1))} damage`;
             if (sneak) attackStr += ' (Sneak Attack)';
             if (blocked) attackStr += ' (Blocked)';
         }
@@ -80,7 +80,7 @@ class Log {
     }
 
     addDamage(name: string, source: string, damage: number) {
-        this.add(`${name} took ${Number(damage.toFixed()).toLocaleString()} damage from ${source}.`);
+        this.add(`${name} took ${Number(damage.toFixed(1)).toLocaleString()} damage from ${source}.`);
     }
 
     addLoot(name: string, itemId: string) {
