@@ -80,7 +80,7 @@ class Log {
     }
 
     addDamage(name: string, source: string, damage: number) {
-        this.add(`${name} took ${damage.toLocaleString()} damage from ${source}.`);
+        this.add(`${name} took ${Number(damage.toFixed()).toLocaleString()} damage from ${source}.`);
     }
 
     addLoot(name: string, itemId: string) {
