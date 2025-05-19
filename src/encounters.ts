@@ -247,7 +247,6 @@ function createNPCChars(npcs: NPC[], level: number, count: number = 1): Characte
 function getRandomEncounter(level: LevelRange): Character[] {
     const encounters = leveledEncounters[level];
     const encounter = encounters[getRandomRange(encounters.length)];
-    console.log(level, encounters, encounter);
     return createNPCChars(encounter.group, encounter.level ? encounter.level : level, encounter.count);
 }
 
