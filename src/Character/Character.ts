@@ -351,7 +351,7 @@ export default class Character {
                 name: this.name,
                 target: target.name,
                 hitType,
-                damage,
+                damage: damageDone,
                 sneak: sneakAttack,
                 blocked,
                 abilityName
@@ -363,7 +363,7 @@ export default class Character {
         // Deal thorns damage to this Character if target was hit
         if (hit && target.stats.getStat(StatType.Thorns) > 0) {
             this.takeDamage({
-                source: StatType.Thorns,
+                source: `${StatType.Thorns} (${target.name})`,
                 damage: target.stats.getStat(StatType.Thorns),
                 armourPenetration: target.stats.armourPenetration
             });
