@@ -348,8 +348,8 @@ export default class Character {
         // Add hit to combat log
         if (this.battle) {
             this.battle.ref.log.addAttack({
-                charName: this.name,
-                tarName: target.name,
+                name: this.name,
+                target: target.name,
                 hitType,
                 damage,
                 sneak: sneakAttack,

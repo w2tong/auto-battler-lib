@@ -5,7 +5,6 @@ enum LineType {
     Text = 'Text',
     // Combat
     Attack = 'Attack',
-    Damage = 'Damage',
     // Results
     Loot = 'Loot',
     Exp = 'Exp',
@@ -39,7 +38,18 @@ interface LevelLine extends BaseLine {
     level: number;
 }
 
-type LogLine = TextLine | LootLine | ExpLine | LevelLine;
+interface AttackLine extends BaseLine {
+    type: LineType.Attack;
+    name: string;
+    target: string;
+    hitType: HitType;
+    damage: number;
+    sneak: boolean;
+    blocked: boolean;
+    abilityName?: string;
+}
+
+type LogLine = TextLine | LootLine | ExpLine | LevelLine | AttackLine;
 
 class Log {
 
@@ -68,15 +78,28 @@ class Log {
         });
     }
 
-    addAttack({ charName, tarName, hitType, damage, sneak, blocked, abilityName }: { charName: string, tarName: string, hitType: HitType, damage: number, sneak: boolean, blocked: boolean, abilityName?: string; }) {
-        const attackName = abilityName ? `casted ${abilityName} on` : 'attacked';
-        let attackStr = `${charName} ${attackName} ${tarName} and ${hitType}`;
-        if (hitType !== HitType.Miss) {
-            attackStr += ` for ${Number(damage.toFixed(1))} damage`;
-            if (sneak) attackStr += ' (Sneak Attack)';
-            if (blocked) attackStr += ' (Blocked)';
-        }
-        this.add(`${attackStr}.`);
+    // addAttack({ charName, tarName, hitType, damage, sneak, blocked, abilityName }: { charName: string, tarName: string, hitType: HitType, damage: number, sneak: boolean, blocked: boolean, abilityName?: string; }) {
+    //     const attackName = abilityName ? `casted ${abilityName} on` : 'attacked';
+    //     let attackStr = `${charName} ${attackName} ${tarName} and ${hitType}`;
+    //     if (hitType !== HitType.Miss) {
+    //         attackStr += ` for ${Number(damage.toFixed(1))} damage`;
+    //         if (sneak) attackStr += ' (Sneak Attack)';
+    //         if (blocked) attackStr += ' (Blocked)';
+    //     }
+    //     this.add(`${attackStr}.`);
+    // }
+
+    addAttack({ name, target, hitType, damage, sneak, blocked, abilityName }: { name: string, target: string, hitType: HitType, damage: number, sneak: boolean, blocked: boolean, abilityName?: string; }) {
+        this.last.push({
+            type: LineType.Attack,
+            name,
+            target,
+            hitType,
+            damage,
+            sneak,
+            blocked,
+            abilityName
+        });
     }
 
     addDamage(name: string, source: string, damage: number) {
