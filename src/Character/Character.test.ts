@@ -9,6 +9,7 @@ import { createTestCharacter, test1HWeapon, test2HWeapon, testPotion } from '../
 import Stats from './Stats/Stats';
 import Invisible from '../StatusEffect/Buffs/Invisible';
 import { EquipSlot } from '../Equipment/Equipment';
+import NumberRange from '../NumberRange';
 
 describe('calcCritDamage', () => {
     // 10 DMG
@@ -1890,130 +1891,129 @@ describe('calcDamage', () => {
     });
 });
 
-// describe('attack', () => {
-//     let char: Character;
-//     let target: Character;
-//     const damageRange: DamageRange = { min: 5, max: 5, bonus: 0 };
+describe('attack', () => {
+    let char: Character;
+    let target: Character;
+    const damageRange: NumberRange = { min: 5, max: 5, bonus: 0 };
 
-//     beforeEach(() => {
-//         char = createTestCharacter({
-//             statTemplate: {
-//                 [StatType.Damage]: { base: 1 },
-//                 [StatType.SpellPower]: { base: 10 },
-//                 [StatType.DamagePercent]: { base: 0.2 },
-//                 [StatType.CriticalDamage]: { base: 2 },
-//                 [StatType.MaxHealth]: { base: 100 },
-//             }
-//         });
+    beforeEach(() => {
+        char = createTestCharacter({
+            statTemplate: {
+                [StatType.Damage]: { base: 1 },
+                [StatType.SpellPower]: { base: 10 },
+                [StatType.DamagePercent]: { base: 0.2 },
+                [StatType.CriticalDamage]: { base: 2 },
+                [StatType.MaxHealth]: { base: 100 },
+            }
+        });
 
-//         target = createTestCharacter({
-//             statTemplate: {
-//                 [StatType.MaxHealth]: { base: 100 },
-//                 [StatType.Dodge]: { base: 0 },
-//                 [StatType.BlockPower]: { base: 5 },
-//                 [StatType.Thorns]: { base: 1 },
-//             }
-//         });
+        target = createTestCharacter({
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 },
+                [StatType.Dodge]: { base: 0 },
+                [StatType.Armour]: { base: 50 },
+                [StatType.BlockPower]: { base: 5 },
+                [StatType.Thorns]: { base: 1 },
+            }
+        });
 
-//         new Battle([char], [target]);
-//     });
+        new Battle([char], [target]);
+    });
 
-//     let mathRandomSpy: jest.SpyInstance;
-//     let critRollSpy: jest.SpyInstance;
-//     let blockRollSpy: jest.SpyInstance;
-//     beforeEach(() => {
-//         mathRandomSpy = jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
-//         critRollSpy = jest.spyOn(Character, 'critRoll').mockReturnValue(true);
-//         blockRollSpy = jest.spyOn(Character, 'blockRoll').mockReturnValue(true);
-//     });
-//     afterEach(() => {
-//         mathRandomSpy.mockRestore();
-//         critRollSpy.mockRestore();
-//         blockRollSpy.mockRestore();
-//     });
+    let mathRandomSpy: jest.SpyInstance;
+    let critRollSpy: jest.SpyInstance;
+    let blockRollSpy: jest.SpyInstance;
+    beforeEach(() => {
+        mathRandomSpy = jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
+        critRollSpy = jest.spyOn(Character, 'critRoll').mockReturnValue(true);
+        blockRollSpy = jest.spyOn(Character, 'blockRoll').mockReturnValue(true);
+    });
+    afterEach(() => {
+        mathRandomSpy.mockRestore();
+        critRollSpy.mockRestore();
+        blockRollSpy.mockRestore();
+    });
 
-//     test('Melee Main-hand Weapon Attack', () => {
-//         char.attack({
-//             target,
-//             attackType: AttackType.MeleeWeapon,
-//             damageRange,
-//             weaponAttack: true,
-//             spellPowerRatio: 0.2
-//         });
-//         expect(target.currentHealth).toBe(75); // (5 + 1 + 2 + 2) * 1.5 * 2 - 5 = 25
-//         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
-//     });
+    test('Melee Main-hand Weapon Attack', () => {
+        const { hit, damageDone } = char.attack({
+            target,
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            weaponAttack: true,
+            spellPowerRatio: 0.2
+        });
+        expect(hit).toBeTruthy();
+        expect(damageDone).toBeCloseTo(7.1); // ((5 + 1 + 10 * 0.2) * 1.2 * 2 - 5) * 0.5 = 7.1
+        expect(target.currentHealth).toBeCloseTo(92.9); // 100 - 7.1 = 92.9
+        expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+    });
 
-//     test('Melee Off-hand Weapon Attack', () => {
-//         char.attack({
-//             target,
-//             attackType: AttackType.MeleeWeapon,
-//             damageRange,
-//             weaponAttack: true,
-//             spellPowerRatio: 0.2,
-//             isOffHand: true
-//         });
-//         expect(target.currentHealth).toBe(72); // (5 + 1 + 2 + 2 + 1) * 1.5 * 2 - 5 = 28
-//         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
-//     });
+    test('Melee Main-hand Weapon Sneak Attack', () => {
+        char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
+        const { hit, damageDone } = char.attack({
+            target,
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            weaponAttack: true,
+            spellPowerRatio: 0.2
+        });
+        expect(hit).toBeTruthy();
+        expect(damageDone).toBeCloseTo(11.9); // ((5 + 1 + 10 * 0.2 + 4) * 1.2 * 2 - 5) * 0.5 = 11.9
+        expect(target.currentHealth).toBeCloseTo(88.1); // 100 - 11.9 = 88.9
+        expect(char.statusEffectManager.buffs[BuffId.Invisible]).toStrictEqual({});
+        expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+    });
 
-//     test('Melee Main-hand Weapon Sneak Attack', () => {
-//         char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
-//         char.attack({
-//             target,
-//             attackType: AttackType.MeleeWeapon,
-//             damageRange,
-//             weaponAttack: true,
-//             spellPowerRatio: 0.2
-//         });
-//         expect(target.currentHealth).toBe(63); // (5 + 1 + 2 + 2 + 4) * 1.5 * 2 - 5 = 37
-//         expect(char.statusEffectManager.buffs[BuffId.Invisible]).toStrictEqual({});
-//         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
-//     });
+    test('Melee Main-hand Weapon Attack, No Crit', () => {
+        critRollSpy.mockReturnValue(false);
 
-//     test('Melee Main-hand Weapon Attack, No Crit', () => {
-//         critRollSpy.mockReturnValue(false);
+        const { hit, damageDone } = char.attack({
+            target,
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            weaponAttack: true,
+            spellPowerRatio: 0.2
+        });
+        expect(hit).toBeTruthy();
+        expect(damageDone).toBeCloseTo(2.3); // ((5 + 1 + 10 * 0.2) * 1.2 - 5) * 0.5 = 2.3
+        expect(target.currentHealth).toBe(97.7); // 100 - 2.3 = 97.7
+        expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+    });
 
-//         char.attack({
-//             target,
-//             attackType: AttackType.MeleeWeapon,
-//             damageRange,
-//             weaponAttack: true,
-//             spellPowerRatio: 0.2
-//         });
-//         expect(target.currentHealth).toBe(90); // (5 + 1 + 2 + 2) * 1.5 - 5 = 10
-//         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
-//     });
+    test('Melee Main-hand Weapon Attack, No Block', () => {
+        blockRollSpy.mockReturnValue(false);
 
-//     test('Melee Main-hand Weapon Attack, No Block', () => {
-//         blockRollSpy.mockReturnValue(false);
+        const { hit, damageDone } = char.attack({
+            target,
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            weaponAttack: true,
+            spellPowerRatio: 0.2
+        });
+        expect(hit).toBeTruthy();
+        expect(damageDone).toBeCloseTo(9.6); // ((5 + 1 + 10 * 0.2) * 1.2 * 2) * 0.5 = 9.6
+        expect(target.currentHealth).toBe(90.4); // 100 - 9.6 = 90.4
+        expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+    });
 
-//         char.attack({
-//             target,
-//             attackType: AttackType.MeleeWeapon,
-//             damageRange,
-//             weaponAttack: true,
-//             spellPowerRatio: 0.2
-//         });
-//         expect(target.currentHealth).toBe(70); // (5 + 1 + 2 + 2) * 1.5 * 2 = 30
-//         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
-//     });
+    test('Melee Main-hand Weapon Attack, No Crit and Block', () => {
+        critRollSpy.mockReturnValue(false);
+        blockRollSpy.mockReturnValue(false);
 
-//     test('Melee Main-hand Weapon Attack, No Crit and Block', () => {
-//         critRollSpy.mockReturnValue(false);
-//         blockRollSpy.mockReturnValue(false);
+        const { hit, damageDone } = char.attack({
+            target,
+            attackType: AttackType.MeleeWeapon,
+            damageRange,
+            weaponAttack: true,
+            spellPowerRatio: 0.2
+        });
 
-//         char.attack({
-//             target,
-//             attackType: AttackType.MeleeWeapon,
-//             damageRange,
-//             weaponAttack: true,
-//             spellPowerRatio: 0.2
-//         });
-//         expect(target.currentHealth).toBe(85); // (5 + 1 + 2 + 2) * 1.5 = 15
-//         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
-//     });
-// });
+        expect(hit).toBeTruthy();
+        expect(damageDone).toBeCloseTo(4.8); // ((5 + 1 + 10 * 0.2) * 1.2) * 0.5 = 4.8
+        expect(target.currentHealth).toBe(95.2); // 100 - 4.8 = 95.2
+        expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+    });
+});
 
 describe('setTarget', () => {
     let left1: Character;
