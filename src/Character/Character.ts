@@ -337,7 +337,7 @@ export default class Character {
                 damage = Character.calcDamageAfterBlock(damage, target.stats.getStat(StatType.BlockPower));
             }
 
-            target.takeDamage({
+            damageDone = target.takeDamage({
                 source: this.name,
                 damage,
                 armourPenetration: this.stats.armourPenetration,
@@ -362,7 +362,7 @@ export default class Character {
 
         // Deal thorns damage to this Character if target was hit
         if (hit && target.stats.getStat(StatType.Thorns) > 0) {
-            damageDone = this.takeDamage({
+            this.takeDamage({
                 source: StatType.Thorns,
                 damage: target.stats.getStat(StatType.Thorns),
                 armourPenetration: target.stats.armourPenetration
