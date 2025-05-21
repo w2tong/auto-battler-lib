@@ -5,6 +5,7 @@ enum LineType {
     Text = 'Text',
     // Combat
     Attack = 'Attack',
+    Damage = 'Damage',
     // Results
     Loot = 'Loot',
     Exp = 'Exp',
@@ -49,7 +50,14 @@ interface AttackLine extends BaseLine {
     abilityName?: string;
 }
 
-type LogLine = TextLine | LootLine | ExpLine | LevelLine | AttackLine;
+interface DamageLine extends BaseLine {
+    type: LineType.Damage;
+    name: string;
+    source: string;
+    damage: number;
+}
+
+type LogLine = TextLine | LootLine | ExpLine | LevelLine | AttackLine | DamageLine;
 
 class Log {
 
@@ -102,8 +110,17 @@ class Log {
         });
     }
 
+    // addDamage(name: string, source: string, damage: number) {
+    //     this.add(`${name} took ${Number(damage.toFixed(1)).toLocaleString()} damage from ${source}.`);
+    // }
+
     addDamage(name: string, source: string, damage: number) {
-        this.add(`${name} took ${Number(damage.toFixed(1)).toLocaleString()} damage from ${source}.`);
+        this.last.push({
+            type: LineType.Damage,
+            name,
+            source,
+            damage
+        });
     }
 
     addLoot(name: string, itemId: string) {
