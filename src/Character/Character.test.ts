@@ -10,6 +10,8 @@ import Stats from './Stats/Stats';
 import Invisible from '../StatusEffect/Buffs/Invisible';
 import { EquipSlot } from '../Equipment/Equipment';
 import NumberRange from '../NumberRange';
+import HitType from '../types/HitType';
+import { LineType } from '../Battle/Log';
 
 describe('calcCritDamage', () => {
     // 10 DMG
@@ -1894,6 +1896,7 @@ describe('calcDamage', () => {
 describe('attack', () => {
     let char: Character;
     let target: Character;
+    let battle: Battle;
     const damageRange: NumberRange = { min: 5, max: 5, bonus: 0 };
 
     beforeEach(() => {
@@ -1917,7 +1920,7 @@ describe('attack', () => {
             }
         });
 
-        new Battle([char], [target]);
+        battle = new Battle([char], [target]);
     });
 
     let mathRandomSpy: jest.SpyInstance;
@@ -1946,6 +1949,24 @@ describe('attack', () => {
         expect(damageDone).toBeCloseTo(7.1); // ((5 + 1 + 10 * 0.2) * 1.2 * 2 - 5) * 0.5 = 7.1
         expect(target.currentHealth).toBeCloseTo(92.9); // 100 - 7.1 = 92.9
         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+        expect(battle.log.last).toStrictEqual([
+            {
+                type: LineType.Attack,
+                name: char.name,
+                target: target.name,
+                hitType: HitType.Crit,
+                damage: 7.1,
+                sneak: false,
+                blocked: true,
+                abilityName: undefined
+            },
+            {
+                type: LineType.Damage,
+                name: char.name,
+                source: `Thorns (${target.name})`,
+                damage: 1
+            }
+        ]);
     });
 
     test('Melee Main-hand Weapon Sneak Attack', () => {
@@ -1962,6 +1983,24 @@ describe('attack', () => {
         expect(target.currentHealth).toBeCloseTo(88.1); // 100 - 11.9 = 88.9
         expect(char.statusEffectManager.buffs[BuffId.Invisible]).toStrictEqual({});
         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+        expect(battle.log.last).toStrictEqual([
+            {
+                type: LineType.Attack,
+                name: char.name,
+                target: target.name,
+                hitType: HitType.Crit,
+                damage: expect.closeTo(11.9),
+                sneak: true,
+                blocked: true,
+                abilityName: undefined
+            },
+            {
+                type: LineType.Damage,
+                name: char.name,
+                source: `Thorns (${target.name})`,
+                damage: 1
+            }
+        ]);
     });
 
     test('Melee Main-hand Weapon Attack, No Crit', () => {
@@ -1978,6 +2017,24 @@ describe('attack', () => {
         expect(damageDone).toBeCloseTo(2.3); // ((5 + 1 + 10 * 0.2) * 1.2 - 5) * 0.5 = 2.3
         expect(target.currentHealth).toBe(97.7); // 100 - 2.3 = 97.7
         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+        expect(battle.log.last).toStrictEqual([
+            {
+                type: LineType.Attack,
+                name: char.name,
+                target: target.name,
+                hitType: HitType.Hit,
+                damage: 2.3,
+                sneak: false,
+                blocked: true,
+                abilityName: undefined
+            },
+            {
+                type: LineType.Damage,
+                name: char.name,
+                source: `Thorns (${target.name})`,
+                damage: 1
+            }
+        ]);
     });
 
     test('Melee Main-hand Weapon Attack, No Block', () => {
@@ -1994,6 +2051,24 @@ describe('attack', () => {
         expect(damageDone).toBeCloseTo(9.6); // ((5 + 1 + 10 * 0.2) * 1.2 * 2) * 0.5 = 9.6
         expect(target.currentHealth).toBe(90.4); // 100 - 9.6 = 90.4
         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+        expect(battle.log.last).toStrictEqual([
+            {
+                type: LineType.Attack,
+                name: char.name,
+                target: target.name,
+                hitType: HitType.Crit,
+                damage: 9.6,
+                sneak: false,
+                blocked: false,
+                abilityName: undefined
+            },
+            {
+                type: LineType.Damage,
+                name: char.name,
+                source: `Thorns (${target.name})`,
+                damage: 1
+            }
+        ]);
     });
 
     test('Melee Main-hand Weapon Attack, No Crit and Block', () => {
@@ -2012,6 +2087,24 @@ describe('attack', () => {
         expect(damageDone).toBeCloseTo(4.8); // ((5 + 1 + 10 * 0.2) * 1.2) * 0.5 = 4.8
         expect(target.currentHealth).toBe(95.2); // 100 - 4.8 = 95.2
         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+        expect(battle.log.last).toStrictEqual([
+            {
+                type: LineType.Attack,
+                name: char.name,
+                target: target.name,
+                hitType: HitType.Hit,
+                damage: 4.8,
+                sneak: false,
+                blocked: false,
+                abilityName: undefined
+            },
+            {
+                type: LineType.Damage,
+                name: char.name,
+                source: `Thorns (${target.name})`,
+                damage: 1
+            }
+        ]);
     });
 });
 
