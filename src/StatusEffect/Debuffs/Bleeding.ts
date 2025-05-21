@@ -3,8 +3,6 @@ import DebuffId from '../DebuffId';
 
 export default class Bleeding extends Debuff {
     id = DebuffId.Bleeding;
-    name: string = 'Bleeding';
-    symbol: string = '🩸';
 
     onApply() { }
     onExpire() { }
@@ -14,7 +12,7 @@ export default class Bleeding extends Debuff {
         if (this.remainingDamage) {
             const damage = this.remainingDamage / this.stacks;
             this.char.takeDamage({
-                source: `${Bleeding.name} (${this.source.name})`,
+                source: `${this.id} (${this.source.name})`,
                 damage,
                 armourPenetration: Infinity
             });

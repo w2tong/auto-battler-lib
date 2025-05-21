@@ -1,21 +1,19 @@
-import AttackType from '../../../AttackType';
-import DamageType from '../../../DamageType';
+import AttackType from '../../../types/AttackType';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 
-type UnarmedId = 'unarmed0';
+type UnarmedId = 'fist';
 
 const unarmed: { [id in UnarmedId]: Weapon } = {
-    unarmed0: {
-        id: 'unarmed0',
+    fist: {
+        id: 'fist',
         itemType: ItemType.Weapon,
-        name: 'Unarmed',
+        name: 'Fist',
         tier: 0,
         img: '',
 
         type: WeaponType.Unarmed,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 2, max: 4, bonus: 0 },
     },
 } as const;

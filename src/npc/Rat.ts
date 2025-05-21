@@ -1,30 +1,30 @@
 import AttributeType from '../Character/Attributes/AttributeType';
 import StatType from '../Character/Stats/StatType';
 import Stats from '../Character/Stats/Stats';
+import { EquipSlot } from '../Equipment/Equipment';
 import { weapons } from '../Equipment/Weapon/weapons';
 import NPC from './NPC';
 
 const Rat: NPC = {
     name: 'Rat',
     attributes: {
-        [AttributeType.WeaponSkill]: { base: 0, perLvl: 0.75 },
-        [AttributeType.Strength]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Dexterity]: { base: 0, perLvl: 1 },
-        [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Constitution]: { base: 0, perLvl: 0.25 }
+        [AttributeType.Strength]: { perLvl: 0.5 },
+        [AttributeType.Dexterity]: { perLvl: 1 },
+        [AttributeType.Perception]: { perLvl: 0.5 },
+        [AttributeType.Constitution]: { perLvl: 0.25 }
     },
     stats: {
         [StatType.MaxHealth]: { base: 5, perLvl: 2 },
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE + 10 },
 
-        [StatType.Accuracy]: { base: -10 },
+        [StatType.Accuracy]: { base: -10, perLvl: 1 },
 
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
 
         [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
     },
     equipment: {
-        mainHand: weapons.poisonbite0
+        [EquipSlot.MainHand]: weapons.poisonbite0
     }
 };
 

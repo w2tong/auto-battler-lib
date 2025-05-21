@@ -20,14 +20,6 @@ enum StatType {
     Damage = 'Damage',
     DamagePercent = '% Damage',
 
-    OffHandDamage = 'Off-Hand Damage',
-
-    MeleeWeaponDamage = 'Melee Weapon Damage',
-    MeleeWeaponDamagePercent = '% Melee Weapon Damage',
-
-    RangedWeaponDamage = 'Ranged Weapon Damage',
-    RangedWeaponDamagePercent = '% Ranged Weapon Damage',
-
     CriticalChance = 'Critical Chance',
     CriticalDamage = 'Critical Damage',
 

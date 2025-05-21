@@ -2,15 +2,12 @@
 // export { Buffs, BuffId } from './StatusEffect/buffs';
 // export { Debuffs, DebuffId } from './StatusEffect/debuffs';
 
-import BuffTracker from './StatusEffect/StatusEffectManager';
-export { BuffTracker };
-
 export { ClassName, Classes } from './Character/Classes/classes';
 
-export { Equip, Equipment, EquipmentItemIds, EquipSlot, equips, isValidEquip, createEquipmentImport } from './Equipment/Equipment';
-export { Item, ItemType, Tier } from './Equipment/Item';
+export { Equip, Equipment, EquipmentImport, EquipmentItemIds, EquipSlot, equips, isValidEquip, createEquipmentImport } from './Equipment/Equipment';
+export { Item, ItemType, Tier, ItemAttributes, ItemStats } from './Equipment/Item';
 export { Armour, ArmourId, armour } from './Equipment/Armour';
-export { Belt, BeltId, belts } from './Equipment/Belt';
+export { Waist, WaistId, waists } from './Equipment/Waist';
 export { Hands, HandsId, hands } from './Equipment/Hands';
 export { Head, HeadId, heads } from './Equipment/Head';
 export { Potion, PotionId, potions } from './Equipment/Potion';
@@ -28,20 +25,49 @@ export { Battle, Side, BattleJSON };
 import Character, { CharacterInfo, CharacterJSON } from './Character/Character';
 export { Character, CharacterInfo, CharacterJSON };
 
-import Log, { LogLine, LineType } from './Battle/Log';
-export { Log, LogLine, LineType };
+import Ability from './Ability/Ability';
+export { Ability };
 
-import DamageType from './DamageType';
-export { DamageType };
+import Attributes from './Character/Attributes/Attributes';
+export { Attributes };
+
+import AttributeStatScaling from './Character/Attributes/AttributeStatScaling';
+import AttributeType from './Character/Attributes/AttributeType';
+export { AttributeStatScaling, AttributeType };
+export { STARTING_POINTS, POINTS_PER_LEVEL, LEVEL_CAPS } from './Character/Attributes/PlayerAttributes';
+
+import ArmourTypeDodgeMultiplier from './Character/Stats/ArmourTypeDodgeMultiplier';
+import StatType from './Character/Stats/StatType';
+import StatDescriptions from './Character/Stats/StatDescriptions';
+export { ArmourTypeDodgeMultiplier, StatType, StatDescriptions };
+
+import AttackType from './types/AttackType';
+export { AttackType };
+
+import HitType from './types/HitType';
+export { HitType };
+
+import LevelRange from './types/LevelRange';
+export { LevelRange };
+
+import BuffId from './StatusEffect/BuffId';
+import buffs from './StatusEffect/buffs';
+import DebuffId from './StatusEffect/DebuffId';
+import debuffs from './StatusEffect/debuffs';
+export { BuffId, buffs, DebuffId, debuffs };
+
+export { PetId } from './Character/Pet';
 
 export { Dice, dice, rollDice } from './dice';
+
+import Log, { LogLine, LineType } from './Battle/Log';
+export { Log, LogLine, LineType };
 
 export { getRandomEncounter } from './encounters';
 
 export { levelExp, encounterExp } from './experience';
 
-import HitType from './HitType';
-export { HitType };
-
 import lootTables from './lootTables';
 export { lootTables };
+
+export { startingAbility, startingEquipment } from './Character/Classes/classLoadouts';

@@ -2,8 +2,8 @@ import Character from '../Character/Character';
 
 interface Ability {
     name: string;
-    description: string;
-    func: (char: Character) => undefined;
+    description: (char?: Character) => string;
+    func: (char: Character) => void;
 }
 
 export default Ability;

@@ -1,19 +1,21 @@
-import DoubleStrike from '../Ability/DoubleStrike';
 import AttributeType from '../Character/Attributes/AttributeType';
+import { startingAbility } from '../Character/Classes/classLoadouts';
+import { ClassName } from '../Character/Classes/classes';
 import StatType from '../Character/Stats/StatType';
 import Stats from '../Character/Stats/Stats';
 import { armour } from '../Equipment/Armour';
+import { EquipSlot } from '../Equipment/Equipment';
 import { weapons } from '../Equipment/Weapon/weapons';
 import NPC from './NPC';
 
 const OrcFighter: NPC = {
     name: 'Orc Fighter',
+    className: ClassName.Fighter,
     attributes: {
-        [AttributeType.WeaponSkill]: { base: 0, perLvl: 1 },
-        [AttributeType.Strength]: { base: 10, perLvl: 1.75 },
-        [AttributeType.Dexterity]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Constitution]: { base: 10, perLvl: 1.75 },
+        [AttributeType.Strength]: { base: 13, perLvl: 1.75 },
+        [AttributeType.Dexterity]: { perLvl: 0.5 },
+        [AttributeType.Perception]: { perLvl: 0.5 },
+        [AttributeType.Constitution]: { base: 13, perLvl: 1.75 },
     },
     stats: {
         [StatType.MaxHealth]: { base: 24, perLvl: 4 },
@@ -21,6 +23,7 @@ const OrcFighter: NPC = {
         [StatType.Deflection]: { base: 0, perLvl: 0.2 },
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 10 },
 
+        [StatType.Accuracy]: { base: 0, perLvl: 1 },
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
 
         [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
@@ -28,10 +31,10 @@ const OrcFighter: NPC = {
         [StatType.ManaCost]: { base: 100 }
     },
     equipment: {
-        mainHand: weapons.greatsword0,
-        armour: armour.mailArmour0
+        [EquipSlot.MainHand]: weapons.greatsword0,
+        [EquipSlot.Armour]: armour.mailArmour0
     },
-    ability: DoubleStrike
+    ability: startingAbility[ClassName.Fighter]
 };
 
 export default OrcFighter;

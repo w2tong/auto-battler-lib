@@ -1,5 +1,6 @@
 import Ability from '../Ability/Ability';
 import FerociousBite from '../Ability/FerociousBite';
+import { EquipSlot } from '../Equipment/Equipment';
 import { weapons } from '../Equipment/Weapon/weapons';
 import Character from './Character';
 import { StatTemplate } from './Stats/StatTemplate';
@@ -29,7 +30,7 @@ function createPet(char: Character, petId: PetId): Character {
         attributes: {},
         statTemplate: statTemplate,
         equipment: {
-            mainHand: weapons.bite0
+            [EquipSlot.MainHand]: weapons.bite0
         },
         ability
     });
@@ -42,4 +43,4 @@ function createPet(char: Character, petId: PetId): Character {
     return pet;
 }
 
-export { PET_STAT_RATIO, PetId, petTemplates, createPet };
+export { PetId, PET_STAT_RATIO, petTemplates, createPet };

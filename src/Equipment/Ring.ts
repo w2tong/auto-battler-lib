@@ -127,7 +127,7 @@ const rings: { [id in RingId]: Ring } = {
         img: 'ring-grey.png',
 
         stats: {
-            [StatType.CriticalDamage]: 10
+            [StatType.CriticalDamage]: 0.10
         }
     },
     critDmgRing1: {
@@ -138,7 +138,7 @@ const rings: { [id in RingId]: Ring } = {
         img: 'ring-grey.png',
 
         stats: {
-            [StatType.CriticalDamage]: 20
+            [StatType.CriticalDamage]: 0.20
         }
     },
     critDmgRing2: {
@@ -149,7 +149,7 @@ const rings: { [id in RingId]: Ring } = {
         img: 'ring-grey.png',
 
         stats: {
-            [StatType.CriticalDamage]: 30
+            [StatType.CriticalDamage]: 0.30
         }
     },
     dodgeRing0: {

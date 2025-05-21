@@ -3,10 +3,15 @@ import * as diceModule from '../dice';
 import StatType from './Stats/StatType';
 import BuffId from '../StatusEffect/BuffId';
 import Battle, { Side } from '../Battle/Battle';
-import AttackType from '../AttackType';
-import DamageRange from '../DamageRange';
+import AttackType from '../types/AttackType';
 import * as utilModule from '../util';
-import { createTestCharacter, test1HWeapon, testPotion } from '../tests/util';
+import { createTestCharacter, test1HWeapon, test2HWeapon, testPotion } from '../tests/util';
+import Stats from './Stats/Stats';
+import Invisible from '../StatusEffect/Buffs/Invisible';
+import { EquipSlot } from '../Equipment/Equipment';
+import NumberRange from '../NumberRange';
+import HitType from '../types/HitType';
+import { LineType } from '../Battle/Log';
 
 describe('calcCritDamage', () => {
     // 10 DMG
@@ -852,7 +857,7 @@ describe('usePotion', () => {
                 [StatType.MaxHealth]: { base: 100 }
             },
             equipment: {
-                potion: testPotion
+                [EquipSlot.Potion]: testPotion
             }
         });
         char.usePotion();
@@ -866,7 +871,7 @@ describe('usePotion', () => {
                 [StatType.MaxHealth]: { base: 100 }
             },
             equipment: {
-                potion: testPotion
+                [EquipSlot.Potion]: testPotion
             },
             options: {
                 currHealthPc: 0.5
@@ -883,7 +888,7 @@ describe('usePotion', () => {
                 [StatType.MaxHealth]: { base: 100 }
             },
             equipment: {
-                potion: testPotion
+                [EquipSlot.Potion]: testPotion
             },
             options: {
                 currHealthPc: 0.5
@@ -920,7 +925,7 @@ describe('hitRoll', () => {
             [StatType.DodgeReduction]: { base: 10 },
         },
         equipment: {
-            mainHand: test1HWeapon
+            [EquipSlot.MainHand]: test1HWeapon
         }
     });
     let target: Character;
@@ -1596,193 +1601,310 @@ describe('hitRoll', () => {
     });
 });
 
+// TODO: add tests for two-handed multiplier (with sneak)
+// TODO: add tests for negative damages to test (to test two-handed penalty)
+// weaponAttack
 describe('calcDamage', () => {
-    const char = createTestCharacter({
-        statTemplate: {
-            [StatType.Damage]: { base: 1 },
-            [StatType.DamagePercent]: { base: 0.2 },
-            [StatType.MeleeWeaponDamage]: { base: 2 },
-            [StatType.MeleeWeaponDamagePercent]: { base: 0.3 },
-            [StatType.RangedWeaponDamage]: { base: 3 },
-            [StatType.RangedWeaponDamagePercent]: { base: 0.2 },
-            [StatType.SpellPower]: { base: 10 },
-            [StatType.SpellPowerPercent]: { base: 0.1 },
-            [StatType.OffHandDamage]: { base: 1 }
-        }
-    });
+    describe('One-handed weapon, positive stats', () => {
+        const baseDamage = 10;
+        const bonusDamage = 1;
+        const damagePercent = 0.2;
+        const spellPower = 10;
+        const spellPowerPercent = 0.1;
+        const spellPowerRatio = 0.5;
+        const invisibleStacks = 10;
 
-    test('Melee weapon main-hand attack', () => {
-        const damage = char.calcDamage({
-            attackType: AttackType.MeleeWeapon,
-            damage: 10
+        const char = createTestCharacter({
+            statTemplate: {
+                [StatType.Damage]: { base: bonusDamage },
+                [StatType.DamagePercent]: { base: damagePercent },
+                [StatType.SpellPower]: { base: spellPower },
+                [StatType.SpellPowerPercent]: { base: spellPowerPercent },
+            }
         });
 
-        expect(damage).toBeCloseTo(19.5); // (10 + 1 + 2) * 1.5
-    });
-
-    test('Melee weapon off-hand attack', () => {
-        const damage = char.calcDamage({
-            attackType: AttackType.MeleeWeapon,
-            damage: 10,
-            isOffHand: true
+        test('Attack', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: false
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage) * (1 + damagePercent));
         });
 
-        expect(damage).toBeCloseTo(21); // (10 + 1 + 2 + 1) * 1.5
-    });
-
-    test('Ranged weapon main-hand attack', () => {
-        const damage = char.calcDamage({
-            attackType: AttackType.RangedWeapon,
-            damage: 10
+        test('Weapon attack', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: true
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage) * (1 + damagePercent));
         });
 
-        expect(damage).toBeCloseTo(19.6); // (10 + 1 + 3) * 1.4
-    });
-
-    test('Ranged weapon off-hand attack', () => {
-        const damage = char.calcDamage({
-            attackType: AttackType.RangedWeapon,
-            damage: 5,
-            isOffHand: true
+        test('Attack with spell power', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                spellPowerRatio: 0.5,
+                weaponAttack: false
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage + spellPower * (1 + spellPowerPercent) * spellPowerRatio) * (1 + damagePercent));
         });
 
-        expect(damage).toBeCloseTo(14); // (5 + 1 + 3 + 1) * 1.4
-    });
-
-    test('Spell main-hand attack', () => {
-        const damage = char.calcDamage({
-            attackType: AttackType.Spell,
-            damage: 20,
-            spellPowerRatio: 0.5
+        test('Weapon attack with spell power', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                spellPowerRatio: 0.5,
+                weaponAttack: true
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage + spellPower * (1 + spellPowerPercent) * spellPowerRatio) * (1 + damagePercent));
         });
 
-        expect(damage).toBeCloseTo(31.8); // (20 + 1 + (10 * 1.1 * 0.5)) * 1.2
-    });
-
-    test('Melee weapon main-hand sneak attack (0 stacks)', () => {
-        const damage = char.calcDamage({
-            attackType: AttackType.MeleeWeapon,
-            damage: 10,
-            invisibleStacks: 0
+        test('Sneak weapon attack (0 stacks)', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: true,
+                invisibleStacks: 0
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage) * (1 + damagePercent));
         });
 
-        expect(damage).toBeCloseTo(19.5); // (10 + 1 + 2 + 0) * 1.5
+        test('Sneak weapon attack (10 stacks)', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: true,
+                invisibleStacks
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage + Invisible.damage * invisibleStacks) * (1 + damagePercent));
+        });
     });
 
-    test('Melee weapon main-hand sneak attack (1 stack)', () => {
-        const damage = char.calcDamage({
-            attackType: AttackType.MeleeWeapon,
-            damage: 10,
-            invisibleStacks: 1
+    describe('One-handed weapon, negative stats', () => {
+        const baseDamage = 10;
+        const bonusDamage = -1;
+        const damagePercent = -0.2;
+        const spellPower = -10;
+        const spellPowerRatio = 0.5;
+        const invisibleStacks = 10;
+
+        const char = createTestCharacter({
+            statTemplate: {
+                [StatType.Damage]: { base: bonusDamage },
+                [StatType.DamagePercent]: { base: damagePercent },
+                [StatType.SpellPower]: { base: spellPower }
+            }
         });
 
-        expect(damage).toBeCloseTo(25.5); // (10 + 1 + 2 + 4) * 1.5
-    });
-
-    test('Melee weapon main-hand sneak attack (10 stacks)', () => {
-        const damage = char.calcDamage({
-            attackType: AttackType.MeleeWeapon,
-            damage: 10,
-            invisibleStacks: 10
+        test('Attack', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: false
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage) * (1 + damagePercent));
         });
 
-        expect(damage).toBeCloseTo(79.5); // (10 + 1 + 2 + 40) * 1.5
-    });
-});
-
-describe('calcDamageRange', () => {
-    const char = createTestCharacter({
-        statTemplate: {
-            [StatType.Damage]: { base: 1 },
-            [StatType.DamagePercent]: { base: 0.2 },
-            [StatType.MeleeWeaponDamage]: { base: 2 },
-            [StatType.MeleeWeaponDamagePercent]: { base: 0.3 },
-            [StatType.RangedWeaponDamage]: { base: 3 },
-            [StatType.RangedWeaponDamagePercent]: { base: 0.2 },
-            [StatType.SpellPower]: { base: 10 },
-            [StatType.SpellPowerPercent]: { base: 0.1 },
-            [StatType.OffHandDamage]: { base: 1 }
-        }
-    });
-
-    test('Melee weapon main-hand attack', () => {
-        const damageRange: DamageRange = { min: 10, max: 20, bonus: 5 };
-        const { min, max } = char.calcDamageRange({
-            attackType: AttackType.MeleeWeapon,
-            damageRange,
-            isOffHand: false
+        test('Weapon attack', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: true
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage) * (1 + damagePercent));
         });
 
-        expect(min).toBeCloseTo(27); // (10 + 5 + 1 + 2) * 1.5
-        expect(max).toBeCloseTo(42); // (20 + 5 + 1 + 2) * 1.5
-    });
+        test('Attack with spell power', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                spellPowerRatio: 0.5,
+                weaponAttack: false
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage + spellPower * spellPowerRatio) * (1 + damagePercent));
+        });
+        // -10 * (1 + -0.1) * 0.5
 
-    test('Melee weapon off-hand attack', () => {
-        const damageRange: DamageRange = { min: 10, max: 20, bonus: 5 };
-        const { min, max } = char.calcDamageRange({
-            attackType: AttackType.MeleeWeapon,
-            damageRange,
-            isOffHand: true
+        test('Weapon attack with spell power', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                spellPowerRatio: 0.5,
+                weaponAttack: true
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage + spellPower * spellPowerRatio) * (1 + damagePercent));
         });
 
-        expect(min).toBeCloseTo(28.5); // (10 + 5 + 1 + 2 + 1) * 1.5
-        expect(max).toBeCloseTo(43.5); // (20 + 5 + 1 + 2 + 1) * 1.5
-    });
-
-    test('Ranged weapon main-hand attack', () => {
-        const damageRange: DamageRange = { min: 10, max: 20, bonus: 5 };
-        const { min, max } = char.calcDamageRange({
-            attackType: AttackType.RangedWeapon,
-            damageRange,
-            isOffHand: false
+        test('Sneak weapon attack (0 stacks)', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: true,
+                invisibleStacks: 0
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage) * (1 + damagePercent));
         });
 
-        expect(min).toBeCloseTo(26.6); // (10 + 5 + 1 + 3) * 1.4
-        expect(max).toBeCloseTo(40.6); // (20 + 5 + 1 + 3) * 1.4
+        test('Sneak weapon attack (10 stacks)', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: true,
+                invisibleStacks
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage + Invisible.damage * invisibleStacks) * (1 + damagePercent));
+        });
     });
 
-    test('Ranged weapon off-hand attack', () => {
-        const damageRange: DamageRange = { min: 5, max: 10, bonus: 5 };
-        const { min, max } = char.calcDamageRange({
-            attackType: AttackType.RangedWeapon,
-            damageRange,
-            isOffHand: true
+    describe('Two-handed weapon, positive stats', () => {
+        const baseDamage = 10;
+        const bonusDamage = 2;
+        const damagePercent = 0.2;
+        const spellPower = 10;
+        const spellPowerPercent = 0.1;
+        const spellPowerRatio = 0.5;
+        const invisibleStacks = 10;
+
+        const char = createTestCharacter({
+            statTemplate: {
+                [StatType.Damage]: { base: bonusDamage },
+                [StatType.DamagePercent]: { base: damagePercent },
+                [StatType.SpellPower]: { base: spellPower },
+                [StatType.SpellPowerPercent]: { base: spellPowerPercent }
+            },
+            equipment: {
+                [EquipSlot.MainHand]: test2HWeapon
+            }
         });
 
-        expect(min).toBeCloseTo(21); // (5 + 5 + 1 + 3 + 1) * 1.4
-        expect(max).toBeCloseTo(28); // (10 + 5 + 1 + 3 + 1) * 1.4
+        test('Weapon attack', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: true
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage * (1 + Stats.TWO_HANDED_BONUS)) * (1 + damagePercent));
+        });
+
+        test('Attack', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: false
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage) * (1 + damagePercent));
+        });
+
+        test('Weapon attack with spell power', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                spellPowerRatio: 0.5,
+                weaponAttack: true
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage * (1 + Stats.TWO_HANDED_BONUS) + spellPower * (1 + spellPowerPercent) * spellPowerRatio) * (1 + damagePercent));
+        });
+
+        test('Attack with spell power', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                spellPowerRatio: spellPowerRatio,
+                weaponAttack: false
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage + spellPower * (1 + spellPowerPercent) * spellPowerRatio) * (1 + damagePercent));
+        });
+
+        test('Sneak weapon attack (10 stacks) weapon attack', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: true,
+                invisibleStacks
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage * (1 + Stats.TWO_HANDED_BONUS) + Invisible.damage * invisibleStacks * (1 + Stats.TWO_HANDED_BONUS)) * (1 + damagePercent));
+        });
+
+        test('Sneak attack (10 stacks)', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: false,
+                invisibleStacks
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage + Invisible.damage * invisibleStacks) * (1 + damagePercent));
+        });
     });
 
-    test('Spell main-hand attack', () => {
-        const damageRange: DamageRange = { min: 20, max: 30, bonus: 2 };
-        const { min, max } = char.calcDamageRange({
-            attackType: AttackType.Spell,
-            damageRange,
-            spellPowerRatio: 0.5,
-            isOffHand: false
+    describe('Two-handed weapon, positive stats', () => {
+        const baseDamage = 10;
+        const bonusDamage = -2;
+        const damagePercent = -0.2;
+        const spellPower = -10;
+        const spellPowerRatio = 0.5;
+        const invisibleStacks = 10;
+
+        const char = createTestCharacter({
+            statTemplate: {
+                [StatType.Damage]: { base: bonusDamage },
+                [StatType.DamagePercent]: { base: damagePercent },
+                [StatType.SpellPower]: { base: spellPower }
+            },
+            equipment: {
+                [EquipSlot.MainHand]: test2HWeapon
+            }
         });
 
-        expect(min).toBeCloseTo(34.2); // (20 + 2 + 1 + (10 * 1.1 * 0.5)) * 1.2
-        expect(max).toBeCloseTo(46.2); // (30 + 2 + 1 + (10 * 1.1 * 0.5)) * 1.2
+        test('Weapon attack', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: true
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage) * (1 + damagePercent));
+        });
+
+        test('Attack', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: false
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage) * (1 + damagePercent));
+        });
+
+        test('Weapon attack with spell power', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                spellPowerRatio: 0.5,
+                weaponAttack: true
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage + spellPower * spellPowerRatio) * (1 + damagePercent));
+        });
+
+        test('Attack with spell power', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                spellPowerRatio: spellPowerRatio,
+                weaponAttack: false
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage + spellPower * spellPowerRatio) * (1 + damagePercent));
+        });
+
+        test('Sneak weapon attack (10 stacks) weapon attack', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: true,
+                invisibleStacks
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage + Invisible.damage * invisibleStacks * (1 + Stats.TWO_HANDED_BONUS)) * (1 + damagePercent));
+        });
+
+        test('Sneak attack (10 stacks)', () => {
+            const damage = char.calcDamage({
+                damage: baseDamage,
+                weaponAttack: false,
+                invisibleStacks
+            });
+            expect(damage).toBeCloseTo((baseDamage + bonusDamage + Invisible.damage * invisibleStacks) * (1 + damagePercent));
+        });
     });
 });
 
 describe('attack', () => {
     let char: Character;
     let target: Character;
-    const damageRange: DamageRange = { min: 5, max: 5, bonus: 0 };
+    let battle: Battle;
+    const damageRange: NumberRange = { min: 5, max: 5, bonus: 0 };
 
     beforeEach(() => {
         char = createTestCharacter({
             statTemplate: {
                 [StatType.Damage]: { base: 1 },
-                [StatType.MeleeWeaponDamage]: { base: 2 },
-                [StatType.RangedWeaponDamage]: { base: 3 },
                 [StatType.SpellPower]: { base: 10 },
-                [StatType.OffHandDamage]: { base: 1 },
                 [StatType.DamagePercent]: { base: 0.2 },
-                [StatType.MeleeWeaponDamagePercent]: { base: 0.3 },
-                [StatType.RangedWeaponDamagePercent]: { base: 0.2 },
                 [StatType.CriticalDamage]: { base: 2 },
                 [StatType.MaxHealth]: { base: 100 },
             }
@@ -1792,12 +1914,13 @@ describe('attack', () => {
             statTemplate: {
                 [StatType.MaxHealth]: { base: 100 },
                 [StatType.Dodge]: { base: 0 },
+                [StatType.Armour]: { base: 50 },
                 [StatType.BlockPower]: { base: 5 },
                 [StatType.Thorns]: { base: 1 },
             }
         });
 
-        new Battle([char], [target]);
+        battle = new Battle([char], [target]);
     });
 
     let mathRandomSpy: jest.SpyInstance;
@@ -1815,79 +1938,173 @@ describe('attack', () => {
     });
 
     test('Melee Main-hand Weapon Attack', () => {
-        char.attack({
+        const { hit, damageDone } = char.attack({
             target,
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             spellPowerRatio: 0.2
         });
-        expect(target.currentHealth).toBe(75); // (5 + 1 + 2 + 2) * 1.5 * 2 - 5 = 25
+        expect(hit).toBeTruthy();
+        expect(damageDone).toBeCloseTo(7.1); // ((5 + 1 + 10 * 0.2) * 1.2 * 2 - 5) * 0.5 = 7.1
+        expect(target.currentHealth).toBeCloseTo(92.9); // 100 - 7.1 = 92.9
         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
-    });
-
-    test('Melee Off-hand Weapon Attack', () => {
-        char.attack({
-            target,
-            attackType: AttackType.MeleeWeapon,
-            damageRange,
-            spellPowerRatio: 0.2,
-            isOffHand: true
-        });
-        expect(target.currentHealth).toBe(72); // (5 + 1 + 2 + 2 + 1) * 1.5 * 2 - 5 = 28
-        expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+        expect(battle.log.last).toStrictEqual([
+            {
+                type: LineType.Attack,
+                name: char.name,
+                target: target.name,
+                hitType: HitType.Crit,
+                damage: 7.1,
+                sneak: false,
+                blocked: true,
+                abilityName: undefined
+            },
+            {
+                type: LineType.Damage,
+                name: char.name,
+                source: `Thorns (${target.name})`,
+                damage: 1
+            }
+        ]);
     });
 
     test('Melee Main-hand Weapon Sneak Attack', () => {
         char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
-        char.attack({
+        const { hit, damageDone } = char.attack({
             target,
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             spellPowerRatio: 0.2
         });
-        expect(target.currentHealth).toBe(63); // (5 + 1 + 2 + 2 + 4) * 1.5 * 2 - 5 = 37
+        expect(hit).toBeTruthy();
+        expect(damageDone).toBeCloseTo(11.9); // ((5 + 1 + 10 * 0.2 + 4) * 1.2 * 2 - 5) * 0.5 = 11.9
+        expect(target.currentHealth).toBeCloseTo(88.1); // 100 - 11.9 = 88.9
         expect(char.statusEffectManager.buffs[BuffId.Invisible]).toStrictEqual({});
         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+        expect(battle.log.last).toStrictEqual([
+            {
+                type: LineType.Attack,
+                name: char.name,
+                target: target.name,
+                hitType: HitType.Crit,
+                damage: expect.closeTo(11.9),
+                sneak: true,
+                blocked: true,
+                abilityName: undefined
+            },
+            {
+                type: LineType.Damage,
+                name: char.name,
+                source: `Thorns (${target.name})`,
+                damage: 1
+            }
+        ]);
     });
 
     test('Melee Main-hand Weapon Attack, No Crit', () => {
         critRollSpy.mockReturnValue(false);
 
-        char.attack({
+        const { hit, damageDone } = char.attack({
             target,
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             spellPowerRatio: 0.2
         });
-        expect(target.currentHealth).toBe(90); // (5 + 1 + 2 + 2) * 1.5 - 5 = 10
+        expect(hit).toBeTruthy();
+        expect(damageDone).toBeCloseTo(2.3); // ((5 + 1 + 10 * 0.2) * 1.2 - 5) * 0.5 = 2.3
+        expect(target.currentHealth).toBe(97.7); // 100 - 2.3 = 97.7
         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+        expect(battle.log.last).toStrictEqual([
+            {
+                type: LineType.Attack,
+                name: char.name,
+                target: target.name,
+                hitType: HitType.Hit,
+                damage: 2.3,
+                sneak: false,
+                blocked: true,
+                abilityName: undefined
+            },
+            {
+                type: LineType.Damage,
+                name: char.name,
+                source: `Thorns (${target.name})`,
+                damage: 1
+            }
+        ]);
     });
 
     test('Melee Main-hand Weapon Attack, No Block', () => {
         blockRollSpy.mockReturnValue(false);
 
-        char.attack({
+        const { hit, damageDone } = char.attack({
             target,
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             spellPowerRatio: 0.2
         });
-        expect(target.currentHealth).toBe(70); // (5 + 1 + 2 + 2) * 1.5 * 2 = 30
+        expect(hit).toBeTruthy();
+        expect(damageDone).toBeCloseTo(9.6); // ((5 + 1 + 10 * 0.2) * 1.2 * 2) * 0.5 = 9.6
+        expect(target.currentHealth).toBe(90.4); // 100 - 9.6 = 90.4
         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+        expect(battle.log.last).toStrictEqual([
+            {
+                type: LineType.Attack,
+                name: char.name,
+                target: target.name,
+                hitType: HitType.Crit,
+                damage: 9.6,
+                sneak: false,
+                blocked: false,
+                abilityName: undefined
+            },
+            {
+                type: LineType.Damage,
+                name: char.name,
+                source: `Thorns (${target.name})`,
+                damage: 1
+            }
+        ]);
     });
 
     test('Melee Main-hand Weapon Attack, No Crit and Block', () => {
         critRollSpy.mockReturnValue(false);
         blockRollSpy.mockReturnValue(false);
 
-        char.attack({
+        const { hit, damageDone } = char.attack({
             target,
             attackType: AttackType.MeleeWeapon,
             damageRange,
+            weaponAttack: true,
             spellPowerRatio: 0.2
         });
-        expect(target.currentHealth).toBe(85); // (5 + 1 + 2 + 2) * 1.5 = 15
+
+        expect(hit).toBeTruthy();
+        expect(damageDone).toBeCloseTo(4.8); // ((5 + 1 + 10 * 0.2) * 1.2) * 0.5 = 4.8
+        expect(target.currentHealth).toBe(95.2); // 100 - 4.8 = 95.2
         expect(char.currentHealth).toBe(99); // 100 - 1 (thorns)
+        expect(battle.log.last).toStrictEqual([
+            {
+                type: LineType.Attack,
+                name: char.name,
+                target: target.name,
+                hitType: HitType.Hit,
+                damage: 4.8,
+                sneak: false,
+                blocked: false,
+                abilityName: undefined
+            },
+            {
+                type: LineType.Damage,
+                name: char.name,
+                source: `Thorns (${target.name})`,
+                damage: 1
+            }
+        ]);
     });
 });
 

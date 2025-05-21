@@ -1,5 +1,4 @@
 enum AttributeType {
-    WeaponSkill = 'WeaponSkill',
     Strength = 'Strength',
     Dexterity = 'Dexterity',
     Perception = 'Perception',

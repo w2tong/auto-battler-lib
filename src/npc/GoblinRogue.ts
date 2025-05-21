@@ -1,23 +1,26 @@
-import DoubleStrike from '../Ability/DoubleStrike';
 import AttributeType from '../Character/Attributes/AttributeType';
+import { ClassName } from '../Character/Classes/classes';
+import { startingAbility } from '../Character/Classes/classLoadouts';
 import StatType from '../Character/Stats/StatType';
 import { armour } from '../Equipment/Armour';
+import { EquipSlot } from '../Equipment/Equipment';
 import { weapons } from '../Equipment/Weapon/weapons';
 import NPC from './NPC';
 
 const GoblinRogue: NPC = {
     name: 'Goblin Rogue',
+    className: ClassName.Rogue,
     attributes: {
-        [AttributeType.WeaponSkill]: { base: 0, perLvl: 1 },
-        [AttributeType.Strength]: { base: 10, perLvl: 1 },
-        [AttributeType.Dexterity]: { base: 5, perLvl: 1 },
-        [AttributeType.Perception]: { base: 0, perLvl: 0.5 },
-        [AttributeType.Constitution]: { base: 0, perLvl: 0.75 },
+        [AttributeType.Strength]: { perLvl: 1 },
+        [AttributeType.Dexterity]: { perLvl: 1 },
+        [AttributeType.Perception]: { perLvl: 0.5 },
+        [AttributeType.Constitution]: { perLvl: 0.75 },
     },
     stats: {
         [StatType.MaxHealth]: { base: 12, perLvl: 3 },
         [StatType.Armour]: { base: 0, perLvl: 0.8 },
 
+        [StatType.Accuracy]: { base: 0, perLvl: 1 },
         [StatType.Damage]: { base: 0, perLvl: 0.2 },
 
         [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
@@ -25,11 +28,11 @@ const GoblinRogue: NPC = {
         [StatType.ManaCost]: { base: 100 }
     },
     equipment: {
-        mainHand: weapons.dagger0,
-        offHandWeapon: weapons.dagger0,
-        armour: armour.leatherArmour0
+        [EquipSlot.MainHand]: weapons.dagger0,
+        [EquipSlot.OffHand]: weapons.dagger0,
+        [EquipSlot.Armour]: armour.leatherArmour0
     },
-    ability: DoubleStrike
+    ability: startingAbility[ClassName.Rogue]
 };
 
 export default GoblinRogue;

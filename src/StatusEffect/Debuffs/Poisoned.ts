@@ -1,10 +1,8 @@
 import Debuff from '../Debuff';
 import DebuffId from '../DebuffId';
 
-export default class Poison extends Debuff {
+export default class Poisoned extends Debuff {
     id = DebuffId.Poisoned;
-    name: string = 'Poisoned';
-    symbol: string = '🤢';
 
     static baseDamage = 1;
     static healthDamagePercent = 0.01;
@@ -15,8 +13,8 @@ export default class Poison extends Debuff {
     onTurnStart() { }
     onTurnEnd() {
         this.char.takeDamage({
-            source: `${Poison.name} (${this.source.name})`,
-            damage: (Poison.baseDamage + this.char.currentHealth * Poison.healthDamagePercent) * this.stacks,
+            source: `${this.id} (${this.source.name})`,
+            damage: (Poisoned.baseDamage + this.char.currentHealth * Poisoned.healthDamagePercent) * this.stacks,
             armourPenetration: Infinity
         });
 

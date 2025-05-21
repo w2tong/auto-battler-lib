@@ -9,7 +9,9 @@ function calcTotalAttribute(attribute: Attribute) {
 }
 
 class Attributes {
-    private [AttributeType.WeaponSkill]: Attribute;
+    static DEFAULT_VALUE = 10;
+    static MIN_VALUE = 5;
+
     private [AttributeType.Strength]: Attribute;
     private [AttributeType.Dexterity]: Attribute;
     private [AttributeType.Perception]: Attribute;
@@ -19,17 +21,15 @@ class Attributes {
 
     constructor(
         {
-            [AttributeType.WeaponSkill]: weaponSkill = 0,
-            [AttributeType.Strength]: strength = 0,
-            [AttributeType.Dexterity]: dexterity = 0,
-            [AttributeType.Perception]: perception = 0,
-            [AttributeType.Constitution]: constitution = 0,
-            [AttributeType.Intelligence]: intelligence = 0,
-            [AttributeType.Wisdom]: wisdom = 0,
+            [AttributeType.Strength]: strength = Attributes.DEFAULT_VALUE,
+            [AttributeType.Dexterity]: dexterity = Attributes.DEFAULT_VALUE,
+            [AttributeType.Perception]: perception = Attributes.DEFAULT_VALUE,
+            [AttributeType.Constitution]: constitution = Attributes.DEFAULT_VALUE,
+            [AttributeType.Intelligence]: intelligence = Attributes.DEFAULT_VALUE,
+            [AttributeType.Wisdom]: wisdom = Attributes.DEFAULT_VALUE,
         }: BaseAttributes,
         equipment: Equipment
     ) {
-        this[AttributeType.WeaponSkill] = { base: weaponSkill, bonus: 0 };
         this[AttributeType.Strength] = { base: strength, bonus: 0 };
         this[AttributeType.Dexterity] = { base: dexterity, bonus: 0 };
         this[AttributeType.Perception] = { base: perception, bonus: 0 };
@@ -38,7 +38,7 @@ class Attributes {
         this[AttributeType.Wisdom] = { base: wisdom, bonus: 0 };
 
         if (equipment.armour) this.addItemAttributes(equipment.armour.attributes);
-        if (equipment.belt) this.addItemAttributes(equipment.belt.attributes);
+        if (equipment.waist) this.addItemAttributes(equipment.waist.attributes);
         if (equipment.hands) this.addItemAttributes(equipment.hands.attributes);
         if (equipment.head) this.addItemAttributes(equipment.head.attributes);
         if (equipment.ring1) this.addItemAttributes(equipment.ring1.attributes);
@@ -48,9 +48,6 @@ class Attributes {
         else if (equipment.offHandShield) this.addItemAttributes(equipment.offHandShield.attributes);
     }
 
-    get weaponSkill() {
-        return calcTotalAttribute(this[AttributeType.WeaponSkill]);
-    }
     get strength() {
         return calcTotalAttribute(this[AttributeType.Strength]);
     }

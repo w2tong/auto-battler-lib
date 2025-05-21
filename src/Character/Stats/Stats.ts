@@ -1,3 +1,4 @@
+import AttackType from '../../types/AttackType';
 import { ArmourType } from '../../Equipment/Armour';
 import { Equipment } from '../../Equipment/Equipment';
 import { ItemStats } from '../../Equipment/Item';
@@ -50,11 +51,6 @@ class Stats {
     // Damage
     [StatType.Damage]: Stat = { base: 0, attribute: 0, bonus: 0 };
     [StatType.DamagePercent]: Stat = { base: 0, attribute: 0, bonus: 0 };
-    [StatType.OffHandDamage]: Stat = { base: 0, attribute: 0, bonus: 0 };
-    [StatType.MeleeWeaponDamage]: Stat = { base: 0, attribute: 0, bonus: 0 };
-    [StatType.MeleeWeaponDamagePercent]: Stat = { base: 0, attribute: 0, bonus: 0 };
-    [StatType.RangedWeaponDamage]: Stat = { base: 0, attribute: 0, bonus: 0 };
-    [StatType.RangedWeaponDamagePercent]: Stat = { base: 0, attribute: 0, bonus: 0 };
 
     // Critical
     [StatType.CriticalChance]: Stat = { base: Stats.DEFAULT_CRIT_CHANCE, attribute: 0, bonus: 0 };
@@ -109,7 +105,7 @@ class Stats {
 
         // Add stats from equipment
         if (equipment.armour) this.addItemStats(equipment.armour.stats);
-        if (equipment.belt) this.addItemStats(equipment.belt.stats);
+        if (equipment.waist) this.addItemStats(equipment.waist.stats);
 
         if (equipment.hands && ((equipment.hands.weaponStyle && equipment.hands.weaponStyle === this.weaponStyle) || !equipment.hands.weaponStyle)) {
             this.addItemStats(equipment.hands.stats);
@@ -135,7 +131,7 @@ class Stats {
         // Calculate attribute scaling stats
         for (const [type, { base, bonus }] of Object.entries(attributes)) {
             for (const [statType, scaling] of Object.entries(AttributeStatScaling[type as AttributeType])) {
-                this[statType as StatType].attribute += (base + bonus) * scaling;
+                this[statType as StatType].attribute += (-Attributes.DEFAULT_VALUE + base + bonus) * scaling;
             }
         }
     }
@@ -183,8 +179,12 @@ class Stats {
     }
 
     // Accuracy
-    get accuracy() {
-        return this.getStat(StatType.Accuracy);
+    getAccuracy(type: AttackType) {
+        let accuracy = this.getStat(StatType.Accuracy);
+        if (type === AttackType.MeleeWeapon) accuracy += this.getStat(StatType.MeleeAccuracy);
+        else if (type === AttackType.RangedWeapon) accuracy += this.getStat(StatType.RangedAccuracy);
+        else if (type === AttackType.Spell) accuracy += this.getStat(StatType.SpellAccuracy);
+        return accuracy;
     }
 
     // Crit
@@ -196,22 +196,22 @@ class Stats {
     }
 
     // Damage
-    get damage() {
-        const damage = this.getStat(StatType.Damage);
-        if (damage < 0) return damage;
-        return damage * this.getTwoHandedMultiplier();
+    // get damage() {
+    //     const damage = this.getStat(StatType.Damage);
+    //     if (damage < 0) return damage;
+    //     return damage * this.getTwoHandedMultiplier();
 
-    }
-    get meleeWeaponDamage() {
-        const meleeWeaponDamage = this.getStat(StatType.MeleeWeaponDamage);
-        if (meleeWeaponDamage < 0) return meleeWeaponDamage;
-        return meleeWeaponDamage * this.getTwoHandedMultiplier();
-    }
-    get rangedWeaponDamage() {
-        const rangedDamage = this.getStat(StatType.RangedWeaponDamage);
-        if (rangedDamage < 0) return rangedDamage;
-        return rangedDamage * this.getTwoHandedMultiplier();
-    }
+    // }
+    // get meleeWeaponDamage() {
+    //     const meleeWeaponDamage = this.getStat(StatType.MeleeWeaponDamage);
+    //     if (meleeWeaponDamage < 0) return meleeWeaponDamage;
+    //     return meleeWeaponDamage * this.getTwoHandedMultiplier();
+    // }
+    // get rangedWeaponDamage() {
+    //     const rangedDamage = this.getStat(StatType.RangedWeaponDamage);
+    //     if (rangedDamage < 0) return rangedDamage;
+    //     return rangedDamage * this.getTwoHandedMultiplier();
+    // }
 
     get armourPenetration() {
         return this.getStat(StatType.ArmourPenetration);

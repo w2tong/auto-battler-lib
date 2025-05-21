@@ -1,4 +1,6 @@
-const levelExp: {[level: number]: number} = {
+import LevelRange from './types/LevelRange';
+
+const levelExp: Record<LevelRange, number> = {
     1: 100,
     2: 250,
     3: 500,
@@ -18,9 +20,10 @@ const levelExp: {[level: number]: number} = {
     17: 22_900,
     18: 27_000,
     19: 31_500,
+    20: Infinity
 } as const;
 
-const encounterExp: {[level: number]: number} = {
+const encounterExp: Record<LevelRange, number> = {
     1: 10,
     2: 20,
     3: 35,
@@ -48,4 +51,4 @@ const encounterExp: {[level: number]: number} = {
 //     console.log(i, levelExp[i] / encounterExp[i]);
 // }
 
-export {levelExp, encounterExp};
+export { levelExp, encounterExp };

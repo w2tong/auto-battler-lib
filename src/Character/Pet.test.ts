@@ -1,4 +1,5 @@
 import { createTestCharacter, createTestStats } from '../tests/util';
+import Attributes from './Attributes/Attributes';
 import AttributeStatScaling from './Attributes/AttributeStatScaling';
 import AttributeType from './Attributes/AttributeType';
 import { createPet, PET_STAT_RATIO, PetId, petTemplates } from './Pet';
@@ -17,21 +18,6 @@ describe('createPet', () => {
     });
 
     // Attributes
-    test('100 Weapon Skill', () => {
-        const num = 100;
-        const char = createTestCharacter({
-            attributes: {
-                [AttributeType.WeaponSkill]: num
-            }
-        });
-        const pet = createPet(char, PetId.Wolf);
-
-        expect(pet.stats).toMatchObject(createTestStats({
-            [StatType.Damage]: { base: 0, attribute: 0, bonus: 0 },
-            [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base, attribute: 0, bonus: 0 },
-            [StatType.Accuracy]: { base: 0, attribute: 0, bonus: AttributeStatScaling.WeaponSkill[StatType.Accuracy] * num * PET_STAT_RATIO }
-        }, char.level));
-    });
     test('100 Dexterity', () => {
         const num = 100;
         const char = createTestCharacter({
@@ -44,10 +30,25 @@ describe('createPet', () => {
         expect(pet.stats).toMatchObject(createTestStats({
             [StatType.Damage]: { base: 0, attribute: 0, bonus: 0 },
             [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base, attribute: 0, bonus: 0 },
-            [StatType.Dodge]: { base: Stats.DEFAULT_DODGE, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.Dodge] * num * PET_STAT_RATIO },
-            [StatType.RangedWeaponDamagePercent]: { base: 0, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.RangedWeaponDamagePercent] * num * PET_STAT_RATIO },
-            [StatType.MeleeWeaponDamagePercent]: { base: 0, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.MeleeWeaponDamagePercent] * num * PET_STAT_RATIO },
-            [StatType.Initiative]: { base: 0, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.Initiative] * num * PET_STAT_RATIO }
+            [StatType.Dodge]: { base: Stats.DEFAULT_DODGE, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.Dodge] * (num - Attributes.DEFAULT_VALUE) * PET_STAT_RATIO },
+            [StatType.CriticalChance]: { base: Stats.DEFAULT_CRIT_CHANCE, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.CriticalChance] * (num - Attributes.DEFAULT_VALUE) * PET_STAT_RATIO },
+            [StatType.Initiative]: { base: 0, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.Initiative] * (num - Attributes.DEFAULT_VALUE) * PET_STAT_RATIO }
+        }, char.level));
+    });
+
+    test('100 Perception', () => {
+        const num = 100;
+        const char = createTestCharacter({
+            attributes: {
+                [AttributeType.Perception]: num
+            }
+        });
+        const pet = createPet(char, PetId.Wolf);
+
+        expect(pet.stats).toMatchObject(createTestStats({
+            [StatType.Damage]: { base: 0, attribute: 0, bonus: 0 },
+            [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base, attribute: 0, bonus: 0 },
+            [StatType.Accuracy]: { base: 0, attribute: 0, bonus: AttributeStatScaling.Perception[StatType.Accuracy] * (num - Attributes.DEFAULT_VALUE) * PET_STAT_RATIO }
         }, char.level));
     });
 

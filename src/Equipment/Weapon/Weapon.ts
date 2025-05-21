@@ -1,15 +1,13 @@
-import AttackType from '../../AttackType';
+import AttackType from '../../types/AttackType';
 import Character from '../../Character/Character';
-import DamageRange from '../../DamageRange';
-import DamageType from '../../DamageType';
+import NumberRange from '../../NumberRange';
 import { Item, ItemType, ItemAttributes, ItemStats } from '../Item';
 
 interface Weapon extends Item {
     itemType: ItemType.Weapon;
     type: WeaponType;
     attackType: AttackType;
-    damageType: DamageType;
-    damageRange: DamageRange;
+    damageRange: NumberRange;
     spellPowerRatio?: number;
     attributes?: ItemAttributes;
     stats?: ItemStats;

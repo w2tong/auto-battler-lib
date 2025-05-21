@@ -24,8 +24,8 @@ beforeEach(() => {
     new Battle([char], [target]);
 });
 
-// Burn damage (1 + 100 * 0.2) / 2 = 10.5
-test('Burn - 0 stacks', () => {
+// Burning damage (1 + 100 * 0.2) / 2 = 10.5
+test('Burning - 0 stacks', () => {
     target.statusEffectManager.addDebuff(DebuffId.Burning, char, 0);
 
     target.statusEffectManager.turnEnd();
@@ -33,7 +33,7 @@ test('Burn - 0 stacks', () => {
     expect(target.statusEffectManager.debuffs[DebuffId.Burning]).toBeUndefined();
 });
 
-test('Burn - 1 stacks', () => {
+test('Burning - 1 stacks', () => {
     target.statusEffectManager.addDebuff(DebuffId.Burning, char, 1);
 
     target.statusEffectManager.turnEnd();
@@ -41,7 +41,7 @@ test('Burn - 1 stacks', () => {
     expect(target.statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(char)]).toBeUndefined();
 });
 
-test('Burn - 2 stacks', () => {
+test('Burning - 2 stacks', () => {
     target.statusEffectManager.addDebuff(DebuffId.Burning, char, 2);
 
     target.statusEffectManager.turnEnd();

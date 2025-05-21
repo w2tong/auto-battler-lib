@@ -1,8 +1,8 @@
-import AttackType from '../AttackType';
+import AttackType from '../types/AttackType';
 import Character from '../Character/Character';
 import { PetId } from '../Character/Pet';
 import StatType from '../Character/Stats/StatType';
-import DamageType from '../DamageType';
+import { EquipSlot } from '../Equipment/Equipment';
 import { ItemType } from '../Equipment/Item';
 import { type Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
 import { createTestCharacter } from '../tests/util';
@@ -16,7 +16,6 @@ const testSword: Weapon = {
     img: 'weapon-longsword.png',
     type: WeaponType.Longsword,
     attackType: AttackType.MeleeWeapon,
-    damageType: DamageType.Physical,
     damageRange: { min: 4, max: 4, bonus: 0 }
 };
 
@@ -130,7 +129,7 @@ describe('nextTurn', () => {
                 [StatType.Initiative]: { base: 1 }
             },
             equipment: {
-                mainHand: testSword
+                [EquipSlot.MainHand]: testSword
             }
         });
         right1 = createTestCharacter({
@@ -139,7 +138,7 @@ describe('nextTurn', () => {
                 [StatType.Dodge]: { base: 0 }
             },
             equipment: {
-                mainHand: testSword
+                [EquipSlot.MainHand]: testSword
             }
         });
 

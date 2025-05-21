@@ -2,11 +2,11 @@ import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle/Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
 import { Equipment, EquipmentImport } from '../Equipment/Equipment';
-import HitType from '../HitType';
+import HitType from '../types/HitType';
 import { dice, rollDice } from '../dice';
 import { Potion } from '../Equipment/Potion';
 import Stats from './Stats/Stats';
-import DamageRange, { damageRoll } from '../DamageRange';
+import NumberRange, { numberRoll } from '../NumberRange';
 import Ability from '../Ability/Ability';
 import { StatTemplate } from './Stats/StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
@@ -15,9 +15,10 @@ import BuffId from '../StatusEffect/BuffId';
 import StatType from './Stats/StatType';
 import Attributes from './Attributes/Attributes';
 import BaseAttributes from './Attributes/BaseAttributes';
-import AttackType from '../AttackType';
+import AttackType from '../types/AttackType';
 import { type Weapon } from '../Equipment/Weapon/Weapon';
 import { createPet, PetId } from './Pet';
+import AttributeType from './Attributes/AttributeType';
 
 type CharacterInfo = {
     name: string,
@@ -48,7 +49,7 @@ export default class Character {
     private userId?: string;
 
     private _name: string;
-    private className: ClassName | null;
+    private _className: ClassName | null;
 
     private _level: number;
 
@@ -62,7 +63,7 @@ export default class Character {
     private _currentMana: number;
 
     // Ability
-    private ability: Ability | null;
+    private _ability: Ability | null;
 
     // Buffs/Debuffs
     private _statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
@@ -77,23 +78,35 @@ export default class Character {
     constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, petId?: PetId, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
         this._name = name;
         this._level = level;
-        this.className = className ?? null;
+        this._className = className ?? null;
 
         this._equipment = new Equipment(equipment);
 
         // Attributes
         this._attributes = new Attributes(attributes, this._equipment);
+        if (className) {
+            for (const [attr, val] of Object.entries(Classes[className].attributes)) {
+                this._attributes.addBonus(attr as AttributeType, val);
+            }
+        }
+
+        // Stats
         this._stats = new Stats({
             template: statTemplate,
             attributes: this.attributes,
             equipment: this._equipment,
             level
         });
-        this.ability = ability ?? (className ? Classes[className].ability : null);
+
+        this._ability = ability ?? (className ? Classes[className].ability : null);
         this._currentHealth = options?.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
 
         this._pet = petId ? createPet(this, petId) : null;
+
+        if (this.equipment.potion) {
+            this.equipment.potion.charges += this.stats.getStat(StatType.PotionCharges);
+        }
 
         if (options?.userId) this.userId = options.userId;
     }
@@ -108,6 +121,10 @@ export default class Character {
 
     get name() {
         return this._name;
+    }
+
+    get className() {
+        return this._className;
     }
 
     get level() {
@@ -158,6 +175,14 @@ export default class Character {
         return this._pet;
     }
 
+    get ability(): Ability | null {
+        return this._ability;
+    }
+
+    set ability(ability: Ability | null) {
+        this.ability = ability;
+    }
+
     getName(): string {
         let name = this.name;
         if (this.userId) name += ` (${this.userId})`;
@@ -192,9 +217,20 @@ export default class Character {
         }
     }
 
+    calcPotionHealing(heal: number): number {
+        return (heal + this.stats.getStat(StatType.PotionHealing)) * (1 + this.stats.getStat(StatType.PotionEffectiveness));
+    }
+
+    calcPotionHealingRange(healingRange: NumberRange): { min: number, max: number; } {
+        return {
+            min: this.calcPotionHealing(healingRange.min + healingRange.bonus),
+            max: this.calcPotionHealing(healingRange.max + healingRange.bonus)
+        };
+    }
+
     usePotion(): void {
         if (this.equipment.potion && this.equipment.potion.charges > 0) {
-            const potionHeal = (rollDice(this.equipment.potion.dice) + this.equipment.potion.bonus + this.stats.getStat(StatType.PotionHealing)) * (1 + this.stats.getStat(StatType.PotionEffectiveness));
+            const potionHeal = this.calcPotionHealing(numberRoll(this.equipment.potion.healingRange));
             this.addHealth(potionHeal);
             this.equipment.potion.charges -= 1;
             if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.equipment.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
@@ -231,21 +267,9 @@ export default class Character {
         // Rolling 96-100 always hits
         if (roll > 95) return true;
 
-        let accuracy = this.stats.accuracy;
-        // Add off-hand Accuracy
+        let accuracy = this.stats.getAccuracy(attackType);
         if (isOffHand) accuracy += this.stats.getStat(StatType.OffHandAccuracy);
-        // Add attack type Accuracy
-        switch (attackType) {
-            case AttackType.MeleeWeapon:
-                accuracy += this.stats.getStat(StatType.MeleeAccuracy);
-                break;
-            case AttackType.RangedWeapon:
-                accuracy += this.stats.getStat(StatType.RangedAccuracy);
-                break;
-            case AttackType.Spell:
-                accuracy += this.stats.getStat(StatType.SpellAccuracy);
-                break;
-        }
+
         const targetDodgeChance = target.stats.dodge - this.stats.getStat(StatType.DodgeReduction);
 
         return roll + accuracy >= targetDodgeChance;
@@ -261,37 +285,26 @@ export default class Character {
         return rollDice(dice['1d100']) <= blockChance;
     }
 
-    calcDamage({ attackType, damage, spellPowerRatio, isOffHand = false, invisibleStacks = 0 }: { attackType: AttackType, damage: number, spellPowerRatio?: number, isOffHand?: boolean, invisibleStacks?: number; }): number {
-        let damageBonus = this.stats.damage + (isOffHand ? this.stats.getStat(StatType.OffHandDamage) : 0);
-        let damagePercent = this.stats.getStat(StatType.DamagePercent);
-        switch (attackType) {
-            case AttackType.MeleeWeapon:
-                damageBonus += this.stats.meleeWeaponDamage;
-                damagePercent += this.stats.getStat(StatType.MeleeWeaponDamagePercent);
-                break;
-            case AttackType.RangedWeapon:
-                damageBonus += this.stats.rangedWeaponDamage;
-                damagePercent += this.stats.getStat(StatType.RangedWeaponDamagePercent);
-                break;
-            case AttackType.Spell:
-                // do nothing
-                break;
-            default:
-                break;
-        }
+    calcDamage({ damage, weaponAttack, spellPowerRatio, invisibleStacks = 0 }: { damage: number, weaponAttack: boolean, spellPowerRatio?: number, invisibleStacks?: number; }): number {
+        const statDamage = this.stats.getStat(StatType.Damage);
+        const twoHandedMultiplier = this.stats.getTwoHandedMultiplier();
+
+        const damageBonus = (weaponAttack && statDamage > 0 ? statDamage * twoHandedMultiplier : this.stats.getStat(StatType.Damage));
+        const damagePercent = this.stats.getStat(StatType.DamagePercent);
+
         const spellDamage = spellPowerRatio !== undefined ? this.stats.spellPower * spellPowerRatio : 0;
-        const sneakDamage = Invisible.damage * invisibleStacks;
+        const sneakDamage = Invisible.damage * invisibleStacks * (weaponAttack ? twoHandedMultiplier : 1);
 
         return (damage + damageBonus + spellDamage + sneakDamage) * (1 + damagePercent);
     }
 
-    calcDamageRange({ attackType, damageRange, spellPowerRatio, isOffHand = false }: { attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean; }): { min: number, max: number; } {
-        const min = this.calcDamage({ attackType, damage: damageRange.min + damageRange.bonus, spellPowerRatio, isOffHand });
-        const max = this.calcDamage({ attackType, damage: damageRange.max + damageRange.bonus, spellPowerRatio, isOffHand });
+    calcDamageRange({ damageRange, weaponAttack, spellPowerRatio }: { damageRange: NumberRange, weaponAttack: boolean, spellPowerRatio?: number; }): { min: number, max: number; } {
+        const min = this.calcDamage({ damage: damageRange.min + damageRange.bonus, weaponAttack, spellPowerRatio });
+        const max = this.calcDamage({ damage: damageRange.max + damageRange.bonus, weaponAttack, spellPowerRatio });
         return { min, max };
     }
 
-    attack({ target, attackType, damageRange, spellPowerRatio, isOffHand = false, abilityName }: { target: Character, attackType: AttackType, damageRange: DamageRange, spellPowerRatio?: number, isOffHand?: boolean, abilityName?: string; }): { hit: boolean, damageDone: number; } {
+    attack({ target, attackType, damageRange, weaponAttack, spellPowerRatio, isOffHand = false, abilityName }: { target: Character, attackType: AttackType, damageRange: NumberRange, weaponAttack: boolean, spellPowerRatio?: number, isOffHand?: boolean, abilityName?: string; }): { hit: boolean, damageDone: number; } {
 
         let hitType: HitType = HitType.Miss;
         let damage: number = 0;
@@ -310,7 +323,7 @@ export default class Character {
             hitType = HitType.Hit;
             if (this.statusEffectManager.getBuffStacks(BuffId.Invisible) > 0) sneakAttack = true;
 
-            damage = this.calcDamage({ attackType, damage: damageRoll(damageRange), spellPowerRatio, isOffHand, invisibleStacks: this.statusEffectManager.getBuffStacks(BuffId.Invisible) });
+            damage = this.calcDamage({ damage: numberRoll(damageRange), weaponAttack, spellPowerRatio, invisibleStacks: this.statusEffectManager.getBuffStacks(BuffId.Invisible) });
 
             const crit = Character.critRoll(this.stats.critChance);
             if (crit) {
@@ -324,7 +337,7 @@ export default class Character {
                 damage = Character.calcDamageAfterBlock(damage, target.stats.getStat(StatType.BlockPower));
             }
 
-            target.takeDamage({
+            damageDone = target.takeDamage({
                 source: this.name,
                 damage,
                 armourPenetration: this.stats.armourPenetration,
@@ -335,10 +348,10 @@ export default class Character {
         // Add hit to combat log
         if (this.battle) {
             this.battle.ref.log.addAttack({
-                charName: this.name,
-                tarName: target.name,
+                name: this.name,
+                target: target.name,
                 hitType,
-                damage,
+                damage: damageDone,
                 sneak: sneakAttack,
                 blocked,
                 abilityName
@@ -349,8 +362,8 @@ export default class Character {
 
         // Deal thorns damage to this Character if target was hit
         if (hit && target.stats.getStat(StatType.Thorns) > 0) {
-            damageDone = this.takeDamage({
-                source: StatType.Thorns,
+            this.takeDamage({
+                source: `${StatType.Thorns} (${target.name})`,
                 damage: target.stats.getStat(StatType.Thorns),
                 armourPenetration: target.stats.armourPenetration
             });
@@ -374,6 +387,7 @@ export default class Character {
             target: target,
             attackType: weapon.attackType,
             damageRange: weapon.damageRange,
+            weaponAttack: true,
             isOffHand
         });
         if (hit) {
@@ -421,7 +435,7 @@ export default class Character {
     info(): CharacterInfo {
         return {
             name: this.name,
-            className: this.className,
+            className: this._className,
             level: this.level,
             mainHand: this.equipment.mainHand,
             offHandWeapon: this.equipment.offHandWeapon,

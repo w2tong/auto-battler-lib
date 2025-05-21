@@ -50,7 +50,7 @@ class Battle {
         this._log = new Log();
     }
 
-    getCharsWithPets(chars: Character[]) {
+    private getCharsWithPets(chars: Character[]) {
         const res: Character[] = [];
         for (const char of chars) {
             res.push(char);

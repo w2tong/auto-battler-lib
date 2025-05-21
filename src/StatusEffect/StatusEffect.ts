@@ -14,8 +14,6 @@ type StatusEffectOptional = { stats?: { [stat in StatType]?: number }, remaining
 abstract class StatusEffect {
     abstract readonly id: BuffId | DebuffId;
     abstract readonly type: StatusEffectType;
-    abstract readonly name: string;
-    abstract readonly symbol: string;
     readonly manager: StatusEffectManager;
     readonly char: Character;
     readonly source: Character;

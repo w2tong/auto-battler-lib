@@ -1,4 +1,4 @@
-import HitType from '../HitType';
+import HitType from '../types/HitType';
 
 enum LineType {
     // Text
@@ -14,7 +14,7 @@ enum LineType {
 
 type BaseLine = {
     type: LineType;
-}
+};
 
 interface TextLine extends BaseLine {
     type: LineType.Text;
@@ -39,7 +39,25 @@ interface LevelLine extends BaseLine {
     level: number;
 }
 
-type LogLine = TextLine | LootLine | ExpLine | LevelLine;
+interface AttackLine extends BaseLine {
+    type: LineType.Attack;
+    name: string;
+    target: string;
+    hitType: HitType;
+    damage: number;
+    sneak: boolean;
+    blocked: boolean;
+    abilityName?: string;
+}
+
+interface DamageLine extends BaseLine {
+    type: LineType.Damage;
+    name: string;
+    source: string;
+    damage: number;
+}
+
+type LogLine = TextLine | LootLine | ExpLine | LevelLine | AttackLine | DamageLine;
 
 class Log {
 
@@ -68,19 +86,41 @@ class Log {
         });
     }
 
-    addAttack({ charName, tarName, hitType, damage, sneak, blocked, abilityName }: { charName: string, tarName: string, hitType: HitType, damage: number, sneak: boolean, blocked: boolean, abilityName?: string }) {
-        const attackName = abilityName ? `casted ${abilityName} on` : 'attacked';
-        let attackStr = `${charName} ${attackName} ${tarName} and ${hitType}`;
-        if (hitType !== HitType.Miss) {
-            attackStr += ` for ${damage} damage`;
-            if (sneak) attackStr += ' (Sneak Attack)';
-            if (blocked) attackStr += ' (Blocked)';
-        }
-        this.add(`${attackStr}.`);
+    // addAttack({ charName, tarName, hitType, damage, sneak, blocked, abilityName }: { charName: string, tarName: string, hitType: HitType, damage: number, sneak: boolean, blocked: boolean, abilityName?: string; }) {
+    //     const attackName = abilityName ? `casted ${abilityName} on` : 'attacked';
+    //     let attackStr = `${charName} ${attackName} ${tarName} and ${hitType}`;
+    //     if (hitType !== HitType.Miss) {
+    //         attackStr += ` for ${Number(damage.toFixed(1))} damage`;
+    //         if (sneak) attackStr += ' (Sneak Attack)';
+    //         if (blocked) attackStr += ' (Blocked)';
+    //     }
+    //     this.add(`${attackStr}.`);
+    // }
+
+    addAttack({ name, target, hitType, damage, sneak, blocked, abilityName }: { name: string, target: string, hitType: HitType, damage: number, sneak: boolean, blocked: boolean, abilityName?: string; }) {
+        this.last.push({
+            type: LineType.Attack,
+            name,
+            target,
+            hitType,
+            damage,
+            sneak,
+            blocked,
+            abilityName
+        });
     }
 
+    // addDamage(name: string, source: string, damage: number) {
+    //     this.add(`${name} took ${Number(damage.toFixed(1)).toLocaleString()} damage from ${source}.`);
+    // }
+
     addDamage(name: string, source: string, damage: number) {
-        this.add(`${name} took ${damage.toLocaleString()} damage from ${source}.`);
+        this.last.push({
+            type: LineType.Damage,
+            name,
+            source,
+            damage
+        });
     }
 
     addLoot(name: string, itemId: string) {

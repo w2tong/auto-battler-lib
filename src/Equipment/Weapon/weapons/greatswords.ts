@@ -1,6 +1,5 @@
-import AttackType from '../../../AttackType';
+import AttackType from '../../../types/AttackType';
 import StatType from '../../../Character/Stats/StatType';
-import DamageType from '../../../DamageType';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 
@@ -16,7 +15,6 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 5, max: 9, bonus: 0 },
         stats: {
             [StatType.ArmourPenetration]: 15
@@ -31,7 +29,6 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 5, max: 9, bonus: 1 },
         stats: {
             [StatType.ArmourPenetration]: 19
@@ -46,7 +43,6 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 5, max: 9, bonus: 2 },
         stats: {
             [StatType.ArmourPenetration]: 23
@@ -61,7 +57,6 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 5, max: 9, bonus: 3 },
         stats: {
             [StatType.ArmourPenetration]: 27
@@ -76,7 +71,6 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 5, max: 9, bonus: 4 },
         stats: {
             [StatType.ArmourPenetration]: 31
@@ -91,7 +85,6 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 4, max: 9, bonus: 5 },
         stats: {
             [StatType.ArmourPenetration]: 35

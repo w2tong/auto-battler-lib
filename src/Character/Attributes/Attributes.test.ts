@@ -1,3 +1,5 @@
+import { EquipSlot } from '../../Equipment/Equipment';
+import { quarterstaffs } from '../../Equipment/Weapon/weapons/quarterstaffs';
 import { createTestCharacter } from '../../tests/util';
 import Character from '../Character';
 import AttributeType from './AttributeType';
@@ -6,7 +8,6 @@ let char: Character;
 beforeEach(() => {
     char = createTestCharacter({
         attributes: {
-            [AttributeType.WeaponSkill]: 5,
             [AttributeType.Strength]: 6,
             [AttributeType.Dexterity]: 7,
             [AttributeType.Perception]: 8,
@@ -18,9 +19,6 @@ beforeEach(() => {
 });
 
 describe('Attribute getters/addBonus', () => {
-    test('weaponSkill', () => {
-        expect(char.attributes.weaponSkill).toBe(5); // 5 + 0
-    });
     test('strength', () => {
         expect(char.attributes.strength).toBe(6);
         char.attributes.addBonus(AttributeType.Strength, 1);
@@ -55,7 +53,6 @@ describe('Attribute getters/addBonus', () => {
 
 test('addItemAttributes', () => {
     char.attributes.addItemAttributes({
-        [AttributeType.WeaponSkill]: 5,
         [AttributeType.Strength]: 10,
         [AttributeType.Dexterity]: 15,
         [AttributeType.Perception]: 20,
@@ -64,11 +61,21 @@ test('addItemAttributes', () => {
         [AttributeType.Wisdom]: 35,
     });
 
-    expect(char.attributes.weaponSkill).toBe(10); // 5 + 5
     expect(char.attributes.strength).toBe(16); // 6 + 10
     expect(char.attributes.dexterity).toBe(22); // 7 + 15
     expect(char.attributes.perception).toBe(28); // 8 + 20
     expect(char.attributes.constitution).toBe(34); // 9 + 25
     expect(char.attributes.intelligence).toBe(40); // 10 + 30
     expect(char.attributes.wisdom).toBe(46); // 11 + 35
+});
+
+describe('constructor - equipment', () => {
+    test('quarterstaff1', () => {
+        const char = createTestCharacter({
+            equipment: {
+                [EquipSlot.MainHand]: quarterstaffs.quarterstaff1
+            }
+        });
+        expect(char.attributes.wisdom).toBe(11);
+    });
 });

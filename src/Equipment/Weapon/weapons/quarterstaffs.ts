@@ -1,7 +1,6 @@
-import AttackType from '../../../AttackType';
+import AttackType from '../../../types/AttackType';
 import AttributeType from '../../../Character/Attributes/AttributeType';
 import StatType from '../../../Character/Stats/StatType';
-import DamageType from '../../../DamageType';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 
@@ -17,7 +16,6 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 4, max: 8, bonus: 0 },
         stats: {
             [StatType.ManaRegen]: 2
@@ -32,7 +30,6 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 4, max: 8, bonus: 2 },
         attributes: {
             [AttributeType.Wisdom]: 1
@@ -50,7 +47,6 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 4, max: 8, bonus: 4 },
         attributes: {
             [AttributeType.Wisdom]: 2
@@ -68,7 +64,6 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 4, max: 8, bonus: 6 },
         attributes: {
             [AttributeType.Wisdom]: 3
@@ -86,7 +81,6 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 4, max: 8, bonus: 8 },
         attributes: {
             [AttributeType.Wisdom]: 4
@@ -104,7 +98,6 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
-        damageType: DamageType.Physical,
         damageRange: { min: 4, max: 8, bonus: 10 },
         attributes: {
             [AttributeType.Wisdom]: 5

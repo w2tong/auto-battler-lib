@@ -23,8 +23,8 @@ beforeEach(() => {
     new Battle([char], [target]);
 });
 
-// Poison damage is (1 + 1% current health) * stacks
-test('Poison - 0 stacks', () => {
+// Poisoned damage is (1 + 1% current health) * stacks
+test('Poisoned - 0 stacks', () => {
     target.statusEffectManager.addDebuff(DebuffId.Poisoned, char, 0);
 
     target.statusEffectManager.turnEnd();
@@ -33,7 +33,7 @@ test('Poison - 0 stacks', () => {
 });
 
 
-test('Poison - 1 stacks', () => {
+test('Poisoned - 1 stacks', () => {
     target.statusEffectManager.addDebuff(DebuffId.Poisoned, char, 1);
 
     target.statusEffectManager.turnEnd();
@@ -41,7 +41,7 @@ test('Poison - 1 stacks', () => {
     expect(target.statusEffectManager.debuffs[DebuffId.Poisoned]![getCharBattleId(char)]).toBeUndefined();
 });
 
-test('Poison - 2 stacks', () => {
+test('Poisoned - 2 stacks', () => {
     target.statusEffectManager.addDebuff(DebuffId.Poisoned, char, 2);
 
     target.statusEffectManager.turnEnd();
@@ -53,7 +53,7 @@ test('Poison - 2 stacks', () => {
     expect(target.statusEffectManager.debuffs[DebuffId.Poisoned]![getCharBattleId(char)]).toBeUndefined();
 });
 
-test('Poison - 10 stacks', () => {
+test('Poisoned - 10 stacks', () => {
     target.statusEffectManager.addDebuff(DebuffId.Poisoned, char, 10);
 
     target.statusEffectManager.turnEnd();

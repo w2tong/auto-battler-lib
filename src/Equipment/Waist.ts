@@ -1,22 +1,22 @@
 import StatType from '../Character/Stats/StatType';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
-interface Belt extends Item {
-    itemType: ItemType.Belt;
+interface Waist extends Item {
+    itemType: ItemType.Waist;
     attributes?: ItemAttributes;
     stats?: ItemStats;
 }
 
-type BeltId =
+type WaistId =
     'chargesBelt0' | 'chargesBelt1'
     | 'effBelt0' | 'effBelt1' | 'effBelt2' | 'effBelt3'
     | 'healBelt0' | 'healBelt1' | 'healBelt2' | 'healBelt3'
     ;
 
-const belts: { [id in BeltId]: Belt } = {
+const waists: { [id in WaistId]: Waist } = {
     chargesBelt0: {
         id: 'chargesBelt0',
-        itemType: ItemType.Belt,
+        itemType: ItemType.Waist,
         name: 'Belt of Charges',
         tier: 4,
         img: 'belt-multi.png',
@@ -27,7 +27,7 @@ const belts: { [id in BeltId]: Belt } = {
     },
     chargesBelt1: {
         id: 'belt',
-        itemType: ItemType.Belt,
+        itemType: ItemType.Waist,
         name: 'Belt of Greater Charges',
         tier: 5,
         img: 'belt-multi.png',
@@ -38,7 +38,7 @@ const belts: { [id in BeltId]: Belt } = {
     },
     effBelt0: {
         id: 'effBelt0',
-        itemType: ItemType.Belt,
+        itemType: ItemType.Waist,
         name: 'Belt of Effectiveness',
         tier: 2,
         img: 'belt-red-pot.png',
@@ -49,7 +49,7 @@ const belts: { [id in BeltId]: Belt } = {
     },
     effBelt1: {
         id: 'effBelt1',
-        itemType: ItemType.Belt,
+        itemType: ItemType.Waist,
         name: 'Belt of Greater Effectiveness',
         tier: 3,
         img: 'belt-red-pot.png',
@@ -60,7 +60,7 @@ const belts: { [id in BeltId]: Belt } = {
     },
     effBelt2: {
         id: 'effBelt2',
-        itemType: ItemType.Belt,
+        itemType: ItemType.Waist,
         name: 'Belt of Superior Effectiveness',
         tier: 4,
         img: 'belt-red-pot.png',
@@ -71,7 +71,7 @@ const belts: { [id in BeltId]: Belt } = {
     },
     effBelt3: {
         id: 'effBelt3',
-        itemType: ItemType.Belt,
+        itemType: ItemType.Waist,
         name: 'Belt of Supreme Effectiveness',
         tier: 5,
         img: 'belt-red-pot.png',
@@ -82,7 +82,7 @@ const belts: { [id in BeltId]: Belt } = {
     },
     healBelt0: {
         id: 'healBelt0',
-        itemType: ItemType.Belt,
+        itemType: ItemType.Waist,
         name: 'Belt of Healing',
         tier: 2,
         img: 'belt-green-pot.png',
@@ -93,7 +93,7 @@ const belts: { [id in BeltId]: Belt } = {
     },
     healBelt1: {
         id: 'healBelt1',
-        itemType: ItemType.Belt,
+        itemType: ItemType.Waist,
         name: 'Belt of Greater Healing',
         tier: 3,
         img: 'belt-green-pot.png',
@@ -104,7 +104,7 @@ const belts: { [id in BeltId]: Belt } = {
     },
     healBelt2: {
         id: 'healBelt2',
-        itemType: ItemType.Belt,
+        itemType: ItemType.Waist,
         name: 'Belt of Superior Healing',
         tier: 4,
         img: 'belt-green-pot.png',
@@ -115,7 +115,7 @@ const belts: { [id in BeltId]: Belt } = {
     },
     healBelt3: {
         id: 'healBelt3',
-        itemType: ItemType.Belt,
+        itemType: ItemType.Waist,
         name: 'Belt of Supreme Healing',
         tier: 5,
         img: 'belt-green-pot.png',
@@ -127,4 +127,4 @@ const belts: { [id in BeltId]: Belt } = {
 
 } as const;
 
-export { Belt, BeltId, belts };
+export { Waist, WaistId, waists };
