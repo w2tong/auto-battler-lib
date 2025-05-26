@@ -19,6 +19,7 @@ import AttackType from '../types/AttackType';
 import { type Weapon } from '../Equipment/Weapon/Weapon';
 import { createPet, PetId } from './Pet';
 import AttributeType from './Attributes/AttributeType';
+import { NpcId } from '../npc/NPC';
 
 type CharacterInfo = {
     name: string,
@@ -49,9 +50,10 @@ export default class Character {
     private userId?: string;
 
     private _name: string;
-    private _className: ClassName | null;
-
     private _level: number;
+
+    private _className: ClassName | null;
+    private _npcId: NpcId | null;
 
     // Equipment
     private _equipment: Equipment;
@@ -75,10 +77,11 @@ export default class Character {
     private _target: Character | null = null;
     private _battle: { ref: Battle, side: Side, index: number; } | null = null;
 
-    constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, petId?: PetId, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
+    constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, npcId, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, petId?: PetId, npcId: NpcId, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
         this._name = name;
         this._level = level;
         this._className = className ?? null;
+        this._npcId = npcId ?? null;
 
         this._equipment = new Equipment(equipment);
 
@@ -123,12 +126,16 @@ export default class Character {
         return this._name;
     }
 
+    get level() {
+        return this._level;
+    }
+
     get className() {
         return this._className;
     }
 
-    get level() {
-        return this._level;
+    get npcId() {
+        return this._npcId;
     }
 
     get attributes() {
