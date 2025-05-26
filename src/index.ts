@@ -71,3 +71,5 @@ import lootTables from './lootTables';
 export { lootTables };
 
 export { startingAbility, startingEquipment } from './Character/Classes/classLoadouts';
+
+export { NpcId } from './npc/NPC';

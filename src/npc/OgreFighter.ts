@@ -9,6 +9,7 @@ import { weapons } from '../Equipment/Weapon/weapons';
 import NPC from './NPC';
 
 const OgreFighter: NPC = {
+    id: 'ogreFighter',
     name: 'Ogre Fighter',
     className: ClassName.Fighter,
     attributes: {
@@ -36,6 +37,6 @@ const OgreFighter: NPC = {
         [EquipSlot.Armour]: armour.leatherArmour0
     },
     ability: startingAbility[ClassName.Fighter]
-};
+} as const;
 
 export default OgreFighter;

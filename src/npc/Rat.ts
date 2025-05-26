@@ -6,6 +6,7 @@ import { weapons } from '../Equipment/Weapon/weapons';
 import NPC from './NPC';
 
 const Rat: NPC = {
+    id: 'rat',
     name: 'Rat',
     attributes: {
         [AttributeType.Strength]: { perLvl: 0.5 },
@@ -26,6 +27,6 @@ const Rat: NPC = {
     equipment: {
         [EquipSlot.MainHand]: weapons.poisonbite0
     }
-};
+} as const;
 
 export default Rat;

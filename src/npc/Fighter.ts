@@ -5,6 +5,7 @@ import StatType from '../Character/Stats/StatType';
 import NPC from './NPC';
 
 const Fighter: NPC = {
+    id: 'fighter',
     name: 'Fighter',
     className: ClassName.Fighter,
     attributes: {
@@ -27,7 +28,7 @@ const Fighter: NPC = {
     },
     equipment: startingEquipment[ClassName.Fighter],
     ability: startingAbility[ClassName.Fighter]
-};
+} as const;
 
 export default Fighter;
 
