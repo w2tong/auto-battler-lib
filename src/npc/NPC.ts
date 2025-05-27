@@ -5,7 +5,7 @@ import { StatTemplate } from '../Character/Stats/StatTemplate';
 import { EquipmentImport } from '../Equipment/Equipment';
 
 type NpcId = 'fighter' | 'rogue' | 'wizard' |
-    'goblinFighter' | 'goblinRogue' | 'orcFighter' | 'ogreFighter' | 'rat' | 'zombie';
+    'goblinFighter' | 'goblinRogue' | 'orcFighter' | 'ogreFighter' | 'rat' | 'zombie' | 'wolf';
 
 interface NPC {
     id: NpcId;
