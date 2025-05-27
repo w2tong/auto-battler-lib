@@ -6,7 +6,7 @@ import NPC from './NPC';
 
 const Wizard: NPC = {
     id: 'wizard',
-    name: 'Wizard',
+    name: 'Bandit Wizard',
     className: ClassName.Wizard,
     attributes: {
         [AttributeType.Dexterity]: { perLvl: 0.5 },

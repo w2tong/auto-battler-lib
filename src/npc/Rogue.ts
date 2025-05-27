@@ -6,7 +6,7 @@ import NPC from './NPC';
 
 const Rogue: NPC = {
     id: 'rogue',
-    name: 'Rogue',
+    name: 'Bandit Rogue',
     className: ClassName.Rogue,
     attributes: {
         [AttributeType.Strength]: { perLvl: 1 },
