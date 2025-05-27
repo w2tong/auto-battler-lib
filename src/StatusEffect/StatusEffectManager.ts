@@ -38,6 +38,16 @@ export default class StatusEffectManager {
         return count;
     }
 
+    getDebuffStacks(id: DebuffId) {
+        let count = 0;
+        if (this.debuffs[id]) {
+            for (const debuff of Object.values(this.debuffs[id]!)) {
+                count += debuff.stacks;
+            }
+        }
+        return count;
+    }
+
     addBuff(id: BuffId, source: Character, stacks: number, optional?: StatusEffectOptional) {
         if (stacks <= 0) return;
         if (!this.buffs[id]) this.buffs[id] = {};
@@ -140,21 +150,4 @@ export default class StatusEffectManager {
             }
         }
     }
-
-    // TODO: move following methods to client
-    // getStatusEffectString(statusEffects: { [id in BuffId]?: Buff } | { [id in DebuffId]?: Debuff }) {
-    //     const arr: string[] = [];
-    //     for (const statusEffect of Object.values(statusEffects)) {
-    //         arr.push(`${statusEffect.symbol}(${statusEffect.stacks})`);
-    //     }
-    //     return arr.join(' ');
-    // }
-
-    // getBuffString(): string {
-    //     return this.getStatusEffectString(this.buffs);
-    // }
-
-    // getDebuffString(): string {
-    //     return this.getStatusEffectString(this.debuffs);
-    // }
 }
