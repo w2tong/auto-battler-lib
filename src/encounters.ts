@@ -217,6 +217,7 @@ function createNPCChar(npc: NPC, level: number, num?: number): Character {
     return new Character({
         name: num ? `${npc.name} ${num}` : npc.name,
         level,
+        className: npc.className,
         npcId: npc.id,
         attributes,
         statTemplate: npc.stats,
