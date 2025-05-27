@@ -77,7 +77,7 @@ export default class Character {
     private _target: Character | null = null;
     private _battle: { ref: Battle, side: Side, index: number; } | null = null;
 
-    constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, npcId, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, petId?: PetId, npcId: NpcId, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
+    constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, npcId, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, petId?: PetId, npcId?: NpcId, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
         this._name = name;
         this._level = level;
         this._className = className ?? null;
