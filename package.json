@@ -12,7 +12,7 @@
   },
   "name": "@wholesome-sisters/auto-battler",
   "description": "classes and types for auto-battler server and client",
-  "version": "1.2.32",
+  "version": "1.2.33",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup",
