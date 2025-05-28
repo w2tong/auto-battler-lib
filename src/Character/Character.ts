@@ -318,6 +318,7 @@ export default class Character {
         let sneakAttack: boolean = false;
         let blocked: boolean = false;
         let damageDone: number = 0;
+        let targetDead: boolean = false;
 
         const hit = this.hitRoll({
             target,
@@ -344,12 +345,14 @@ export default class Character {
                 damage = Character.calcDamageAfterBlock(damage, target.stats.getStat(StatType.BlockPower));
             }
 
-            damageDone = target.takeDamage({
+            const res = target.takeDamage({
                 source: this.name,
                 damage,
                 armourPenetration: this.stats.armourPenetration,
                 options: { addToLog: false }
             });
+            damageDone = res.damageTaken;
+            targetDead = res.dead;
         }
 
         // Add hit to combat log
@@ -363,6 +366,9 @@ export default class Character {
                 blocked,
                 abilityName
             });
+            if (targetDead) {
+                this.battle.ref.log.add(`${target.name} died.`);
+            }
         }
 
         this.statusEffectManager.onAttack(hit);
@@ -403,8 +409,10 @@ export default class Character {
         }
     }
 
-    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean; }; }): number {
+    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean; }; }): { damageTaken: number, dead: boolean; } {
+        const addToLog = options?.addToLog ?? true;
         let damageTaken = Math.max(damage, 0);
+        let dead = false;
 
         if (damageTaken > 0) {
             damageTaken = Character.calcDamageAfterDeflection(damageTaken, this.stats.getStat(StatType.Deflection));
@@ -413,14 +421,17 @@ export default class Character {
         }
 
         if (this.battle) {
-            if (options?.addToLog === undefined || options?.addToLog === true) this.battle.ref.log.addDamage(this.name, source, damageTaken);
+            if (addToLog) {
+                this.battle.ref.log.addDamage(this.name, source, damageTaken);
+            }
             if (this.isDead()) {
+                dead = true;
                 this.battle.ref.setCharDead(this.battle.side, this.battle.index);
-                this.battle.ref.log.add(`${this.name} died.`);
+                if (addToLog) this.battle.ref.log.add(`${this.name} died.`);
             }
         }
 
-        return damageTaken;
+        return { damageTaken, dead };
     }
 
     addMana(mana: number): void {
