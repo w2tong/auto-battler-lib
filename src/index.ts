@@ -19,11 +19,11 @@ export { WeaponId, weapons } from './Equipment/Weapon/weapons';
 import WeaponStyle from './WeaponStyle';
 export { WeaponStyle };
 
-import Battle, { Side, BattleJSON } from './Battle/Battle';
-export { Battle, Side, BattleJSON };
+import Battle, { Side } from './Battle/Battle';
+export { Battle, Side };
 
-import Character, { CharacterInfo, CharacterJSON } from './Character/Character';
-export { Character, CharacterInfo, CharacterJSON };
+import Character, { CharacterInfo } from './Character/Character';
+export { Character, CharacterInfo };
 
 import Ability from './Ability/Ability';
 export { Ability };

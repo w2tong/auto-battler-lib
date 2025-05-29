@@ -33,18 +33,6 @@ type CharacterInfo = {
     stats: Stats;
 };
 
-type CharacterJSON = {
-    name: string;
-    className: string | null;
-    level: number;
-    currHealth: number;
-    maxHealth: number;
-    currMana: number;
-    manaCost: number;
-    buffs: string;
-    debuffs: string;
-};
-
 // Crit chance, crit dmg, Accuracy, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
 export default class Character {
     private userId?: string;
@@ -463,21 +451,6 @@ export default class Character {
         };
     }
 
-    // Helper functions
-    // json(): CharacterJSON {
-    //     return {
-    //         name: this._name,
-    //         className: this.className,
-    //         level: this.level,
-    //         currHealth: this.currentHealth,
-    //         maxHealth: this.stats.getStat(StatType.MaxHealth),
-    //         currMana: this.currentHealth,
-    //         manaCost: this.stats.getStat(StatType.ManaCost),
-    //         buffs: this.statusEffectManager.getBuffString(),
-    //         debuffs: this.statusEffectManager.getDebuffString()
-    //     };
-    // }
-
     static calcCritDamage(damage: number, critDamage: number) {
         return Math.max(damage *= critDamage, 0);
     }
@@ -497,4 +470,4 @@ export default class Character {
     }
 }
 
-export { CharacterInfo, CharacterJSON };
+export { CharacterInfo };

@@ -1,4 +1,4 @@
-import Character, { CharacterJSON } from '../Character/Character';
+import Character from '../Character/Character';
 import Log from './Log';
 import { rollDice, dice } from '../dice';
 
@@ -11,13 +11,6 @@ enum Side {
 type TurnRes = {
     combatEnded: boolean;
     winner?: Side;
-};
-
-type BattleJSON = {
-    left: CharacterJSON[];
-    right: CharacterJSON[];
-    turnOrder: { name: string, init: number; }[];
-    turnIndex: number;
 };
 
 class Battle {
@@ -140,16 +133,7 @@ class Battle {
 
         return res;
     }
-
-    // json(): BattleJSON {
-    //     return {
-    //         left: [...this.left.map(char => char.json())],
-    //         right: [...this.right.map(char => char.json())],
-    //         turnOrder: this.turnOrder.map(charInit => { return { name: charInit.char.name, init: charInit.init }; }),
-    //         turnIndex: this.turnIndex,
-    //     };
-    // }
 }
 
 export default Battle;
-export { BattleJSON, Side };
+export { Side };
