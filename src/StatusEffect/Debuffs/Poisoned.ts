@@ -1,3 +1,4 @@
+import StatType from '../../Character/Stats/StatType';
 import Debuff from '../Debuff';
 import DebuffId from '../DebuffId';
 
@@ -12,9 +13,12 @@ export default class Poisoned extends Debuff {
 
     onTurnStart() { }
     onTurnEnd() {
+        const healthDamage = this.char.currentHealth * Poisoned.healthDamagePercent;
+        const damagePercent = 1 + this.source.stats.getStat(StatType.DamagePercent);
+
         this.char.takeDamage({
             source: `${this.id} (${this.source.name})`,
-            damage: (Poisoned.baseDamage + this.char.currentHealth * Poisoned.healthDamagePercent) * this.stacks,
+            damage: (Poisoned.baseDamage + healthDamage) * damagePercent * this.stacks,
             armourPenetration: Infinity
         });
 

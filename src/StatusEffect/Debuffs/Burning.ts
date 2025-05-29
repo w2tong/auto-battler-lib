@@ -13,9 +13,12 @@ export default class Burning extends Debuff {
 
     onTurnStart() { }
     onTurnEnd() {
+        const spellPowerDamage = this.source.stats.spellPower * Burning.spellPowerRatio;
+        const damagePercent = 1 + this.source.stats.getStat(StatType.DamagePercent);
+
         this.char.takeDamage({
             source: `${this.id} (${this.source.name})`,
-            damage: Burning.baseDamage + this.source.stats.spellPower * Burning.spellPowerRatio,
+            damage: (Burning.baseDamage + spellPowerDamage) * damagePercent,
             armourPenetration: this.source.stats.getStat(StatType.ArmourPenetration)
         });
 
