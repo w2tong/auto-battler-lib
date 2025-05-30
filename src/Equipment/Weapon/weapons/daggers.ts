@@ -29,7 +29,7 @@ const daggers: { [id in DaggerId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 2, max: 5, bonus: 1 },
         stats: {
-            [StatType.CriticalChance]: 5
+            [StatType.CriticalChance]: 6
         }
     },
     dagger2: {
@@ -42,7 +42,7 @@ const daggers: { [id in DaggerId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 2, max: 5, bonus: 2 },
         stats: {
-            [StatType.CriticalChance]: 5
+            [StatType.CriticalChance]: 7
         }
     },
     dagger3: {
@@ -55,7 +55,7 @@ const daggers: { [id in DaggerId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 2, max: 5, bonus: 3 },
         stats: {
-            [StatType.CriticalChance]: 5
+            [StatType.CriticalChance]: 8
         }
     },
     dagger4: {
@@ -68,7 +68,7 @@ const daggers: { [id in DaggerId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 2, max: 5, bonus: 4 },
         stats: {
-            [StatType.CriticalChance]: 5
+            [StatType.CriticalChance]: 9
         }
     },
     dagger5: {
@@ -81,7 +81,7 @@ const daggers: { [id in DaggerId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 2, max: 5, bonus: 5 },
         stats: {
-            [StatType.CriticalChance]: 5
+            [StatType.CriticalChance]: 10
         }
     },
 } as const;

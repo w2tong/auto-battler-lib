@@ -15,7 +15,7 @@ const wands: { [id in WandId]: Weapon } = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        damageRange: { min: 1, max: 3, bonus: 0 },
+        damageRange: { min: 2, max: 4, bonus: 0 },
         spellPowerRatio: 0.1,
         stats: {
             [StatType.SpellPower]: 5
@@ -29,13 +29,13 @@ const wands: { [id in WandId]: Weapon } = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        damageRange: { min: 1, max: 3, bonus: 1 },
+        damageRange: { min: 2, max: 4, bonus: 1 },
         spellPowerRatio: 0.1,
         attributes: {
             [AttributeType.Intelligence]: 1
         },
         stats: {
-            [StatType.SpellPower]: 5
+            [StatType.SpellPower]: 10
         }
     },
     wand2: {
@@ -46,13 +46,13 @@ const wands: { [id in WandId]: Weapon } = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        damageRange: { min: 1, max: 3, bonus: 2 },
+        damageRange: { min: 2, max: 4, bonus: 2 },
         spellPowerRatio: 0.1,
         attributes: {
             [AttributeType.Intelligence]: 2
         },
         stats: {
-            [StatType.SpellPower]: 5
+            [StatType.SpellPower]: 15
         }
     },
     wand3: {
@@ -63,13 +63,13 @@ const wands: { [id in WandId]: Weapon } = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        damageRange: { min: 1, max: 3, bonus: 3 },
+        damageRange: { min: 2, max: 4, bonus: 3 },
         spellPowerRatio: 0.1,
         attributes: {
             [AttributeType.Intelligence]: 3
         },
         stats: {
-            [StatType.SpellPower]: 5
+            [StatType.SpellPower]: 20
         }
     },
     wand4: {
@@ -80,13 +80,13 @@ const wands: { [id in WandId]: Weapon } = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        damageRange: { min: 1, max: 3, bonus: 4 },
+        damageRange: { min: 2, max: 4, bonus: 4 },
         spellPowerRatio: 0.1,
         attributes: {
             [AttributeType.Intelligence]: 4
         },
         stats: {
-            [StatType.SpellPower]: 5
+            [StatType.SpellPower]: 25
         }
     },
     wand5: {
@@ -97,13 +97,13 @@ const wands: { [id in WandId]: Weapon } = {
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
-        damageRange: { min: 1, max: 3, bonus: 5 },
+        damageRange: { min: 2, max: 4, bonus: 5 },
         spellPowerRatio: 0.1,
         attributes: {
             [AttributeType.Intelligence]: 5
         },
         stats: {
-            [StatType.SpellPower]: 5
+            [StatType.SpellPower]: 30
         }
     },
 } as const;

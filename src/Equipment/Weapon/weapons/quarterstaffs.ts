@@ -30,7 +30,7 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 4, max: 8, bonus: 2 },
         attributes: {
-            [AttributeType.Wisdom]: 1
+            [AttributeType.Wisdom]: 2
         },
         stats: {
             [StatType.ManaRegen]: 2
@@ -46,7 +46,7 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 4, max: 8, bonus: 4 },
         attributes: {
-            [AttributeType.Wisdom]: 2
+            [AttributeType.Wisdom]: 4
         },
         stats: {
             [StatType.ManaRegen]: 2
@@ -62,7 +62,7 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 4, max: 8, bonus: 6 },
         attributes: {
-            [AttributeType.Wisdom]: 3
+            [AttributeType.Wisdom]: 6
         },
         stats: {
             [StatType.ManaRegen]: 2
@@ -78,7 +78,7 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 4, max: 8, bonus: 8 },
         attributes: {
-            [AttributeType.Wisdom]: 4
+            [AttributeType.Wisdom]: 7
         },
         stats: {
             [StatType.ManaRegen]: 2
@@ -94,7 +94,7 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 4, max: 8, bonus: 10 },
         attributes: {
-            [AttributeType.Wisdom]: 5
+            [AttributeType.Wisdom]: 10
         },
         stats: {
             [StatType.ManaRegen]: 2
