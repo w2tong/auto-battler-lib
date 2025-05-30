@@ -3,7 +3,7 @@ import Character from '../../Character/Character';
 import StatType from '../../Character/Stats/StatType';
 import { createTestCharacter } from '../../tests/util';
 import { getCharBattleId } from '../../util';
-import DebuffId from '../DebuffId';
+import DebuffId from '../types/DebuffId';
 import Burning from './Burning';
 
 let char: Character;
@@ -27,7 +27,7 @@ beforeEach(() => {
 
 // Burning damage (1 + 100 * 0.2) / 2 = 10.5
 test('Burning - 0 stacks', () => {
-    target.statusEffectManager.addDebuff(new Burning({
+    target.statusEffectManager.add(new Burning({
         char: target,
         source: char,
         stacks: 0
@@ -39,7 +39,7 @@ test('Burning - 0 stacks', () => {
 });
 
 test('Burning - 1 stacks', () => {
-    target.statusEffectManager.addDebuff(new Burning({
+    target.statusEffectManager.add(new Burning({
         char: target,
         source: char,
         stacks: 1
@@ -51,7 +51,7 @@ test('Burning - 1 stacks', () => {
 });
 
 test('Burning - 2 stacks', () => {
-    target.statusEffectManager.addDebuff(new Burning({
+    target.statusEffectManager.add(new Burning({
         char: target,
         source: char,
         stacks: 2
@@ -84,7 +84,7 @@ test('Burning - damagePercent increases burning damage', () => {
     new Battle([char], [target]);
 
     // Burning damage: (1 + 100 * 0.2) * 2 / 2 = 21
-    target.statusEffectManager.addDebuff(new Burning({
+    target.statusEffectManager.add(new Burning({
         char: target,
         source: char,
         stacks: 1
@@ -113,7 +113,7 @@ test('Burning - damagePercent negative reduces burning damage', () => {
     new Battle([char], [target]);
 
     // Burning damage: (1 + 100 * 0.2) * 0.5 / 2 = 5.25
-    target.statusEffectManager.addDebuff(new Burning({
+    target.statusEffectManager.add(new Burning({
         char: target,
         source: char,
         stacks: 1

@@ -1,7 +1,7 @@
 import Character from './Character';
 import * as diceModule from '../dice';
 import StatType from './Stats/StatType';
-import BuffId from '../StatusEffect/BuffId';
+import BuffId from '../StatusEffect/types/BuffId';
 import Battle, { Side } from '../Battle/Battle';
 import AttackType from '../types/AttackType';
 import * as utilModule from '../util';
@@ -832,7 +832,7 @@ describe('isInvisible', () => {
     test('new char, add buff = true', () => {
         const char = createTestCharacter({});
         new Battle([char], []);
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: char,
             stacks: 1
@@ -1969,7 +1969,7 @@ describe('attack', () => {
     });
 
     test('Melee Main-hand Weapon Sneak Attack', () => {
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: char,
             stacks: 1
@@ -2168,7 +2168,7 @@ describe('setTarget', () => {
     test('1 left, 2 right (1 invisible)', () => {
         mathRandomSpy.mockReturnValue(0.99);
         new Battle([left1, left2], [right1, right2]);
-        right2.statusEffectManager.addBuff(new Invisible({
+        right2.statusEffectManager.add(new Invisible({
             char: right2,
             source: right2,
             stacks: 1

@@ -4,7 +4,7 @@ import Character from '../../Character/Character';
 import StatType from '../../Character/Stats/StatType';
 import { createTestCharacter } from '../../tests/util';
 import { getCharBattleId } from '../../util';
-import BuffId from '../BuffId';
+import BuffId from '../types/BuffId';
 import Blessed from './Blessed';
 
 let char: Character;
@@ -56,7 +56,7 @@ beforeEach(() => {
 });
 
 test('Blessing - 1 source, 1 stack', () => {
-    char.statusEffectManager.addBuff(new Blessed({
+    char.statusEffectManager.add(new Blessed({
         char,
         source: char,
         stacks: 1
@@ -71,7 +71,7 @@ test('Blessing - 1 source, 1 stack', () => {
 });
 
 test('Blessing - 1 source, 3 stacks', () => {
-    char.statusEffectManager.addBuff(new Blessed({
+    char.statusEffectManager.add(new Blessed({
         char,
         source: char,
         stacks: 3
@@ -95,7 +95,7 @@ test('Blessing - 1 source, 3 stacks', () => {
 });
 
 test('Blessing - 1 source, 1 stack per cast', () => {
-    char.statusEffectManager.addBuff(new Blessed({
+    char.statusEffectManager.add(new Blessed({
         char,
         source: char,
         stacks: 1
@@ -104,7 +104,7 @@ test('Blessing - 1 source, 1 stack per cast', () => {
     expect(char.stats.getStat(StatType.Damage)).toBeCloseTo(charDamage);
     expect(char.stats.getStat(StatType.Accuracy)).toBeCloseTo(charAccuracy);
 
-    char.statusEffectManager.addBuff(new Blessed({
+    char.statusEffectManager.add(new Blessed({
         char,
         source: char,
         stacks: 1
@@ -115,12 +115,12 @@ test('Blessing - 1 source, 1 stack per cast', () => {
 });
 
 test('Blessing - 2 sources, 1 stack each', () => {
-    char.statusEffectManager.addBuff(new Blessed({
+    char.statusEffectManager.add(new Blessed({
         char,
         source: char,
         stacks: 1
     }));
-    char.statusEffectManager.addBuff(new Blessed({
+    char.statusEffectManager.add(new Blessed({
         char,
         source: source1,
         stacks: 1
@@ -144,12 +144,12 @@ test('Blessing - 2 sources, 1 stack each', () => {
 });
 
 test('Blessing - 2 sources, 2 stack each', () => {
-    char.statusEffectManager.addBuff(new Blessed({
+    char.statusEffectManager.add(new Blessed({
         char,
         source: char,
         stacks: 2
     }));
-    char.statusEffectManager.addBuff(new Blessed({
+    char.statusEffectManager.add(new Blessed({
         char,
         source: source1,
         stacks: 2
@@ -175,17 +175,17 @@ test('Blessing - 2 sources, 2 stack each', () => {
 });
 
 test('Blessing - 3 sources, 1 stack each', () => {
-    char.statusEffectManager.addBuff(new Blessed({
+    char.statusEffectManager.add(new Blessed({
         char,
         source: char,
         stacks: 1
     }));
-    char.statusEffectManager.addBuff(new Blessed({
+    char.statusEffectManager.add(new Blessed({
         char,
         source: source1,
         stacks: 1
     }));
-    char.statusEffectManager.addBuff(new Blessed({
+    char.statusEffectManager.add(new Blessed({
         char,
         source: source2,
         stacks: 1

@@ -1,4 +1,4 @@
-import BuffId from '../StatusEffect/BuffId';
+import BuffId from '../StatusEffect/types/BuffId';
 import Ability from './Ability';
 import Blessed from '../StatusEffect/Buffs/Blessed';
 import { formatNum } from '../util';
@@ -21,7 +21,7 @@ const Bless: Ability = {
         char.useAbilityMana();
         if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME}.`);
         // TODO: add targeting system for blessing allies
-        char.statusEffectManager.addBuff(new Blessed({
+        char.statusEffectManager.add(new Blessed({
             char,
             source: char,
             stacks: STACKS

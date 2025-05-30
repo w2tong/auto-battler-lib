@@ -1,18 +1,9 @@
 import Character from '../Character/Character';
-import BuffId from './BuffId';
-import DebuffId from './DebuffId';
+import BuffId from './types/BuffId';
+import DebuffId from './types/DebuffId';
 import StatusEffectManager from './StatusEffectManager';
-
-enum StatusEffectType {
-    Buff = 'Buff',
-    Debuff = 'Debuff'
-}
-
-type StatusEffectCtorArgs = {
-    char: Character,
-    source: Character,
-    stacks: number;
-};
+import StatusEffectCtorArgs from './types/StatusEffectCtorArgs';
+import StatusEffectType from './types/StatusEffectType';
 
 abstract class StatusEffect {
     abstract readonly id: BuffId | DebuffId;
@@ -53,5 +44,3 @@ abstract class StatusEffect {
 }
 
 export default StatusEffect;
-export type { StatusEffectCtorArgs };
-export { StatusEffectType };

@@ -1,4 +1,4 @@
-import BuffId from '../StatusEffect/BuffId';
+import BuffId from '../StatusEffect/types/BuffId';
 import Invisible from '../StatusEffect/Buffs/Invisible';
 import Ability from './Ability';
 
@@ -15,7 +15,7 @@ const Vanish: Ability = {
         char.useAbilityMana();
         if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME}.`);
         const stacks = Math.max(Math.floor(char.attributes.dexterity * DEX_RATIO), 1);
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: char,
             stacks

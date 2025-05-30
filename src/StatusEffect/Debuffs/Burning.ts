@@ -1,6 +1,6 @@
 import StatType from '../../Character/Stats/StatType';
 import Debuff from '../Debuff';
-import DebuffId from '../DebuffId';
+import DebuffId from '../types/DebuffId';
 
 export default class Burning extends Debuff {
     id = DebuffId.Burning;

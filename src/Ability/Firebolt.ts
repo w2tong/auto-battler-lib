@@ -43,7 +43,7 @@ const Firebolt: Ability = {
             });
 
             if (hit) {
-                char.target.statusEffectManager.addDebuff(new Burning({
+                char.target.statusEffectManager.add(new Burning({
                     char: char.target,
                     source: char,
                     stacks: STACKS

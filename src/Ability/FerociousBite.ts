@@ -38,7 +38,7 @@ const FerociousBite: Ability = {
             });
 
             if (hit) {
-                char.target.statusEffectManager.addDebuff(new Bleeding({
+                char.target.statusEffectManager.add(new Bleeding({
                     char: char.target,
                     source: char,
                     stacks: BLEED_STACKS,

@@ -2,7 +2,7 @@ import Battle from '../Battle/Battle';
 import AttributeType from '../Character/Attributes/AttributeType';
 import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';
-import BuffId from '../StatusEffect/BuffId';
+import BuffId from '../StatusEffect/types/BuffId';
 import { createTestCharacter } from '../tests/util';
 import { getCharBattleId } from '../util';
 import Vanish from './Vanish';

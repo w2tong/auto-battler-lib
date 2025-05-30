@@ -1,7 +1,7 @@
 import Debuff from '../Debuff';
-import DebuffId from '../DebuffId';
 import RemainingDamage from '../interface/RemainingDamage';
-import { StatusEffectCtorArgs } from '../StatusEffect';
+import DebuffId from '../types/DebuffId';
+import StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
 
 export default class Bleeding extends Debuff implements RemainingDamage {
     id = DebuffId.Bleeding;

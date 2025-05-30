@@ -4,7 +4,7 @@ import StatType from '../Character/Stats/StatType';
 import { EquipSlot } from '../Equipment/Equipment';
 import { ItemType } from '../Equipment/Item';
 import { Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
-import DebuffId from '../StatusEffect/DebuffId';
+import DebuffId from '../StatusEffect/types/DebuffId';
 import Bleeding from '../StatusEffect/Debuffs/Bleeding';
 import { createTestCharacter } from '../tests/util';
 import AttackType from '../types/AttackType';
@@ -18,7 +18,6 @@ const testWeapon: Weapon = {
     itemType: ItemType.Weapon,
     name: '',
     tier: 0,
-    img: '',
 
     type: WeaponType.Bow,
     attackType: AttackType.RangedWeapon,

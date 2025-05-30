@@ -2,10 +2,10 @@ import Battle from '../Battle/Battle';
 import Character from '../Character/Character';
 import { createTestCharacter } from '../tests/util';
 import { getCharBattleId } from '../util';
-import BuffId from './BuffId';
+import BuffId from './types/BuffId';
 import Blessed from './Buffs/Blessed';
 import Invisible from './Buffs/Invisible';
-import DebuffId from './DebuffId';
+import DebuffId from './types/DebuffId';
 import Bleeding from './Debuffs/Bleeding';
 import Burning from './Debuffs/Burning';
 import Frozen from './Debuffs/Frozen';
@@ -25,16 +25,16 @@ beforeEach(() => {
 });
 
 // TODO: update tests to include checks for outgoing(de)buffs
-describe('addBuff', () => {
+describe('add', () => {
     describe('stacks', () => {
         test('0 stacks', () => {
-            statusEffectManager.addBuff(new Blessed({
+            statusEffectManager.add(new Blessed({
                 char: source1,
                 source: source1,
                 stacks: 0
             }));
             expect(statusEffectManager.buffs[BuffId.Blessed]).toBeUndefined();
-            statusEffectManager.addBuff(new Invisible({
+            statusEffectManager.add(new Invisible({
                 char: source1,
                 source: source1,
                 stacks: 0
@@ -42,7 +42,7 @@ describe('addBuff', () => {
             expect(statusEffectManager.buffs[BuffId.Invisible]).toBeUndefined();
         });
         test('1 source, 1 stack', () => {
-            statusEffectManager.addBuff(new Blessed({
+            statusEffectManager.add(new Blessed({
                 char: source1,
                 source: source1,
                 stacks: 1
@@ -50,12 +50,12 @@ describe('addBuff', () => {
             expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(1);
         });
         test('1 source, 2 stacks', () => {
-            statusEffectManager.addBuff(new Blessed({
+            statusEffectManager.add(new Blessed({
                 char: source1,
                 source: source1,
                 stacks: 1
             }));
-            statusEffectManager.addBuff(new Blessed({
+            statusEffectManager.add(new Blessed({
                 char: source1,
                 source: source1,
                 stacks: 1
@@ -63,12 +63,12 @@ describe('addBuff', () => {
             expect(statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(2);
         });
         test('2 sources, 1 stack', () => {
-            statusEffectManager.addBuff(new Blessed({
+            statusEffectManager.add(new Blessed({
                 char: source1,
                 source: source1,
                 stacks: 1
             }));
-            statusEffectManager.addBuff(new Blessed({
+            statusEffectManager.add(new Blessed({
                 char: source1,
                 source: source2,
                 stacks: 1
@@ -79,29 +79,29 @@ describe('addBuff', () => {
     });
 });
 
-describe('addDebuff', () => {
+describe('add', () => {
     describe('stacks', () => {
         test('0 stacks', () => {
-            statusEffectManager.addDebuff(new Bleeding({
+            statusEffectManager.add(new Bleeding({
                 char: source1,
                 source: source1,
                 stacks: 0,
                 remainingDamage: 0
             }));
             expect(statusEffectManager.debuffs[DebuffId.Bleeding]).toBeUndefined();
-            statusEffectManager.addDebuff(new Burning({
+            statusEffectManager.add(new Burning({
                 char: source1,
                 source: source1,
                 stacks: 0
             }));
             expect(statusEffectManager.debuffs[DebuffId.Burning]).toBeUndefined();
-            statusEffectManager.addDebuff(new Frozen({
+            statusEffectManager.add(new Frozen({
                 char: source1,
                 source: source1,
                 stacks: 0
             }));
             expect(statusEffectManager.debuffs[DebuffId.Frozen]).toBeUndefined();
-            statusEffectManager.addDebuff(new Poisoned({
+            statusEffectManager.add(new Poisoned({
                 char: source1,
                 source: source1,
                 stacks: 0
@@ -109,7 +109,7 @@ describe('addDebuff', () => {
             expect(statusEffectManager.debuffs[DebuffId.Poisoned]).toBeUndefined();
         });
         test('1 source, 1 stack', () => {
-            statusEffectManager.addDebuff(new Burning({
+            statusEffectManager.add(new Burning({
                 char: source1,
                 source: source1,
                 stacks: 1
@@ -117,12 +117,12 @@ describe('addDebuff', () => {
             expect(statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(source1)].stacks).toBe(1);
         });
         test('1 source, 2 stacks', () => {
-            statusEffectManager.addDebuff(new Burning({
+            statusEffectManager.add(new Burning({
                 char: source1,
                 source: source1,
                 stacks: 1
             }));
-            statusEffectManager.addDebuff(new Burning({
+            statusEffectManager.add(new Burning({
                 char: source1,
                 source: source1,
                 stacks: 1
@@ -130,12 +130,12 @@ describe('addDebuff', () => {
             expect(statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(source1)].stacks).toBe(2);
         });
         test('2 sources, 1 stack each', () => {
-            statusEffectManager.addDebuff(new Burning({
+            statusEffectManager.add(new Burning({
                 char: source1,
                 source: source1,
                 stacks: 1
             }));
-            statusEffectManager.addDebuff(new Burning({
+            statusEffectManager.add(new Burning({
                 char: source1,
                 source: source2,
                 stacks: 1
@@ -152,7 +152,7 @@ describe('getBuffStacks', () => {
         expect(statusEffectManager.getBuffStacks(BuffId.Invisible)).toBe(0);
     });
     test('Blessed - 1 source, 1 stack', () => {
-        statusEffectManager.addBuff(new Blessed({
+        statusEffectManager.add(new Blessed({
             char: source1,
             source: source1,
             stacks: 1
@@ -160,7 +160,7 @@ describe('getBuffStacks', () => {
         expect(statusEffectManager.getBuffStacks(BuffId.Blessed)).toBe(1);
     });
     test('Blessed - 1 source, 3 stacks', () => {
-        statusEffectManager.addBuff(new Blessed({
+        statusEffectManager.add(new Blessed({
             char: source1,
             source: source1,
             stacks: 3
@@ -168,12 +168,12 @@ describe('getBuffStacks', () => {
         expect(statusEffectManager.getBuffStacks(BuffId.Blessed)).toBe(3);
     });
     test('Blessed - 2 sources, 1 stack each', () => {
-        statusEffectManager.addBuff(new Blessed({
+        statusEffectManager.add(new Blessed({
             char: source1,
             source: source1,
             stacks: 1
         }));
-        statusEffectManager.addBuff(new Blessed({
+        statusEffectManager.add(new Blessed({
             char: source1,
             source: source2,
             stacks: 1
@@ -181,12 +181,12 @@ describe('getBuffStacks', () => {
         expect(statusEffectManager.getBuffStacks(BuffId.Blessed)).toBe(2);
     });
     test('Blessed - 2 sources, 3 stacks each', () => {
-        statusEffectManager.addBuff(new Blessed({
+        statusEffectManager.add(new Blessed({
             char: source1,
             source: source1,
             stacks: 3
         }));
-        statusEffectManager.addBuff(new Blessed({
+        statusEffectManager.add(new Blessed({
             char: source1,
             source: source2,
             stacks: 3

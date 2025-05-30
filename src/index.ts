@@ -50,8 +50,8 @@ export { HitType };
 import LevelRange from './types/LevelRange';
 export { LevelRange };
 
-import BuffId from './StatusEffect/BuffId';
-import DebuffId from './StatusEffect/DebuffId';
+import BuffId from './StatusEffect/types/BuffId';
+import DebuffId from './StatusEffect/types/DebuffId';
 export { BuffId, DebuffId };
 
 export { PetId } from './Character/Pet';

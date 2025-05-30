@@ -1,6 +1,6 @@
 import StatType from '../../Character/Stats/StatType';
 import Buff from '../Buff';
-import BuffId from '../BuffId';
+import BuffId from '../types/BuffId';
 import StatsInterface, { StatsInterfaceType } from '../interface/StatsInterface';
 
 export default class Blessed extends Buff implements StatsInterface {

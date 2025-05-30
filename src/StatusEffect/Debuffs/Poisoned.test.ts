@@ -3,7 +3,7 @@ import Character from '../../Character/Character';
 import StatType from '../../Character/Stats/StatType';
 import { createTestCharacter } from '../../tests/util';
 import { getCharBattleId } from '../../util';
-import DebuffId from '../DebuffId';
+import DebuffId from '../types/DebuffId';
 import Poisoned from './Poisoned';
 
 let char: Character;
@@ -27,7 +27,7 @@ beforeEach(() => {
 
 // Poisoned damage is (1 + 1% current health) * stacks
 test('Poisoned - 0 stacks', () => {
-    target.statusEffectManager.addDebuff(new Poisoned({
+    target.statusEffectManager.add(new Poisoned({
         char: target,
         source: char,
         stacks: 0
@@ -40,7 +40,7 @@ test('Poisoned - 0 stacks', () => {
 
 
 test('Poisoned - 1 stacks', () => {
-    target.statusEffectManager.addDebuff(new Poisoned({
+    target.statusEffectManager.add(new Poisoned({
         char: target,
         source: char,
         stacks: 1
@@ -52,7 +52,7 @@ test('Poisoned - 1 stacks', () => {
 });
 
 test('Poisoned - 2 stacks', () => {
-    target.statusEffectManager.addDebuff(new Poisoned({
+    target.statusEffectManager.add(new Poisoned({
         char: target,
         source: char,
         stacks: 2
@@ -68,7 +68,7 @@ test('Poisoned - 2 stacks', () => {
 });
 
 test('Poisoned - 10 stacks', () => {
-    target.statusEffectManager.addDebuff(new Poisoned({
+    target.statusEffectManager.add(new Poisoned({
         char: target,
         source: char,
         stacks: 10

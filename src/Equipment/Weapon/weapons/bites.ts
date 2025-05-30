@@ -28,7 +28,7 @@ const bites: { [id in BiteId]: Weapon } = {
         damageRange: { min: 1, max: 3, bonus: 0 },
         onHit: {
             func: (self: Character, target: Character) => {
-                target.statusEffectManager.addDebuff(new Poisoned({
+                target.statusEffectManager.add(new Poisoned({
                     char: target,
                     source: self,
                     stacks: 2
@@ -49,7 +49,7 @@ const bites: { [id in BiteId]: Weapon } = {
         damageRange: { min: 1, max: 3, bonus: 1 },
         onHit: {
             func: (self: Character, target: Character) => {
-                target.statusEffectManager.addDebuff(new Poisoned({
+                target.statusEffectManager.add(new Poisoned({
                     char: target,
                     source: self,
                     stacks: 2

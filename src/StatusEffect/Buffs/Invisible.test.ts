@@ -2,7 +2,7 @@ import Battle from '../../Battle/Battle';
 import Character from '../../Character/Character';
 import { createTestCharacter } from '../../tests/util';
 import { getCharBattleId } from '../../util';
-import BuffId from '../BuffId';
+import BuffId from '../types/BuffId';
 import Invisible from './Invisible';
 
 let char: Character;
@@ -18,7 +18,7 @@ beforeEach(() => {
 
 describe('Invisible - 1 source', () => {
     test('0 stacks', () => {
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: char,
             stacks: 0
@@ -27,7 +27,7 @@ describe('Invisible - 1 source', () => {
     });
 
     test('1 stack', () => {
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: char,
             stacks: 1
@@ -39,7 +39,7 @@ describe('Invisible - 1 source', () => {
     });
 
     test('10 stack', () => {
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: char,
             stacks: 10
@@ -51,7 +51,7 @@ describe('Invisible - 1 source', () => {
     });
 
     test('100 stack', () => {
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: char,
             stacks: 100
@@ -65,12 +65,12 @@ describe('Invisible - 1 source', () => {
 
 describe('Invisible - 2 sources', () => {
     test('Invisible - 1 stack each', () => {
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: char,
             stacks: 1
         }));
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: source1,
             stacks: 1
@@ -83,12 +83,12 @@ describe('Invisible - 2 sources', () => {
     });
 
     test('Invisible - 10 stacks each', () => {
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: char,
             stacks: 10
         }));
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: source1,
             stacks: 10
@@ -103,17 +103,17 @@ describe('Invisible - 2 sources', () => {
 
 describe('Invisible - 3 sources', () => {
     test('Invisible - 1 stack each', () => {
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: char,
             stacks: 1
         }));
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: source1,
             stacks: 1
         }));
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: source2,
             stacks: 1
@@ -127,17 +127,17 @@ describe('Invisible - 3 sources', () => {
     });
 
     test('Invisible - 10 stacks each', () => {
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: char,
             stacks: 10
         }));
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: source1,
             stacks: 10
         }));
-        char.statusEffectManager.addBuff(new Invisible({
+        char.statusEffectManager.add(new Invisible({
             char,
             source: source2,
             stacks: 10

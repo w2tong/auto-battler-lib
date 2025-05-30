@@ -1,9 +1,10 @@
 import Character from '../Character/Character';
 import { getOutgoingStatusEffectId, getCharBattleId } from '../util';
 import Buff from './Buff';
-import BuffId from './BuffId';
 import Debuff from './Debuff';
-import DebuffId from './DebuffId';
+import StatusEffect from './StatusEffect';
+import BuffId from './types/BuffId';
+import DebuffId from './types/DebuffId';
 
 export default class StatusEffectManager {
     private char: Character;
@@ -45,35 +46,38 @@ export default class StatusEffectManager {
         return count;
     }
 
-    addBuff(buff: Buff) {
-        if (buff.stacks <= 0) return;
-        const id = buff.id;
-        if (this.buffs[id] === undefined) this.buffs[id] = {};
-        const battleId = getCharBattleId(buff.source);
-        const buffMap = this.buffs[id]!; // Non-null after assignment above
-        if (buffMap[battleId] === undefined) {
-            buffMap[battleId] = buff;
-            buff.source.statusEffectManager.addOutgoingBuff(id, this.char, this.buffs[id]![battleId]);
-            buff.onApply();
-        }
-        else {
-            buffMap[battleId].add(buff);
+    private addStatusEffect<T extends Buff | Debuff, IdType extends string>(
+        effect: T,
+        map: { [id in IdType]?: { [key: string]: T; } },
+        addOutgoing: (id: IdType, char: Character, ref: T) => void
+    ) {
+        if (effect.stacks <= 0) return;
+        const id = effect.id as IdType;
+        if (map[id] === undefined) map[id] = {};
+        const battleId = getCharBattleId(effect.source);
+        const effectMap = map[id]!;
+        if (effectMap[battleId] === undefined) {
+            effectMap[battleId] = effect;
+            addOutgoing(id, this.char, effectMap[battleId]);
+            effect.onApply();
+        } else {
+            effectMap[battleId].add(effect);
         }
     }
 
-    addDebuff(debuff: Debuff) {
-        if (debuff.stacks <= 0) return;
-        const id = debuff.id;
-        if (this.debuffs[id] === undefined) this.debuffs[id] = {};
-        const battleId = getCharBattleId(debuff.source);
-        const debuffMap = this.debuffs[id]!; // Non-null after assignment above
-        if (debuffMap[battleId] === undefined) {
-            debuffMap[battleId] = debuff;
-            debuff.source.statusEffectManager.addOutgoingDebuff(id, this.char, this.debuffs[id]![battleId]);
-            debuff.onApply();
-        }
-        else {
-            debuffMap[battleId].add(debuff);
+    add(statusEffect: StatusEffect) {
+        if (statusEffect.type === 'Buff') {
+            this.addStatusEffect(
+                statusEffect as Buff,
+                this._buffs,
+                (id, char, ref) => statusEffect.source.statusEffectManager.addOutgoingBuff(id as BuffId, char, ref)
+            );
+        } else if (statusEffect.type === 'Debuff') {
+            this.addStatusEffect(
+                statusEffect as Debuff,
+                this._debuffs,
+                (id, char, ref) => statusEffect.source.statusEffectManager.addOutgoingDebuff(id as DebuffId, char, ref)
+            );
         }
     }
 

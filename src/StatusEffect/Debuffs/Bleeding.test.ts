@@ -23,7 +23,7 @@ beforeEach(() => {
 });
 
 test('10 remaining damage, 1 stack', () => {
-    char.statusEffectManager.addDebuff(new Bleeding({
+    char.statusEffectManager.add(new Bleeding({
         char,
         source: char,
         stacks: 1,
@@ -34,7 +34,7 @@ test('10 remaining damage, 1 stack', () => {
 });
 
 test('20 remaining damage, 2 stacks', () => {
-    char.statusEffectManager.addDebuff(new Bleeding({
+    char.statusEffectManager.add(new Bleeding({
         char,
         source: char,
         stacks: 2,
@@ -47,13 +47,13 @@ test('20 remaining damage, 2 stacks', () => {
 });
 
 test('10 + 20 remaining damage, 1 + 1 stacks', () => {
-    char.statusEffectManager.addDebuff(new Bleeding({
+    char.statusEffectManager.add(new Bleeding({
         char,
         source: char,
         stacks: 1,
         remainingDamage: 10
     }));
-    char.statusEffectManager.addDebuff(new Bleeding({
+    char.statusEffectManager.add(new Bleeding({
         char,
         source: char,
         stacks: 1,
@@ -66,7 +66,7 @@ test('10 + 20 remaining damage, 1 + 1 stacks', () => {
 });
 
 test('20 + 30 remaining damage, 2 + 1 stacks', () => {
-    char.statusEffectManager.addDebuff(new Bleeding({
+    char.statusEffectManager.add(new Bleeding({
         char,
         source: char,
         stacks: 2,
@@ -74,7 +74,7 @@ test('20 + 30 remaining damage, 2 + 1 stacks', () => {
     }));
     char.statusEffectManager.turnEnd();
     expect(char.currentHealth).toBe(90);
-    char.statusEffectManager.addDebuff(new Bleeding({
+    char.statusEffectManager.add(new Bleeding({
         char,
         source: char,
         stacks: 1,
@@ -85,7 +85,7 @@ test('20 + 30 remaining damage, 2 + 1 stacks', () => {
 });
 
 test('0 remaining damage, 1 stack', () => {
-    char.statusEffectManager.addDebuff(new Bleeding({
+    char.statusEffectManager.add(new Bleeding({
         char,
         source: char,
         stacks: 1,
@@ -96,7 +96,7 @@ test('0 remaining damage, 1 stack', () => {
 });
 
 test('0 remaining damage, 3 stack', () => {
-    char.statusEffectManager.addDebuff(new Bleeding({
+    char.statusEffectManager.add(new Bleeding({
         char,
         source: char,
         stacks: 3,

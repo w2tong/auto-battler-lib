@@ -4,8 +4,8 @@ import Character from './Character/Character';
 import { type ClassName } from './Character/Classes/classes';
 import { type StatTemplate } from './Character/Stats/StatTemplate';
 import { type EquipmentImport } from './Equipment/Equipment';
-import type BuffId from './StatusEffect/BuffId';
-import type DebuffId from './StatusEffect/DebuffId';
+import type BuffId from './StatusEffect/types/BuffId';
+import type DebuffId from './StatusEffect/types/DebuffId';
 import type LevelRange from './types/LevelRange';
 
 // Random integer between 0 and max

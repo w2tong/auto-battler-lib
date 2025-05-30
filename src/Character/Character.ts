@@ -11,7 +11,7 @@ import Ability from '../Ability/Ability';
 import { StatTemplate } from './Stats/StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
 import { ClassName, Classes } from './Classes/classes';
-import BuffId from '../StatusEffect/BuffId';
+import BuffId from '../StatusEffect/types/BuffId';
 import StatType from './Stats/StatType';
 import Attributes from './Attributes/Attributes';
 import BaseAttributes from './Attributes/BaseAttributes';
