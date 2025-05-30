@@ -51,10 +51,8 @@ import LevelRange from './types/LevelRange';
 export { LevelRange };
 
 import BuffId from './StatusEffect/BuffId';
-import buffs from './StatusEffect/buffs';
 import DebuffId from './StatusEffect/DebuffId';
-import debuffs from './StatusEffect/debuffs';
-export { BuffId, buffs, DebuffId, debuffs };
+export { BuffId, DebuffId };
 
 export { PetId } from './Character/Pet';
 

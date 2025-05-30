@@ -21,7 +21,11 @@ const Bless: Ability = {
         char.useAbilityMana();
         if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME}.`);
         // TODO: add targeting system for blessing allies
-        char.statusEffectManager.addBuff(BuffId.Blessed, char, STACKS);
+        char.statusEffectManager.addBuff(new Blessed({
+            char,
+            source: char,
+            stacks: STACKS
+        }));
     }
 };
 

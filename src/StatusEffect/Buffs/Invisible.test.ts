@@ -3,6 +3,7 @@ import Character from '../../Character/Character';
 import { createTestCharacter } from '../../tests/util';
 import { getCharBattleId } from '../../util';
 import BuffId from '../BuffId';
+import Invisible from './Invisible';
 
 let char: Character;
 let source1: Character;
@@ -17,12 +18,20 @@ beforeEach(() => {
 
 describe('Invisible - 1 source', () => {
     test('0 stacks', () => {
-        char.statusEffectManager.addBuff(BuffId.Invisible, char, 0);
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: char,
+            stacks: 0
+        }));
         expect(char.statusEffectManager.buffs[BuffId.Invisible]).toBeUndefined();
     });
 
     test('1 stack', () => {
-        char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: char,
+            stacks: 1
+        }));
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(1);
 
         char.statusEffectManager.onAttack(true);
@@ -30,7 +39,11 @@ describe('Invisible - 1 source', () => {
     });
 
     test('10 stack', () => {
-        char.statusEffectManager.addBuff(BuffId.Invisible, char, 10);
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: char,
+            stacks: 10
+        }));
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(10);
 
         char.statusEffectManager.onAttack(true);
@@ -38,7 +51,11 @@ describe('Invisible - 1 source', () => {
     });
 
     test('100 stack', () => {
-        char.statusEffectManager.addBuff(BuffId.Invisible, char, 100);
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: char,
+            stacks: 100
+        }));
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(100);
 
         char.statusEffectManager.onAttack(true);
@@ -48,8 +65,16 @@ describe('Invisible - 1 source', () => {
 
 describe('Invisible - 2 sources', () => {
     test('Invisible - 1 stack each', () => {
-        char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
-        char.statusEffectManager.addBuff(BuffId.Invisible, source1, 1);
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: char,
+            stacks: 1
+        }));
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: source1,
+            stacks: 1
+        }));
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(1);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(source1)].stacks).toBe(1);
 
@@ -58,8 +83,16 @@ describe('Invisible - 2 sources', () => {
     });
 
     test('Invisible - 10 stacks each', () => {
-        char.statusEffectManager.addBuff(BuffId.Invisible, char, 10);
-        char.statusEffectManager.addBuff(BuffId.Invisible, source1, 10);
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: char,
+            stacks: 10
+        }));
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: source1,
+            stacks: 10
+        }));
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(10);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(source1)].stacks).toBe(10);
 
@@ -70,9 +103,21 @@ describe('Invisible - 2 sources', () => {
 
 describe('Invisible - 3 sources', () => {
     test('Invisible - 1 stack each', () => {
-        char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
-        char.statusEffectManager.addBuff(BuffId.Invisible, source1, 1);
-        char.statusEffectManager.addBuff(BuffId.Invisible, source2, 1);
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: char,
+            stacks: 1
+        }));
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: source1,
+            stacks: 1
+        }));
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: source2,
+            stacks: 1
+        }));
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(1);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(source1)].stacks).toBe(1);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(source2)].stacks).toBe(1);
@@ -82,9 +127,21 @@ describe('Invisible - 3 sources', () => {
     });
 
     test('Invisible - 10 stacks each', () => {
-        char.statusEffectManager.addBuff(BuffId.Invisible, char, 10);
-        char.statusEffectManager.addBuff(BuffId.Invisible, source1, 10);
-        char.statusEffectManager.addBuff(BuffId.Invisible, source2, 10);
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: char,
+            stacks: 10
+        }));
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: source1,
+            stacks: 10
+        }));
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: source2,
+            stacks: 10
+        }));
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(10);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(source1)].stacks).toBe(10);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(source2)].stacks).toBe(10);

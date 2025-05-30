@@ -1,8 +1,9 @@
 import StatType from '../../Character/Stats/StatType';
 import Buff from '../Buff';
 import BuffId from '../BuffId';
+import StatsInterface, { StatsInterfaceType } from '../interface/StatsInterface';
 
-export default class Blessed extends Buff {
+export default class Blessed extends Buff implements StatsInterface {
     id = BuffId.Blessed;
 
     static baseDamage = 4;
@@ -12,6 +13,8 @@ export default class Blessed extends Buff {
     static baseAccuracy = 5;
     static accuracyPerLvl = 0.5;
     static accuracyPerWisdom = 0.2;
+
+    stats: StatsInterfaceType = {};
 
     onApply() {
         const damagePerLvl = Blessed.damagePerLvl * this.source.level;

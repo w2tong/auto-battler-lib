@@ -832,13 +832,12 @@ describe('isInvisible', () => {
     test('new char, add buff = true', () => {
         const char = createTestCharacter({});
         new Battle([char], []);
-        char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: char,
+            stacks: 1
+        }));
         expect(char.isInvisible()).toBeTruthy();
-    });
-    test('new char, add buff = true', () => {
-        const char = createTestCharacter({});
-        new Battle([char], []);
-        char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
     });
 });
 
@@ -1970,7 +1969,11 @@ describe('attack', () => {
     });
 
     test('Melee Main-hand Weapon Sneak Attack', () => {
-        char.statusEffectManager.addBuff(BuffId.Invisible, char, 1);
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: char,
+            stacks: 1
+        }));
         const { hit, damageDone } = char.attack({
             target,
             attackType: AttackType.MeleeWeapon,
@@ -2165,7 +2168,11 @@ describe('setTarget', () => {
     test('1 left, 2 right (1 invisible)', () => {
         mathRandomSpy.mockReturnValue(0.99);
         new Battle([left1, left2], [right1, right2]);
-        right2.statusEffectManager.addBuff(BuffId.Invisible, right2, 1);
+        right2.statusEffectManager.addBuff(new Invisible({
+            char: right2,
+            source: right2,
+            stacks: 1
+        }));
 
         left1.setTarget();
         expect(left1.target).toBe(right1);

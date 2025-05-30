@@ -14,7 +14,12 @@ const Vanish: Ability = {
     func: (char) => {
         char.useAbilityMana();
         if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME}.`);
-        char.statusEffectManager.addBuff(BuffId.Invisible, char, Math.max(Math.floor(char.attributes.dexterity * DEX_RATIO), 1));
+        const stacks = Math.max(Math.floor(char.attributes.dexterity * DEX_RATIO), 1);
+        char.statusEffectManager.addBuff(new Invisible({
+            char,
+            source: char,
+            stacks
+        }));
     }
 };
 

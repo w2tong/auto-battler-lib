@@ -1,8 +1,29 @@
 import Debuff from '../Debuff';
 import DebuffId from '../DebuffId';
+import RemainingDamage from '../interface/RemainingDamage';
+import { StatusEffectCtorArgs } from '../StatusEffect';
 
-export default class Bleeding extends Debuff {
+export default class Bleeding extends Debuff implements RemainingDamage {
     id = DebuffId.Bleeding;
+
+    _remainingDamage: number;
+
+    constructor(args: StatusEffectCtorArgs & { remainingDamage: number; }) {
+        super(args);
+        this._remainingDamage = args.remainingDamage;
+    }
+
+    get remainingDamage(): number {
+        return this._remainingDamage;
+    }
+    set remainingDamage(damage: number) {
+        this._remainingDamage = damage;
+    }
+
+    add(bleeding: Bleeding) {
+        this.stacks += bleeding.stacks;
+        this._remainingDamage += bleeding.remainingDamage;
+    }
 
     onApply() { }
     onExpire() { }

@@ -1,7 +1,7 @@
 import AttackType from '../types/AttackType';
-import DebuffId from '../StatusEffect/DebuffId';
 import Ability from './Ability';
 import { formatNum } from '../util';
+import Bleeding from '../StatusEffect/Debuffs/Bleeding';
 
 const NAME = 'Ferocious Bite';
 const BONUS_DMG = 0.25;
@@ -38,7 +38,12 @@ const FerociousBite: Ability = {
             });
 
             if (hit) {
-                char.target.statusEffectManager.addDebuff(DebuffId.Bleeding, char, BLEED_STACKS, { remainingDamage: damageDone * BLEED_STACKS * DMG_PER_TURN });
+                char.target.statusEffectManager.addDebuff(new Bleeding({
+                    char: char.target,
+                    source: char,
+                    stacks: BLEED_STACKS,
+                    remainingDamage: damageDone * BLEED_STACKS * DMG_PER_TURN
+                }));
             }
         }
     }

@@ -1,8 +1,8 @@
 import AttackType from '../../../types/AttackType';
 import Character from '../../../Character/Character';
-import DebuffId from '../../../StatusEffect/DebuffId';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
+import Poisoned from '../../../StatusEffect/Debuffs/Poisoned';
 
 type BiteId = 'bite0' | 'poisonbite0' | 'poisonbite1';
 
@@ -30,9 +30,13 @@ const bites: { [id in BiteId]: Weapon } = {
         damageRange: { min: 1, max: 3, bonus: 0 },
         onHit: {
             func: (self: Character, target: Character) => {
-                target.statusEffectManager.addDebuff(DebuffId.Poisoned, self, 2);
+                target.statusEffectManager.addDebuff(new Poisoned({
+                    char: target,
+                    source: self,
+                    stacks: 2
+                }));
             },
-            description: 'Inflict 1 Poison on hit.'
+            description: 'Inflict 2 Poison on hit.'
         }
     },
     poisonbite1: {
@@ -47,7 +51,11 @@ const bites: { [id in BiteId]: Weapon } = {
         damageRange: { min: 1, max: 3, bonus: 1 },
         onHit: {
             func: (self: Character, target: Character) => {
-                target.statusEffectManager.addDebuff(DebuffId.Poisoned, self, 2);
+                target.statusEffectManager.addDebuff(new Poisoned({
+                    char: target,
+                    source: self,
+                    stacks: 2
+                }));
             },
             description: 'Inflict 2 Poison on hit.'
         }

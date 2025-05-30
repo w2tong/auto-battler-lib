@@ -1,5 +1,4 @@
 import AttackType from '../types/AttackType';
-import DebuffId from '../StatusEffect/DebuffId';
 import Ability from './Ability';
 import Burning from '../StatusEffect/Debuffs/Burning';
 import { formatNum } from '../util';
@@ -44,7 +43,11 @@ const Firebolt: Ability = {
             });
 
             if (hit) {
-                char.target.statusEffectManager.addDebuff(DebuffId.Burning, char, STACKS);
+                char.target.statusEffectManager.addDebuff(new Burning({
+                    char: char.target,
+                    source: char,
+                    stacks: STACKS
+                }));
             }
         }
     }

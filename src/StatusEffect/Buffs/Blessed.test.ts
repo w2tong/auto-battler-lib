@@ -56,7 +56,11 @@ beforeEach(() => {
 });
 
 test('Blessing - 1 source, 1 stack', () => {
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
+    char.statusEffectManager.addBuff(new Blessed({
+        char,
+        source: char,
+        stacks: 1
+    }));
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(1);
     expect(char.stats.getStat(StatType.Damage)).toBeCloseTo(charDamage);
     expect(char.stats.getStat(StatType.Accuracy)).toBeCloseTo(charAccuracy);
@@ -67,7 +71,11 @@ test('Blessing - 1 source, 1 stack', () => {
 });
 
 test('Blessing - 1 source, 3 stacks', () => {
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 3);
+    char.statusEffectManager.addBuff(new Blessed({
+        char,
+        source: char,
+        stacks: 3
+    }));
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(3);
     expect(char.stats.getStat(StatType.Damage)).toBeCloseTo(charDamage);
     expect(char.stats.getStat(StatType.Accuracy)).toBeCloseTo(charAccuracy);
@@ -87,20 +95,36 @@ test('Blessing - 1 source, 3 stacks', () => {
 });
 
 test('Blessing - 1 source, 1 stack per cast', () => {
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
+    char.statusEffectManager.addBuff(new Blessed({
+        char,
+        source: char,
+        stacks: 1
+    }));
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(1);
     expect(char.stats.getStat(StatType.Damage)).toBeCloseTo(charDamage);
     expect(char.stats.getStat(StatType.Accuracy)).toBeCloseTo(charAccuracy);
 
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
+    char.statusEffectManager.addBuff(new Blessed({
+        char,
+        source: char,
+        stacks: 1
+    }));
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(2);
     expect(char.stats.getStat(StatType.Damage)).toBeCloseTo(charDamage);
     expect(char.stats.getStat(StatType.Accuracy)).toBeCloseTo(charAccuracy);
 });
 
 test('Blessing - 2 sources, 1 stack each', () => {
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
-    char.statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
+    char.statusEffectManager.addBuff(new Blessed({
+        char,
+        source: char,
+        stacks: 1
+    }));
+    char.statusEffectManager.addBuff(new Blessed({
+        char,
+        source: source1,
+        stacks: 1
+    }));
 
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(1);
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(1);
@@ -120,8 +144,16 @@ test('Blessing - 2 sources, 1 stack each', () => {
 });
 
 test('Blessing - 2 sources, 2 stack each', () => {
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 2);
-    char.statusEffectManager.addBuff(BuffId.Blessed, source1, 2);
+    char.statusEffectManager.addBuff(new Blessed({
+        char,
+        source: char,
+        stacks: 2
+    }));
+    char.statusEffectManager.addBuff(new Blessed({
+        char,
+        source: source1,
+        stacks: 2
+    }));
 
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(2);
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(2);
@@ -143,9 +175,21 @@ test('Blessing - 2 sources, 2 stack each', () => {
 });
 
 test('Blessing - 3 sources, 1 stack each', () => {
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
-    char.statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
-    char.statusEffectManager.addBuff(BuffId.Blessed, source2, 1);
+    char.statusEffectManager.addBuff(new Blessed({
+        char,
+        source: char,
+        stacks: 1
+    }));
+    char.statusEffectManager.addBuff(new Blessed({
+        char,
+        source: source1,
+        stacks: 1
+    }));
+    char.statusEffectManager.addBuff(new Blessed({
+        char,
+        source: source2,
+        stacks: 1
+    }));
 
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(1);
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(1);

@@ -4,6 +4,7 @@ import StatType from '../../Character/Stats/StatType';
 import { createTestCharacter } from '../../tests/util';
 import { getCharBattleId } from '../../util';
 import DebuffId from '../DebuffId';
+import Poisoned from './Poisoned';
 
 let char: Character;
 let target: Character;
@@ -26,7 +27,11 @@ beforeEach(() => {
 
 // Poisoned damage is (1 + 1% current health) * stacks
 test('Poisoned - 0 stacks', () => {
-    target.statusEffectManager.addDebuff(DebuffId.Poisoned, char, 0);
+    target.statusEffectManager.addDebuff(new Poisoned({
+        char: target,
+        source: char,
+        stacks: 0
+    }));
 
     target.statusEffectManager.turnEnd();
     expect(target.currentHealth).toBe(100);
@@ -35,7 +40,11 @@ test('Poisoned - 0 stacks', () => {
 
 
 test('Poisoned - 1 stacks', () => {
-    target.statusEffectManager.addDebuff(DebuffId.Poisoned, char, 1);
+    target.statusEffectManager.addDebuff(new Poisoned({
+        char: target,
+        source: char,
+        stacks: 1
+    }));
 
     target.statusEffectManager.turnEnd();
     expect(target.currentHealth).toBeCloseTo(96); // 100 - ((1 + 1% * 100) * 2 = 4) = 96
@@ -43,7 +52,11 @@ test('Poisoned - 1 stacks', () => {
 });
 
 test('Poisoned - 2 stacks', () => {
-    target.statusEffectManager.addDebuff(DebuffId.Poisoned, char, 2);
+    target.statusEffectManager.addDebuff(new Poisoned({
+        char: target,
+        source: char,
+        stacks: 2
+    }));
 
     target.statusEffectManager.turnEnd();
     expect(target.currentHealth).toBeCloseTo(92); // 100 - ((2 + 2% * 100) * 2 = 8) = 92
@@ -55,7 +68,11 @@ test('Poisoned - 2 stacks', () => {
 });
 
 test('Poisoned - 10 stacks', () => {
-    target.statusEffectManager.addDebuff(DebuffId.Poisoned, char, 10);
+    target.statusEffectManager.addDebuff(new Poisoned({
+        char: target,
+        source: char,
+        stacks: 10
+    }));
 
     target.statusEffectManager.turnEnd();
     expect(target.currentHealth).toBeCloseTo(60); // 100 - ((10 + 10% * 100) * 2 = 40) = 60

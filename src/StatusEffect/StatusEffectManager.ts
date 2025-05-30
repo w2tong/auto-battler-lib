@@ -2,11 +2,8 @@ import Character from '../Character/Character';
 import { getOutgoingStatusEffectId, getCharBattleId } from '../util';
 import Buff from './Buff';
 import BuffId from './BuffId';
-import buffs from './buffs';
 import Debuff from './Debuff';
 import DebuffId from './DebuffId';
-import debuffs from './debuffs';
-import type { StatusEffectOptional } from './StatusEffect';
 
 export default class StatusEffectManager {
     private char: Character;
@@ -48,33 +45,35 @@ export default class StatusEffectManager {
         return count;
     }
 
-    addBuff(id: BuffId, source: Character, stacks: number, optional?: StatusEffectOptional) {
-        if (stacks <= 0) return;
-        if (!this.buffs[id]) this.buffs[id] = {};
-        const buff = this.buffs[id]![getCharBattleId(source)];
-        if (!buff) {
-            this.buffs[id]![getCharBattleId(source)] = new buffs[id](this, this.char, source, stacks, optional);
-            source.statusEffectManager.addOutgoingBuff(id, this.char, this.buffs[id]![getCharBattleId(source)]);
-            this.buffs[id]![getCharBattleId(source)].onApply();
+    addBuff(buff: Buff) {
+        if (buff.stacks <= 0) return;
+        const id = buff.id;
+        if (this.buffs[id] === undefined) this.buffs[id] = {};
+        const battleId = getCharBattleId(buff.source);
+        const buffMap = this.buffs[id]!; // Non-null after assignment above
+        if (buffMap[battleId] === undefined) {
+            buffMap[battleId] = buff;
+            buff.source.statusEffectManager.addOutgoingBuff(id, this.char, this.buffs[id]![battleId]);
+            buff.onApply();
         }
         else {
-            buff.stacks += stacks;
-            if (buff.remainingDamage && optional?.remainingDamage) buff.remainingDamage += optional.remainingDamage;
+            buffMap[battleId].add(buff);
         }
     }
 
-    addDebuff(id: DebuffId, source: Character, stacks: number, optional?: StatusEffectOptional) {
-        if (stacks <= 0) return;
-        if (!this.debuffs[id]) this.debuffs[id] = {};
-        const debuff = this.debuffs[id]![getCharBattleId(source)];
-        if (!debuff) {
-            this.debuffs[id]![getCharBattleId(source)] = new debuffs[id](this, this.char, source, stacks, optional);
-            source.statusEffectManager.addOutgoingDebuff(id, this.char, this.debuffs[id]![getCharBattleId(source)]);
-            this.debuffs[id]![getCharBattleId(source)].onApply();
+    addDebuff(debuff: Debuff) {
+        if (debuff.stacks <= 0) return;
+        const id = debuff.id;
+        if (this.debuffs[id] === undefined) this.debuffs[id] = {};
+        const battleId = getCharBattleId(debuff.source);
+        const debuffMap = this.debuffs[id]!; // Non-null after assignment above
+        if (debuffMap[battleId] === undefined) {
+            debuffMap[battleId] = debuff;
+            debuff.source.statusEffectManager.addOutgoingDebuff(id, this.char, this.debuffs[id]![battleId]);
+            debuff.onApply();
         }
         else {
-            debuff.stacks += stacks;
-            if (debuff.remainingDamage && optional?.remainingDamage) debuff.remainingDamage += optional.remainingDamage;
+            debuffMap[battleId].add(debuff);
         }
     }
 
