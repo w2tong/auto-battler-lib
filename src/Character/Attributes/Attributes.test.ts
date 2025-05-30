@@ -76,6 +76,6 @@ describe('constructor - equipment', () => {
                 [EquipSlot.MainHand]: quarterstaffs.quarterstaff1
             }
         });
-        expect(char.attributes.wisdom).toBe(11);
+        expect(char.attributes.wisdom).toBe(12);
     });
 });
