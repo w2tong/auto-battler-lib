@@ -72,7 +72,6 @@ const test1HWeapon: Weapon = {
     itemType: ItemType.Weapon,
     name: '',
     tier: 0,
-    img: '',
     type: WeaponType.Longsword,
     attackType: AttackType.MeleeWeapon,
     damageRange: { min: 0, max: 0, bonus: 0 },
@@ -82,7 +81,6 @@ const test2HWeapon: Weapon = {
     itemType: ItemType.Weapon,
     name: '',
     tier: 0,
-    img: '',
     type: WeaponType.Greatsword,
     attackType: AttackType.MeleeWeapon,
     damageRange: { min: 0, max: 0, bonus: 0 },
@@ -92,7 +90,6 @@ const testShield: Shield = {
     name: '',
     itemType: ItemType.Shield,
     tier: 0,
-    img: '',
 
     type: ShieldType.Light,
     stats: {
@@ -105,21 +102,18 @@ const testHead: Head = {
     itemType: ItemType.Head,
     name: '',
     tier: 0,
-    img: ''
 };
 const testNeck: Neck = {
     id: '',
     itemType: ItemType.Neck,
     name: '',
     tier: 0,
-    img: ''
 };
 const testArmour: Armour = {
     id: '',
     itemType: ItemType.Armour,
     name: '',
     tier: 0,
-    img: '',
     type: ArmourType.Unarmoured,
 };
 const testHands: Hands = {
@@ -127,28 +121,24 @@ const testHands: Hands = {
     itemType: ItemType.Hands,
     name: '',
     tier: 0,
-    img: ''
 };
 const testWaist: Waist = {
     id: '',
     itemType: ItemType.Waist,
     name: '',
     tier: 0,
-    img: ''
 };
 const testRing: Ring = {
     id: '',
     itemType: ItemType.Ring,
     name: '',
     tier: 0,
-    img: '',
 };
 const testPotion: Potion = {
     id: '',
     itemType: ItemType.Potion,
     name: '',
     tier: 0,
-    img: '',
     healingRange: { min: 4, max: 8, bonus: 2 },
     charges: 1
 };

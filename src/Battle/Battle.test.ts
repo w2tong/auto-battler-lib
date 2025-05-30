@@ -13,7 +13,7 @@ const testSword: Weapon = {
     itemType: ItemType.Weapon,
     name: 'Longsword',
     tier: 0,
-    img: 'weapon-longsword.png',
+
     type: WeaponType.Longsword,
     attackType: AttackType.MeleeWeapon,
     damageRange: { min: 4, max: 4, bonus: 0 }
