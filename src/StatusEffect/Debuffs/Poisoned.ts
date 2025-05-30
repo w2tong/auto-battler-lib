@@ -1,24 +1,35 @@
 import StatType from '../../Character/Stats/StatType';
 import Debuff from '../Debuff';
+import DamageTaken from '../interface/DamageTaken';
 import DebuffId from '../types/DebuffId';
 
-export default class Poisoned extends Debuff {
+export default class Poisoned extends Debuff implements DamageTaken {
     id = DebuffId.Poisoned;
 
     static baseDamage = 1;
     static healthDamagePercent = 0.01;
+
+    calcDamage(): number {
+        const healthDamage = this.char.currentHealth * Poisoned.healthDamagePercent;
+        const damagePercent = 1 + this.source.stats.getStat(StatType.DamagePercent);
+
+        return (Poisoned.baseDamage + healthDamage) * damagePercent * this.stacks;
+    }
+
+    getDamageTaken(): number {
+        return this.char.calcDamageTaken(this.calcDamage(), Infinity);
+    }
 
     onApply() { }
     onExpire() { }
 
     onTurnStart() { }
     onTurnEnd() {
-        const healthDamage = this.char.currentHealth * Poisoned.healthDamagePercent;
-        const damagePercent = 1 + this.source.stats.getStat(StatType.DamagePercent);
+
 
         this.char.takeDamage({
             source: `${this.id} (${this.source.name})`,
-            damage: (Poisoned.baseDamage + healthDamage) * damagePercent * this.stacks,
+            damage: this.calcDamage(),
             armourPenetration: Infinity
         });
 

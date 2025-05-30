@@ -397,14 +397,19 @@ export default class Character {
         }
     }
 
+    calcDamageTaken(damage: number, armourPen: number): number {
+        let damageTaken = Character.calcDamageAfterDeflection(damage, this.stats.getStat(StatType.Deflection));
+        damageTaken = Character.calcDamageAfterArmour(damageTaken, this.stats.getStat(StatType.Armour), armourPen);
+        return damageTaken;
+    }
+
     takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean; }; }): { damageTaken: number, dead: boolean; } {
         const addToLog = options?.addToLog ?? true;
         let damageTaken = Math.max(damage, 0);
         let dead = false;
 
         if (damageTaken > 0) {
-            damageTaken = Character.calcDamageAfterDeflection(damageTaken, this.stats.getStat(StatType.Deflection));
-            damageTaken = Character.calcDamageAfterArmour(damageTaken, this.stats.getStat(StatType.Armour), armourPenetration);
+            damageTaken = this.calcDamageTaken(damageTaken, armourPenetration);
             this._currentHealth -= damageTaken;
         }
 
