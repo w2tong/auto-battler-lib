@@ -23,7 +23,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Buckler',
         itemType: ItemType.Shield,
         tier: 0,
-        img: 'shield-buckler.png',
 
         type: ShieldType.Light,
         stats: {
@@ -36,7 +35,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Buckler +1',
         itemType: ItemType.Shield,
         tier: 1,
-        img: 'shield-buckler.png',
 
         type: ShieldType.Light,
         stats: {
@@ -49,7 +47,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Buckler +2',
         itemType: ItemType.Shield,
         tier: 2,
-        img: 'shield-buckler.png',
 
         type: ShieldType.Light,
         stats: {
@@ -62,7 +59,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Buckler +3',
         itemType: ItemType.Shield,
         tier: 3,
-        img: 'shield-buckler.png',
 
         type: ShieldType.Light,
         stats: {
@@ -75,7 +71,7 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Buckler +4',
         itemType: ItemType.Shield,
         tier: 4,
-        img: 'shield-buckler.png',
+
         type: ShieldType.Light,
         stats: {
             [StatType.BlockChance]: 45,
@@ -87,7 +83,7 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Buckler +5',
         itemType: ItemType.Shield,
         tier: 5,
-        img: 'shield-buckler.png',
+
         type: ShieldType.Light,
         stats: {
             [StatType.BlockChance]: 45,
@@ -99,7 +95,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Spiked Shield',
         itemType: ItemType.Shield,
         tier: 0,
-        img: 'shield-spiked.png',
 
         type: ShieldType.Medium,
         stats: {
@@ -113,7 +108,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Spiked Shield +1',
         itemType: ItemType.Shield,
         tier: 1,
-        img: 'shield-spiked.png',
 
         type: ShieldType.Medium,
         stats: {
@@ -127,7 +121,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Spiked Shield +2',
         itemType: ItemType.Shield,
         tier: 2,
-        img: 'shield-spiked.png',
 
         type: ShieldType.Medium,
         stats: {
@@ -141,7 +134,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Spiked Shield +3',
         itemType: ItemType.Shield,
         tier: 3,
-        img: 'shield-spiked.png',
 
         type: ShieldType.Medium,
         stats: {
@@ -155,7 +147,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Spiked Shield +4',
         itemType: ItemType.Shield,
         tier: 4,
-        img: 'shield-spiked.png',
 
         type: ShieldType.Medium,
         stats: {
@@ -169,7 +160,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Spiked Shield +5',
         itemType: ItemType.Shield,
         tier: 5,
-        img: 'shield-spiked.png',
 
         type: ShieldType.Medium,
         stats: {
@@ -183,7 +173,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Tower Shield',
         itemType: ItemType.Shield,
         tier: 0,
-        img: 'shield-tower.png',
 
         type: ShieldType.Heavy,
         stats: {
@@ -197,7 +186,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Tower Shield +1',
         itemType: ItemType.Shield,
         tier: 1,
-        img: 'shield-tower.png',
 
         type: ShieldType.Heavy,
         stats: {
@@ -211,7 +199,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Tower Shield +2',
         itemType: ItemType.Shield,
         tier: 2,
-        img: 'shield-tower.png',
 
         type: ShieldType.Heavy,
         stats: {
@@ -225,7 +212,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Tower Shield +3',
         itemType: ItemType.Shield,
         tier: 3,
-        img: 'shield-tower.png',
 
         type: ShieldType.Heavy,
         stats: {
@@ -240,7 +226,6 @@ const shields: { [id in ShieldId]: Shield } = {
         itemType: ItemType.Shield,
         tier: 4,
 
-        img: 'shield-tower.png',
         type: ShieldType.Heavy,
         stats: {
             [StatType.BlockChance]: 60,
@@ -253,7 +238,6 @@ const shields: { [id in ShieldId]: Shield } = {
         name: 'Tower Shield +5',
         itemType: ItemType.Shield,
         tier: 5,
-        img: 'shield-tower.png',
 
         type: ShieldType.Heavy,
         stats: {

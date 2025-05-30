@@ -10,7 +10,6 @@ const unarmed: { [id in UnarmedId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Fist',
         tier: 0,
-        img: '',
 
         type: WeaponType.Unarmed,
         attackType: AttackType.MeleeWeapon,

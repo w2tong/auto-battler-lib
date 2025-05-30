@@ -14,16 +14,7 @@ const necks: { [id in NeckId]: Neck } = {
         itemType: ItemType.Neck,
         name: 'Neck',
         tier: 0,
-        img: ''
     }
 } as const;
 
-function getNeckTooltip(neck: Neck) {
-    return neck.name;
-}
-
-function getNeckDescription(neck: Neck) {
-    return neck.name;
-}
-
-export { Neck, NeckId, necks, getNeckTooltip, getNeckDescription };
+export { Neck, NeckId, necks };

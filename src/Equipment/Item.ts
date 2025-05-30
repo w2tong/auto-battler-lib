@@ -20,7 +20,6 @@ interface Item {
     itemType: ItemType;
     name: string;
     tier: Tier;
-    img: string;
 }
 
 type ItemAttributes = { [type in AttributeType]?: number };

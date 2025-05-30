@@ -11,7 +11,6 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Greatsword',
         tier: 0,
-        img: 'weapon-greatsword.png',
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
@@ -25,7 +24,6 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Greatsword +1',
         tier: 1,
-        img: 'weapon-greatsword.png',
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
@@ -39,7 +37,6 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Greatsword +2',
         tier: 2,
-        img: 'weapon-greatsword.png',
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
@@ -53,7 +50,6 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Greatsword +3',
         tier: 3,
-        img: 'weapon-greatsword.png',
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
@@ -67,7 +63,6 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Greatsword +4',
         tier: 4,
-        img: 'weapon-greatsword.png',
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
@@ -81,7 +76,6 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Greatsword +5',
         tier: 5,
-        img: 'weapon-greatsword.png',
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,

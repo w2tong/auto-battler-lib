@@ -11,7 +11,6 @@ const daggers: { [id in DaggerId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Dagger',
         tier: 0,
-        img: 'weapon-dagger.png',
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
@@ -25,7 +24,6 @@ const daggers: { [id in DaggerId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Dagger +1',
         tier: 1,
-        img: 'weapon-dagger.png',
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
@@ -39,7 +37,6 @@ const daggers: { [id in DaggerId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Dagger +2',
         tier: 2,
-        img: 'weapon-dagger.png',
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
@@ -53,7 +50,6 @@ const daggers: { [id in DaggerId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Dagger +3',
         tier: 3,
-        img: 'weapon-dagger.png',
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
@@ -67,7 +63,6 @@ const daggers: { [id in DaggerId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Dagger +4',
         tier: 4,
-        img: 'weapon-dagger.png',
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,
@@ -81,7 +76,6 @@ const daggers: { [id in DaggerId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Dagger +5',
         tier: 5,
-        img: 'weapon-dagger.png',
 
         type: WeaponType.Dagger,
         attackType: AttackType.MeleeWeapon,

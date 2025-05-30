@@ -12,7 +12,6 @@ const bites: { [id in BiteId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Bite',
         tier: 0,
-        img: '',
 
         type: WeaponType.Bite,
         attackType: AttackType.MeleeWeapon,
@@ -23,7 +22,6 @@ const bites: { [id in BiteId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Poison Bite',
         tier: 0,
-        img: '',
 
         type: WeaponType.Bite,
         attackType: AttackType.MeleeWeapon,
@@ -44,7 +42,7 @@ const bites: { [id in BiteId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Poison Bite +1',
         tier: 1,
-        img: '',
+
 
         type: WeaponType.Bite,
         attackType: AttackType.MeleeWeapon,

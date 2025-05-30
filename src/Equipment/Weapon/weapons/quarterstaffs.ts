@@ -12,7 +12,6 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Quarterstaff',
         tier: 0,
-        img: 'weapon-quarterstaff.png',
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
@@ -26,7 +25,6 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Quarterstaff +1',
         tier: 1,
-        img: 'weapon-quarterstaff.png',
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
@@ -43,7 +41,6 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Quarterstaff +2',
         tier: 2,
-        img: 'weapon-quarterstaff.png',
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
@@ -60,7 +57,6 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Quarterstaff +3',
         tier: 3,
-        img: 'weapon-quarterstaff.png',
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
@@ -77,7 +73,6 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Quarterstaff +4',
         tier: 4,
-        img: 'weapon-quarterstaff.png',
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,
@@ -94,7 +89,6 @@ const quarterstaffs: { [id in QuarterstaffId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Quarterstaff +5',
         tier: 5,
-        img: 'weapon-quarterstaff.png',
 
         type: WeaponType.Quarterstaff,
         attackType: AttackType.MeleeWeapon,

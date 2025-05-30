@@ -12,7 +12,6 @@ const wands: { [id in WandId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Wand',
         tier: 0,
-        img: 'weapon-wand.png',
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
@@ -27,7 +26,6 @@ const wands: { [id in WandId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Wand +1',
         tier: 1,
-        img: 'weapon-wand.png',
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
@@ -45,7 +43,6 @@ const wands: { [id in WandId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Wand +2',
         tier: 2,
-        img: 'weapon-wand.png',
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
@@ -63,7 +60,6 @@ const wands: { [id in WandId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Wand +3',
         tier: 3,
-        img: 'weapon-wand.png',
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
@@ -81,7 +77,6 @@ const wands: { [id in WandId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Wand +4',
         tier: 4,
-        img: 'weapon-wand.png',
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,
@@ -99,7 +94,6 @@ const wands: { [id in WandId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Wand +5',
         tier: 5,
-        img: 'weapon-wand.png',
 
         type: WeaponType.Wand,
         attackType: AttackType.RangedWeapon,

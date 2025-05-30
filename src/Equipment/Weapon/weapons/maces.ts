@@ -11,7 +11,6 @@ const maces: { [id in MaceId]: Weapon } = {
         itemType: ItemType.Weapon,
         name: 'Mace',
         tier: 0,
-        img: 'weapon-mace.png',
 
         type: WeaponType.Mace,
         attackType: AttackType.MeleeWeapon,
