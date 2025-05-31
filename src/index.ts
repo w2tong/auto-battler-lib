@@ -1,7 +1,3 @@
-// TODO: redo exports for StatusEffects / Buffs / Debuffs
-// export { Buffs, BuffId } from './StatusEffect/buffs';
-// export { Debuffs, DebuffId } from './StatusEffect/debuffs';
-
 export { ClassName, Classes } from './Character/Classes/classes';
 
 export { Equip, Equipment, EquipmentImport, EquipmentItemIds, EquipSlot, equips, isValidEquip, createEquipmentImport } from './Equipment/Equipment';
@@ -50,9 +46,12 @@ export { HitType };
 import LevelRange from './types/LevelRange';
 export { LevelRange };
 
+import StatusEffect from './StatusEffect/StatusEffect';
+import Buff from './StatusEffect/Buff';
+import Debuff from './StatusEffect/Debuff';
 import BuffId from './StatusEffect/types/BuffId';
 import DebuffId from './StatusEffect/types/DebuffId';
-export { BuffId, DebuffId };
+export { StatusEffect, Buff, Debuff, BuffId, DebuffId };
 
 export { PetId } from './Character/Pet';
 
