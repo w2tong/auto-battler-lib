@@ -46,12 +46,25 @@ export { HitType };
 import LevelRange from './types/LevelRange';
 export { LevelRange };
 
+// Status Effects
 import StatusEffect from './StatusEffect/StatusEffect';
 import Buff from './StatusEffect/Buff';
 import Debuff from './StatusEffect/Debuff';
 import BuffId from './StatusEffect/types/BuffId';
 import DebuffId from './StatusEffect/types/DebuffId';
 export { StatusEffect, Buff, Debuff, BuffId, DebuffId };
+
+// Buffs
+import Blessed from './StatusEffect/Buffs/Blessed';
+import Invisible from './StatusEffect/Buffs/Invisible';
+export { Blessed, Invisible };
+
+// Debuffs
+import Bleeding from './StatusEffect/Debuffs/Bleeding';
+import Burning from './StatusEffect/Debuffs/Burning';
+import Frozen from './StatusEffect/Debuffs/Frozen';
+import Poisoned from './StatusEffect/Debuffs/Poisoned';
+export { Bleeding, Burning, Frozen, Poisoned };
 
 export { PetId } from './Character/Pet';
 
