@@ -15,17 +15,18 @@ describe('calculateBaseAttributes', () => {
         const template = {
             [AttributeType.Dexterity]: { base: 2, perLvl: 1.7 },
         };
-        // Math.floor(2) + (1.7 - 1) * 3 = 2 + 0.7 * 3 = 2 + 2.1 = 4.1
+        // 2 + 1.7 * (3 - 1) = 5.4
         const result = calculateBaseAttributes(template, 3);
-        expect(result[AttributeType.Dexterity]).toBeCloseTo(4.1);
+        expect(result[AttributeType.Dexterity]).toBeCloseTo(5);
     });
 
     it('uses Attributes.DEFAULT_VALUE if base is missing', () => {
         const template = {
             [AttributeType.Intelligence]: { perLvl: 2 },
         };
+        // 2 * (2 - 1) = 2
         const result = calculateBaseAttributes(template, 2);
-        expect(result[AttributeType.Intelligence]).toBe(Math.floor(Attributes.DEFAULT_VALUE) + (2 - 1) * 2);
+        expect(result[AttributeType.Intelligence]).toBe(Math.floor(Attributes.DEFAULT_VALUE) + 2);
     });
 
     it('does not add level scaling if perLvl is missing', () => {
@@ -33,15 +34,15 @@ describe('calculateBaseAttributes', () => {
             [AttributeType.Wisdom]: { base: 7.8 },
         };
         const result = calculateBaseAttributes(template, 5);
-        expect(result[AttributeType.Wisdom]).toBe(7); // Math.floor(7.8)
+        expect(result[AttributeType.Wisdom]).toBe(7);
     });
 
     it('works with integer base and perLvl', () => {
         const template = {
             [AttributeType.Perception]: { base: 3, perLvl: 2 },
         };
+        // 3 + 2 * (4 - 1) = 9
         const result = calculateBaseAttributes(template, 4);
-        // Math.floor(3) + (2 - 1) * 4 = 3 + 1 * 4 = 7
-        expect(result[AttributeType.Perception]).toBe(7);
+        expect(result[AttributeType.Perception]).toBe(9);
     });
 });
