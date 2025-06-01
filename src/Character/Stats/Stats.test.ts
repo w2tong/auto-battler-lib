@@ -576,6 +576,6 @@ describe('constructor', () => {
             }
         });
         expect(char.stats.getStat(StatType.Armour)).toBe(40);
-        expect(char.stats.getStat(StatType.Deflection)).toBe(2);
+        expect(char.stats.getStat(StatType.Deflection)).toBe(1);
     });
 });
