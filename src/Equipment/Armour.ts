@@ -193,7 +193,7 @@ const armour: { [id in ArmourId]: Armour } = {
         type: ArmourType.Medium,
         stats: {
             [StatType.Armour]: 30,
-            [StatType.Deflection]: 1
+            [StatType.Deflection]: 0.5
         }
     },
     mailArmour1: {
@@ -205,7 +205,7 @@ const armour: { [id in ArmourId]: Armour } = {
         type: ArmourType.Medium,
         stats: {
             [StatType.Armour]: 35,
-            [StatType.Deflection]: 2
+            [StatType.Deflection]: 1
         }
     },
     mailArmour2: {
@@ -217,7 +217,7 @@ const armour: { [id in ArmourId]: Armour } = {
         type: ArmourType.Medium,
         stats: {
             [StatType.Armour]: 40,
-            [StatType.Deflection]: 3
+            [StatType.Deflection]: 1.5
         }
     },
     mailArmour3: {
@@ -229,7 +229,7 @@ const armour: { [id in ArmourId]: Armour } = {
         type: ArmourType.Medium,
         stats: {
             [StatType.Armour]: 45,
-            [StatType.Deflection]: 4
+            [StatType.Deflection]: 2
         }
     },
     mailArmour4: {
@@ -241,7 +241,7 @@ const armour: { [id in ArmourId]: Armour } = {
         type: ArmourType.Medium,
         stats: {
             [StatType.Armour]: 50,
-            [StatType.Deflection]: 5
+            [StatType.Deflection]: 2.5
         }
     },
     mailArmour5: {
@@ -253,7 +253,7 @@ const armour: { [id in ArmourId]: Armour } = {
         type: ArmourType.Medium,
         stats: {
             [StatType.Armour]: 55,
-            [StatType.Deflection]: 6
+            [StatType.Deflection]: 3
         }
     },
 
@@ -267,7 +267,7 @@ const armour: { [id in ArmourId]: Armour } = {
         type: ArmourType.Heavy,
         stats: {
             [StatType.Armour]: 40,
-            [StatType.Deflection]: 2
+            [StatType.Deflection]: 1
         }
     },
     plateArmour1: {
@@ -279,7 +279,7 @@ const armour: { [id in ArmourId]: Armour } = {
         type: ArmourType.Heavy,
         stats: {
             [StatType.Armour]: 46,
-            [StatType.Deflection]: 4
+            [StatType.Deflection]: 2
         }
     },
     plateArmour2: {
@@ -291,7 +291,7 @@ const armour: { [id in ArmourId]: Armour } = {
         type: ArmourType.Heavy,
         stats: {
             [StatType.Armour]: 52,
-            [StatType.Deflection]: 6
+            [StatType.Deflection]: 3
         }
     },
     plateArmour3: {
@@ -303,7 +303,7 @@ const armour: { [id in ArmourId]: Armour } = {
         type: ArmourType.Heavy,
         stats: {
             [StatType.Armour]: 58,
-            [StatType.Deflection]: 8
+            [StatType.Deflection]: 4
         }
     },
     plateArmour4: {
@@ -315,7 +315,7 @@ const armour: { [id in ArmourId]: Armour } = {
         type: ArmourType.Heavy,
         stats: {
             [StatType.Armour]: 64,
-            [StatType.Deflection]: 10
+            [StatType.Deflection]: 5
         }
     },
     plateArmour5: {
@@ -327,7 +327,7 @@ const armour: { [id in ArmourId]: Armour } = {
         type: ArmourType.Heavy,
         stats: {
             [StatType.Armour]: 70,
-            [StatType.Deflection]: 12
+            [StatType.Deflection]: 6
         }
     },
 } as const;
