@@ -4,7 +4,6 @@ import StatusEffectManager from '../StatusEffect/StatusEffectManager';
 import { Equipment, EquipmentImport } from '../Equipment/Equipment';
 import HitType from '../types/HitType';
 import { dice, rollDice } from '../dice';
-import { Potion } from '../Equipment/Potion';
 import Stats from './Stats/Stats';
 import NumberRange, { numberRoll } from '../NumberRange';
 import Ability from '../Ability/Ability';
