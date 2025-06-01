@@ -21,18 +21,6 @@ import { createPet, PetId } from './Pet';
 import AttributeType from './Attributes/AttributeType';
 import { NpcId } from '../npc/NPC';
 
-type CharacterInfo = {
-    name: string,
-    className: string | null,
-    level: number,
-    mainHand: Weapon,
-    offHandWeapon?: Weapon,
-    potion?: Potion,
-
-    attributes: Attributes,
-    stats: Stats;
-};
-
 // Crit chance, crit dmg, Accuracy, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
 export default class Character {
     private userId?: string;
@@ -443,19 +431,6 @@ export default class Character {
         return this.statusEffectManager.getBuffStacks(BuffId.Invisible) > 0;
     }
 
-    info(): CharacterInfo {
-        return {
-            name: this.name,
-            className: this._className,
-            level: this.level,
-            mainHand: this.equipment.mainHand,
-            offHandWeapon: this.equipment.offHandWeapon,
-            potion: this.equipment.potion,
-            attributes: this.attributes,
-            stats: this.stats
-        };
-    }
-
     static calcCritDamage(damage: number, critDamage: number) {
         return Math.max(damage *= critDamage, 0);
     }
@@ -474,5 +449,3 @@ export default class Character {
         return Math.max(damage - Math.max(blockPower, 0), 0);
     }
 }
-
-export { CharacterInfo };

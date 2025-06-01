@@ -18,8 +18,8 @@ export { WeaponStyle };
 import Battle, { Side } from './Battle/Battle';
 export { Battle, Side };
 
-import Character, { CharacterInfo } from './Character/Character';
-export { Character, CharacterInfo };
+import Character from './Character/Character';
+export { Character };
 
 import Ability from './Ability/Ability';
 export { Ability };
