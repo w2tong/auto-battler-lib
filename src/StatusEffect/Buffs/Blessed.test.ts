@@ -1,4 +1,5 @@
 import Battle from '../../Battle/Battle';
+import Attributes from '../../Character/Attributes/Attributes';
 import AttributeType from '../../Character/Attributes/AttributeType';
 import Character from '../../Character/Character';
 import StatType from '../../Character/Stats/StatType';
@@ -12,19 +13,20 @@ let source1: Character;
 let source2: Character;
 
 const charLevel = 5;
-const charWisdom = 10;
-const charDamage = Blessed.baseDamage + Blessed.damagePerLvl * charLevel + Blessed.damagePerWisdom * charWisdom;
-const charAccuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * charLevel + Blessed.accuracyPerWisdom * charWisdom;
+const charWisdom = 20;
+const charAccuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * (charLevel - 1) + Blessed.accuracyPerWisdom * (charWisdom - Attributes.DEFAULT_VALUE);
+const charDamage = Blessed.baseDamage + Blessed.damagePerLvl * (charLevel - 1) + Blessed.damagePerWisdom * (charWisdom - Attributes.DEFAULT_VALUE);
 
 const source1Level = 1;
-const source1Wisdom = 0;
-const source1Damage = Blessed.baseDamage + Blessed.damagePerLvl * source1Level + Blessed.damagePerWisdom * source1Wisdom;
-const source1Accuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * source1Level + Blessed.accuracyPerWisdom * source1Wisdom;
+const source1Wisdom = 5;
+const source1Accuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * (source1Level - 1) + Blessed.accuracyPerWisdom * (source1Wisdom - Attributes.DEFAULT_VALUE);
+const source1Damage = Blessed.baseDamage + Blessed.damagePerLvl * (source1Level - 1) + Blessed.damagePerWisdom * (source1Wisdom - Attributes.DEFAULT_VALUE);
 
 const source2Level = 10;
-const source2Wisdom = 5;
-const source2Damage = Blessed.baseDamage + Blessed.damagePerLvl * source2Level + Blessed.damagePerWisdom * source2Wisdom;
-const source2Accuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * source2Level + Blessed.accuracyPerWisdom * source2Wisdom;
+const source2Wisdom = 15;
+const source2Accuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * (source2Level - 1) + Blessed.accuracyPerWisdom * (source2Wisdom - Attributes.DEFAULT_VALUE);
+const source2Damage = Blessed.baseDamage + Blessed.damagePerLvl * (source2Level - 1) + Blessed.damagePerWisdom * (source2Wisdom - Attributes.DEFAULT_VALUE);
+
 
 beforeEach(() => {
     char = createTestCharacter({

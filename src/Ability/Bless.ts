@@ -12,10 +12,10 @@ const Bless: Ability = {
         let damage = null;
         let accuracy = null;
         if (char) {
-            damage = Blessed.baseDamage + Blessed.damagePerLvl * (char.level - 1) + Blessed.damagePerWisdom * char.attributes.wisdom;
-            accuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * (char.level - 1) + Blessed.accuracyPerWisdom * char.attributes.wisdom;
+            accuracy = Blessed.calcAccuracy(char.level, char.attributes.wisdom);
+            damage = Blessed.calcDamage(char.level, char.attributes.wisdom);
         }
-        return `Gain ${STACKS} ${BuffId.Blessed} stacks, increasing Damage ${damage ? `by ${formatNum(damage)}` : ''} and Accuracy${accuracy ? ` by ${formatNum(accuracy)}` : ''}.`;
+        return `Gain ${STACKS} ${BuffId.Blessed} stacks, increasing Accuracy${accuracy ? ` by ${formatNum(accuracy)}` : ''} and Damage${damage ? ` by ${formatNum(damage)}` : ''}.`;
     },
     func: (char) => {
         char.useAbilityMana();
