@@ -2,6 +2,7 @@ import StatType from '../Character/Stats/StatType';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Ring extends Item {
+    id: RingId;
     itemType: ItemType.Ring;
     attributes?: ItemAttributes;
     stats?: ItemStats;

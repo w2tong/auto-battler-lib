@@ -3,6 +3,7 @@ import Character from '../Character/Character';
 import NumberRange from '../NumberRange';
 
 interface Potion extends Item {
+    id: PotionId;
     itemType: ItemType.Potion;
     healingRange: NumberRange;
     charges: number;

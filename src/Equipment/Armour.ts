@@ -4,6 +4,7 @@ import StatType from '../Character/Stats/StatType';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Armour extends Item {
+    id: ArmourId;
     itemType: ItemType.Armour;
     type: ArmourType;
     attributes?: ItemAttributes;

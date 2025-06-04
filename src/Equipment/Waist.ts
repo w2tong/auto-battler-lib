@@ -2,6 +2,7 @@ import StatType from '../Character/Stats/StatType';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Waist extends Item {
+    id: WaistId;
     itemType: ItemType.Waist;
     attributes?: ItemAttributes;
     stats?: ItemStats;
@@ -25,7 +26,7 @@ const waists: { [id in WaistId]: Waist } = {
         }
     },
     chargesBelt1: {
-        id: 'belt',
+        id: 'chargesBelt1',
         itemType: ItemType.Waist,
         name: 'Belt of Greater Charges',
         tier: 5,

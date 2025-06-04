@@ -1,15 +1,13 @@
-import { type Weapon } from './Weapon';
-import { type LongswordId, longswords } from './weapons/longswords';
-import { type GreatswordId, greatswords } from './weapons/greatswords';
-import { type DaggerId, daggers } from './weapons/daggers';
-import { type QuarterstaffId, quarterstaffs } from './weapons/quarterstaffs';
-import { type WandId, wands } from './weapons/wands';
-import { type UnarmedId, unarmed } from './weapons/unarmed';
-import { type BiteId, bites, } from './weapons/bites';
-import { type MaceId, maces } from './weapons/maces';
-import { type BowId, bows } from './weapons/bows';
-
-type WeaponId = UnarmedId | LongswordId | GreatswordId | DaggerId | QuarterstaffId | WandId | BiteId | MaceId | BowId;
+import type { Weapon, WeaponId } from './Weapon';
+import { longswords } from './weapons/longswords';
+import { greatswords } from './weapons/greatswords';
+import { daggers } from './weapons/daggers';
+import { quarterstaffs } from './weapons/quarterstaffs';
+import { wands } from './weapons/wands';
+import { unarmed } from './weapons/unarmed';
+import { bites, } from './weapons/bites';
+import { maces } from './weapons/maces';
+import { bows } from './weapons/bows';
 
 const weapons: { [id in WeaponId]: Weapon } = {
     ...unarmed,

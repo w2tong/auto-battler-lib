@@ -8,6 +8,7 @@ enum ShieldType {
 }
 
 interface Shield extends Item {
+    id: ShieldId;
     itemType: ItemType.Shield;
     type: ShieldType;
     attributes?: ItemAttributes;

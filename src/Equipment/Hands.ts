@@ -3,6 +3,7 @@ import WeaponStyle from '../WeaponStyle';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Hands extends Item {
+    id: HandsId;
     itemType: ItemType.Hands;
     weaponStyle?: WeaponStyle;
 

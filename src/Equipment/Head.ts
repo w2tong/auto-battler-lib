@@ -2,6 +2,7 @@ import StatType from '../Character/Stats/StatType';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Head extends Item {
+    id: HeadId;
     itemType: ItemType.Head;
     armourClass?: number;
     attributes?: ItemAttributes;
