@@ -1,10 +1,11 @@
 import AttributeType from '../Character/Attributes/AttributeType';
-import { Item, ItemAttributes, ItemType } from './Item';
+import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Neck extends Item {
     id: NeckId;
     itemType: ItemType.Neck;
     attributes?: ItemAttributes;
+    stats?: ItemStats;
 }
 
 type NeckId =
