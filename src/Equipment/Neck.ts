@@ -143,7 +143,6 @@ const necks: { [id in NeckId]: Neck } = {
         }
     },
 
-
     intNeck0: {
         id: 'intNeck0',
         itemType: ItemType.Neck,
@@ -199,6 +198,7 @@ const necks: { [id in NeckId]: Neck } = {
         itemType: ItemType.Neck,
         name: 'Greater Necklace of Wisdom',
         tier: 5,
+
         attributes: {
             [AttributeType.Wisdom]: 15
         }
