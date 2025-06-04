@@ -68,7 +68,7 @@ function createTestStats(stats: { [key in StatType]?: Stat }, level: number = 1)
 }
 
 const test1HWeapon: Weapon = {
-    id: '',
+    id: 'longsword0',
     itemType: ItemType.Weapon,
     name: '',
     tier: 0,
@@ -77,7 +77,7 @@ const test1HWeapon: Weapon = {
     damageRange: { min: 0, max: 0, bonus: 0 },
 };
 const test2HWeapon: Weapon = {
-    id: '',
+    id: 'greatsword0',
     itemType: ItemType.Weapon,
     name: '',
     tier: 0,
@@ -86,7 +86,7 @@ const test2HWeapon: Weapon = {
     damageRange: { min: 0, max: 0, bonus: 0 },
 };
 const testShield: Shield = {
-    id: '',
+    id: 'towerShield0',
     name: '',
     itemType: ItemType.Shield,
     tier: 0,
@@ -98,44 +98,44 @@ const testShield: Shield = {
     }
 };
 const testHead: Head = {
-    id: '',
+    id: 'helmet0',
     itemType: ItemType.Head,
     name: '',
     tier: 0,
 };
 const testNeck: Neck = {
-    id: '',
+    id: 'strNeck0',
     itemType: ItemType.Neck,
     name: '',
     tier: 0,
 };
 const testArmour: Armour = {
-    id: '',
+    id: 'robe0',
     itemType: ItemType.Armour,
     name: '',
     tier: 0,
     type: ArmourType.Unarmoured,
 };
 const testHands: Hands = {
-    id: '',
+    id: 'dwGloves0',
     itemType: ItemType.Hands,
     name: '',
     tier: 0,
 };
 const testWaist: Waist = {
-    id: '',
+    id: 'chargesBelt0',
     itemType: ItemType.Waist,
     name: '',
     tier: 0,
 };
 const testRing: Ring = {
-    id: '',
+    id: 'accRing0',
     itemType: ItemType.Ring,
     name: '',
     tier: 0,
 };
 const testPotion: Potion = {
-    id: '',
+    id: 'healingPotion0',
     itemType: ItemType.Potion,
     name: '',
     tier: 0,

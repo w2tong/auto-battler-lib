@@ -14,7 +14,7 @@ import WoundingShot from './WoundingShot';
 let char: Character;
 let target: Character;
 const testWeapon: Weapon = {
-    id: '',
+    id: 'bite0',
     itemType: ItemType.Weapon,
     name: '',
     tier: 0,
