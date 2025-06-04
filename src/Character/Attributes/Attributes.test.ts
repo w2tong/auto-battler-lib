@@ -78,6 +78,7 @@ describe('constructor - equipment', () => {
             }
         });
         expect(char.attributes.wisdom).toBe(12);
+        expect(char.attributes[AttributeType.Wisdom].bonus).toBe(2);
     });
     test('strNeck0', () => {
         const char = createTestCharacter({
@@ -86,5 +87,6 @@ describe('constructor - equipment', () => {
             }
         });
         expect(char.attributes.strength).toBe(15);
+        expect(char.attributes[AttributeType.Strength].bonus).toBe(5);
     });
 });
