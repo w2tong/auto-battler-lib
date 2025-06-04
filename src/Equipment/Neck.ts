@@ -1,6 +1,7 @@
 import { Item, ItemType } from './Item';
 
 interface Neck extends Item {
+    id: NeckId;
     itemType: ItemType.Neck;
 }
 
