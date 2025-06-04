@@ -1,4 +1,4 @@
-import { Neck, necks } from './Neck';
+import { Neck, NeckId, necks } from './Neck';
 import { Armour, ArmourId, armour } from './Armour';
 import { Waist, WaistId, waists } from './Waist';
 import { Hands, HandsId, hands } from './Hands';
@@ -148,6 +148,10 @@ function createEquipmentImport(equipmentItemIds: EquipmentItemIds): EquipmentImp
 
     if (equipmentItemIds[EquipSlot.Waist] && equipmentItemIds[EquipSlot.Waist] in waists) {
         equipmentImport[EquipSlot.Waist] = waists[equipmentItemIds[EquipSlot.Waist] as WaistId];
+    }
+
+    if (equipmentItemIds[EquipSlot.Neck] && equipmentItemIds[EquipSlot.Neck] in necks) {
+        equipmentImport[EquipSlot.Neck] = necks[equipmentItemIds[EquipSlot.Neck] as NeckId];
     }
 
     return equipmentImport;
