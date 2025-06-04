@@ -3,7 +3,7 @@ import { Armour, ArmourId, armour } from './Armour';
 import { Waist, WaistId, waists } from './Waist';
 import { Hands, HandsId, hands } from './Hands';
 import { Head, HeadId, heads } from './Head';
-import { ItemType } from './Item';
+import { ItemId, ItemType } from './Item';
 import { Potion, PotionId, potions } from './Potion';
 import { Ring, RingId, rings } from './Ring';
 import { Shield, ShieldId, shields } from './Shield';
@@ -11,7 +11,7 @@ import { Weapon, WeaponTypeProperties } from './Weapon/Weapon';
 import { WeaponId, weapons } from './Weapon/weapons';
 
 type Equip = Weapon | Shield | Armour | Head | Hands | Ring | Potion | Waist | Neck;
-const equips: { [key: string]: Equip; } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...waists, ...necks } as const;
+const equips: { [key in ItemId]: Equip; } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...waists, ...necks } as const;
 
 type EquipmentImport = {
     [EquipSlot.MainHand]?: Weapon,
@@ -95,7 +95,7 @@ const equipValidationMap: Record<EquipSlot, (item: Equip) => boolean> = {
     [EquipSlot.Neck]: (item) => item.itemType === ItemType.Neck,
 };
 
-function isValidEquip(itemId: string, slot: EquipSlot): boolean {
+function isValidEquip(itemId: ItemId, slot: EquipSlot): boolean {
     const item = equips[itemId];
     if (!item) return false;
 
