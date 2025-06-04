@@ -7,7 +7,8 @@ import { RingId } from './Equipment/Ring';
 import { PotionId } from './Equipment/Potion';
 import { WaistId } from './Equipment/Waist';
 import LevelRange from './types/LevelRange';
-type LootTable = (WeaponId | ShieldId | HeadId | ArmourId | HandsId | RingId | PotionId | WaistId)[];
+import { NeckId } from './Equipment/Neck';
+type LootTable = (WeaponId | ShieldId | HeadId | ArmourId | HandsId | RingId | PotionId | WaistId | NeckId)[];
 
 const lootTiers: { [tier: number]: LootTable; } = {
     0: [
@@ -39,7 +40,9 @@ const lootTiers: { [tier: number]: LootTable; } = {
         // Rings
         'accRing0', 'dmgRing0', 'critRing0', 'dodgeRing0', 'thornsRing0', 'mpHitRing0', 'mpRegenRing0', 'mpCostRing0',
         // Potions
-        'healingPotion0'
+        'healingPotion0',
+        // Necks
+        'strNeck0', 'dexNeck0', 'perNeck0', 'conNeck0', 'intNeck0', 'wisNeck0',
     ],
     2: [
         // Weapons
@@ -58,6 +61,8 @@ const lootTiers: { [tier: number]: LootTable; } = {
         'healingPotion1',
         // Waists
         'effBelt0', 'healBelt0',
+        // Necks
+        'strNeck0', 'dexNeck0', 'perNeck0', 'conNeck0', 'intNeck0', 'wisNeck0',
     ],
     3: [
         // Weapons
@@ -76,6 +81,8 @@ const lootTiers: { [tier: number]: LootTable; } = {
         'healingPotion2',
         // Waists
         'effBelt1', 'healBelt1',
+        // Necks
+        'strNeck1', 'dexNeck1', 'perNeck1', 'conNeck1', 'intNeck1', 'wisNeck1',
     ],
     4: [
         // Weapons
@@ -94,6 +101,8 @@ const lootTiers: { [tier: number]: LootTable; } = {
         'healingPotion3',
         // Waists
         'effBelt2', 'healBelt2', 'chargesBelt0',
+        // Necks
+        'strNeck1', 'dexNeck1', 'perNeck1', 'conNeck1', 'intNeck1', 'wisNeck1',
     ],
 
     5: [
@@ -113,6 +122,8 @@ const lootTiers: { [tier: number]: LootTable; } = {
         'healingPotion4',
         // Waists
         'effBelt3', 'healBelt3', 'chargesBelt1',
+        // Necks
+        'strNeck2', 'dexNeck2', 'perNeck2', 'conNeck2', 'intNeck2', 'wisNeck2',
     ],
 };
 
