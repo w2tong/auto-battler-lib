@@ -10,7 +10,7 @@ export { Potion, PotionId, potions } from './Equipment/Potion';
 export { Ring, RingId, rings } from './Equipment/Ring';
 export { Shield, ShieldId, shields } from './Equipment/Shield';
 export { WeaponType, Weapon, WeaponTypeProperties } from './Equipment/Weapon/Weapon';
-export { NeckId } from './Equipment/Neck';
+export { Neck, NeckId, necks } from './Equipment/Neck';
 export { WeaponId, weapons } from './Equipment/Weapon/weapons';
 
 import WeaponStyle from './WeaponStyle';
