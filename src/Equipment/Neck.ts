@@ -147,7 +147,7 @@ const necks: { [id in NeckId]: Neck } = {
     intNeck0: {
         id: 'intNeck0',
         itemType: ItemType.Neck,
-        name: 'Intelligence Necklace',
+        name: 'Lesser Necklace of Intelligence',
         tier: 1,
 
         attributes: {
@@ -157,7 +157,7 @@ const necks: { [id in NeckId]: Neck } = {
     intNeck1: {
         id: 'intNeck1',
         itemType: ItemType.Neck,
-        name: 'Intelligence Necklace',
+        name: 'Necklace of Intelligence',
         tier: 3,
 
         attributes: {
@@ -167,7 +167,7 @@ const necks: { [id in NeckId]: Neck } = {
     intNeck2: {
         id: 'intNeck2',
         itemType: ItemType.Neck,
-        name: 'Greater Intelligence Necklace',
+        name: 'Greater Necklace of Intelligence',
         tier: 5,
 
         attributes: {
@@ -177,7 +177,7 @@ const necks: { [id in NeckId]: Neck } = {
     wisNeck0: {
         id: 'wisNeck0',
         itemType: ItemType.Neck,
-        name: 'Wisdom Necklace',
+        name: 'Lesser Necklace of Wisdom',
         tier: 1,
 
         attributes: {
@@ -187,7 +187,7 @@ const necks: { [id in NeckId]: Neck } = {
     wisNeck1: {
         id: 'wisNeck1',
         itemType: ItemType.Neck,
-        name: 'Wisdom Necklace',
+        name: 'Necklace of Wisdom',
         tier: 3,
 
         attributes: {
@@ -197,7 +197,7 @@ const necks: { [id in NeckId]: Neck } = {
     wisNeck2: {
         id: 'wisNeck2',
         itemType: ItemType.Neck,
-        name: 'Greater Wisdom Necklace',
+        name: 'Greater Necklace of Wisdom',
         tier: 5,
         attributes: {
             [AttributeType.Wisdom]: 15
