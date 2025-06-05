@@ -1,6 +1,6 @@
 enum AttackType {
-    MeleeWeapon = 'Melee',
-    RangedWeapon = 'Ranged',
+    MeleeWeapon = 'Melee Weapon',
+    RangedWeapon = 'Ranged Weapon',
     Spell = 'Spell'
 }
 
