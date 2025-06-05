@@ -6,6 +6,7 @@ import { weapons } from '../Equipment/Weapon/weapons';
 import NPC from './NPC';
 
 const Zombie: NPC = {
+    id: 'zombie',
     name: 'Zombie',
     attributes: {
         [AttributeType.Strength]: { perLvl: 1 },
@@ -26,6 +27,6 @@ const Zombie: NPC = {
     equipment: {
         [EquipSlot.MainHand]: weapons.poisonbite0
     }
-};
+} as const;
 
 export default Zombie;

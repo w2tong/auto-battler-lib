@@ -4,7 +4,7 @@ import Class from './Class';
 
 const Priest: Class = {
     name: 'Priest',
-    description: 'Priest Class description here.',
+    description: 'Priests empower their allies in battle, enhancing their stats with divine blessings.',
     attributes: {
         [AttributeType.Constitution]: 5,
         [AttributeType.Wisdom]: 5

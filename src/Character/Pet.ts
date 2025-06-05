@@ -2,6 +2,7 @@ import Ability from '../Ability/Ability';
 import FerociousBite from '../Ability/FerociousBite';
 import { EquipSlot } from '../Equipment/Equipment';
 import { weapons } from '../Equipment/Weapon/weapons';
+import { NpcId } from '../npc/NPC';
 import Character from './Character';
 import { StatTemplate } from './Stats/StatTemplate';
 import StatType from './Stats/StatType';
@@ -12,8 +13,9 @@ enum PetId {
     Wolf = 'Wolf'
 }
 
-const petTemplates: Record<PetId, { statTemplate: StatTemplate, ability: Ability; }> = {
+const petTemplates: Record<PetId, { id: NpcId, statTemplate: StatTemplate, ability: Ability; }> = {
     [PetId.Wolf]: {
+        id: 'wolf',
         statTemplate: {
             [StatType.MaxHealth]: { base: 10, perLvl: 2 },
             [StatType.Damage]: { base: 0, perLvl: 0.2 }
@@ -23,16 +25,17 @@ const petTemplates: Record<PetId, { statTemplate: StatTemplate, ability: Ability
 };
 
 function createPet(char: Character, petId: PetId): Character {
-    const { statTemplate, ability } = petTemplates[petId];
+    const { id, statTemplate, ability } = petTemplates[petId];
     const pet = new Character({
         name: `${char.name}'s ${petId}`,
         level: char.level,
+        npcId: id,
         attributes: {},
         statTemplate: statTemplate,
         equipment: {
             [EquipSlot.MainHand]: weapons.bite0
         },
-        ability
+        ability,
     });
 
     // Pet inherits stats from char

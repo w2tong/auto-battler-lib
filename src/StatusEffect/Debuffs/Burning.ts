@@ -1,12 +1,24 @@
 import StatType from '../../Character/Stats/StatType';
 import Debuff from '../Debuff';
-import DebuffId from '../DebuffId';
+import DamageTaken from '../interface/DamageTaken';
+import DebuffId from '../types/DebuffId';
 
-export default class Burning extends Debuff {
+export default class Burning extends Debuff implements DamageTaken {
     id = DebuffId.Burning;
 
     static baseDamage = 1;
     static spellPowerRatio = 0.2;
+
+    calcDamage(): number {
+        const spellPowerDamage = this.source.stats.spellPower * Burning.spellPowerRatio;
+        const damagePercent = 1 + this.source.stats.getStat(StatType.DamagePercent);
+
+        return (Burning.baseDamage + spellPowerDamage) * damagePercent;
+    }
+
+    getDamageTaken(): number {
+        return this.char.calcDamageTaken(this.calcDamage(), this.source.stats.getStat(StatType.ArmourPenetration));
+    }
 
     onApply() { }
     onExpire() { }
@@ -15,7 +27,7 @@ export default class Burning extends Debuff {
     onTurnEnd() {
         this.char.takeDamage({
             source: `${this.id} (${this.source.name})`,
-            damage: Burning.baseDamage + this.source.stats.spellPower * Burning.spellPowerRatio,
+            damage: this.calcDamage(),
             armourPenetration: this.source.stats.getStat(StatType.ArmourPenetration)
         });
 

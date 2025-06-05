@@ -3,6 +3,7 @@ import Character from '../Character/Character';
 import NumberRange from '../NumberRange';
 
 interface Potion extends Item {
+    id: PotionId;
     itemType: ItemType.Potion;
     healingRange: NumberRange;
     charges: number;
@@ -22,7 +23,7 @@ const potions: { [id in PotionId]: Potion } = {
         itemType: ItemType.Potion,
         name: 'Lesser Healing Potion',
         tier: 1,
-        img: 'potion-red.png',
+
         healingRange: { min: 4, max: 8, bonus: 0 },
         charges: 1
     },
@@ -31,7 +32,7 @@ const potions: { [id in PotionId]: Potion } = {
         itemType: ItemType.Potion,
         name: 'Healing Potion',
         tier: 2,
-        img: 'potion-red.png',
+
         healingRange: { min: 8, max: 16, bonus: 0 },
         charges: 1
     },
@@ -40,7 +41,7 @@ const potions: { [id in PotionId]: Potion } = {
         itemType: ItemType.Potion,
         name: 'Greater Healing Potion',
         tier: 3,
-        img: 'potion-red.png',
+
         healingRange: { min: 12, max: 24, bonus: 0 },
         charges: 1
     },
@@ -49,7 +50,7 @@ const potions: { [id in PotionId]: Potion } = {
         itemType: ItemType.Potion,
         name: 'Superior Healing Potion',
         tier: 4,
-        img: 'potion-red.png',
+
         healingRange: { min: 16, max: 32, bonus: 0 },
         charges: 1
     },
@@ -58,7 +59,7 @@ const potions: { [id in PotionId]: Potion } = {
         itemType: ItemType.Potion,
         name: 'Supreme Healing Potion',
         tier: 5,
-        img: 'potion-red.png',
+
         healingRange: { min: 20, max: 40, bonus: 0 },
         charges: 1
     }

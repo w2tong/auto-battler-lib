@@ -1,12 +1,10 @@
 import Character from '../Character/Character';
 import { getOutgoingStatusEffectId, getCharBattleId } from '../util';
 import Buff from './Buff';
-import BuffId from './BuffId';
-import buffs from './buffs';
 import Debuff from './Debuff';
-import DebuffId from './DebuffId';
-import debuffs from './debuffs';
-import type { StatusEffectOptional } from './StatusEffect';
+import StatusEffect from './StatusEffect';
+import BuffId from './types/BuffId';
+import DebuffId from './types/DebuffId';
 
 export default class StatusEffectManager {
     private char: Character;
@@ -38,33 +36,48 @@ export default class StatusEffectManager {
         return count;
     }
 
-    addBuff(id: BuffId, source: Character, stacks: number, optional?: StatusEffectOptional) {
-        if (stacks <= 0) return;
-        if (!this.buffs[id]) this.buffs[id] = {};
-        const buff = this.buffs[id]![getCharBattleId(source)];
-        if (!buff) {
-            this.buffs[id]![getCharBattleId(source)] = new buffs[id](this, this.char, source, stacks, optional);
-            source.statusEffectManager.addOutgoingBuff(id, this.char, this.buffs[id]![getCharBattleId(source)]);
-            this.buffs[id]![getCharBattleId(source)].onApply();
+    getDebuffStacks(id: DebuffId) {
+        let count = 0;
+        if (this.debuffs[id]) {
+            for (const debuff of Object.values(this.debuffs[id]!)) {
+                count += debuff.stacks;
+            }
         }
-        else {
-            buff.stacks += stacks;
-            if (buff.remainingDamage && optional?.remainingDamage) buff.remainingDamage += optional.remainingDamage;
+        return count;
+    }
+
+    private addStatusEffect<T extends Buff | Debuff, IdType extends string>(
+        effect: T,
+        map: { [id in IdType]?: { [key: string]: T; } },
+        addOutgoing: (id: IdType, char: Character, ref: T) => void
+    ) {
+        if (effect.stacks <= 0) return;
+        const id = effect.id as IdType;
+        if (map[id] === undefined) map[id] = {};
+        const battleId = getCharBattleId(effect.source);
+        const effectMap = map[id]!;
+        if (effectMap[battleId] === undefined) {
+            effectMap[battleId] = effect;
+            addOutgoing(id, this.char, effectMap[battleId]);
+            effect.onApply();
+        } else {
+            effectMap[battleId].add(effect);
         }
     }
 
-    addDebuff(id: DebuffId, source: Character, stacks: number, optional?: StatusEffectOptional) {
-        if (stacks <= 0) return;
-        if (!this.debuffs[id]) this.debuffs[id] = {};
-        const debuff = this.debuffs[id]![getCharBattleId(source)];
-        if (!debuff) {
-            this.debuffs[id]![getCharBattleId(source)] = new debuffs[id](this, this.char, source, stacks, optional);
-            source.statusEffectManager.addOutgoingDebuff(id, this.char, this.debuffs[id]![getCharBattleId(source)]);
-            this.debuffs[id]![getCharBattleId(source)].onApply();
-        }
-        else {
-            debuff.stacks += stacks;
-            if (debuff.remainingDamage && optional?.remainingDamage) debuff.remainingDamage += optional.remainingDamage;
+    add(statusEffect: StatusEffect) {
+        if (statusEffect.type === 'Buff') {
+            this.addStatusEffect(
+                statusEffect as Buff,
+                this._buffs,
+                (id, char, ref) => statusEffect.source.statusEffectManager.addOutgoingBuff(id as BuffId, char, ref)
+            );
+        } else if (statusEffect.type === 'Debuff') {
+            this.addStatusEffect(
+                statusEffect as Debuff,
+                this._debuffs,
+                (id, char, ref) => statusEffect.source.statusEffectManager.addOutgoingDebuff(id as DebuffId, char, ref)
+            );
         }
     }
 
@@ -140,21 +153,4 @@ export default class StatusEffectManager {
             }
         }
     }
-
-    // TODO: move following methods to client
-    // getStatusEffectString(statusEffects: { [id in BuffId]?: Buff } | { [id in DebuffId]?: Debuff }) {
-    //     const arr: string[] = [];
-    //     for (const statusEffect of Object.values(statusEffects)) {
-    //         arr.push(`${statusEffect.symbol}(${statusEffect.stacks})`);
-    //     }
-    //     return arr.join(' ');
-    // }
-
-    // getBuffString(): string {
-    //     return this.getStatusEffectString(this.buffs);
-    // }
-
-    // getDebuffString(): string {
-    //     return this.getStatusEffectString(this.debuffs);
-    // }
 }

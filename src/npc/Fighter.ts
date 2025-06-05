@@ -5,7 +5,8 @@ import StatType from '../Character/Stats/StatType';
 import NPC from './NPC';
 
 const Fighter: NPC = {
-    name: 'Fighter',
+    id: 'fighter',
+    name: 'Bandit Fighter',
     className: ClassName.Fighter,
     attributes: {
         [AttributeType.Strength]: { perLvl: 1.5 },
@@ -27,7 +28,7 @@ const Fighter: NPC = {
     },
     equipment: startingEquipment[ClassName.Fighter],
     ability: startingAbility[ClassName.Fighter]
-};
+} as const;
 
 export default Fighter;
 

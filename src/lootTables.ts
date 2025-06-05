@@ -7,12 +7,13 @@ import { RingId } from './Equipment/Ring';
 import { PotionId } from './Equipment/Potion';
 import { WaistId } from './Equipment/Waist';
 import LevelRange from './types/LevelRange';
-type LootTable = (WeaponId | ShieldId | HeadId | ArmourId | HandsId | RingId | PotionId | WaistId)[];
+import { NeckId } from './Equipment/Neck';
+type LootTable = (WeaponId | ShieldId | HeadId | ArmourId | HandsId | RingId | PotionId | WaistId | NeckId)[];
 
 const lootTiers: { [tier: number]: LootTable; } = {
     0: [
         // Weapons
-        'longsword0', 'greatsword0', 'dagger0', 'quarterstaff0', 'wand0',
+        'longsword0', 'greatsword0', 'dagger0', 'quarterstaff0', 'wand0', 'mace0', 'longbow0',
         // Shields
         'buckler0', 'spikedShield0', 'towerShield0',
         // Armour
@@ -27,7 +28,7 @@ const lootTiers: { [tier: number]: LootTable; } = {
     ],
     1: [
         // Weapons
-        'longsword1', 'greatsword1', 'dagger1', 'quarterstaff1', 'wand1',
+        'longsword1', 'greatsword1', 'dagger1', 'quarterstaff1', 'wand1', 'mace1', 'longbow1',
         // Shields
         'buckler1', 'spikedShield1', 'towerShield1',
         // Armour
@@ -39,11 +40,13 @@ const lootTiers: { [tier: number]: LootTable; } = {
         // Rings
         'accRing0', 'dmgRing0', 'critRing0', 'dodgeRing0', 'thornsRing0', 'mpHitRing0', 'mpRegenRing0', 'mpCostRing0',
         // Potions
-        'healingPotion0'
+        'healingPotion0',
+        // Necks
+        'strNeck0', 'dexNeck0', 'perNeck0', 'conNeck0', 'intNeck0', 'wisNeck0',
     ],
     2: [
         // Weapons
-        'longsword2', 'greatsword2', 'dagger2', 'quarterstaff2', 'wand2',
+        'longsword2', 'greatsword2', 'dagger2', 'quarterstaff2', 'wand2', 'mace2', 'longbow2',
         // Shields
         'buckler2', 'spikedShield2', 'towerShield2',
         // Armour
@@ -58,10 +61,12 @@ const lootTiers: { [tier: number]: LootTable; } = {
         'healingPotion1',
         // Waists
         'effBelt0', 'healBelt0',
+        // Necks
+        'strNeck0', 'dexNeck0', 'perNeck0', 'conNeck0', 'intNeck0', 'wisNeck0',
     ],
     3: [
         // Weapons
-        'longsword3', 'greatsword3', 'dagger3', 'quarterstaff3', 'wand3',
+        'longsword3', 'greatsword3', 'dagger3', 'quarterstaff3', 'wand3', 'mace3', 'longbow3',
         // Shields
         'buckler3', 'spikedShield3', 'towerShield3',
         // Armour
@@ -76,10 +81,12 @@ const lootTiers: { [tier: number]: LootTable; } = {
         'healingPotion2',
         // Waists
         'effBelt1', 'healBelt1',
+        // Necks
+        'strNeck1', 'dexNeck1', 'perNeck1', 'conNeck1', 'intNeck1', 'wisNeck1',
     ],
     4: [
         // Weapons
-        'longsword4', 'greatsword4', 'dagger4', 'quarterstaff4', 'wand4',
+        'longsword4', 'greatsword4', 'dagger4', 'quarterstaff4', 'wand4', 'mace4', 'longbow4',
         // Shields
         'buckler4', 'spikedShield4', 'towerShield4',
         // Armour
@@ -94,11 +101,13 @@ const lootTiers: { [tier: number]: LootTable; } = {
         'healingPotion3',
         // Waists
         'effBelt2', 'healBelt2', 'chargesBelt0',
+        // Necks
+        'strNeck1', 'dexNeck1', 'perNeck1', 'conNeck1', 'intNeck1', 'wisNeck1',
     ],
 
     5: [
         // Weapons
-        'longsword5', 'greatsword5', 'dagger5', 'quarterstaff5', 'wand5',
+        'longsword5', 'greatsword5', 'dagger5', 'quarterstaff5', 'wand5', 'mace5', 'longbow5',
         // Shields
         'buckler5', 'spikedShield5', 'towerShield5',
         // Armour
@@ -113,6 +122,8 @@ const lootTiers: { [tier: number]: LootTable; } = {
         'healingPotion4',
         // Waists
         'effBelt3', 'healBelt3', 'chargesBelt1',
+        // Necks
+        'strNeck2', 'dexNeck2', 'perNeck2', 'conNeck2', 'intNeck2', 'wisNeck2',
     ],
 };
 

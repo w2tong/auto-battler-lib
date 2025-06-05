@@ -4,7 +4,7 @@ import Class from './Class';
 
 const Ranger: Class = {
     name: 'Ranger',
-    description: 'Ranger Class description here.',
+    description: 'Rangers fight alongside a loyal companion and strike from afar.',
     attributes: {
         [AttributeType.Dexterity]: 5,
         [AttributeType.Perception]: 5,

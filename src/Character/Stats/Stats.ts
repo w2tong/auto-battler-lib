@@ -113,6 +113,7 @@ class Stats {
         if (equipment.head) this.addItemStats(equipment.head.stats);
         if (equipment.ring1) this.addItemStats(equipment.ring1.stats);
         if (equipment.ring2) this.addItemStats(equipment.ring2.stats);
+        if (equipment.neck) this.addItemStats(equipment.neck.stats);
         if (equipment.mainHand) this.addItemStats(equipment.mainHand.stats);
         if (equipment.offHandWeapon) this.addItemStats(equipment.offHandWeapon.stats);
         else if (equipment.offHandShield) this.addItemStats(equipment.offHandShield.stats);

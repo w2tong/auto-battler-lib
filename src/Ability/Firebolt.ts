@@ -1,7 +1,7 @@
 import AttackType from '../types/AttackType';
-import DebuffId from '../StatusEffect/DebuffId';
 import Ability from './Ability';
 import Burning from '../StatusEffect/Debuffs/Burning';
+import { formatNum } from '../util';
 
 const NAME = 'Firebolt';
 const MIN_BASE = 1;
@@ -23,7 +23,7 @@ const Firebolt: Ability = {
             weaponAttack: false,
             spellPowerRatio: SPELLPOWER_RATIO
         }) : null;
-        return `Deals ${damageRange ? `${damageRange.min} - ${damageRange.max} ` : ''}to your target and apply ${STACKS} Burning stacks${char ? ` dealing ${Burning.baseDamage + char.stats.spellPower * Burning.spellPowerRatio} each turn` : ''}.`;
+        return `Deals ${damageRange ? `${formatNum(damageRange.min)} - ${formatNum(damageRange.max)} ` : ''}to your target and apply ${STACKS} Burning stacks${char ? ` dealing ${formatNum(Burning.baseDamage + char.stats.spellPower * Burning.spellPowerRatio)} damage each turn` : ''}.`;
     },
     func: (char) => {
         if (char.target) {
@@ -43,7 +43,11 @@ const Firebolt: Ability = {
             });
 
             if (hit) {
-                char.target.statusEffectManager.addDebuff(DebuffId.Burning, char, STACKS);
+                char.target.statusEffectManager.add(new Burning({
+                    char: char.target,
+                    source: char,
+                    stacks: STACKS
+                }));
             }
         }
     }

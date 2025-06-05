@@ -24,18 +24,18 @@ describe('createNPCChars', () => {
     it('creates multiple copies of each NPC when count > 1', () => {
         const chars = createNPCChars([Fighter], 1, 3);
         expect(chars).toHaveLength(3);
-        expect(chars[0].name).toBe('Fighter 1');
-        expect(chars[1].name).toBe('Fighter 2');
-        expect(chars[2].name).toBe('Fighter 3');
+        expect(chars[0].name).toBe('Bandit Fighter 1');
+        expect(chars[1].name).toBe('Bandit Fighter 2');
+        expect(chars[2].name).toBe('Bandit Fighter 3');
     });
 
     it('creates multiple copies for multiple NPCs when count > 1', () => {
         const chars = createNPCChars([Fighter, Rogue], 1, 2);
         expect(chars).toHaveLength(4);
-        expect(chars[0].name).toBe('Fighter 1');
-        expect(chars[1].name).toBe('Rogue 1');
-        expect(chars[2].name).toBe('Fighter 2');
-        expect(chars[3].name).toBe('Rogue 2');
+        expect(chars[0].name).toBe('Bandit Fighter 1');
+        expect(chars[1].name).toBe('Bandit Rogue 1');
+        expect(chars[2].name).toBe('Bandit Fighter 2');
+        expect(chars[3].name).toBe('Bandit Rogue 2');
     });
 });
 

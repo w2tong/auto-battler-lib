@@ -2,6 +2,7 @@ import StatType from '../Character/Stats/StatType';
 import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
 
 interface Head extends Item {
+    id: HeadId;
     itemType: ItemType.Head;
     armourClass?: number;
     attributes?: ItemAttributes;
@@ -19,7 +20,6 @@ const heads: { [id in HeadId]: Head } = {
         itemType: ItemType.Head,
         name: 'Leather Helmet',
         tier: 0,
-        img: 'head-leather.png',
 
         stats: {
             [StatType.Armour]: 3
@@ -30,7 +30,6 @@ const heads: { [id in HeadId]: Head } = {
         itemType: ItemType.Head,
         name: 'Mail Coif',
         tier: 3,
-        img: 'head-mail.png',
 
         stats: {
             [StatType.Armour]: 6
@@ -41,7 +40,6 @@ const heads: { [id in HeadId]: Head } = {
         itemType: ItemType.Head,
         name: 'Plate Helmet',
         tier: 5,
-        img: 'head-plate.png',
 
         stats: {
             [StatType.Armour]: 10
@@ -52,7 +50,6 @@ const heads: { [id in HeadId]: Head } = {
         itemType: ItemType.Head,
         name: 'Cloth Hood',
         tier: 0,
-        img: 'head-cloth.png',
 
         stats: {
             [StatType.ManaCost]: -5
@@ -63,7 +60,6 @@ const heads: { [id in HeadId]: Head } = {
         itemType: ItemType.Head,
         name: 'Cloth Hood +1',
         tier: 3,
-        img: 'head-cloth.png',
 
         stats: {
             [StatType.ManaCost]: -10
@@ -74,7 +70,6 @@ const heads: { [id in HeadId]: Head } = {
         itemType: ItemType.Head,
         name: 'Cloth Hood +2',
         tier: 5,
-        img: 'head-cloth.png',
 
         stats: {
             [StatType.ManaCost]: -15

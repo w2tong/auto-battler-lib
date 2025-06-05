@@ -1,4 +1,5 @@
 import { EquipSlot } from '../../Equipment/Equipment';
+import { necks } from '../../Equipment/Neck';
 import { quarterstaffs } from '../../Equipment/Weapon/weapons/quarterstaffs';
 import { createTestCharacter } from '../../tests/util';
 import Character from '../Character';
@@ -76,6 +77,16 @@ describe('constructor - equipment', () => {
                 [EquipSlot.MainHand]: quarterstaffs.quarterstaff1
             }
         });
-        expect(char.attributes.wisdom).toBe(11);
+        expect(char.attributes.wisdom).toBe(12);
+        expect(char.attributes[AttributeType.Wisdom].bonus).toBe(2);
+    });
+    test('strNeck0', () => {
+        const char = createTestCharacter({
+            equipment: {
+                [EquipSlot.Neck]: necks.strNeck0
+            }
+        });
+        expect(char.attributes.strength).toBe(15);
+        expect(char.attributes[AttributeType.Strength].bonus).toBe(5);
     });
 });

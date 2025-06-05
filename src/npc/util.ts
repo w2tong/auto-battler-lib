@@ -9,7 +9,7 @@ import StatType from '../Character/Stats/StatType';
 function calculateBaseAttributes(template: AttributeTemplate, level: number): BaseAttributes {
     const attributes: BaseAttributes = {};
     for (const [attr, { base, perLvl }] of Object.entries(template))
-        attributes[attr as AttributeType] = (base ? base : Attributes.DEFAULT_VALUE) + (perLvl ? (perLvl - 1) * level : 0);
+        attributes[attr as AttributeType] = Math.floor((base ? base : Attributes.DEFAULT_VALUE) + (perLvl ? (perLvl) * (level - 1) : 0));
     return attributes;
 }
 

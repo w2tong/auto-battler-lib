@@ -1,11 +1,7 @@
-// TODO: redo exports for StatusEffects / Buffs / Debuffs
-// export { Buffs, BuffId } from './StatusEffect/buffs';
-// export { Debuffs, DebuffId } from './StatusEffect/debuffs';
-
 export { ClassName, Classes } from './Character/Classes/classes';
 
 export { Equip, Equipment, EquipmentImport, EquipmentItemIds, EquipSlot, equips, isValidEquip, createEquipmentImport } from './Equipment/Equipment';
-export { Item, ItemType, Tier, ItemAttributes, ItemStats } from './Equipment/Item';
+export { Item, ItemId, ItemType, Tier, ItemAttributes, ItemStats } from './Equipment/Item';
 export { Armour, ArmourId, armour } from './Equipment/Armour';
 export { Waist, WaistId, waists } from './Equipment/Waist';
 export { Hands, HandsId, hands } from './Equipment/Hands';
@@ -14,16 +10,17 @@ export { Potion, PotionId, potions } from './Equipment/Potion';
 export { Ring, RingId, rings } from './Equipment/Ring';
 export { Shield, ShieldId, shields } from './Equipment/Shield';
 export { WeaponType, Weapon, WeaponTypeProperties } from './Equipment/Weapon/Weapon';
+export { Neck, NeckId, necks } from './Equipment/Neck';
 export { WeaponId, weapons } from './Equipment/Weapon/weapons';
 
 import WeaponStyle from './WeaponStyle';
 export { WeaponStyle };
 
-import Battle, { Side, BattleJSON } from './Battle/Battle';
-export { Battle, Side, BattleJSON };
+import Battle, { Side } from './Battle/Battle';
+export { Battle, Side };
 
-import Character, { CharacterInfo, CharacterJSON } from './Character/Character';
-export { Character, CharacterInfo, CharacterJSON };
+import Character from './Character/Character';
+export { Character };
 
 import Ability from './Ability/Ability';
 export { Ability };
@@ -50,11 +47,25 @@ export { HitType };
 import LevelRange from './types/LevelRange';
 export { LevelRange };
 
-import BuffId from './StatusEffect/BuffId';
-import buffs from './StatusEffect/buffs';
-import DebuffId from './StatusEffect/DebuffId';
-import debuffs from './StatusEffect/debuffs';
-export { BuffId, buffs, DebuffId, debuffs };
+// Status Effects
+import StatusEffect from './StatusEffect/StatusEffect';
+import Buff from './StatusEffect/Buff';
+import Debuff from './StatusEffect/Debuff';
+import BuffId from './StatusEffect/types/BuffId';
+import DebuffId from './StatusEffect/types/DebuffId';
+export { StatusEffect, Buff, Debuff, BuffId, DebuffId };
+
+// Buffs
+import Blessed from './StatusEffect/Buffs/Blessed';
+import Invisible from './StatusEffect/Buffs/Invisible';
+export { Blessed, Invisible };
+
+// Debuffs
+import Bleeding from './StatusEffect/Debuffs/Bleeding';
+import Burning from './StatusEffect/Debuffs/Burning';
+import Frozen from './StatusEffect/Debuffs/Frozen';
+import Poisoned from './StatusEffect/Debuffs/Poisoned';
+export { Bleeding, Burning, Frozen, Poisoned };
 
 export { PetId } from './Character/Pet';
 
@@ -71,3 +82,5 @@ import lootTables from './lootTables';
 export { lootTables };
 
 export { startingAbility, startingEquipment } from './Character/Classes/classLoadouts';
+
+export { NpcId } from './npc/NPC';

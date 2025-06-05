@@ -1,7 +1,7 @@
 import Battle from '../Battle/Battle';
 import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';
-import DebuffId from '../StatusEffect/DebuffId';
+import DebuffId from '../StatusEffect/types/DebuffId';
 import { createTestCharacter } from '../tests/util';
 import { getCharBattleId } from '../util';
 import Firebolt from './Firebolt';

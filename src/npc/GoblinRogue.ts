@@ -8,6 +8,7 @@ import { weapons } from '../Equipment/Weapon/weapons';
 import NPC from './NPC';
 
 const GoblinRogue: NPC = {
+    id: 'goblinRogue',
     name: 'Goblin Rogue',
     className: ClassName.Rogue,
     attributes: {
@@ -33,6 +34,6 @@ const GoblinRogue: NPC = {
         [EquipSlot.Armour]: armour.leatherArmour0
     },
     ability: startingAbility[ClassName.Rogue]
-};
+} as const;
 
 export default GoblinRogue;

@@ -5,7 +5,8 @@ import StatType from '../Character/Stats/StatType';
 import NPC from './NPC';
 
 const Wizard: NPC = {
-    name: 'Wizard',
+    id: 'wizard',
+    name: 'Bandit Wizard',
     className: ClassName.Wizard,
     attributes: {
         [AttributeType.Dexterity]: { perLvl: 0.5 },
@@ -28,7 +29,7 @@ const Wizard: NPC = {
     },
     equipment: startingEquipment[ClassName.Wizard],
     ability: startingAbility[ClassName.Wizard]
-};
+} as const;
 
 export default Wizard;
 

@@ -1,6 +1,7 @@
 import AttackType from '../types/AttackType';
-import DebuffId from '../StatusEffect/DebuffId';
 import Ability from './Ability';
+import { formatNum } from '../util';
+import Bleeding from '../StatusEffect/Debuffs/Bleeding';
 
 const NAME = 'Wounding Shot';
 const BONUS_DMG = 0.5;
@@ -19,7 +20,7 @@ const WoundingShot: Ability = {
             weaponAttack: true,
             spellPowerRatio: char.equipment.mainHand.spellPowerRatio ? char.equipment.mainHand.spellPowerRatio * (1 + BONUS_DMG) : char.equipment.mainHand.spellPowerRatio
         }) : null;
-        return `Deals ${damageRange ? `${damageRange.min} - ${damageRange.max} ` : ''}damage and applies Bleed dealing ${DMG_PER_TURN * BLEED_STACKS * 100}% of the damage dealt over ${BLEED_STACKS} turns.`;
+        return `Deals ${damageRange ? `${formatNum(damageRange.min)} - ${formatNum(damageRange.max)} ` : ''}damage and applies Bleed dealing ${formatNum(DMG_PER_TURN * BLEED_STACKS * 100)}% of the damage dealt over ${BLEED_STACKS} turns.`;
     },
     func: (char) => {
         if (char.target) {
@@ -40,7 +41,12 @@ const WoundingShot: Ability = {
             });
 
             if (hit) {
-                char.target.statusEffectManager.addDebuff(DebuffId.Bleeding, char, BLEED_STACKS, { remainingDamage: damageDone * BLEED_STACKS * DMG_PER_TURN });
+                char.target.statusEffectManager.add(new Bleeding({
+                    char: char.target,
+                    source: char,
+                    stacks: BLEED_STACKS,
+                    remainingDamage: damageDone * BLEED_STACKS * DMG_PER_TURN
+                }));
             }
         }
     }

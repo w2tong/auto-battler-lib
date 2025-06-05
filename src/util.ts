@@ -4,8 +4,8 @@ import Character from './Character/Character';
 import { type ClassName } from './Character/Classes/classes';
 import { type StatTemplate } from './Character/Stats/StatTemplate';
 import { type EquipmentImport } from './Equipment/Equipment';
-import type BuffId from './StatusEffect/BuffId';
-import type DebuffId from './StatusEffect/DebuffId';
+import type BuffId from './StatusEffect/types/BuffId';
+import type DebuffId from './StatusEffect/types/DebuffId';
 import type LevelRange from './types/LevelRange';
 
 // Random integer between 0 and max
@@ -19,6 +19,10 @@ function getCharBattleId(char: Character): string {
 
 function getOutgoingStatusEffectId(id: BuffId | DebuffId, char: Character) {
     return `${id}-${getCharBattleId(char)}`;
+}
+
+function formatNum(num: number, multiplier = 1): number {
+    return Number((num * multiplier).toFixed(1));
 }
 
 function createPlayerChar({ userId, name, level, className, attributes, statTemplate, equipment, ability }: { userId: string, name: string, level: LevelRange, className: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability: Ability; }): Character {
@@ -37,4 +41,4 @@ function createPlayerChar({ userId, name, level, className, attributes, statTemp
     });
 }
 
-export { getRandomRange, getCharBattleId, getOutgoingStatusEffectId, createPlayerChar };
+export { getRandomRange, getCharBattleId, getOutgoingStatusEffectId, createPlayerChar, formatNum };

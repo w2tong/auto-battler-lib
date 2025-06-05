@@ -4,7 +4,8 @@ import StatType from '../Character/Stats/StatType';
 import { EquipSlot } from '../Equipment/Equipment';
 import { ItemType } from '../Equipment/Item';
 import { Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
-import DebuffId from '../StatusEffect/DebuffId';
+import DebuffId from '../StatusEffect/types/DebuffId';
+import Bleeding from '../StatusEffect/Debuffs/Bleeding';
 import { createTestCharacter } from '../tests/util';
 import AttackType from '../types/AttackType';
 import { getCharBattleId } from '../util';
@@ -13,11 +14,10 @@ import WoundingShot from './WoundingShot';
 let char: Character;
 let target: Character;
 const testWeapon: Weapon = {
-    id: '',
+    id: 'bite0',
     itemType: ItemType.Weapon,
     name: '',
     tier: 0,
-    img: '',
 
     type: WeaponType.Bow,
     attackType: AttackType.RangedWeapon,
@@ -49,12 +49,23 @@ beforeEach(() => {
     new Battle([char], [target]);
 });
 
+let hitRollSpy: jest.SpyInstance;
+let critRollSpy: jest.SpyInstance;
+beforeEach(() => {
+    hitRollSpy = jest.spyOn(Character.prototype, 'hitRoll').mockReturnValue(true);
+    critRollSpy = jest.spyOn(Character, 'critRoll').mockReturnValue(true);
+});
+afterEach(() => {
+    hitRollSpy.mockRestore();
+    critRollSpy.mockRestore();
+});
+
 test('WoundingShot.func', () => {
     WoundingShot.func(char);
-    expect(target.currentHealth).toBeCloseTo(92.5); // 100 - (5 * 1.5 = 7.5) = 92.5
+    expect(target.currentHealth).toBeCloseTo(88.75); // 100 - (5 * 1.5 * 1.5 = 11.25) = 88.75
     expect(char.currentMana).toBe(50);
 
-    const bleedingDebuff = target.statusEffectManager.debuffs[DebuffId.Bleeding]![getCharBattleId(char)];
+    const bleedingDebuff = target.statusEffectManager.debuffs[DebuffId.Bleeding]![getCharBattleId(char)] as Bleeding;
     expect(bleedingDebuff.stacks).toBe(3);
-    expect(bleedingDebuff.remainingDamage).toBeCloseTo(4.5); // 7.5 * 0.2 * 3
+    expect(bleedingDebuff.remainingDamage).toBeCloseTo(6.75); // 11.25 * 0.2 * 3
 });

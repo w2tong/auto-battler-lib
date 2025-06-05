@@ -5,7 +5,8 @@ import StatType from '../Character/Stats/StatType';
 import NPC from './NPC';
 
 const Rogue: NPC = {
-    name: 'Rogue',
+    id: 'rogue',
+    name: 'Bandit Rogue',
     className: ClassName.Rogue,
     attributes: {
         [AttributeType.Strength]: { perLvl: 1 },
@@ -25,7 +26,7 @@ const Rogue: NPC = {
     },
     equipment: startingEquipment[ClassName.Rogue],
     ability: startingAbility[ClassName.Rogue]
-};
+} as const;
 
 export default Rogue;
 

@@ -4,14 +4,13 @@ import StatusEffectManager from '../StatusEffect/StatusEffectManager';
 import { Equipment, EquipmentImport } from '../Equipment/Equipment';
 import HitType from '../types/HitType';
 import { dice, rollDice } from '../dice';
-import { Potion } from '../Equipment/Potion';
 import Stats from './Stats/Stats';
 import NumberRange, { numberRoll } from '../NumberRange';
 import Ability from '../Ability/Ability';
 import { StatTemplate } from './Stats/StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
 import { ClassName, Classes } from './Classes/classes';
-import BuffId from '../StatusEffect/BuffId';
+import BuffId from '../StatusEffect/types/BuffId';
 import StatType from './Stats/StatType';
 import Attributes from './Attributes/Attributes';
 import BaseAttributes from './Attributes/BaseAttributes';
@@ -19,39 +18,17 @@ import AttackType from '../types/AttackType';
 import { type Weapon } from '../Equipment/Weapon/Weapon';
 import { createPet, PetId } from './Pet';
 import AttributeType from './Attributes/AttributeType';
-
-type CharacterInfo = {
-    name: string,
-    className: string | null,
-    level: number,
-    mainHand: Weapon,
-    offHandWeapon?: Weapon,
-    potion?: Potion,
-
-    attributes: Attributes,
-    stats: Stats;
-};
-
-type CharacterJSON = {
-    name: string;
-    className: string | null;
-    level: number;
-    currHealth: number;
-    maxHealth: number;
-    currMana: number;
-    manaCost: number;
-    buffs: string;
-    debuffs: string;
-};
+import { NpcId } from '../npc/NPC';
 
 // Crit chance, crit dmg, Accuracy, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
 export default class Character {
     private userId?: string;
 
     private _name: string;
-    private _className: ClassName | null;
-
     private _level: number;
+
+    private _className: ClassName | null;
+    private _npcId: NpcId | null;
 
     // Equipment
     private _equipment: Equipment;
@@ -75,10 +52,11 @@ export default class Character {
     private _target: Character | null = null;
     private _battle: { ref: Battle, side: Side, index: number; } | null = null;
 
-    constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, petId?: PetId, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
+    constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, npcId, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, petId?: PetId, npcId?: NpcId, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
         this._name = name;
         this._level = level;
         this._className = className ?? null;
+        this._npcId = npcId ?? null;
 
         this._equipment = new Equipment(equipment);
 
@@ -123,12 +101,16 @@ export default class Character {
         return this._name;
     }
 
+    get level() {
+        return this._level;
+    }
+
     get className() {
         return this._className;
     }
 
-    get level() {
-        return this._level;
+    get npcId() {
+        return this._npcId;
     }
 
     get attributes() {
@@ -311,6 +293,7 @@ export default class Character {
         let sneakAttack: boolean = false;
         let blocked: boolean = false;
         let damageDone: number = 0;
+        let targetDead: boolean = false;
 
         const hit = this.hitRoll({
             target,
@@ -337,12 +320,14 @@ export default class Character {
                 damage = Character.calcDamageAfterBlock(damage, target.stats.getStat(StatType.BlockPower));
             }
 
-            damageDone = target.takeDamage({
+            const res = target.takeDamage({
                 source: this.name,
                 damage,
                 armourPenetration: this.stats.armourPenetration,
                 options: { addToLog: false }
             });
+            damageDone = res.damageTaken;
+            targetDead = res.dead;
         }
 
         // Add hit to combat log
@@ -356,6 +341,9 @@ export default class Character {
                 blocked,
                 abilityName
             });
+            if (targetDead) {
+                this.battle.ref.log.add(`${target.name} died.`);
+            }
         }
 
         this.statusEffectManager.onAttack(hit);
@@ -396,24 +384,34 @@ export default class Character {
         }
     }
 
-    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean; }; }): number {
+    calcDamageTaken(damage: number, armourPen: number): number {
+        let damageTaken = Character.calcDamageAfterDeflection(damage, this.stats.getStat(StatType.Deflection));
+        damageTaken = Character.calcDamageAfterArmour(damageTaken, this.stats.getStat(StatType.Armour), armourPen);
+        return damageTaken;
+    }
+
+    takeDamage({ source, damage, armourPenetration, options }: { source: string, damage: number, armourPenetration: number, options?: { addToLog: boolean; }; }): { damageTaken: number, dead: boolean; } {
+        const addToLog = options?.addToLog ?? true;
         let damageTaken = Math.max(damage, 0);
+        let dead = false;
 
         if (damageTaken > 0) {
-            damageTaken = Character.calcDamageAfterDeflection(damageTaken, this.stats.getStat(StatType.Deflection));
-            damageTaken = Character.calcDamageAfterArmour(damageTaken, this.stats.getStat(StatType.Armour), armourPenetration);
+            damageTaken = this.calcDamageTaken(damageTaken, armourPenetration);
             this._currentHealth -= damageTaken;
         }
 
         if (this.battle) {
-            if (options?.addToLog === undefined || options?.addToLog === true) this.battle.ref.log.addDamage(this.name, source, damageTaken);
+            if (addToLog) {
+                this.battle.ref.log.addDamage(this.name, source, damageTaken);
+            }
             if (this.isDead()) {
+                dead = true;
                 this.battle.ref.setCharDead(this.battle.side, this.battle.index);
-                this.battle.ref.log.add(`${this.name} died.`);
+                if (addToLog) this.battle.ref.log.add(`${this.name} died.`);
             }
         }
 
-        return damageTaken;
+        return { damageTaken, dead };
     }
 
     addMana(mana: number): void {
@@ -431,34 +429,6 @@ export default class Character {
     isInvisible(): boolean {
         return this.statusEffectManager.getBuffStacks(BuffId.Invisible) > 0;
     }
-
-    info(): CharacterInfo {
-        return {
-            name: this.name,
-            className: this._className,
-            level: this.level,
-            mainHand: this.equipment.mainHand,
-            offHandWeapon: this.equipment.offHandWeapon,
-            potion: this.equipment.potion,
-            attributes: this.attributes,
-            stats: this.stats
-        };
-    }
-
-    // Helper functions
-    // json(): CharacterJSON {
-    //     return {
-    //         name: this._name,
-    //         className: this.className,
-    //         level: this.level,
-    //         currHealth: this.currentHealth,
-    //         maxHealth: this.stats.getStat(StatType.MaxHealth),
-    //         currMana: this.currentHealth,
-    //         manaCost: this.stats.getStat(StatType.ManaCost),
-    //         buffs: this.statusEffectManager.getBuffString(),
-    //         debuffs: this.statusEffectManager.getDebuffString()
-    //     };
-    // }
 
     static calcCritDamage(damage: number, critDamage: number) {
         return Math.max(damage *= critDamage, 0);
@@ -478,5 +448,3 @@ export default class Character {
         return Math.max(damage - Math.max(blockPower, 0), 0);
     }
 }
-
-export { CharacterInfo, CharacterJSON };

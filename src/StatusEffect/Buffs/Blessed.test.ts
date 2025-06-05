@@ -1,10 +1,11 @@
 import Battle from '../../Battle/Battle';
+import Attributes from '../../Character/Attributes/Attributes';
 import AttributeType from '../../Character/Attributes/AttributeType';
 import Character from '../../Character/Character';
 import StatType from '../../Character/Stats/StatType';
 import { createTestCharacter } from '../../tests/util';
 import { getCharBattleId } from '../../util';
-import BuffId from '../BuffId';
+import BuffId from '../types/BuffId';
 import Blessed from './Blessed';
 
 let char: Character;
@@ -12,19 +13,20 @@ let source1: Character;
 let source2: Character;
 
 const charLevel = 5;
-const charWisdom = 10;
-const charDamage = Blessed.baseDamage + Blessed.damagePerLvl * charLevel + Blessed.damagePerWisdom * charWisdom;
-const charAccuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * charLevel + Blessed.accuracyPerWisdom * charWisdom;
+const charWisdom = 20;
+const charAccuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * (charLevel - 1) + Blessed.accuracyPerWisdom * (charWisdom - Attributes.DEFAULT_VALUE);
+const charDamage = Blessed.baseDamage + Blessed.damagePerLvl * (charLevel - 1) + Blessed.damagePerWisdom * (charWisdom - Attributes.DEFAULT_VALUE);
 
 const source1Level = 1;
-const source1Wisdom = 0;
-const source1Damage = Blessed.baseDamage + Blessed.damagePerLvl * source1Level + Blessed.damagePerWisdom * source1Wisdom;
-const source1Accuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * source1Level + Blessed.accuracyPerWisdom * source1Wisdom;
+const source1Wisdom = 5;
+const source1Accuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * (source1Level - 1) + Blessed.accuracyPerWisdom * (source1Wisdom - Attributes.DEFAULT_VALUE);
+const source1Damage = Blessed.baseDamage + Blessed.damagePerLvl * (source1Level - 1) + Blessed.damagePerWisdom * (source1Wisdom - Attributes.DEFAULT_VALUE);
 
 const source2Level = 10;
-const source2Wisdom = 5;
-const source2Damage = Blessed.baseDamage + Blessed.damagePerLvl * source2Level + Blessed.damagePerWisdom * source2Wisdom;
-const source2Accuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * source2Level + Blessed.accuracyPerWisdom * source2Wisdom;
+const source2Wisdom = 15;
+const source2Accuracy = Blessed.baseAccuracy + Blessed.accuracyPerLvl * (source2Level - 1) + Blessed.accuracyPerWisdom * (source2Wisdom - Attributes.DEFAULT_VALUE);
+const source2Damage = Blessed.baseDamage + Blessed.damagePerLvl * (source2Level - 1) + Blessed.damagePerWisdom * (source2Wisdom - Attributes.DEFAULT_VALUE);
+
 
 beforeEach(() => {
     char = createTestCharacter({
@@ -56,7 +58,11 @@ beforeEach(() => {
 });
 
 test('Blessing - 1 source, 1 stack', () => {
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
+    char.statusEffectManager.add(new Blessed({
+        char,
+        source: char,
+        stacks: 1
+    }));
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(1);
     expect(char.stats.getStat(StatType.Damage)).toBeCloseTo(charDamage);
     expect(char.stats.getStat(StatType.Accuracy)).toBeCloseTo(charAccuracy);
@@ -67,7 +73,11 @@ test('Blessing - 1 source, 1 stack', () => {
 });
 
 test('Blessing - 1 source, 3 stacks', () => {
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 3);
+    char.statusEffectManager.add(new Blessed({
+        char,
+        source: char,
+        stacks: 3
+    }));
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(3);
     expect(char.stats.getStat(StatType.Damage)).toBeCloseTo(charDamage);
     expect(char.stats.getStat(StatType.Accuracy)).toBeCloseTo(charAccuracy);
@@ -87,20 +97,36 @@ test('Blessing - 1 source, 3 stacks', () => {
 });
 
 test('Blessing - 1 source, 1 stack per cast', () => {
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
+    char.statusEffectManager.add(new Blessed({
+        char,
+        source: char,
+        stacks: 1
+    }));
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(1);
     expect(char.stats.getStat(StatType.Damage)).toBeCloseTo(charDamage);
     expect(char.stats.getStat(StatType.Accuracy)).toBeCloseTo(charAccuracy);
 
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
+    char.statusEffectManager.add(new Blessed({
+        char,
+        source: char,
+        stacks: 1
+    }));
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(2);
     expect(char.stats.getStat(StatType.Damage)).toBeCloseTo(charDamage);
     expect(char.stats.getStat(StatType.Accuracy)).toBeCloseTo(charAccuracy);
 });
 
 test('Blessing - 2 sources, 1 stack each', () => {
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
-    char.statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
+    char.statusEffectManager.add(new Blessed({
+        char,
+        source: char,
+        stacks: 1
+    }));
+    char.statusEffectManager.add(new Blessed({
+        char,
+        source: source1,
+        stacks: 1
+    }));
 
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(1);
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(1);
@@ -120,8 +146,16 @@ test('Blessing - 2 sources, 1 stack each', () => {
 });
 
 test('Blessing - 2 sources, 2 stack each', () => {
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 2);
-    char.statusEffectManager.addBuff(BuffId.Blessed, source1, 2);
+    char.statusEffectManager.add(new Blessed({
+        char,
+        source: char,
+        stacks: 2
+    }));
+    char.statusEffectManager.add(new Blessed({
+        char,
+        source: source1,
+        stacks: 2
+    }));
 
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(2);
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(2);
@@ -143,9 +177,21 @@ test('Blessing - 2 sources, 2 stack each', () => {
 });
 
 test('Blessing - 3 sources, 1 stack each', () => {
-    char.statusEffectManager.addBuff(BuffId.Blessed, char, 1);
-    char.statusEffectManager.addBuff(BuffId.Blessed, source1, 1);
-    char.statusEffectManager.addBuff(BuffId.Blessed, source2, 1);
+    char.statusEffectManager.add(new Blessed({
+        char,
+        source: char,
+        stacks: 1
+    }));
+    char.statusEffectManager.add(new Blessed({
+        char,
+        source: source1,
+        stacks: 1
+    }));
+    char.statusEffectManager.add(new Blessed({
+        char,
+        source: source2,
+        stacks: 1
+    }));
 
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char)].stacks).toBe(1);
     expect(char.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source1)].stacks).toBe(1);

@@ -2,8 +2,20 @@ import AttackType from '../../types/AttackType';
 import Character from '../../Character/Character';
 import NumberRange from '../../NumberRange';
 import { Item, ItemType, ItemAttributes, ItemStats } from '../Item';
+import { BiteId } from './weapons/bites';
+import { BowId } from './weapons/bows';
+import { DaggerId } from './weapons/daggers';
+import { GreatswordId } from './weapons/greatswords';
+import { LongswordId } from './weapons/longswords';
+import { MaceId } from './weapons/maces';
+import { QuarterstaffId } from './weapons/quarterstaffs';
+import { UnarmedId } from './weapons/unarmed';
+import { WandId } from './weapons/wands';
+
+type WeaponId = UnarmedId | LongswordId | GreatswordId | DaggerId | QuarterstaffId | WandId | BiteId | MaceId | BowId;
 
 interface Weapon extends Item {
+    id: WeaponId,
     itemType: ItemType.Weapon;
     type: WeaponType;
     attackType: AttackType;
@@ -71,4 +83,4 @@ const WeaponTypeProperties: { [type in WeaponType]: {
     }
 } as const;
 
-export { Weapon, WeaponType, WeaponTypeProperties };
+export { WeaponId, Weapon, WeaponType, WeaponTypeProperties };

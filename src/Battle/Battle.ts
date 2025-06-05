@@ -1,4 +1,4 @@
-import Character, { CharacterJSON } from '../Character/Character';
+import Character from '../Character/Character';
 import Log from './Log';
 import { rollDice, dice } from '../dice';
 
@@ -11,13 +11,6 @@ enum Side {
 type TurnRes = {
     combatEnded: boolean;
     winner?: Side;
-};
-
-type BattleJSON = {
-    left: CharacterJSON[];
-    right: CharacterJSON[];
-    turnOrder: { name: string, init: number; }[];
-    turnIndex: number;
 };
 
 class Battle {
@@ -36,13 +29,13 @@ class Battle {
 
     constructor(left: Character[], right: Character[]) {
         this._left = this.getCharsWithPets(left);
-        this.leftAlive = new Set(Array(left.length).keys());
+        this.leftAlive = new Set(Array(this.left.length).keys());
         for (let i = 0; i < this.left.length; i++) {
             this.left[i].setBattle(this, Side.Left, i);
         }
 
         this._right = this.getCharsWithPets(right);
-        this.rightAlive = new Set(Array(right.length).keys());
+        this.rightAlive = new Set(Array(this.right.length).keys());
         for (let i = 0; i < this.right.length; i++) {
             this.right[i].setBattle(this, Side.Right, i);
         }
@@ -140,16 +133,7 @@ class Battle {
 
         return res;
     }
-
-    // json(): BattleJSON {
-    //     return {
-    //         left: [...this.left.map(char => char.json())],
-    //         right: [...this.right.map(char => char.json())],
-    //         turnOrder: this.turnOrder.map(charInit => { return { name: charInit.char.name, init: charInit.init }; }),
-    //         turnIndex: this.turnIndex,
-    //     };
-    // }
 }
 
 export default Battle;
-export { BattleJSON, Side };
+export { Side };
