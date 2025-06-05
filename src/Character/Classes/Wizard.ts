@@ -4,7 +4,7 @@ import Class from './Class';
 
 const Wizard: Class = {
     name: 'Wizard',
-    description: 'Wizard Class description here.',
+    description: 'Wizards are masterful spellcasters who unleash powerful magic from afar, overwhelming foes with destructive spells.',
     attributes: {
         [AttributeType.Intelligence]: 5,
         [AttributeType.Wisdom]: 5

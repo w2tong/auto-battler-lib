@@ -4,7 +4,7 @@ import Class from './Class';
 
 const Rogue: Class = {
     name: 'Rogue',
-    description: 'Rogue Class description here.',
+    description: 'Rogues are agile dual-wielders who excel at striking from the shadows and delivering powerful sneak attacks.',
     attributes: {
         [AttributeType.Strength]: 5,
         [AttributeType.Dexterity]: 5
