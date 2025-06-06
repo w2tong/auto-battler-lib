@@ -3,6 +3,7 @@ import BuffId from '../types/BuffId';
 
 export default class Invisible extends Buff {
     id = BuffId.Invisible;
+    name = 'Invisible';
 
     static damage = 4;
 
