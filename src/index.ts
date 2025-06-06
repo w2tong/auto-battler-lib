@@ -23,7 +23,9 @@ import Character from './Character/Character';
 export { Character };
 
 import Ability from './Ability/Ability';
-export { Ability };
+import AbilityId from './Ability/AbilityId';
+import abilities from './Ability/abilities';
+export { Ability, AbilityId, abilities };
 
 import Attributes from './Character/Attributes/Attributes';
 export { Attributes };

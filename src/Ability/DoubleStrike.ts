@@ -1,8 +1,10 @@
 import Ability from './Ability';
+import AbilityId from './AbilityId';
 
 const NAME = 'Double Strike';
 
 const DoubleStrike: Ability = {
+    id: AbilityId.DoubleStrike,
     name: NAME,
     description: () => 'Attack an enemy twice with your weapon(s).',
     func: (char) => {
@@ -13,6 +15,6 @@ const DoubleStrike: Ability = {
             char.turnAttack();
         }
     }
-};
+} as const;
 
 export default DoubleStrike;

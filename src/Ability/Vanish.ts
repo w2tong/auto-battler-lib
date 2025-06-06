@@ -1,11 +1,13 @@
 import BuffId from '../StatusEffect/types/BuffId';
 import Invisible from '../StatusEffect/Buffs/Invisible';
 import Ability from './Ability';
+import AbilityId from './AbilityId';
 
 const NAME = 'Vanish';
 const DEX_RATIO = 0.1;
 
 const Vanish: Ability = {
+    id: AbilityId.Vanish,
     name: NAME,
     description: (char) => {
         const stacks = char ? Math.max(Math.floor(char.attributes.dexterity * DEX_RATIO), 1) : null;
@@ -21,6 +23,6 @@ const Vanish: Ability = {
             stacks
         }));
     }
-};
+} as const;
 
 export default Vanish;

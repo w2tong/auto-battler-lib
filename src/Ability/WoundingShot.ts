@@ -2,6 +2,7 @@ import AttackType from '../types/AttackType';
 import Ability from './Ability';
 import { formatNum } from '../util';
 import Bleeding from '../StatusEffect/Debuffs/Bleeding';
+import AbilityId from './AbilityId';
 
 const NAME = 'Wounding Shot';
 const BONUS_DMG = 0.5;
@@ -9,6 +10,7 @@ const BLEED_STACKS = 3;
 const DMG_PER_TURN = 0.2;
 
 const WoundingShot: Ability = {
+    id: AbilityId.WoundingShot,
     name: NAME,
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
@@ -50,6 +52,6 @@ const WoundingShot: Ability = {
             }
         }
     }
-};
+} as const;
 
 export default WoundingShot;

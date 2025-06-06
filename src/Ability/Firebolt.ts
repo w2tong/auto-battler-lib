@@ -2,6 +2,7 @@ import AttackType from '../types/AttackType';
 import Ability from './Ability';
 import Burning from '../StatusEffect/Debuffs/Burning';
 import { formatNum } from '../util';
+import AbilityId from './AbilityId';
 
 const NAME = 'Firebolt';
 const MIN_BASE = 1;
@@ -12,6 +13,7 @@ const SPELLPOWER_RATIO = 0.34;
 const STACKS = 2;
 
 const Firebolt: Ability = {
+    id: AbilityId.Firebolt,
     name: NAME,
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
@@ -51,6 +53,6 @@ const Firebolt: Ability = {
             }
         }
     }
-};
+} as const;
 
 export default Firebolt;
