@@ -48,11 +48,14 @@ beforeEach(() => {
 });
 
 let hitRollSpy: jest.SpyInstance;
+let critRollSpy: jest.SpyInstance;
 beforeEach(() => {
     hitRollSpy = jest.spyOn(Character.prototype, 'hitRoll').mockReturnValue(true);
+    critRollSpy = jest.spyOn(Character, 'critRoll').mockReturnValue(false);
 });
 afterEach(() => {
     hitRollSpy.mockRestore();
+    critRollSpy.mockRestore();
 });
 
 test('SerpentSting.func', () => {
