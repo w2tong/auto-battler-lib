@@ -9,7 +9,8 @@ import NumberRange, { numberRoll } from '../NumberRange';
 import Ability from '../Ability/Ability';
 import { StatTemplate } from './Stats/StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
-import { ClassName, Classes } from './Classes/classes';
+import classes from './Classes/classes';
+import ClassName from './Classes/ClassName';
 import BuffId from '../StatusEffect/types/BuffId';
 import StatType from './Stats/StatType';
 import Attributes from './Attributes/Attributes';
@@ -63,7 +64,7 @@ export default class Character {
         // Attributes
         this._attributes = new Attributes(attributes, this._equipment);
         if (className) {
-            for (const [attr, val] of Object.entries(Classes[className].attributes)) {
+            for (const [attr, val] of Object.entries(classes[className].attributes)) {
                 this._attributes.addBonus(attr as AttributeType, val);
             }
         }
@@ -76,7 +77,7 @@ export default class Character {
             level
         });
 
-        this._ability = ability ?? (className ? Classes[className].ability : null);
+        this._ability = ability ?? null;
         this._currentHealth = options?.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
 
