@@ -1,3 +1,4 @@
+import EnvenomWeapon from '../../Ability/EnvenomWeapon';
 import Vanish from '../../Ability/Vanish';
 import AttributeType from '../Attributes/AttributeType';
 import Class from './Class';
@@ -10,7 +11,7 @@ const Rogue: Class = {
         [AttributeType.Dexterity]: 5
     },
     stats: {},
-    abilities: [Vanish]
+    abilities: [EnvenomWeapon, Vanish]
 } as const;
 
 export default Rogue;

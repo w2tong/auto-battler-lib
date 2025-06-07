@@ -11,6 +11,7 @@ enum AbilityId {
     WoundingShot = 'WoundingShot',
 
     // Rogue
+    EnvenomWeapon = 'EnvenomWeapon',
     Vanish = 'Vanish',
 
     // Wizard
