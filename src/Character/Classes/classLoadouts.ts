@@ -8,9 +8,9 @@ import { armour } from '../../Equipment/Armour';
 import { EquipmentImport, EquipSlot } from '../../Equipment/Equipment';
 import { shields } from '../../Equipment/Shield';
 import { weapons } from '../../Equipment/Weapon/weapons';
-import { ClassName } from './classes';
+import ClassName from './ClassName';
 
-const startingAbility: { [name in ClassName]: Ability } = {
+const startingAbility: Record<ClassName, Ability> = {
     [ClassName.Fighter]: DoubleStrike,
     [ClassName.Priest]: Bless,
     [ClassName.Ranger]: WoundingShot,
@@ -18,7 +18,7 @@ const startingAbility: { [name in ClassName]: Ability } = {
     [ClassName.Wizard]: Firebolt
 };
 
-const startingEquipment: { [name in ClassName]: EquipmentImport } = {
+const startingEquipment: Record<ClassName, EquipmentImport> = {
     [ClassName.Fighter]: {
         [EquipSlot.MainHand]: weapons.longsword0,
         [EquipSlot.OffHand]: shields.buckler0,

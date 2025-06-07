@@ -1,8 +1,8 @@
-import Ability from '../Ability/Ability';
-import AttributeTemplate from '../Character/Attributes/AttributeTemplate';
-import { ClassName } from '../Character/Classes/classes';
-import { StatTemplate } from '../Character/Stats/StatTemplate';
-import { EquipmentImport } from '../Equipment/Equipment';
+import type Ability from '../Ability/Ability';
+import type AttributeTemplate from '../Character/Attributes/AttributeTemplate';
+import type ClassName from '../Character/Classes/ClassName';
+import { type StatTemplate } from '../Character/Stats/StatTemplate';
+import { type EquipmentImport } from '../Equipment/Equipment';
 
 type NpcId = 'fighter' | 'rogue' | 'wizard' |
     'goblinFighter' | 'goblinRogue' | 'orcFighter' | 'ogreFighter' | 'rat' | 'zombie' | 'wolf';

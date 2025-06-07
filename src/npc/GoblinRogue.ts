@@ -1,6 +1,6 @@
 import AttributeType from '../Character/Attributes/AttributeType';
-import { ClassName } from '../Character/Classes/classes';
 import { startingAbility } from '../Character/Classes/classLoadouts';
+import ClassName from '../Character/Classes/ClassName';
 import StatType from '../Character/Stats/StatType';
 import { armour } from '../Equipment/Armour';
 import { EquipSlot } from '../Equipment/Equipment';

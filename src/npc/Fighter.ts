@@ -1,8 +1,8 @@
 import { startingAbility, startingEquipment } from '../Character/Classes/classLoadouts';
 import AttributeType from '../Character/Attributes/AttributeType';
-import { ClassName } from '../Character/Classes/classes';
 import StatType from '../Character/Stats/StatType';
 import NPC from './NPC';
+import ClassName from '../Character/Classes/ClassName';
 
 const Fighter: NPC = {
     id: 'fighter',
