@@ -347,7 +347,7 @@ export default class Character {
             }
         }
 
-        this.statusEffectManager.onAttack(hit);
+        this.statusEffectManager.onAttack(hit, target);
 
         // Deal thorns damage to this Character if target was hit
         if (hit && target.stats.getStat(StatType.Thorns) > 0) {
