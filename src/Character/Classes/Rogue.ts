@@ -10,7 +10,7 @@ const Rogue: Class = {
         [AttributeType.Dexterity]: 5
     },
     stats: {},
-    ability: Vanish
+    abilities: [Vanish]
 } as const;
 
 export default Rogue;

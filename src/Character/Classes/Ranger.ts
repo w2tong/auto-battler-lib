@@ -10,7 +10,7 @@ const Ranger: Class = {
         [AttributeType.Perception]: 5,
     },
     stats: {},
-    ability: WoundingShot
+    abilities: [WoundingShot]
 } as const;
 
 export default Ranger;

@@ -1,4 +1,5 @@
 import DoubleStrike from '../../Ability/DoubleStrike';
+import ShieldWall from '../../Ability/ShieldWall';
 import AttributeType from '../Attributes/AttributeType';
 import Class from './Class';
 
@@ -10,7 +11,7 @@ const Fighter: Class = {
         [AttributeType.Constitution]: 5
     },
     stats: {},
-    ability: DoubleStrike
+    abilities: [DoubleStrike, ShieldWall]
 } as const;
 
 export default Fighter;

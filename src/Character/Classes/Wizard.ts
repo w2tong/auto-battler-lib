@@ -10,7 +10,7 @@ const Wizard: Class = {
         [AttributeType.Wisdom]: 5
     },
     stats: {},
-    ability: Firebolt
+    abilities: [Firebolt]
 } as const;
 
 export default Wizard;

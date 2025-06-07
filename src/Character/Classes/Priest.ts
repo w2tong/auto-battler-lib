@@ -10,7 +10,7 @@ const Priest: Class = {
         [AttributeType.Wisdom]: 5
     },
     stats: {},
-    ability: Bless
+    abilities: [Bless]
 } as const;
 
 export default Priest;
