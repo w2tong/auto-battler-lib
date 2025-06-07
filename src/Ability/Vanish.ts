@@ -25,7 +25,9 @@ const Vanish: Ability = {
             source: char,
             stacks
         }));
-    }
+    },
+    scaling: ['level', AttributeType.Dexterity]
+
 } as const;
 
 export default Vanish;

@@ -3,6 +3,7 @@ import Ability from './Ability';
 import Burning from '../StatusEffect/Debuffs/Burning';
 import { formatNum } from '../util';
 import AbilityId from './AbilityId';
+import StatType from '../Character/Stats/StatType';
 
 const NAME = 'Firebolt';
 const MIN_BASE = 1;
@@ -52,7 +53,9 @@ const Firebolt: Ability = {
                 }));
             }
         }
-    }
+    },
+    scaling: ['level', StatType.SpellPower],
+    attackType: AttackType.Spell,
 } as const;
 
 export default Firebolt;

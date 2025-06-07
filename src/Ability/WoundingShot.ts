@@ -51,7 +51,8 @@ const WoundingShot: Ability = {
                 }));
             }
         }
-    }
+    },
+    attackType: AttackType.RangedWeapon,
 } as const;
 
 export default WoundingShot;

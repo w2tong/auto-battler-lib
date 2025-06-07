@@ -3,6 +3,7 @@ import Ability from './Ability';
 import Blessed from '../StatusEffect/Buffs/Blessed';
 import { formatNum } from '../util';
 import AbilityId from './AbilityId';
+import AttributeType from '../Character/Attributes/AttributeType';
 
 const NAME = 'Bless';
 const STACKS = 3;
@@ -28,7 +29,8 @@ const Bless: Ability = {
             source: char,
             stacks: STACKS
         }));
-    }
+    },
+    scaling: ['level', AttributeType.Wisdom]
 } as const;
 
 export default Bless;
