@@ -38,6 +38,7 @@ export default class Poisoned extends Debuff implements DamageTaken {
         if (this.stacks <= 0) this.manager.removeDebuff(this.id, this.source);
     }
     onAttack() { }
+    onAttacked() { }
 
     onSourceTurnStart() { }
     onSourceTurnEnd() { }

@@ -15,6 +15,7 @@ export default class Frozen extends Debuff {
         if (this.stacks <= 0) this.manager.removeDebuff(this.id, this.source);
     }
     onAttack() { }
+    onAttacked() { }
 
     onSourceTurnStart() { }
     onSourceTurnEnd() { }

@@ -15,6 +15,7 @@ export default class Invisible extends Buff {
     onAttack() {
         this.manager.removeBuff(this.id, this.source);
     }
+    onAttacked() { }
 
     onSourceTurnStart() { }
     onSourceTurnEnd() { }

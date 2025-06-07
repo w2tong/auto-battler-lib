@@ -54,6 +54,7 @@ export default class Bleeding extends Debuff implements RemainingDamage, DamageT
         if (this.stacks <= 0) this.manager.removeDebuff(this.id, this.source);
     }
     onAttack() { }
+    onAttacked() { }
 
     onSourceTurnStart() { }
     onSourceTurnEnd() { }

@@ -48,6 +48,7 @@ export default class Blessed extends Buff implements StatsInterface {
     onTurnStart() { }
     onTurnEnd() { }
     onAttack() { }
+    onAttacked() { }
 
     onSourceTurnStart() {
         this.stacks -= 1;

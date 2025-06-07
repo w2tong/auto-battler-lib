@@ -49,6 +49,7 @@ export default class ShieldWall extends Buff implements StatsInterface {
     onTurnStart() { }
     onTurnEnd() { }
     onAttack() { }
+    onAttacked() { }
 
     onSourceTurnStart() {
         this.stacks -= 1;
