@@ -3,6 +3,7 @@ enum AbilityId {
     DoubleStrike = 'DoubleStrike',
     FerociousBite = 'FerociousBite',
     Firebolt = 'Firebolt',
+    ShieldWall = 'ShieldWall',
     Vanish = 'Vanish',
     WoundingShot = 'WoundingShot',
 }

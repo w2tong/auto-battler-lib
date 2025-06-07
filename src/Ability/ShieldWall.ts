@@ -2,12 +2,13 @@ import Ability from './Ability';
 import { formatNum } from '../util';
 import AbilityId from './AbilityId';
 import ShieldWallBuff from '../StatusEffect/Buffs/ShieldWall';
+import AttributeType from '../Character/Attributes/AttributeType';
 
 const NAME = 'Shield Wall';
 const STACKS = 3;
 
 const ShieldWall: Ability = {
-    id: AbilityId.Bless,
+    id: AbilityId.ShieldWall,
     name: NAME,
     description: (char) => {
         let blockChance = null;
@@ -26,7 +27,8 @@ const ShieldWall: Ability = {
             source: char,
             stacks: STACKS
         }));
-    }
+    },
+    scaling: ['level', AttributeType.Strength],
 } as const;
 
 export default ShieldWall;
