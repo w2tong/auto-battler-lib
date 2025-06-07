@@ -10,9 +10,7 @@ let char: Character;
 beforeEach(() => {
     char = createTestCharacter({
         statTemplate: {
-            [StatType.Damage]: { base: 0, perLvl: 0 },
-            [StatType.Accuracy]: { base: 0, perLvl: 0 },
-            [StatType.ManaCost]: { base: 100 },
+            [StatType.ManaCost]: { base: 50 },
             [StatType.StartingMana]: { base: 100 },
         }
     });
@@ -23,7 +21,7 @@ beforeEach(() => {
 test('adds 3 stacks of ShieldWall buff, and adds to log', () => {
     expect(char.currentMana).toBe(100);
     ShieldWall.func(char);
-    expect(char.currentMana).toBe(0);
+    expect(char.currentMana).toBe(50);
     expect(char.statusEffectManager.buffs[BuffId.ShieldWall]![getCharBattleId(char)].stacks).toBe(3);
     expect(char.battle?.ref.log.last[0]).toEqual({ text: ' used Shield Wall.', type: 'Text' });
 });
