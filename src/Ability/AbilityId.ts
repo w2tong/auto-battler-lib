@@ -1,11 +1,23 @@
 enum AbilityId {
-    Bless = 'Bless',
+    // Fighter
     DoubleStrike = 'DoubleStrike',
-    FerociousBite = 'FerociousBite',
-    Firebolt = 'Firebolt',
     ShieldWall = 'ShieldWall',
-    Vanish = 'Vanish',
+
+    // Priest
+    Bless = 'Bless',
+
+    // Ranger
+    SerpentSting = 'SerpentSting',
     WoundingShot = 'WoundingShot',
+
+    // Rogue
+    Vanish = 'Vanish',
+
+    // Wizard
+    Firebolt = 'Firebolt',
+
+    // Other
+    FerociousBite = 'FerociousBite',
 }
 
 export default AbilityId;
