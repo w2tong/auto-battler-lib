@@ -1,4 +1,3 @@
-import BuffId from '../StatusEffect/types/BuffId';
 import Invisible from '../StatusEffect/Buffs/Invisible';
 import Ability from './Ability';
 import AbilityId from './AbilityId';
@@ -14,7 +13,7 @@ const Vanish: Ability = {
     name: NAME,
     description: (char) => {
         const stacks = char ? 1 + Math.floor(stacksPerLvl * (char.level - 1)) + Math.trunc(stacksPerDex * (char.attributes.dexterity - Attributes.DEFAULT_VALUE)) : null;
-        return `Gain ${stacks ? `${stacks} ` : ''} ${Invisible.name} stacks, causing your next attack to be a sneak attack, dealing ${Invisible.damage} damage per ${BuffId.Invisible} stack.`;
+        return `Gain${stacks ? ` ${stacks}` : ''} ${Invisible.name}, causing your next attack to be a sneak attack, dealing ${Invisible.damage} damage per stack.`;
     },
     func: (char) => {
         char.useAbilityMana();
