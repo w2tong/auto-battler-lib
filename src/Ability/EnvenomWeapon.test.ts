@@ -1,6 +1,8 @@
 import Battle from '../Battle/Battle';
 import Character from '../Character/Character';
 import StatType from '../Character/Stats/StatType';
+import EnvenomWeaponBuff from '../StatusEffect/Buffs/EnvenomWeapon';
+import Poisoned from '../StatusEffect/Debuffs/Poisoned';
 import BuffId from '../StatusEffect/types/BuffId';
 import { createTestCharacter } from '../tests/util';
 import { getCharBattleId } from '../util';
@@ -26,3 +28,8 @@ test('adds 3 stacks of used Envenom Weapon buff, and adds to log', () => {
     expect(char.battle?.ref.log.last[0]).toEqual({ text: ' used Envenom Weapon.', type: 'Text' });
 });
 
+test('Description', () => {
+    expect(EnvenomWeapon.description()).toBe(
+        `Your next 3 hits apply ${EnvenomWeaponBuff.POISONED_STACKS} ${Poisoned.name}.`
+    );
+});
