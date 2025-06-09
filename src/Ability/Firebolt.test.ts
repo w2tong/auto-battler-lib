@@ -11,7 +11,7 @@ let target: Character;
 
 beforeEach(() => {
     char = createTestCharacter({
-        level: 10,
+        level: 11,
         statTemplate: {
             [StatType.MaxHealth]: { base: 100 },
             [StatType.SpellPower]: { base: 100 },

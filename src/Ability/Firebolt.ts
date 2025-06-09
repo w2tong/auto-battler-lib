@@ -19,8 +19,8 @@ const Firebolt: Ability = {
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
             damageRange: {
-                min: MIN_BASE + char.level * MIN_PER_LVL,
-                max: MAX_BASE + char.level * MAX_PER_LVL,
+                min: MIN_BASE + (char.level - 1) * MIN_PER_LVL,
+                max: MAX_BASE + (char.level - 1) * MAX_PER_LVL,
                 bonus: 0,
             },
             weaponAttack: false,
@@ -35,8 +35,8 @@ const Firebolt: Ability = {
                 target: char.target,
                 attackType: AttackType.Spell,
                 damageRange: {
-                    min: MIN_BASE + char.level * MIN_PER_LVL,
-                    max: MAX_BASE + char.level * MAX_PER_LVL,
+                    min: MIN_BASE + (char.level - 1) * MIN_PER_LVL,
+                    max: MAX_BASE + (char.level - 1) * MAX_PER_LVL,
                     bonus: 0
                 },
                 weaponAttack: false,
