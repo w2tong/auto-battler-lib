@@ -35,18 +35,13 @@ beforeEach(() => {
 
 describe('Firebolt Damage and Debuff', () => {
     let mathRandomSpy: jest.SpyInstance;
-    beforeEach(() => {
-        mathRandomSpy = jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
-    });
-    afterEach(() => {
-        mathRandomSpy.mockRestore();
-    });
-
     let hitRollSpy: jest.SpyInstance;
     beforeEach(() => {
+        mathRandomSpy = jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
         hitRollSpy = jest.spyOn(Character.prototype, 'hitRoll');
     });
     afterEach(() => {
+        mathRandomSpy.mockRestore();
         hitRollSpy.mockRestore();
     });
 
