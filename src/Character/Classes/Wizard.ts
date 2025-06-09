@@ -1,4 +1,5 @@
 import Firebolt from '../../Ability/Firebolt';
+import Frostbolt from '../../Ability/Frostbolt';
 import AttributeType from '../Attributes/AttributeType';
 import Class from './Class';
 
@@ -10,7 +11,7 @@ const Wizard: Class = {
         [AttributeType.Wisdom]: 5
     },
     stats: {},
-    abilities: [Firebolt]
+    abilities: [Firebolt, Frostbolt]
 } as const;
 
 export default Wizard;

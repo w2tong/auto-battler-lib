@@ -16,6 +16,7 @@ enum AbilityId {
 
     // Wizard
     Firebolt = 'Firebolt',
+    Frostbolt = 'Frostbolt',
 
     // Other
     FerociousBite = 'FerociousBite',

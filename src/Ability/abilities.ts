@@ -3,8 +3,10 @@ import AbilityId from './AbilityId';
 
 import Bless from './Bless';
 import DoubleStrike from './DoubleStrike';
+import EnvenomWeapon from './EnvenomWeapon';
 import FerociousBite from './FerociousBite';
 import Firebolt from './Firebolt';
+import Frostbolt from './Frostbolt';
 import SerpentSting from './SerpentSting';
 import ShieldWall from './ShieldWall';
 import Vanish from './Vanish';
@@ -24,9 +26,11 @@ const abilities: Record<AbilityId, Ability> = {
 
     // Rogue
     [AbilityId.Vanish]: Vanish,
+    [AbilityId.EnvenomWeapon]: EnvenomWeapon,
 
     // Wizard
     [AbilityId.Firebolt]: Firebolt,
+    [AbilityId.Frostbolt]: Frostbolt,
 
     // Other
     [AbilityId.FerociousBite]: FerociousBite,
