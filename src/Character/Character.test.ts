@@ -14,6 +14,8 @@ import HitType from '../types/HitType';
 import { LineType } from '../Battle/Log';
 import Stunned from '../StatusEffect/Debuffs/Stunned';
 import Frozen from '../StatusEffect/Debuffs/Frozen';
+import Firebolt from '../Ability/Firebolt';
+import { potions } from '../Equipment/Potion';
 
 describe('calcCritDamage', () => {
     // 10 DMG
@@ -993,7 +995,7 @@ describe('hitRoll', () => {
             test('Ranged Weapon Off-Hand Attack', () => {
                 expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
             });
-            test('Spell Off-Hand Attack', () => {
+            test('Spell Off-Hand Attack = false', () => {
                 expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
             });
         });
@@ -1293,7 +1295,7 @@ describe('hitRoll', () => {
             test('Ranged Weapon Off-Hand Attack', () => {
                 expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
             });
-            test('Spell Off-Hand Attack', () => {
+            test('Spell Off-Hand Attack = false', () => {
                 expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
             });
         });
@@ -1413,7 +1415,6 @@ describe('hitRoll', () => {
                 expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
             });
         });
-
     });
 
     describe('0% Dodge Target', () => {
@@ -1478,7 +1479,7 @@ describe('hitRoll', () => {
             test('Ranged Weapon Off-Hand Attack', () => {
                 expect(char.hitRoll({ target, attackType: AttackType.RangedWeapon, isOffHand: true })).toBeFalsy();
             });
-            test('Spell Off-Hand Attack', () => {
+            test('Spell Off-Hand Attack = false', () => {
                 expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeFalsy();
             });
         });
@@ -1598,7 +1599,6 @@ describe('hitRoll', () => {
                 expect(char.hitRoll({ target, attackType: AttackType.Spell, isOffHand: true })).toBeTruthy();
             });
         });
-
     });
 });
 
@@ -2233,5 +2233,73 @@ describe('isCrowdControlled', () => {
             char.statusEffectManager.add(new Frozen({ char, source: char, stacks: 10 }));
             expect(char.isCrowdControlled()).toBeTruthy();
         });
+    });
+});
+
+describe('doTurn', () => {
+    let char: Character;
+    let isCrowdControlledSpy: jest.SpyInstance;
+    let usePotionSpy: jest.SpyInstance;
+    let setTargetSpy: jest.SpyInstance;
+    let turnAttackSpy: jest.SpyInstance;
+    let abilityFuncSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+        char = createTestCharacter({
+            equipment: {
+                [EquipSlot.Potion]: potions.healingPotion0
+            },
+            ability: Firebolt,
+            options: {
+                currHealthPc: 0.4,
+            }
+        });
+        new Battle([char], []);
+
+        // Setup spies
+        isCrowdControlledSpy = jest.spyOn(char, 'isCrowdControlled');
+        usePotionSpy = jest.spyOn(char, 'usePotion');
+        setTargetSpy = jest.spyOn(char, 'setTarget');
+        turnAttackSpy = jest.spyOn(char, 'turnAttack');
+
+        // Spy on ability.func if ability exists
+        if (char.ability) {
+            abilityFuncSpy = jest.spyOn(char.ability, 'func');
+        }
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
+    test('Not crowd controlled, has mana for ability', () => {
+        isCrowdControlledSpy.mockReturnValue(false);
+        char.addMana(char.stats.getStat(StatType.ManaCost));
+        char.doTurn();
+
+        expect(usePotionSpy).toHaveBeenCalled();
+        expect(setTargetSpy).toHaveBeenCalled();
+        expect(abilityFuncSpy).toHaveBeenCalled();
+        expect(turnAttackSpy).not.toHaveBeenCalled();
+    });
+
+    test('Not crowd controlled, no mana for ability', () => {
+        isCrowdControlledSpy.mockReturnValue(false);
+        char.doTurn();
+
+        expect(usePotionSpy).toHaveBeenCalled();
+        expect(setTargetSpy).toHaveBeenCalled();
+        expect(abilityFuncSpy).not.toHaveBeenCalled();
+        expect(turnAttackSpy).toHaveBeenCalled();
+    });
+
+    test('Crowd controlled', () => {
+        isCrowdControlledSpy.mockReturnValue(true);
+        char.doTurn();
+
+        expect(usePotionSpy).not.toHaveBeenCalled();
+        expect(setTargetSpy).not.toHaveBeenCalled();
+        expect(abilityFuncSpy).not.toHaveBeenCalled();
+        expect(turnAttackSpy).not.toHaveBeenCalled();
     });
 });
