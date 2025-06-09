@@ -4,6 +4,7 @@ import StatType from '../Character/Stats/StatType';
 import { EquipSlot } from '../Equipment/Equipment';
 import { ItemType } from '../Equipment/Item';
 import { Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
+import Poisoned from '../StatusEffect/Debuffs/Poisoned';
 import DebuffId from '../StatusEffect/types/DebuffId';
 import { createTestCharacter } from '../tests/util';
 import AttackType from '../types/AttackType';
@@ -47,23 +48,38 @@ beforeEach(() => {
     new Battle([char], [target]);
 });
 
-let hitRollSpy: jest.SpyInstance;
-let critRollSpy: jest.SpyInstance;
-beforeEach(() => {
-    hitRollSpy = jest.spyOn(Character.prototype, 'hitRoll').mockReturnValue(true);
-    critRollSpy = jest.spyOn(Character, 'critRoll').mockReturnValue(false);
-});
-afterEach(() => {
-    hitRollSpy.mockRestore();
-    critRollSpy.mockRestore();
+describe('Serpent Sting Damage and Debuff', () => {
+    let hitRollSpy: jest.SpyInstance;
+    let critRollSpy: jest.SpyInstance;
+    beforeEach(() => {
+        hitRollSpy = jest.spyOn(Character.prototype, 'hitRoll').mockReturnValue(true);
+        critRollSpy = jest.spyOn(Character, 'critRoll').mockReturnValue(false);
+    });
+    afterEach(() => {
+        hitRollSpy.mockRestore();
+        critRollSpy.mockRestore();
+    });
+
+    test('SerpentSting.func', () => {
+        SerpentSting.func(char);
+        // 8 * 1.25 = 10 damage
+        expect(target.currentHealth).toBeCloseTo(90); // 100 - 10
+        expect(char.currentMana).toBe(50);
+
+        const poisonedDebuff = target.statusEffectManager.debuffs[DebuffId.Poisoned]![getCharBattleId(char)];
+        expect(poisonedDebuff.stacks).toBe(4);
+    });
 });
 
-test('SerpentSting.func', () => {
-    SerpentSting.func(char);
-    // 8 * 1.25 = 10 damage
-    expect(target.currentHealth).toBeCloseTo(90); // 100 - 10
-    expect(char.currentMana).toBe(50);
-
-    const poisonedDebuff = target.statusEffectManager.debuffs[DebuffId.Poisoned]![getCharBattleId(char)];
-    expect(poisonedDebuff.stacks).toBe(4);
+describe('Serpent Sting Description', () => {
+    test('No Character', () => {
+        expect(SerpentSting.description()).toBe(
+            `Deal damage and apply 4 ${Poisoned.name}.`
+        );
+    });
+    test('With Character', () => {
+        expect(SerpentSting.description(char)).toBe(
+            `Deal 10-10 damage and apply 4 ${Poisoned.name}.`
+        );
+    });
 });
