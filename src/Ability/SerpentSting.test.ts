@@ -74,12 +74,12 @@ describe('Serpent Sting Damage and Debuff', () => {
 describe('Serpent Sting Description', () => {
     test('No Character', () => {
         expect(SerpentSting.description()).toBe(
-            `Deal damage and apply 4 ${Poisoned.name}.`
+            `Deals damage and applies 4 ${Poisoned.name}.`
         );
     });
     test('With Character', () => {
         expect(SerpentSting.description(char)).toBe(
-            `Deal 10-10 damage and apply 4 ${Poisoned.name}.`
+            `Deals 10-10 damage and applies 4 ${Poisoned.name}.`
         );
     });
 });

@@ -21,7 +21,7 @@ const SerpentSting: Ability = {
             weaponAttack: true,
             spellPowerRatio: char.equipment.mainHand.spellPowerRatio ? char.equipment.mainHand.spellPowerRatio * (1 + BONUS_DMG) : char.equipment.mainHand.spellPowerRatio
         }) : null;
-        return `Deal ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage and apply ${STACKS} ${Poisoned.name}.`;
+        return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage and applies ${STACKS} ${Poisoned.name}.`;
     },
     func: (char) => {
         if (char.target) {

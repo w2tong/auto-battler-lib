@@ -29,12 +29,12 @@ test('adds 3 stacks of ShieldWall buff, and adds to log', () => {
 describe('ShieldWall Description', () => {
     test('No Character', () => {
         expect(ShieldWall.description()).toBe(
-            'Increase Block Chance and Thorns for 3 turns.'
+            'Increases Block Chance and Thorns for 3 turns.'
         );
     });
     test('With Character', () => {
         expect(ShieldWall.description(char)).toBe(
-            'Increase Block Chance by 10% and Thorns by 2 for 3 turns.'
+            'Increases Block Chance by 10% and Thorns by 2 for 3 turns.'
         );
     });
 });

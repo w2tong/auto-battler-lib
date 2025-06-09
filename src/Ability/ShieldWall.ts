@@ -17,7 +17,7 @@ const ShieldWall: Ability = {
             blockChance = ShieldWallBuff.calcBlockChance(char.level, char.attributes.strength);
             thorns = ShieldWallBuff.calcThorns(char.level, char.attributes.strength);
         }
-        return `Increase Block Chance${blockChance ? ` by ${formatNum(blockChance)}%` : ''} and Thorns${thorns ? ` by ${formatNum(thorns)}` : ''} for ${STACKS} turns.`;
+        return `Increases Block Chance${blockChance ? ` by ${formatNum(blockChance)}%` : ''} and Thorns${thorns ? ` by ${formatNum(thorns)}` : ''} for ${STACKS} turns.`;
     },
     func: (char) => {
         char.useAbilityMana();

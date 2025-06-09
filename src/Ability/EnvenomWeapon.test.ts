@@ -30,6 +30,6 @@ test('adds 3 stacks of used Envenom Weapon buff, and adds to log', () => {
 
 test('Description', () => {
     expect(EnvenomWeapon.description()).toBe(
-        `Your next 3 hits apply ${EnvenomWeaponBuff.POISONED_STACKS} ${Poisoned.name}.`
+        `Your next 3 hits applies ${EnvenomWeaponBuff.POISONED_STACKS} ${Poisoned.name}.`
     );
 });

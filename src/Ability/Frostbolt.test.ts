@@ -87,12 +87,12 @@ describe('Frostbolt Damage and Debuff', () => {
 describe('Frostbolt Damage and Debuff', () => {
     test('No Character', () => {
         expect(Frostbolt.description()).toBe(
-            'Deals damage to your target. There\'s a 50% chance to apply 1 Frozen, preventing them from acting for 1 turn.'
+            'Deals damage to your target, with a 50% chance of applying 1 Frozen, preventing them from acting for 1 turn.'
         );
     });
     test('With Character', () => {
         expect(Frostbolt.description(char)).toBe(
-            'Deals 52-54 damage to your target. There\'s a 50% chance to apply 1 Frozen, preventing them from acting for 1 turn.'
+            'Deals 52-54 damage to your target, with a 50% chance of applying 1 Frozen, preventing them from acting for 1 turn.'
         );
     });
 });

@@ -9,7 +9,7 @@ const STACKS = 3;
 const EnvenomWeapon: Ability = {
     id: AbilityId.EnvenomWeapon,
     name: NAME,
-    description: () => `Your next ${STACKS} hits apply ${EnvenomWeaponBuff.POISONED_STACKS} ${Poisoned.name}.`,
+    description: () => `Your next ${STACKS} hits applies ${EnvenomWeaponBuff.POISONED_STACKS} ${Poisoned.name}.`,
     func: (char) => {
         if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME}.`);
         char.useAbilityMana();

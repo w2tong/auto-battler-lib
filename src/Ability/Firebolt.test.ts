@@ -79,12 +79,12 @@ describe('Firebolt Damage and Debuff', () => {
 describe('Firebolt Description', () => {
     test('No Character', () => {
         expect(Firebolt.description()).toBe(
-            'Deals damage to your target and apply 2 Burning, dealing damage each turn.'
+            'Deals damage to your target and applies 2 Burning, dealing damage each turn.'
         );
     });
     test('Wth Character', () => {
         expect(Firebolt.description(char)).toBe(
-            'Deals 36-40 damage to your target and apply 2 Burning, dealing 21 damage each turn.'
+            'Deals 36-40 damage to your target and applies 2 Burning, dealing 21 damage each turn.'
         );
     });
 });

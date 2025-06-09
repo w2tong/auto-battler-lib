@@ -28,7 +28,7 @@ const Frostbolt: Ability = {
             weaponAttack: false,
             spellPowerRatio: SPELLPOWER_RATIO
         }) : null;
-        return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage to your target. There's a ${FROZEN_CHANCE}% chance to apply 1 ${Frozen.name}, preventing them from acting for 1 turn.`;
+        return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage to your target, with a ${FROZEN_CHANCE}% chance of applying 1 ${Frozen.name}, preventing them from acting for 1 turn.`;
     },
     func: (char) => {
         if (char.target) {
