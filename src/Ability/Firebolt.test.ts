@@ -84,7 +84,7 @@ describe('Firebolt Description', () => {
     });
     test('Wth Character', () => {
         expect(Firebolt.description(char)).toBe(
-            'Deals 36 - 40 damage to your target and apply 2 Burning, dealing 21 damage each turn.'
+            'Deals 36-40 damage to your target and apply 2 Burning, dealing 21 damage each turn.'
         );
     });
 });

@@ -26,7 +26,7 @@ const Firebolt: Ability = {
             weaponAttack: false,
             spellPowerRatio: SPELLPOWER_RATIO
         }) : null;
-        return `Deals ${damageRange ? `${formatNum(damageRange.min)} - ${formatNum(damageRange.max)} ` : ''}damage to your target and apply ${STACKS} ${Burning.name}, dealing${char ? ` ${formatNum(Burning.baseDamage + char.stats.spellPower * Burning.spellPowerRatio)}` : ''} damage each turn.`;
+        return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage to your target and apply ${STACKS} ${Burning.name}, dealing${char ? ` ${formatNum(Burning.baseDamage + char.stats.spellPower * Burning.spellPowerRatio)}` : ''} damage each turn.`;
     },
     func: (char) => {
         if (char.target) {
