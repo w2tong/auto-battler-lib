@@ -12,6 +12,8 @@ import { EquipSlot } from '../Equipment/Equipment';
 import NumberRange from '../NumberRange';
 import HitType from '../types/HitType';
 import { LineType } from '../Battle/Log';
+import Stunned from '../StatusEffect/Debuffs/Stunned';
+import Frozen from '../StatusEffect/Debuffs/Frozen';
 
 describe('calcCritDamage', () => {
     // 10 DMG
@@ -2188,5 +2190,48 @@ describe('setTarget', () => {
         mathRandomSpy.mockReturnValue(0.99);
         left1.setTarget();
         expect(left1.target).toBe(right1);
+    });
+});
+
+describe('isCrowdControlled', () => {
+    let char: Character;
+
+    beforeEach(() => {
+        char = createTestCharacter({});
+        new Battle([char], []);
+    });
+
+    test('No crowd control', () => {
+        expect(char.isCrowdControlled()).toBeFalsy();
+    });
+
+    describe('Stunned', () => {
+        test('0 stacks', () => {
+            char.statusEffectManager.add(new Stunned({ char, source: char, stacks: 0 }));
+            expect(char.isCrowdControlled()).toBeFalsy();
+        });
+        test('1 stack', () => {
+            char.statusEffectManager.add(new Stunned({ char, source: char, stacks: 1 }));
+            expect(char.isCrowdControlled()).toBeTruthy();
+        });
+        test('10 stacks', () => {
+            char.statusEffectManager.add(new Stunned({ char, source: char, stacks: 10 }));
+            expect(char.isCrowdControlled()).toBeTruthy();
+        });
+    });
+
+    describe('Frozen', () => {
+        test('0 stacks', () => {
+            char.statusEffectManager.add(new Frozen({ char, source: char, stacks: 0 }));
+            expect(char.isCrowdControlled()).toBeFalsy();
+        });
+        test('1 stack', () => {
+            char.statusEffectManager.add(new Frozen({ char, source: char, stacks: 1 }));
+            expect(char.isCrowdControlled()).toBeTruthy();
+        });
+        test('10 stacks', () => {
+            char.statusEffectManager.add(new Frozen({ char, source: char, stacks: 10 }));
+            expect(char.isCrowdControlled()).toBeTruthy();
+        });
     });
 });
