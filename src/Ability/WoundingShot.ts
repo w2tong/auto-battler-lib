@@ -22,7 +22,7 @@ const WoundingShot: Ability = {
             weaponAttack: true,
             spellPowerRatio: char.equipment.mainHand.spellPowerRatio ? char.equipment.mainHand.spellPowerRatio * (1 + BONUS_DMG) : char.equipment.mainHand.spellPowerRatio
         }) : null;
-        return `Deals ${damageRange ? `${formatNum(damageRange.min)} - ${formatNum(damageRange.max)} ` : ''}damage and applies Bleed dealing ${formatNum(DMG_PER_TURN * BLEED_STACKS * 100)}% of the damage dealt over ${BLEED_STACKS} turns.`;
+        return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage and applies Bleed dealing ${formatNum(DMG_PER_TURN * BLEED_STACKS * 100)}% of the initial damage dealt over ${BLEED_STACKS} turns.`;
     },
     func: (char) => {
         if (char.target) {

@@ -49,23 +49,40 @@ beforeEach(() => {
     new Battle([char], [target]);
 });
 
-let hitRollSpy: jest.SpyInstance;
-let critRollSpy: jest.SpyInstance;
-beforeEach(() => {
-    hitRollSpy = jest.spyOn(Character.prototype, 'hitRoll').mockReturnValue(true);
-    critRollSpy = jest.spyOn(Character, 'critRoll').mockReturnValue(true);
-});
-afterEach(() => {
-    hitRollSpy.mockRestore();
-    critRollSpy.mockRestore();
+
+describe('WoundingShot Damage and Debuff', () => {
+    let hitRollSpy: jest.SpyInstance;
+    let critRollSpy: jest.SpyInstance;
+    beforeEach(() => {
+        hitRollSpy = jest.spyOn(Character.prototype, 'hitRoll').mockReturnValue(true);
+        critRollSpy = jest.spyOn(Character, 'critRoll').mockReturnValue(true);
+    });
+    afterEach(() => {
+        hitRollSpy.mockRestore();
+        critRollSpy.mockRestore();
+    });
+
+    test('WoundingShot.func', () => {
+        WoundingShot.func(char);
+        expect(target.currentHealth).toBeCloseTo(88.75); // 100 - (5 * 1.5 * 1.5 = 11.25) = 88.75
+        expect(char.currentMana).toBe(50);
+
+        const bleedingDebuff = target.statusEffectManager.debuffs[DebuffId.Bleeding]![getCharBattleId(char)] as Bleeding;
+        expect(bleedingDebuff.stacks).toBe(3);
+        expect(bleedingDebuff.remainingDamage).toBeCloseTo(6.75); // 11.25 * 0.2 * 3
+    });
 });
 
-test('WoundingShot.func', () => {
-    WoundingShot.func(char);
-    expect(target.currentHealth).toBeCloseTo(88.75); // 100 - (5 * 1.5 * 1.5 = 11.25) = 88.75
-    expect(char.currentMana).toBe(50);
 
-    const bleedingDebuff = target.statusEffectManager.debuffs[DebuffId.Bleeding]![getCharBattleId(char)] as Bleeding;
-    expect(bleedingDebuff.stacks).toBe(3);
-    expect(bleedingDebuff.remainingDamage).toBeCloseTo(6.75); // 11.25 * 0.2 * 3
+describe('WoundingShot Description', () => {
+    test('No Character', () => {
+        expect(WoundingShot.description()).toBe(
+            'Deals damage and applies Bleed dealing 60% of the initial damage dealt over 3 turns.'
+        );
+    });
+    test('With Character', () => {
+        expect(WoundingShot.description(char)).toBe(
+            'Deals 7.5-7.5 damage and applies Bleed dealing 60% of the initial damage dealt over 3 turns.'
+        );
+    });
 });
