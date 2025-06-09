@@ -1,4 +1,3 @@
-import BuffId from '../StatusEffect/types/BuffId';
 import Ability from './Ability';
 import Blessed from '../StatusEffect/Buffs/Blessed';
 import { formatNum } from '../util';
@@ -18,7 +17,7 @@ const Bless: Ability = {
             accuracy = Blessed.calcAccuracy(char.level, char.attributes.wisdom);
             damage = Blessed.calcDamage(char.level, char.attributes.wisdom);
         }
-        return `Gain ${STACKS} ${BuffId.Blessed} stacks, increasing Accuracy${accuracy ? ` by ${formatNum(accuracy)}` : ''} and Damage${damage ? ` by ${formatNum(damage)}` : ''}.`;
+        return `Increases Accuracy${accuracy ? ` by ${formatNum(accuracy)}` : ''} and Damage${damage ? ` by ${formatNum(damage)}` : ''} for ${STACKS} turns.`;
     },
     func: (char) => {
         char.useAbilityMana();
