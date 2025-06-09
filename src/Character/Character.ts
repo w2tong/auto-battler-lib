@@ -20,6 +20,7 @@ import { type Weapon } from '../Equipment/Weapon/Weapon';
 import { createPet, PetId } from './Pet';
 import AttributeType from './Attributes/AttributeType';
 import { NpcId } from '../npc/NPC';
+import DebuffId from '../StatusEffect/types/DebuffId';
 
 // Crit chance, crit dmg, Accuracy, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
 export default class Character {
@@ -226,16 +227,19 @@ export default class Character {
 
     doTurn(): void {
         this.statusEffectManager.turnStart();
-        if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
-            this.usePotion();
-        }
 
-        this.setTarget();
-        if (this.ability && this.currentMana >= this.stats.getStat(StatType.ManaCost)) {
-            this.ability.func(this);
-        }
-        else {
-            this.turnAttack();
+        if (!this.isCrowdControlled()) {
+            if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
+                this.usePotion();
+            }
+
+            this.setTarget();
+            if (this.ability && this.currentMana >= this.stats.getStat(StatType.ManaCost)) {
+                this.ability.func(this);
+            }
+            else {
+                this.turnAttack();
+            }
         }
 
         this.addMana(this.stats.getStat(StatType.ManaRegen));
@@ -447,5 +451,12 @@ export default class Character {
 
     static calcDamageAfterBlock(damage: number, blockPower: number) {
         return Math.max(damage - Math.max(blockPower, 0), 0);
+    }
+
+    isCrowdControlled(): boolean {
+        if (this.statusEffectManager.getDebuffStacks(DebuffId.Frozen) > 0 ||
+            this.statusEffectManager.getDebuffStacks(DebuffId.Stunned) > 0)
+            return true;
+        return false;
     }
 }
