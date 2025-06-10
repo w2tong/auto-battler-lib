@@ -1,6 +1,6 @@
 import Ability from './Ability';
 import Blessed from '../StatusEffect/Buffs/Blessed';
-import { formatNum } from '../util';
+import { formatNum, getRandomRange } from '../util';
 import AbilityId from './AbilityId';
 import AttributeType from '../Character/Attributes/AttributeType';
 
@@ -20,11 +20,14 @@ const Bless: Ability = {
         return `Increases Accuracy${accuracy ? ` by ${formatNum(accuracy)}` : ''} and Damage${damage ? ` by ${formatNum(damage)}` : ''} for ${STACKS} turns.`;
     },
     func: (char) => {
+        if (!char.battle) return;
+
         char.useAbilityMana();
-        if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME}.`);
-        // TODO: add targeting system for blessing allies
-        char.statusEffectManager.add(new Blessed({
-            char,
+        const targets = char.battle.ref.getAliveTargets(char.battle.side);
+        const target = targets[getRandomRange(targets.length)];
+        char.battle.ref.log.add(`${char.name} casted ${NAME} on ${target.name}.`);
+        target.statusEffectManager.add(new Blessed({
+            char: target,
             source: char,
             stacks: STACKS
         }));

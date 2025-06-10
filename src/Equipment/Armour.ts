@@ -56,6 +56,7 @@ const armour: { [id in ArmourId]: Armour } = {
             [AttributeType.Intelligence]: 6
         },
         stats: {
+            [StatType.Armour]: 3,
             [StatType.ManaRegen]: 7
         }
     },
@@ -70,6 +71,7 @@ const armour: { [id in ArmourId]: Armour } = {
             [AttributeType.Intelligence]: 7
         },
         stats: {
+            [StatType.Armour]: 6,
             [StatType.ManaRegen]: 9
         }
     },
@@ -84,6 +86,7 @@ const armour: { [id in ArmourId]: Armour } = {
             [AttributeType.Intelligence]: 8
         },
         stats: {
+            [StatType.Armour]: 9,
             [StatType.ManaRegen]: 11
         }
     },
@@ -98,6 +101,7 @@ const armour: { [id in ArmourId]: Armour } = {
             [AttributeType.Intelligence]: 9
         },
         stats: {
+            [StatType.Armour]: 12,
             [StatType.ManaRegen]: 13
         }
     },
@@ -112,6 +116,7 @@ const armour: { [id in ArmourId]: Armour } = {
             [AttributeType.Intelligence]: 10
         },
         stats: {
+            [StatType.Armour]: 15,
             [StatType.ManaRegen]: 15
         }
     },

@@ -1,9 +1,9 @@
 import { getRandomRange } from './util';
 import Character from './Character/Character';
-import NPC from './npc/NPC';
-import Fighter from './npc/Fighter';
-import Rogue from './npc/Rogue';
-import Wizard from './npc/Wizard';
+import NPC, { NpcEquipmentLevel } from './npc/NPC';
+import Fighter from './npc/bandit/Fighter';
+import Rogue from './npc/bandit/Rogue';
+import Wizard from './npc/bandit/Wizard';
 import Rat from './npc/Rat';
 import GoblinFighter from './npc/GoblinFighter';
 import GoblinRogue from './npc/GoblinRogue';
@@ -13,206 +13,203 @@ import OgreFighter from './npc/OgreFighter';
 import LevelRange from './types/LevelRange';
 import BaseAttributes from './Character/Attributes/BaseAttributes';
 import { calculateBaseAttributes } from './npc/util';
+import { EquipmentImport } from './Equipment/Equipment';
+import Priest from './npc/bandit/Priest';
+import Ranger from './npc/bandit/Ranger';
+import GoblinPriest from './npc/GoblinPriest';
 
 type EncounterGroup = NPC[];
 type GroupKey =
     | 'fighter'
+    | 'priest'
+    | 'ranger'
     | 'rogue'
     | 'wizard'
     | 'rat'
-    | 'goblinDuo'
+    | 'goblinFighterPriest'
+    | 'goblinFighterRogue'
+    | 'goblinPriestRogue'
     | 'orcFighter'
     | 'zombie'
     | 'ogreFighter';
 
 const groups: Record<GroupKey, NPC[]> = {
+    // Bandits
     fighter: [Fighter],
+    priest: [Priest],
+    ranger: [Ranger],
     rogue: [Rogue],
     wizard: [Wizard],
     rat: [Rat],
-    goblinDuo: [GoblinFighter, GoblinRogue],
+    // Goblins
+    goblinFighterPriest: [GoblinFighter, GoblinPriest],
+    goblinFighterRogue: [GoblinFighter, GoblinRogue],
+    goblinPriestRogue: [GoblinPriest, GoblinRogue],
+
     orcFighter: [OrcFighter],
     zombie: [Zombie],
     ogreFighter: [OgreFighter]
 };
 
+const banditGroup: { group: EncounterGroup; }[] = [
+    { group: groups.fighter },
+    { group: groups.priest },
+    { group: groups.rogue },
+    { group: groups.rogue },
+    { group: groups.wizard },
+];
+
+const goblinGroups: { group: EncounterGroup; }[] = [
+    { group: groups.goblinFighterPriest },
+    { group: groups.goblinFighterRogue },
+    { group: groups.goblinPriestRogue },
+];
+
 const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: number, count?: number; }[]> = {
     1: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.rat, count: 2 },
         { group: groups.zombie },
     ],
     2: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.rat, count: 2 },
         { group: groups.zombie },
     ],
     3: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.rat, count: 2 },
         { group: groups.zombie },
     ],
     4: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo, level: 3 },
+
     ],
     5: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo, level: 4 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     6: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo, level: 5 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     7: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo, level: 6 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     8: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo, level: 7 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     9: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo, level: 8 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     10: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo, level: 9 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     11: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo, level: 10 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     12: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo, level: 11 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     13: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo, level: 12 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     14: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo, level: 13 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     15: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo, level: 14 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     16: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo, level: 15 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     17: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo, level: 16 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     18: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo, level: 17 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     19: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo, level: 18 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     20: [
-        { group: groups.fighter },
-        { group: groups.rogue },
-        { group: groups.wizard },
+        ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo, level: 19 },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
 };
 
-function createNPCChar(npc: NPC, level: number, num?: number): Character {
+function createNpcChar(npc: NPC, level: number, num?: number): Character {
     const attributes: BaseAttributes = calculateBaseAttributes(npc.attributes, level);
+    let equipment: EquipmentImport = npc.equipment[1];
+    for (const lvl of Object.keys(npc.equipment).reverse()) {
+        const equipLvl = Number(lvl) as NpcEquipmentLevel;
+        const leveledEquipment = npc.equipment[equipLvl];
+        if (level > equipLvl && leveledEquipment !== undefined) {
+            equipment = leveledEquipment;
+        }
+    }
 
     return new Character({
         name: num ? `${npc.name} ${num}` : npc.name,
@@ -221,23 +218,24 @@ function createNPCChar(npc: NPC, level: number, num?: number): Character {
         npcId: npc.id,
         attributes,
         statTemplate: npc.stats,
-        equipment: npc.equipment,
-        ability: npc.ability
+        equipment: equipment,
+        ability: npc.ability,
+        petId: npc.petId
     });
 }
 
-function createNPCChars(npcs: NPC[], level: number, count: number = 1): Character[] {
+function createNpcChars(npcs: NPC[], level: number, count: number = 1): Character[] {
     const chars: Character[] = [];
 
     if (count === 1) {
         for (const npc of npcs) {
-            chars.push(createNPCChar(npc, level));
+            chars.push(createNpcChar(npc, level));
         }
     }
     else {
         for (let i = 1; i <= count; i++) {
             for (const npc of npcs) {
-                chars.push(createNPCChar(npc, level, i));
+                chars.push(createNpcChar(npc, level, i));
             }
         }
     }
@@ -245,11 +243,10 @@ function createNPCChars(npcs: NPC[], level: number, count: number = 1): Characte
     return chars;
 }
 
-
 function getRandomEncounter(level: LevelRange): Character[] {
     const encounters = leveledEncounters[level];
     const encounter = encounters[getRandomRange(encounters.length)];
-    return createNPCChars(encounter.group, encounter.level ? encounter.level : level, encounter.count);
+    return createNpcChars(encounter.group, encounter.level ? encounter.level : level, encounter.count);
 }
 
-export { getRandomEncounter, createNPCChars };
+export { getRandomEncounter, createNpcChars };

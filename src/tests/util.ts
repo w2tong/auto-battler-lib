@@ -19,11 +19,22 @@ import { Ring } from '../Equipment/Ring';
 import { Shield, ShieldType } from '../Equipment/Shield';
 import { Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
 
-function createTestCharacter({ level = 1, attributes = {}, statTemplate = {}, equipment = { [EquipSlot.MainHand]: test1HWeapon }, ability, petId, options }: {
-    level?: number, attributes?: BaseAttributes, statTemplate?: StatTemplate, equipment?: EquipmentImport, ability?: Ability, petId?: PetId, options?: { currHealthPc?: number, currManaPc?: number; };
-}): Character {
+type createTestCharacterParams = {
+    name?: string,
+    level?: number,
+    attributes?: BaseAttributes,
+    statTemplate?: StatTemplate,
+    equipment?: EquipmentImport,
+    ability?: Ability,
+    petId?: PetId,
+    options?: {
+        currHealthPc?: number,
+        currManaPc?: number;
+    };
+};
+function createTestCharacter({ name = '', level = 1, attributes = {}, statTemplate = {}, equipment = { [EquipSlot.MainHand]: test1HWeapon }, ability, petId, options }: createTestCharacterParams): Character {
     return new Character({
-        name: '',
+        name,
         level,
         attributes,
         statTemplate,

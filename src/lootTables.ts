@@ -59,10 +59,10 @@ const lootTiers: { [tier: number]: LootTable; } = {
         'accRing0', 'dmgRing0', 'critRing0', 'dodgeRing0', 'thornsRing0', 'mpHitRing0', 'mpRegenRing0', 'mpCostRing0',
         // Potions
         'healingPotion1',
-        // Waists
-        'effBelt0', 'healBelt0',
         // Necks
         'strNeck0', 'dexNeck0', 'perNeck0', 'conNeck0', 'intNeck0', 'wisNeck0',
+        // Waists
+        'effBelt0', 'healBelt0',
     ],
     3: [
         // Weapons
@@ -79,10 +79,10 @@ const lootTiers: { [tier: number]: LootTable; } = {
         'accRing1', 'dmgRing1', 'critDmgRing1', 'dodgeRing1', 'thornsRing1', 'mpHitRing1', 'mpRegenRing1', 'mpCostRing1', 'critRing1',
         // Potions
         'healingPotion2',
-        // Waists
-        'effBelt1', 'healBelt1',
         // Necks
         'strNeck1', 'dexNeck1', 'perNeck1', 'conNeck1', 'intNeck1', 'wisNeck1',
+        // Waists
+        'effBelt1', 'healBelt1',
     ],
     4: [
         // Weapons
@@ -99,10 +99,10 @@ const lootTiers: { [tier: number]: LootTable; } = {
         'accRing1', 'dmgRing1', 'critDmgRing1', 'dodgeRing1', 'thornsRing1', 'mpHitRing1', 'mpRegenRing1', 'mpCostRing1', 'critRing1',
         // Potions
         'healingPotion3',
-        // Waists
-        'effBelt2', 'healBelt2', 'chargesBelt0',
         // Necks
         'strNeck1', 'dexNeck1', 'perNeck1', 'conNeck1', 'intNeck1', 'wisNeck1',
+        // Waists
+        'effBelt2', 'healBelt2', 'chargesBelt0',
     ],
 
     5: [
@@ -120,10 +120,10 @@ const lootTiers: { [tier: number]: LootTable; } = {
         'accRing2', 'dmgRing2', 'critDmgRing2', 'dodgeRing2', 'thornsRing2', 'mpHitRing2', 'mpRegenRing2', 'mpCostRing2', 'critRing2',
         // Potions
         'healingPotion4',
-        // Waists
-        'effBelt3', 'healBelt3', 'chargesBelt1',
         // Necks
         'strNeck2', 'dexNeck2', 'perNeck2', 'conNeck2', 'intNeck2', 'wisNeck2',
+        // Waists
+        'effBelt3', 'healBelt3', 'chargesBelt1',
     ],
 };
 

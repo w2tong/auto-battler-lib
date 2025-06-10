@@ -1,4 +1,5 @@
 import AttributeType from '../Character/Attributes/AttributeType';
+import Attributes from '../Character/Attributes/Attributes';
 import StatType from '../Character/Stats/StatType';
 import Stats from '../Character/Stats/Stats';
 import { EquipSlot } from '../Equipment/Equipment';
@@ -9,23 +10,26 @@ const Rat: NPC = {
     id: 'rat',
     name: 'Rat',
     attributes: {
-        [AttributeType.Strength]: { perLvl: 0.5 },
+        [AttributeType.Strength]: { perLvl: 1 },
         [AttributeType.Dexterity]: { perLvl: 1 },
-        [AttributeType.Perception]: { perLvl: 0.5 },
-        [AttributeType.Constitution]: { perLvl: 0.25 }
+        [AttributeType.Perception]: { perLvl: 1 },
+        [AttributeType.Constitution]: { base: Attributes.MIN_VALUE },
+        [AttributeType.Intelligence]: { base: Attributes.MIN_VALUE },
+        [AttributeType.Wisdom]: { base: Attributes.MIN_VALUE },
     },
     stats: {
-        [StatType.MaxHealth]: { base: 5, perLvl: 2 },
-        [StatType.Dodge]: { base: Stats.DEFAULT_DODGE + 10 },
-
-        [StatType.Accuracy]: { base: -10, perLvl: 1 },
-
-        [StatType.Damage]: { base: 0, perLvl: 0.2 },
-
-        [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
+        [StatType.MaxHealth]: { base: 6, perLvl: 2 },
+        [StatType.Dodge]: { base: Stats.DEFAULT_DODGE + 15 },
+        [StatType.Accuracy]: { base: -10 },
+        [StatType.Damage]: { base: 0, perLvl: 0.5 }
     },
     equipment: {
-        [EquipSlot.MainHand]: weapons.poisonbite0
+        1: { [EquipSlot.MainHand]: weapons.poisonbite0 },
+        5: { [EquipSlot.MainHand]: weapons.poisonbite1 },
+        9: { [EquipSlot.MainHand]: weapons.poisonbite2 },
+        13: { [EquipSlot.MainHand]: weapons.poisonbite3 },
+        17: { [EquipSlot.MainHand]: weapons.poisonbite4 },
+        20: { [EquipSlot.MainHand]: weapons.poisonbite5 },
     }
 } as const;
 

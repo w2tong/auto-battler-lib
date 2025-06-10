@@ -1,32 +1,27 @@
-import EnvenomWeapon from '../Ability/EnvenomWeapon';
-import AttributeType from '../Character/Attributes/AttributeType';
-import { startingEquipment } from '../Character/Classes/classLoadouts';
-import ClassName from '../Character/Classes/ClassName';
-import StatType from '../Character/Stats/StatType';
-import { armour } from '../Equipment/Armour';
-import { EquipSlot } from '../Equipment/Equipment';
-import { hands } from '../Equipment/Hands';
-import { heads } from '../Equipment/Head';
-import { necks } from '../Equipment/Neck';
-import { potions } from '../Equipment/Potion';
-import { rings } from '../Equipment/Ring';
-import { waists } from '../Equipment/Waist';
-import { weapons } from '../Equipment/Weapon/weapons';
-import NPC from './NPC';
+import AttributeType from '../../Character/Attributes/AttributeType';
+import { startingAbility, startingEquipment } from '../../Character/Classes/classLoadouts';
+import ClassName from '../../Character/Classes/ClassName';
+import { armour } from '../../Equipment/Armour';
+import { EquipSlot } from '../../Equipment/Equipment';
+import { hands } from '../../Equipment/Hands';
+import { heads } from '../../Equipment/Head';
+import { necks } from '../../Equipment/Neck';
+import { potions } from '../../Equipment/Potion';
+import { rings } from '../../Equipment/Ring';
+import { waists } from '../../Equipment/Waist';
+import { weapons } from '../../Equipment/Weapon/weapons';
+import NPC from '../NPC';
 
-const GoblinRogue: NPC = {
-    id: 'goblinRogue',
-    name: 'Goblin Rogue',
+const Rogue: NPC = {
+    id: 'rogue',
+    name: 'Bandit Rogue',
     className: ClassName.Rogue,
     attributes: {
         [AttributeType.Strength]: { perLvl: 1 },
         [AttributeType.Dexterity]: { perLvl: 1 },
-        [AttributeType.Perception]: { perLvl: 1 }
+        [AttributeType.Perception]: { perLvl: 1 },
     },
-    stats: {
-        [StatType.HealthPercent]: { base: 0.6 },
-        [StatType.DamagePercent]: { base: 0.6 }
-    },
+    stats: {},
     equipment: {
         1: startingEquipment[ClassName.Rogue],
         5: {
@@ -89,7 +84,7 @@ const GoblinRogue: NPC = {
             [EquipSlot.Waist]: waists.healBelt3
         },
     },
-    ability: EnvenomWeapon
+    ability: startingAbility[ClassName.Rogue]
 } as const;
 
-export default GoblinRogue;
+export default Rogue;

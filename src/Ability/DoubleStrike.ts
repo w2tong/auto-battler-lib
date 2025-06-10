@@ -9,7 +9,7 @@ const DoubleStrike: Ability = {
     description: () => 'Attack your target twice with your weapon(s).',
     func: (char) => {
         if (char.target) {
-            if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME}.`);
+            if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME} on ${char.target.name}.`);
             char.useAbilityMana();
             char.turnAttack();
             char.turnAttack();
