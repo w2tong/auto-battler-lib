@@ -1,7 +1,7 @@
 import { describe, it, expect } from '@jest/globals';
 import Character from './Character/Character';
-import Fighter from './npc/Fighter';
-import Rogue from './npc/Rogue';
+import Fighter from './npc/bandit/Fighter';
+import Rogue from './npc/bandit/Rogue';
 import { createNpcChars, getRandomEncounter } from './encounters';
 import LevelRange from './types/LevelRange';
 

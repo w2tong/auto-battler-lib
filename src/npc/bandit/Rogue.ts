@@ -1,16 +1,16 @@
-import AttributeType from '../Character/Attributes/AttributeType';
-import { startingAbility, startingEquipment } from '../Character/Classes/classLoadouts';
-import ClassName from '../Character/Classes/ClassName';
-import { armour } from '../Equipment/Armour';
-import { EquipSlot } from '../Equipment/Equipment';
-import { hands } from '../Equipment/Hands';
-import { heads } from '../Equipment/Head';
-import { necks } from '../Equipment/Neck';
-import { potions } from '../Equipment/Potion';
-import { rings } from '../Equipment/Ring';
-import { waists } from '../Equipment/Waist';
-import { weapons } from '../Equipment/Weapon/weapons';
-import NPC from './NPC';
+import AttributeType from '../../Character/Attributes/AttributeType';
+import { startingAbility, startingEquipment } from '../../Character/Classes/classLoadouts';
+import ClassName from '../../Character/Classes/ClassName';
+import { armour } from '../../Equipment/Armour';
+import { EquipSlot } from '../../Equipment/Equipment';
+import { hands } from '../../Equipment/Hands';
+import { heads } from '../../Equipment/Head';
+import { necks } from '../../Equipment/Neck';
+import { potions } from '../../Equipment/Potion';
+import { rings } from '../../Equipment/Ring';
+import { waists } from '../../Equipment/Waist';
+import { weapons } from '../../Equipment/Weapon/weapons';
+import NPC from '../NPC';
 
 const Rogue: NPC = {
     id: 'rogue',

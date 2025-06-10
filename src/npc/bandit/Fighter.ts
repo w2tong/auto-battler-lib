@@ -1,17 +1,17 @@
-import { startingAbility, startingEquipment } from '../Character/Classes/classLoadouts';
-import AttributeType from '../Character/Attributes/AttributeType';
-import NPC from './NPC';
-import ClassName from '../Character/Classes/ClassName';
-import { armour } from '../Equipment/Armour';
-import { EquipSlot } from '../Equipment/Equipment';
-import { shields } from '../Equipment/Shield';
-import { weapons } from '../Equipment/Weapon/weapons';
-import { heads } from '../Equipment/Head';
-import { rings } from '../Equipment/Ring';
-import { hands } from '../Equipment/Hands';
-import { potions } from '../Equipment/Potion';
-import { necks } from '../Equipment/Neck';
-import { waists } from '../Equipment/Waist';
+import { startingAbility, startingEquipment } from '../../Character/Classes/classLoadouts';
+import AttributeType from '../../Character/Attributes/AttributeType';
+import NPC from '../NPC';
+import ClassName from '../../Character/Classes/ClassName';
+import { armour } from '../../Equipment/Armour';
+import { EquipSlot } from '../../Equipment/Equipment';
+import { shields } from '../../Equipment/Shield';
+import { weapons } from '../../Equipment/Weapon/weapons';
+import { heads } from '../../Equipment/Head';
+import { rings } from '../../Equipment/Ring';
+import { hands } from '../../Equipment/Hands';
+import { potions } from '../../Equipment/Potion';
+import { necks } from '../../Equipment/Neck';
+import { waists } from '../../Equipment/Waist';
 
 const Fighter: NPC = {
     id: 'fighter',
@@ -89,4 +89,3 @@ const Fighter: NPC = {
 } as const;
 
 export default Fighter;
-

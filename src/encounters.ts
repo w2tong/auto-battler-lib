@@ -1,9 +1,9 @@
 import { getRandomRange } from './util';
 import Character from './Character/Character';
 import NPC, { NpcEquipmentLevel } from './npc/NPC';
-import Fighter from './npc/Fighter';
-import Rogue from './npc/Rogue';
-import Wizard from './npc/Wizard';
+import Fighter from './npc/bandit/Fighter';
+import Rogue from './npc/bandit/Rogue';
+import Wizard from './npc/bandit/Wizard';
 import Rat from './npc/Rat';
 import GoblinFighter from './npc/GoblinFighter';
 import GoblinRogue from './npc/GoblinRogue';
