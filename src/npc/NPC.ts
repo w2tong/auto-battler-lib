@@ -6,7 +6,8 @@ import { type StatTemplate } from '../Character/Stats/StatTemplate';
 import { type EquipmentImport } from '../Equipment/Equipment';
 
 type NpcId = 'fighter' | 'priest' | 'ranger' | 'rogue' | 'wizard' |
-    'goblinFighter' | 'goblinRogue' | 'orcFighter' | 'ogreFighter' | 'rat' | 'zombie' | 'wolf';
+    'goblinFighter' | 'goblinPriest' | 'goblinRogue' |
+    'orcFighter' | 'ogreFighter' | 'rat' | 'zombie' | 'wolf';
 
 type NpcEquipmentLevel = 1 | 5 | 9 | 13 | 17 | 20;
 

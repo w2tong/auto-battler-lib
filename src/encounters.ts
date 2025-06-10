@@ -16,6 +16,7 @@ import { calculateBaseAttributes } from './npc/util';
 import { EquipmentImport } from './Equipment/Equipment';
 import Priest from './npc/bandit/Priest';
 import Ranger from './npc/bandit/Ranger';
+import GoblinPriest from './npc/GoblinPriest';
 
 type EncounterGroup = NPC[];
 type GroupKey =
@@ -25,19 +26,26 @@ type GroupKey =
     | 'rogue'
     | 'wizard'
     | 'rat'
-    | 'goblinDuo'
+    | 'goblinFighterPriest'
+    | 'goblinFighterRogue'
+    | 'goblinPriestRogue'
     | 'orcFighter'
     | 'zombie'
     | 'ogreFighter';
 
 const groups: Record<GroupKey, NPC[]> = {
+    // Bandits
     fighter: [Fighter],
     priest: [Priest],
     ranger: [Ranger],
     rogue: [Rogue],
     wizard: [Wizard],
     rat: [Rat],
-    goblinDuo: [GoblinFighter, GoblinRogue],
+    // Goblins
+    goblinFighterPriest: [GoblinFighter, GoblinPriest],
+    goblinFighterRogue: [GoblinFighter, GoblinRogue],
+    goblinPriestRogue: [GoblinPriest, GoblinRogue],
+
     orcFighter: [OrcFighter],
     zombie: [Zombie],
     ogreFighter: [OgreFighter]
@@ -49,6 +57,12 @@ const banditGroup: { group: EncounterGroup; }[] = [
     { group: groups.rogue },
     { group: groups.rogue },
     { group: groups.wizard },
+];
+
+const goblinGroups: { group: EncounterGroup; }[] = [
+    { group: groups.goblinFighterPriest },
+    { group: groups.goblinFighterRogue },
+    { group: groups.goblinPriestRogue },
 ];
 
 const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: number, count?: number; }[]> = {
@@ -70,117 +84,117 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
     4: [
         ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo },
+
     ],
     5: [
         ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     6: [
         ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     7: [
         ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     8: [
         ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     9: [
         ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     10: [
         ...banditGroup,
         { group: groups.zombie },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     11: [
         ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     12: [
         ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     13: [
         ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     14: [
         ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     15: [
         ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     16: [
         ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     17: [
         ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     18: [
         ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     19: [
         ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
     20: [
         ...banditGroup,
         { group: groups.zombie, count: 2 },
-        { group: groups.goblinDuo },
+        ...goblinGroups,
         { group: groups.orcFighter },
         { group: groups.ogreFighter },
     ],
