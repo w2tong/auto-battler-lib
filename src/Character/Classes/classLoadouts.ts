@@ -27,7 +27,7 @@ const startingEquipment: Record<ClassName, EquipmentImport> = {
     [ClassName.Priest]: {
         [EquipSlot.MainHand]: weapons.mace0,
         [EquipSlot.OffHand]: shields.buckler0,
-        [EquipSlot.Armour]: armour.robe0
+        [EquipSlot.Armour]: armour.mailArmour0
     },
     [ClassName.Ranger]: {
         [EquipSlot.MainHand]: weapons.longbow0,
