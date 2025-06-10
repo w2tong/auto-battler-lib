@@ -1,4 +1,7 @@
-export { ClassName, Classes } from './Character/Classes/classes';
+import classes from './Character/Classes/classes';
+export { classes };
+import ClassName from './Character/Classes/ClassName';
+export { ClassName };
 
 export { Equip, Equipment, EquipmentImport, EquipmentItemIds, EquipSlot, equips, isValidEquip, createEquipmentImport } from './Equipment/Equipment';
 export { Item, ItemId, ItemType, Tier, ItemAttributes, ItemStats } from './Equipment/Item';
