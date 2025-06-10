@@ -217,9 +217,9 @@ function createNpcChar(npc: NPC, level: number, num?: number): Character {
     let equipment: EquipmentImport = npc.equipment[1];
     for (const lvl of Object.keys(npc.equipment).reverse()) {
         const equipLvl = Number(lvl) as NpcEquipmentLevel;
-        console.log(equipLvl);
-        if (level > equipLvl && npc.equipment[equipLvl] !== undefined) {
-            equipment = npc.equipment[equipLvl];
+        const leveledEquipment = npc.equipment[equipLvl];
+        if (level > equipLvl && leveledEquipment !== undefined) {
+            equipment = leveledEquipment;
         }
     }
 
