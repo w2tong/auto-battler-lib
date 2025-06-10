@@ -19,15 +19,15 @@ const OgreFighter: NPC = {
     name: 'Ogre Fighter',
     className: ClassName.Fighter,
     attributes: {
-        [AttributeType.Strength]: { base: Attributes.DEFAULT_VALUE + 20, perLvl: 1.5 },
+        [AttributeType.Strength]: { base: Attributes.DEFAULT_VALUE + 15, perLvl: 1.5 },
         [AttributeType.Dexterity]: { base: Attributes.DEFAULT_VALUE - 5 },
         [AttributeType.Perception]: { base: Attributes.MIN_VALUE, perLvl: 0.5 },
-        [AttributeType.Constitution]: { base: Attributes.DEFAULT_VALUE + 15, perLvl: 1 },
+        [AttributeType.Constitution]: { base: Attributes.DEFAULT_VALUE + 10, perLvl: 1 },
         [AttributeType.Intelligence]: { base: Attributes.MIN_VALUE },
         [AttributeType.Wisdom]: { base: Attributes.MIN_VALUE },
     },
     stats: {
-        [StatType.HealthPercent]: { base: 25 },
+        [StatType.Accuracy]: { base: -10 },
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 25 }
     },
     equipment: {

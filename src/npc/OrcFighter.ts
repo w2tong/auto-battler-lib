@@ -3,6 +3,7 @@ import Attributes from '../Character/Attributes/Attributes';
 import ClassName from '../Character/Classes/ClassName';
 import { startingAbility } from '../Character/Classes/classLoadouts';
 import StatType from '../Character/Stats/StatType';
+import Stats from '../Character/Stats/Stats';
 import { armour } from '../Equipment/Armour';
 import { EquipSlot } from '../Equipment/Equipment';
 import { hands } from '../Equipment/Hands';
@@ -19,16 +20,16 @@ const OrcFighter: NPC = {
     name: 'Orc Fighter',
     className: ClassName.Fighter,
     attributes: {
-        [AttributeType.Strength]: { base: Attributes.DEFAULT_VALUE + 15, perLvl: 1 },
+        [AttributeType.Strength]: { base: Attributes.DEFAULT_VALUE + 10, perLvl: 1 },
         [AttributeType.Dexterity]: { base: Attributes.MIN_VALUE + 2 },
-        [AttributeType.Perception]: { perLvl: 1 },
-        [AttributeType.Constitution]: { base: Attributes.DEFAULT_VALUE + 15, perLvl: 1 },
-        [AttributeType.Intelligence]: { base: Attributes.MIN_VALUE + 2 },
-        [AttributeType.Wisdom]: { base: Attributes.MIN_VALUE + 2 }
+        [AttributeType.Perception]: { base: Attributes.MIN_VALUE - 2, perLvl: 1 },
+        [AttributeType.Constitution]: { base: Attributes.DEFAULT_VALUE + 5, perLvl: 1 },
+        [AttributeType.Intelligence]: { base: Attributes.MIN_VALUE },
+        [AttributeType.Wisdom]: { base: Attributes.MIN_VALUE + 1 }
     },
     stats: {
-        [StatType.HealthPercent]: { base: 0.1 },
-        [StatType.Armour]: { base: 5 }
+        [StatType.Accuracy]: { base: -5 },
+        [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 10 }
     },
     equipment: {
         1: {
