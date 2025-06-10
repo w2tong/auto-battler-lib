@@ -7,15 +7,17 @@ import { type EquipmentImport } from '../Equipment/Equipment';
 type NpcId = 'fighter' | 'rogue' | 'wizard' |
     'goblinFighter' | 'goblinRogue' | 'orcFighter' | 'ogreFighter' | 'rat' | 'zombie' | 'wolf';
 
+type NpcEquipmentLevel = 1 | 5 | 9 | 13 | 17 | 20;
+
 interface NPC {
     id: NpcId;
     name: string;
     className?: ClassName;
     attributes: AttributeTemplate;
     stats: StatTemplate;
-    equipment: EquipmentImport;
+    equipment: { 1: EquipmentImport; } & Partial<Record<NpcEquipmentLevel, EquipmentImport>>;
     ability?: Ability;
 }
 
-export { NpcId };
+export { NpcId, NpcEquipmentLevel };
 export default NPC;

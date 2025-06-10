@@ -1,32 +1,90 @@
 import { startingAbility, startingEquipment } from '../Character/Classes/classLoadouts';
 import AttributeType from '../Character/Attributes/AttributeType';
-import StatType from '../Character/Stats/StatType';
 import NPC from './NPC';
 import ClassName from '../Character/Classes/ClassName';
+import { armour } from '../Equipment/Armour';
+import { EquipSlot } from '../Equipment/Equipment';
+import { shields } from '../Equipment/Shield';
+import { weapons } from '../Equipment/Weapon/weapons';
+import { heads } from '../Equipment/Head';
+import { rings } from '../Equipment/Ring';
+import { hands } from '../Equipment/Hands';
+import { potions } from '../Equipment/Potion';
+import { necks } from '../Equipment/Neck';
+import { waists } from '../Equipment/Waist';
 
 const Fighter: NPC = {
     id: 'fighter',
     name: 'Bandit Fighter',
     className: ClassName.Fighter,
     attributes: {
-        [AttributeType.Strength]: { perLvl: 1.5 },
-        [AttributeType.Dexterity]: { perLvl: 0.5 },
-        [AttributeType.Perception]: { perLvl: 0.5 },
-        [AttributeType.Constitution]: { perLvl: 1.5 },
+        [AttributeType.Strength]: { perLvl: 1 },
+        [AttributeType.Perception]: { perLvl: 1 },
+        [AttributeType.Constitution]: { perLvl: 1 },
     },
-    stats: {
-        [StatType.Armour]: { base: 0, perLvl: 1.2 },
-        [StatType.Deflection]: { base: 0, perLvl: 0.2 },
-        [StatType.BlockPower]: { base: 0, perLvl: 0.2 },
-
-        [StatType.Accuracy]: { base: 0, perLvl: 1 },
-        [StatType.Damage]: { base: 0, perLvl: 0.2 },
-
-        [StatType.ArmourPenetration]: { base: 0, perLvl: 0.2 },
-
-        [StatType.ManaCost]: { base: 100 }
+    stats: {},
+    equipment: {
+        1: startingEquipment[ClassName.Fighter],
+        5: {
+            [EquipSlot.MainHand]: weapons.longsword1,
+            [EquipSlot.OffHand]: shields.buckler1,
+            [EquipSlot.Armour]: armour.plateArmour1,
+            [EquipSlot.Head]: heads.helmet0,
+            [EquipSlot.Hands]: hands.ohGloves0,
+            [EquipSlot.Ring1]: rings.accRing0,
+            [EquipSlot.Ring2]: rings.accRing0,
+            [EquipSlot.Potion]: potions.healingPotion0,
+            [EquipSlot.Neck]: necks.conNeck0
+        },
+        9: {
+            [EquipSlot.MainHand]: weapons.longsword2,
+            [EquipSlot.OffHand]: shields.buckler2,
+            [EquipSlot.Armour]: armour.plateArmour2,
+            [EquipSlot.Head]: heads.helmet0,
+            [EquipSlot.Hands]: hands.ohGloves0,
+            [EquipSlot.Ring1]: rings.accRing0,
+            [EquipSlot.Ring2]: rings.accRing0,
+            [EquipSlot.Potion]: potions.healingPotion1,
+            [EquipSlot.Neck]: necks.conNeck0,
+            [EquipSlot.Waist]: waists.healBelt0
+        },
+        13: {
+            [EquipSlot.MainHand]: weapons.longsword3,
+            [EquipSlot.OffHand]: shields.buckler3,
+            [EquipSlot.Armour]: armour.plateArmour3,
+            [EquipSlot.Head]: heads.helmet1,
+            [EquipSlot.Hands]: hands.ohGloves1,
+            [EquipSlot.Ring1]: rings.accRing1,
+            [EquipSlot.Ring2]: rings.accRing1,
+            [EquipSlot.Potion]: potions.healingPotion2,
+            [EquipSlot.Neck]: necks.conNeck1,
+            [EquipSlot.Waist]: waists.healBelt1
+        },
+        17: {
+            [EquipSlot.MainHand]: weapons.longsword4,
+            [EquipSlot.OffHand]: shields.buckler4,
+            [EquipSlot.Armour]: armour.plateArmour4,
+            [EquipSlot.Head]: heads.helmet1,
+            [EquipSlot.Hands]: hands.ohGloves1,
+            [EquipSlot.Ring1]: rings.accRing1,
+            [EquipSlot.Ring2]: rings.accRing1,
+            [EquipSlot.Potion]: potions.healingPotion3,
+            [EquipSlot.Neck]: necks.conNeck1,
+            [EquipSlot.Waist]: waists.healBelt2
+        },
+        20: {
+            [EquipSlot.MainHand]: weapons.longsword5,
+            [EquipSlot.OffHand]: shields.buckler5,
+            [EquipSlot.Armour]: armour.plateArmour5,
+            [EquipSlot.Head]: heads.helmet2,
+            [EquipSlot.Hands]: hands.ohGloves2,
+            [EquipSlot.Ring1]: rings.accRing2,
+            [EquipSlot.Ring2]: rings.accRing2,
+            [EquipSlot.Potion]: potions.healingPotion4,
+            [EquipSlot.Neck]: necks.conNeck2,
+            [EquipSlot.Waist]: waists.healBelt3
+        }
     },
-    equipment: startingEquipment[ClassName.Fighter],
     ability: startingAbility[ClassName.Fighter]
 } as const;
 
