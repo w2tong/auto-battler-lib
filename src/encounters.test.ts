@@ -4,6 +4,7 @@ import Fighter from './npc/bandit/Fighter';
 import Rogue from './npc/bandit/Rogue';
 import { createNpcChars, getRandomEncounter } from './encounters';
 import LevelRange from './types/LevelRange';
+import Ranger from './npc/bandit/Ranger';
 
 describe('createNpcChars', () => {
     it('creates a single Character from one NPC', () => {
@@ -38,6 +39,14 @@ describe('createNpcChars', () => {
         expect(chars[1].name).toBe('Bandit Rogue 1');
         expect(chars[2].name).toBe('Bandit Fighter 2');
         expect(chars[3].name).toBe('Bandit Rogue 2');
+    });
+
+    it('creates a ranger with a pet', () => {
+        const chars = createNpcChars([Ranger], 1);
+        expect(chars).toHaveLength(1);
+        expect(chars[0]).toBeInstanceOf(Character);
+        expect(chars[0].name).toBe(Ranger.name);
+        expect(chars[0].pet).not.toBeNull();
     });
 });
 
