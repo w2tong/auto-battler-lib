@@ -9,6 +9,7 @@ import Firebolt from './Firebolt';
 import Frostbolt from './Frostbolt';
 import SerpentSting from './SerpentSting';
 import ShieldWall from './ShieldWall';
+import Smite from './Smite';
 import Vanish from './Vanish';
 import WoundingShot from './WoundingShot';
 
@@ -19,6 +20,7 @@ const abilities: Record<AbilityId, Ability> = {
 
     // Priest
     [AbilityId.Bless]: Bless,
+    [AbilityId.Smite]: Smite,
 
     // Ranger
     [AbilityId.SerpentSting]: SerpentSting,

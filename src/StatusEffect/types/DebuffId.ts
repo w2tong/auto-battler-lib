@@ -4,6 +4,7 @@ enum DebuffId {
     Frozen = 'Frozen',
     Bleeding = 'Bleeding',
     Stunned = 'Stunned',
+    Smote = 'Smote'
 }
 
 export default DebuffId;

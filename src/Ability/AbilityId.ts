@@ -5,6 +5,7 @@ enum AbilityId {
 
     // Priest
     Bless = 'Bless',
+    Smite = 'Smite',
 
     // Ranger
     SerpentSting = 'SerpentSting',

@@ -1,4 +1,5 @@
 import Bless from '../../Ability/Bless';
+import Smite from '../../Ability/Smite';
 import AttributeType from '../Attributes/AttributeType';
 import Class from './Class';
 
@@ -10,7 +11,7 @@ const Priest: Class = {
         [AttributeType.Wisdom]: 5
     },
     stats: {},
-    abilities: [Bless]
+    abilities: [Bless, Smite]
 } as const;
 
 export default Priest;
