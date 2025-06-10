@@ -30,7 +30,6 @@ export default class ShieldWall extends Buff implements StatsInterface {
     static calcBlockChance(level: number, strength: number): number {
         const perLvl = ShieldWall.blockChancePerLvl * (level - 1);
         const perStrength = ShieldWall.blockChancePerStrength * (strength - Attributes.DEFAULT_VALUE);
-        console.log('calcBlockChance', ShieldWall.blockChanceBase, perLvl, perStrength, ShieldWall.blockChanceBase + perLvl + perStrength);
         return ShieldWall.blockChanceBase + perLvl + perStrength;
     }
     static calcThorns(level: number, strength: number): number {
