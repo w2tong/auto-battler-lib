@@ -136,4 +136,4 @@ class Battle {
 }
 
 export default Battle;
-export { Side };
+export { Side, TurnRes };
