@@ -2,6 +2,7 @@ import AttackType from '../types/AttackType';
 import Ability from './Ability';
 import { formatNum } from '../util';
 import Bleeding from '../StatusEffect/Debuffs/Bleeding';
+import AbilityId from './AbilityId';
 
 const NAME = 'Ferocious Bite';
 const BONUS_DMG = 0.25;
@@ -9,6 +10,7 @@ const BLEED_STACKS = 2;
 const DMG_PER_TURN = 0.15;
 
 const FerociousBite: Ability = {
+    id: AbilityId.FerociousBite,
     name: NAME,
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
@@ -46,7 +48,8 @@ const FerociousBite: Ability = {
                 }));
             }
         }
-    }
-};
+    },
+    attackType: AttackType.MeleeWeapon
+} as const;
 
 export default FerociousBite;

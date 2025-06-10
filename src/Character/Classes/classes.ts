@@ -1,18 +1,11 @@
+import ClassName from './ClassName';
 import Fighter from './Fighter';
 import Priest from './Priest';
 import Ranger from './Ranger';
 import Rogue from './Rogue';
 import Wizard from './Wizard';
 
-enum ClassName {
-    Fighter = 'Fighter',
-    Priest = 'Priest',
-    Ranger = 'Ranger',
-    Rogue = 'Rogue',
-    Wizard = 'Wizard',
-}
-
-const Classes = {
+const classes = {
     [ClassName.Fighter]: Fighter,
     [ClassName.Priest]: Priest,
     [ClassName.Ranger]: Ranger,
@@ -20,4 +13,4 @@ const Classes = {
     [ClassName.Wizard]: Wizard,
 } as const;
 
-export { Classes, ClassName };
+export default classes;

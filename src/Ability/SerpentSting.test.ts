@@ -4,24 +4,23 @@ import StatType from '../Character/Stats/StatType';
 import { EquipSlot } from '../Equipment/Equipment';
 import { ItemType } from '../Equipment/Item';
 import { Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
+import Poisoned from '../StatusEffect/Debuffs/Poisoned';
 import DebuffId from '../StatusEffect/types/DebuffId';
-import Bleeding from '../StatusEffect/Debuffs/Bleeding';
 import { createTestCharacter } from '../tests/util';
 import AttackType from '../types/AttackType';
 import { getCharBattleId } from '../util';
-import WoundingShot from './WoundingShot';
+import SerpentSting from './SerpentSting';
 
 let char: Character;
 let target: Character;
 const testWeapon: Weapon = {
-    id: 'bite0',
+    id: 'longbow0',
     itemType: ItemType.Weapon,
     name: '',
     tier: 0,
-
     type: WeaponType.Bow,
     attackType: AttackType.RangedWeapon,
-    damageRange: { min: 5, max: 5, bonus: 0 },
+    damageRange: { min: 8, max: 8, bonus: 0 },
 };
 
 beforeEach(() => {
@@ -49,40 +48,38 @@ beforeEach(() => {
     new Battle([char], [target]);
 });
 
-
-describe('WoundingShot Damage and Debuff', () => {
+describe('Serpent Sting Damage and Debuff', () => {
     let hitRollSpy: jest.SpyInstance;
     let critRollSpy: jest.SpyInstance;
     beforeEach(() => {
         hitRollSpy = jest.spyOn(Character.prototype, 'hitRoll').mockReturnValue(true);
-        critRollSpy = jest.spyOn(Character, 'critRoll').mockReturnValue(true);
+        critRollSpy = jest.spyOn(Character, 'critRoll').mockReturnValue(false);
     });
     afterEach(() => {
         hitRollSpy.mockRestore();
         critRollSpy.mockRestore();
     });
 
-    test('WoundingShot.func', () => {
-        WoundingShot.func(char);
-        expect(target.currentHealth).toBeCloseTo(88.75); // 100 - (5 * 1.5 * 1.5 = 11.25) = 88.75
+    test('SerpentSting.func', () => {
+        SerpentSting.func(char);
+        // 8 * 1.25 = 10 damage
+        expect(target.currentHealth).toBeCloseTo(90); // 100 - 10
         expect(char.currentMana).toBe(50);
 
-        const bleedingDebuff = target.statusEffectManager.debuffs[DebuffId.Bleeding]![getCharBattleId(char)] as Bleeding;
-        expect(bleedingDebuff.stacks).toBe(3);
-        expect(bleedingDebuff.remainingDamage).toBeCloseTo(6.75); // 11.25 * 0.2 * 3
+        const poisonedDebuff = target.statusEffectManager.debuffs[DebuffId.Poisoned]![getCharBattleId(char)];
+        expect(poisonedDebuff.stacks).toBe(4);
     });
 });
 
-
-describe('WoundingShot Description', () => {
+describe('Serpent Sting Description', () => {
     test('No Character', () => {
-        expect(WoundingShot.description()).toBe(
-            'Deals damage and applies Bleed dealing 60% of the initial damage dealt over 3 turns.'
+        expect(SerpentSting.description()).toBe(
+            `Deals damage and applies 4 ${Poisoned.name}.`
         );
     });
     test('With Character', () => {
-        expect(WoundingShot.description(char)).toBe(
-            'Deals 7.5-7.5 damage and applies Bleed dealing 60% of the initial damage dealt over 3 turns.'
+        expect(SerpentSting.description(char)).toBe(
+            `Deals 10-10 damage and applies 4 ${Poisoned.name}.`
         );
     });
 });

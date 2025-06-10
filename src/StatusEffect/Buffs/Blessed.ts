@@ -7,6 +7,7 @@ import StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
 
 export default class Blessed extends Buff implements StatsInterface {
     id = BuffId.Blessed;
+    name = 'Blessed';
 
     static baseAccuracy = 5;
     static accuracyPerLvl = 0.5;
@@ -47,6 +48,7 @@ export default class Blessed extends Buff implements StatsInterface {
     onTurnStart() { }
     onTurnEnd() { }
     onAttack() { }
+    onAttacked() { }
 
     onSourceTurnStart() {
         this.stacks -= 1;

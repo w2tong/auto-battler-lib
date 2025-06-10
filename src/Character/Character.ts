@@ -9,7 +9,8 @@ import NumberRange, { numberRoll } from '../NumberRange';
 import Ability from '../Ability/Ability';
 import { StatTemplate } from './Stats/StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
-import { ClassName, Classes } from './Classes/classes';
+import classes from './Classes/classes';
+import ClassName from './Classes/ClassName';
 import BuffId from '../StatusEffect/types/BuffId';
 import StatType from './Stats/StatType';
 import Attributes from './Attributes/Attributes';
@@ -19,6 +20,7 @@ import { type Weapon } from '../Equipment/Weapon/Weapon';
 import { createPet, PetId } from './Pet';
 import AttributeType from './Attributes/AttributeType';
 import { NpcId } from '../npc/NPC';
+import DebuffId from '../StatusEffect/types/DebuffId';
 
 // Crit chance, crit dmg, Accuracy, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
 export default class Character {
@@ -63,7 +65,7 @@ export default class Character {
         // Attributes
         this._attributes = new Attributes(attributes, this._equipment);
         if (className) {
-            for (const [attr, val] of Object.entries(Classes[className].attributes)) {
+            for (const [attr, val] of Object.entries(classes[className].attributes)) {
                 this._attributes.addBonus(attr as AttributeType, val);
             }
         }
@@ -76,7 +78,7 @@ export default class Character {
             level
         });
 
-        this._ability = ability ?? (className ? Classes[className].ability : null);
+        this._ability = ability ?? null;
         this._currentHealth = options?.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
 
@@ -225,16 +227,19 @@ export default class Character {
 
     doTurn(): void {
         this.statusEffectManager.turnStart();
-        if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
-            this.usePotion();
-        }
 
-        this.setTarget();
-        if (this.ability && this.currentMana >= this.stats.getStat(StatType.ManaCost)) {
-            this.ability.func(this);
-        }
-        else {
-            this.turnAttack();
+        if (!this.isCrowdControlled()) {
+            if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
+                this.usePotion();
+            }
+
+            this.setTarget();
+            if (this.ability && this.currentMana >= this.stats.getStat(StatType.ManaCost)) {
+                this.ability.func(this);
+            }
+            else {
+                this.turnAttack();
+            }
         }
 
         this.addMana(this.stats.getStat(StatType.ManaRegen));
@@ -346,7 +351,7 @@ export default class Character {
             }
         }
 
-        this.statusEffectManager.onAttack(hit);
+        this.statusEffectManager.onAttack(hit, target);
 
         // Deal thorns damage to this Character if target was hit
         if (hit && target.stats.getStat(StatType.Thorns) > 0) {
@@ -446,5 +451,12 @@ export default class Character {
 
     static calcDamageAfterBlock(damage: number, blockPower: number) {
         return Math.max(damage - Math.max(blockPower, 0), 0);
+    }
+
+    isCrowdControlled(): boolean {
+        if (this.statusEffectManager.getDebuffStacks(DebuffId.Frozen) > 0 ||
+            this.statusEffectManager.getDebuffStacks(DebuffId.Stunned) > 0)
+            return true;
+        return false;
     }
 }

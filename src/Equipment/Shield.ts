@@ -127,7 +127,7 @@ const shields: { [id in ShieldId]: Shield } = {
         stats: {
             [StatType.BlockChance]: 30,
             [StatType.BlockPower]: 6,
-            [StatType.Thorns]: 3,
+            [StatType.Thorns]: 4,
         }
     },
     spikedShield3: {
@@ -140,7 +140,7 @@ const shields: { [id in ShieldId]: Shield } = {
         stats: {
             [StatType.BlockChance]: 30,
             [StatType.BlockPower]: 8,
-            [StatType.Thorns]: 4,
+            [StatType.Thorns]: 7,
         }
     },
     spikedShield4: {
@@ -153,7 +153,7 @@ const shields: { [id in ShieldId]: Shield } = {
         stats: {
             [StatType.BlockChance]: 30,
             [StatType.BlockPower]: 10,
-            [StatType.Thorns]: 5,
+            [StatType.Thorns]: 11,
         }
     },
     spikedShield5: {
@@ -166,7 +166,7 @@ const shields: { [id in ShieldId]: Shield } = {
         stats: {
             [StatType.BlockChance]: 30,
             [StatType.BlockPower]: 12,
-            [StatType.Thorns]: 6,
+            [StatType.Thorns]: 16,
         }
     },
     towerShield0: {

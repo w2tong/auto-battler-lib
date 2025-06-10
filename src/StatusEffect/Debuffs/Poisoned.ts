@@ -5,6 +5,7 @@ import DebuffId from '../types/DebuffId';
 
 export default class Poisoned extends Debuff implements DamageTaken {
     id = DebuffId.Poisoned;
+    name = 'Poisoned';
 
     static baseDamage = 1;
     static healthDamagePercent = 0.01;
@@ -37,6 +38,7 @@ export default class Poisoned extends Debuff implements DamageTaken {
         if (this.stacks <= 0) this.manager.removeDebuff(this.id, this.source);
     }
     onAttack() { }
+    onAttacked() { }
 
     onSourceTurnStart() { }
     onSourceTurnEnd() { }

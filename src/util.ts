@@ -1,7 +1,7 @@
 import type Ability from './Ability/Ability';
 import type BaseAttributes from './Character/Attributes/BaseAttributes';
 import Character from './Character/Character';
-import { type ClassName } from './Character/Classes/classes';
+import type ClassName from './Character/Classes/ClassName';
 import { type StatTemplate } from './Character/Stats/StatTemplate';
 import { type EquipmentImport } from './Equipment/Equipment';
 import type BuffId from './StatusEffect/types/BuffId';

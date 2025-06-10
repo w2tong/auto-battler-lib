@@ -5,6 +5,7 @@ import DebuffId from '../types/DebuffId';
 
 export default class Burning extends Debuff implements DamageTaken {
     id = DebuffId.Burning;
+    name = 'Burning';
 
     static baseDamage = 1;
     static spellPowerRatio = 0.2;
@@ -35,6 +36,7 @@ export default class Burning extends Debuff implements DamageTaken {
         if (this.stacks <= 0) this.manager.removeDebuff(this.id, this.source);
     }
     onAttack() { }
+    onAttacked() { }
 
     onSourceTurnStart() { }
     onSourceTurnEnd() { }

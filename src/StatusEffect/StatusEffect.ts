@@ -8,6 +8,7 @@ import StatusEffectType from './types/StatusEffectType';
 abstract class StatusEffect {
     abstract readonly id: BuffId | DebuffId;
     abstract readonly type: StatusEffectType;
+    abstract readonly name: string;
     readonly manager: StatusEffectManager;
     readonly char: Character;
     readonly source: Character;
@@ -37,7 +38,8 @@ abstract class StatusEffect {
     // Char events
     abstract onTurnStart(): void;
     abstract onTurnEnd(): void;
-    abstract onAttack(hit: boolean): void;
+    abstract onAttack(hit: boolean, target: Character): void;
+    abstract onAttacked(hit: boolean, source: Character): void;
     // Source events
     abstract onSourceTurnStart(source: Character): void;
     abstract onSourceTurnEnd(source: Character): void;

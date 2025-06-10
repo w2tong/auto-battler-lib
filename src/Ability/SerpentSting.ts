@@ -1,16 +1,15 @@
 import AttackType from '../types/AttackType';
 import Ability from './Ability';
 import { formatNum } from '../util';
-import Bleeding from '../StatusEffect/Debuffs/Bleeding';
 import AbilityId from './AbilityId';
+import Poisoned from '../StatusEffect/Debuffs/Poisoned';
 
-const NAME = 'Wounding Shot';
-const BONUS_DMG = 0.5;
-const BLEED_STACKS = 3;
-const DMG_PER_TURN = 0.2;
+const NAME = 'Serpent Sting';
+const BONUS_DMG = 0.25;
+const STACKS = 4;
 
-const WoundingShot: Ability = {
-    id: AbilityId.WoundingShot,
+const SerpentSting: Ability = {
+    id: AbilityId.SerpentSting,
     name: NAME,
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
@@ -22,13 +21,13 @@ const WoundingShot: Ability = {
             weaponAttack: true,
             spellPowerRatio: char.equipment.mainHand.spellPowerRatio ? char.equipment.mainHand.spellPowerRatio * (1 + BONUS_DMG) : char.equipment.mainHand.spellPowerRatio
         }) : null;
-        return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage and applies Bleed dealing ${formatNum(DMG_PER_TURN * BLEED_STACKS * 100)}% of the initial damage dealt over ${BLEED_STACKS} turns.`;
+        return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage and applies ${STACKS} ${Poisoned.name}.`;
     },
     func: (char) => {
         if (char.target) {
             char.useAbilityMana();
             const mainHand = char.equipment.mainHand;
-            const { hit, damageDone } = char.attack({
+            const { hit } = char.attack({
                 target: char.target,
                 attackType: AttackType.RangedWeapon,
                 damageRange: {
@@ -43,11 +42,10 @@ const WoundingShot: Ability = {
             });
 
             if (hit) {
-                char.target.statusEffectManager.add(new Bleeding({
+                char.target.statusEffectManager.add(new Poisoned({
                     char: char.target,
                     source: char,
-                    stacks: BLEED_STACKS,
-                    remainingDamage: damageDone * BLEED_STACKS * DMG_PER_TURN
+                    stacks: STACKS
                 }));
             }
         }
@@ -55,4 +53,4 @@ const WoundingShot: Ability = {
     attackType: AttackType.RangedWeapon,
 } as const;
 
-export default WoundingShot;
+export default SerpentSting;

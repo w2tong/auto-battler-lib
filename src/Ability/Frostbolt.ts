@@ -1,20 +1,22 @@
 import AttackType from '../types/AttackType';
 import Ability from './Ability';
-import Burning from '../StatusEffect/Debuffs/Burning';
 import { formatNum } from '../util';
 import AbilityId from './AbilityId';
 import StatType from '../Character/Stats/StatType';
+import Frozen from '../StatusEffect/Debuffs/Frozen';
+import { dice, rollDice } from '../dice';
 
-const NAME = 'Firebolt';
+const NAME = 'Frostbolt';
 const MIN_BASE = 1;
 const MIN_PER_LVL = 0.1;
-const MAX_BASE = 4;
+const MAX_BASE = 2;
 const MAX_PER_LVL = 0.2;
-const SPELLPOWER_RATIO = 0.34;
-const STACKS = 2;
+const SPELLPOWER_RATIO = 0.5;
+const STACKS = 1;
+const FROZEN_CHANCE = 50;
 
-const Firebolt: Ability = {
-    id: AbilityId.Firebolt,
+const Frostbolt: Ability = {
+    id: AbilityId.Frostbolt,
     name: NAME,
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
@@ -26,7 +28,7 @@ const Firebolt: Ability = {
             weaponAttack: false,
             spellPowerRatio: SPELLPOWER_RATIO
         }) : null;
-        return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage to your target and applies ${STACKS} ${Burning.name}, dealing${char ? ` ${formatNum(Burning.baseDamage + char.stats.spellPower * Burning.spellPowerRatio)}` : ''} damage each turn.`;
+        return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage to your target, with a ${FROZEN_CHANCE}% chance of applying 1 ${Frozen.name}, preventing them from acting for 1 turn.`;
     },
     func: (char) => {
         if (char.target) {
@@ -45,8 +47,8 @@ const Firebolt: Ability = {
                 abilityName: NAME
             });
 
-            if (hit) {
-                char.target.statusEffectManager.add(new Burning({
+            if (hit && rollDice(dice['1d100']) <= FROZEN_CHANCE) {
+                char.target.statusEffectManager.add(new Frozen({
                     char: char.target,
                     source: char,
                     stacks: STACKS
@@ -58,4 +60,4 @@ const Firebolt: Ability = {
     attackType: AttackType.Spell,
 } as const;
 
-export default Firebolt;
+export default Frostbolt;

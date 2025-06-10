@@ -1,3 +1,4 @@
+import SerpentSting from '../../Ability/SerpentSting';
 import WoundingShot from '../../Ability/WoundingShot';
 import AttributeType from '../Attributes/AttributeType';
 import Class from './Class';
@@ -10,7 +11,7 @@ const Ranger: Class = {
         [AttributeType.Perception]: 5,
     },
     stats: {},
-    ability: WoundingShot
+    abilities: [SerpentSting, WoundingShot]
 } as const;
 
 export default Ranger;

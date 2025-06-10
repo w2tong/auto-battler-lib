@@ -7,7 +7,7 @@ type Class = {
     description: string;
     attributes: BaseAttributes;
     stats: BaseStats;
-    ability: Ability;
-}
+    abilities: readonly Ability[];
+};
 
 export default Class;

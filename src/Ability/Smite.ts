@@ -1,20 +1,21 @@
 import AttackType from '../types/AttackType';
 import Ability from './Ability';
-import Burning from '../StatusEffect/Debuffs/Burning';
 import { formatNum } from '../util';
 import AbilityId from './AbilityId';
 import StatType from '../Character/Stats/StatType';
+import Smote from '../StatusEffect/Debuffs/Smote';
+import AttributeType from '../Character/Attributes/AttributeType';
 
-const NAME = 'Firebolt';
+const NAME = 'Smite';
 const MIN_BASE = 1;
 const MIN_PER_LVL = 0.1;
-const MAX_BASE = 4;
+const MAX_BASE = 2;
 const MAX_PER_LVL = 0.2;
-const SPELLPOWER_RATIO = 0.34;
+const SPELLPOWER_RATIO = 0.5;
 const STACKS = 2;
 
-const Firebolt: Ability = {
-    id: AbilityId.Firebolt,
+const Smite: Ability = {
+    id: AbilityId.Smite,
     name: NAME,
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
@@ -26,7 +27,15 @@ const Firebolt: Ability = {
             weaponAttack: false,
             spellPowerRatio: SPELLPOWER_RATIO
         }) : null;
-        return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage to your target and applies ${STACKS} ${Burning.name}, dealing${char ? ` ${formatNum(Burning.baseDamage + char.stats.spellPower * Burning.spellPowerRatio)}` : ''} damage each turn.`;
+
+        let damage = null;
+        let accuracy = null;
+        if (char) {
+            accuracy = Smote.calcAccuracy(char.level, char.attributes.wisdom);
+            damage = Smote.calcDamage(char.level, char.attributes.wisdom);
+        }
+
+        return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage to the target and reduces their Accuracy${accuracy ? ` by ${formatNum(-accuracy)}` : ''} and Damage${damage ? ` by ${formatNum(-damage)}` : ''} for ${STACKS} turns.`;
     },
     func: (char) => {
         if (char.target) {
@@ -46,7 +55,7 @@ const Firebolt: Ability = {
             });
 
             if (hit) {
-                char.target.statusEffectManager.add(new Burning({
+                char.target.statusEffectManager.add(new Smote({
                     char: char.target,
                     source: char,
                     stacks: STACKS
@@ -54,8 +63,8 @@ const Firebolt: Ability = {
             }
         }
     },
-    scaling: ['level', StatType.SpellPower],
+    scaling: ['level', AttributeType.Wisdom, StatType.SpellPower],
     attackType: AttackType.Spell,
 } as const;
 
-export default Firebolt;
+export default Smite;

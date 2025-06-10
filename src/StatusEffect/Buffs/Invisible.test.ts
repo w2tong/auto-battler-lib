@@ -34,7 +34,7 @@ describe('Invisible - 1 source', () => {
         }));
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(1);
 
-        char.statusEffectManager.onAttack(true);
+        char.statusEffectManager.onAttack(true, char);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]).toStrictEqual({});
     });
 
@@ -46,7 +46,7 @@ describe('Invisible - 1 source', () => {
         }));
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(10);
 
-        char.statusEffectManager.onAttack(true);
+        char.statusEffectManager.onAttack(true, char);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]).toStrictEqual({});
     });
 
@@ -58,7 +58,7 @@ describe('Invisible - 1 source', () => {
         }));
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(100);
 
-        char.statusEffectManager.onAttack(true);
+        char.statusEffectManager.onAttack(true, char);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]).toStrictEqual({});
     });
 });
@@ -78,7 +78,7 @@ describe('Invisible - 2 sources', () => {
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(1);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(source1)].stacks).toBe(1);
 
-        char.statusEffectManager.onAttack(true);
+        char.statusEffectManager.onAttack(true, char);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]).toStrictEqual({});
     });
 
@@ -96,7 +96,7 @@ describe('Invisible - 2 sources', () => {
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(char)].stacks).toBe(10);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(source1)].stacks).toBe(10);
 
-        char.statusEffectManager.onAttack(true);
+        char.statusEffectManager.onAttack(true, char);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]).toStrictEqual({});
     });
 });
@@ -122,7 +122,7 @@ describe('Invisible - 3 sources', () => {
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(source1)].stacks).toBe(1);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(source2)].stacks).toBe(1);
 
-        char.statusEffectManager.onAttack(true);
+        char.statusEffectManager.onAttack(true, char);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]).toStrictEqual({});
     });
 
@@ -146,7 +146,7 @@ describe('Invisible - 3 sources', () => {
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(source1)].stacks).toBe(10);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]![getCharBattleId(source2)].stacks).toBe(10);
 
-        char.statusEffectManager.onAttack(true);
+        char.statusEffectManager.onAttack(true, char);
         expect(char.statusEffectManager.buffs[BuffId.Invisible]).toStrictEqual({});
     });
 });
