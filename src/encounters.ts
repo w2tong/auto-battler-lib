@@ -202,12 +202,14 @@ const leveledEncounters: Record<LevelRange, { group: EncounterGroup, level?: num
 
 function createNpcChar(npc: NPC, level: number, num?: number): Character {
     const attributes: BaseAttributes = calculateBaseAttributes(npc.attributes, level);
+
     let equipment: EquipmentImport = npc.equipment[1];
     for (const lvl of Object.keys(npc.equipment).reverse()) {
         const equipLvl = Number(lvl) as NpcEquipmentLevel;
         const leveledEquipment = npc.equipment[equipLvl];
-        if (level > equipLvl && leveledEquipment !== undefined) {
+        if (level >= equipLvl && leveledEquipment !== undefined) {
             equipment = leveledEquipment;
+            break;
         }
     }
 
