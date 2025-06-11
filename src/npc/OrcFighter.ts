@@ -7,7 +7,6 @@ import Stats from '../Character/Stats/Stats';
 import { armour } from '../Equipment/Armour';
 import { EquipSlot } from '../Equipment/Equipment';
 import { heads } from '../Equipment/Head';
-import { necks } from '../Equipment/Neck';
 import { potions } from '../Equipment/Potion';
 import { waists } from '../Equipment/Waist';
 import { weapons } from '../Equipment/Weapon/weapons';
@@ -54,7 +53,6 @@ const OrcFighter: NPC = {
             [EquipSlot.Armour]: armour.mailArmour3,
             [EquipSlot.Head]: heads.helmet1,
             [EquipSlot.Potion]: potions.healingPotion2,
-            [EquipSlot.Neck]: necks.strNeck1,
             [EquipSlot.Waist]: waists.healBelt1
         },
         17: {
