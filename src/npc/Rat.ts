@@ -13,12 +13,12 @@ const Rat: NPC = {
         [AttributeType.Strength]: { perLvl: 1 },
         [AttributeType.Dexterity]: { perLvl: 1 },
         [AttributeType.Perception]: { perLvl: 1 },
-        [AttributeType.Constitution]: { base: Attributes.MIN_VALUE },
+        [AttributeType.Constitution]: { base: Attributes.MIN_VALUE + 1 },
         [AttributeType.Intelligence]: { base: Attributes.MIN_VALUE },
         [AttributeType.Wisdom]: { base: Attributes.MIN_VALUE },
     },
     stats: {
-        [StatType.MaxHealth]: { base: 6, perLvl: 2 },
+        [StatType.HealthPercent]: { base: 0.4 },
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE + 15 },
         [StatType.Accuracy]: { base: -10 },
         [StatType.Damage]: { base: 0, perLvl: 0.5 }
