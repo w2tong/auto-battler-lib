@@ -62,15 +62,19 @@ export { StatusEffect, Buff, Debuff, BuffId, DebuffId };
 
 // Buffs
 import Blessed from './StatusEffect/Buffs/Blessed';
+import EnvenomWeapon from './StatusEffect/Buffs/EnvenomWeapon';
 import Invisible from './StatusEffect/Buffs/Invisible';
-export { Blessed, Invisible };
+import ShieldWall from './StatusEffect/Buffs/ShieldWall';
+export { Blessed, Invisible, EnvenomWeapon, ShieldWall };
 
 // Debuffs
 import Bleeding from './StatusEffect/Debuffs/Bleeding';
 import Burning from './StatusEffect/Debuffs/Burning';
 import Frozen from './StatusEffect/Debuffs/Frozen';
 import Poisoned from './StatusEffect/Debuffs/Poisoned';
-export { Bleeding, Burning, Frozen, Poisoned };
+import Smote from './StatusEffect/Debuffs/Smote';
+import Stunned from './StatusEffect/Debuffs/Stunned';
+export { Bleeding, Burning, Frozen, Poisoned, Smote, Stunned };
 
 export { PetId } from './Character/Pet';
 
