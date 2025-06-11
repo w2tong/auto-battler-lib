@@ -58,7 +58,7 @@ const rings: { [id in RingId]: Ring } = {
         tier: 0,
 
         stats: {
-            [StatType.Damage]: 1
+            [StatType.DamagePercent]: 0.05
         }
     },
     dmgRing1: {
@@ -68,7 +68,7 @@ const rings: { [id in RingId]: Ring } = {
         tier: 3,
 
         stats: {
-            [StatType.Damage]: 2
+            [StatType.DamagePercent]: 0.075
         }
     },
     dmgRing2: {
@@ -78,7 +78,7 @@ const rings: { [id in RingId]: Ring } = {
         tier: 5,
 
         stats: {
-            [StatType.Damage]: 3
+            [StatType.DamagePercent]: 0.1
         }
     },
     critRing0: {

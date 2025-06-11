@@ -60,7 +60,7 @@ const hands: { [id in HandsId]: Hands } = {
 
         weaponStyle: WeaponStyle.TwoHanded,
         stats: {
-            [StatType.Damage]: 2,
+            [StatType.DamagePercent]: 0.1,
         }
     },
     thGloves1: {
@@ -71,7 +71,7 @@ const hands: { [id in HandsId]: Hands } = {
 
         weaponStyle: WeaponStyle.TwoHanded,
         stats: {
-            [StatType.Damage]: 4,
+            [StatType.DamagePercent]: 0.15,
         }
     },
     thGloves2: {
@@ -82,7 +82,7 @@ const hands: { [id in HandsId]: Hands } = {
 
         weaponStyle: WeaponStyle.TwoHanded,
         stats: {
-            [StatType.Damage]: 6,
+            [StatType.DamagePercent]: 0.2,
         }
     },
     ohGloves0: {

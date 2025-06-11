@@ -27,8 +27,8 @@ const shields: { [id in ShieldId]: Shield } = {
 
         type: ShieldType.Light,
         stats: {
-            [StatType.BlockChance]: 45,
-            [StatType.BlockPower]: 2
+            [StatType.BlockChance]: 50,
+            [StatType.BlockPower]: 3
         }
     },
     buckler1: {
@@ -39,8 +39,8 @@ const shields: { [id in ShieldId]: Shield } = {
 
         type: ShieldType.Light,
         stats: {
-            [StatType.BlockChance]: 45,
-            [StatType.BlockPower]: 4
+            [StatType.BlockChance]: 50,
+            [StatType.BlockPower]: 6
         }
     },
     buckler2: {
@@ -51,8 +51,8 @@ const shields: { [id in ShieldId]: Shield } = {
 
         type: ShieldType.Light,
         stats: {
-            [StatType.BlockChance]: 45,
-            [StatType.BlockPower]: 6
+            [StatType.BlockChance]: 50,
+            [StatType.BlockPower]: 9
         }
     },
     buckler3: {
@@ -63,8 +63,8 @@ const shields: { [id in ShieldId]: Shield } = {
 
         type: ShieldType.Light,
         stats: {
-            [StatType.BlockChance]: 45,
-            [StatType.BlockPower]: 8
+            [StatType.BlockChance]: 50,
+            [StatType.BlockPower]: 12
         }
     },
     buckler4: {
@@ -75,8 +75,8 @@ const shields: { [id in ShieldId]: Shield } = {
 
         type: ShieldType.Light,
         stats: {
-            [StatType.BlockChance]: 45,
-            [StatType.BlockPower]: 10
+            [StatType.BlockChance]: 50,
+            [StatType.BlockPower]: 15
         }
     },
     buckler5: {
@@ -87,8 +87,8 @@ const shields: { [id in ShieldId]: Shield } = {
 
         type: ShieldType.Light,
         stats: {
-            [StatType.BlockChance]: 45,
-            [StatType.BlockPower]: 12
+            [StatType.BlockChance]: 50,
+            [StatType.BlockPower]: 18
         }
     },
     spikedShield0: {
@@ -99,9 +99,10 @@ const shields: { [id in ShieldId]: Shield } = {
 
         type: ShieldType.Medium,
         stats: {
-            [StatType.BlockChance]: 30,
-            [StatType.BlockPower]: 2,
-            [StatType.Thorns]: 1,
+            [StatType.BlockChance]: 40,
+            [StatType.BlockPower]: 3,
+            [StatType.Thorns]: 2,
+            [StatType.Damage]: -1
         }
     },
     spikedShield1: {
@@ -112,9 +113,10 @@ const shields: { [id in ShieldId]: Shield } = {
 
         type: ShieldType.Medium,
         stats: {
-            [StatType.BlockChance]: 30,
-            [StatType.BlockPower]: 4,
-            [StatType.Thorns]: 2,
+            [StatType.BlockChance]: 40,
+            [StatType.BlockPower]: 6,
+            [StatType.Thorns]: 4,
+            [StatType.Damage]: -1
         }
     },
     spikedShield2: {
@@ -125,9 +127,10 @@ const shields: { [id in ShieldId]: Shield } = {
 
         type: ShieldType.Medium,
         stats: {
-            [StatType.BlockChance]: 30,
-            [StatType.BlockPower]: 6,
-            [StatType.Thorns]: 4,
+            [StatType.BlockChance]: 40,
+            [StatType.BlockPower]: 9,
+            [StatType.Thorns]: 7,
+            [StatType.Damage]: -1
         }
     },
     spikedShield3: {
@@ -138,9 +141,10 @@ const shields: { [id in ShieldId]: Shield } = {
 
         type: ShieldType.Medium,
         stats: {
-            [StatType.BlockChance]: 30,
-            [StatType.BlockPower]: 8,
-            [StatType.Thorns]: 7,
+            [StatType.BlockChance]: 40,
+            [StatType.BlockPower]: 12,
+            [StatType.Thorns]: 11,
+            [StatType.Damage]: -1
         }
     },
     spikedShield4: {
@@ -151,9 +155,10 @@ const shields: { [id in ShieldId]: Shield } = {
 
         type: ShieldType.Medium,
         stats: {
-            [StatType.BlockChance]: 30,
-            [StatType.BlockPower]: 10,
-            [StatType.Thorns]: 11,
+            [StatType.BlockChance]: 40,
+            [StatType.BlockPower]: 15,
+            [StatType.Thorns]: 16,
+            [StatType.Damage]: -1
         }
     },
     spikedShield5: {
@@ -164,9 +169,10 @@ const shields: { [id in ShieldId]: Shield } = {
 
         type: ShieldType.Medium,
         stats: {
-            [StatType.BlockChance]: 30,
-            [StatType.BlockPower]: 12,
+            [StatType.BlockChance]: 40,
+            [StatType.BlockPower]: 18,
             [StatType.Thorns]: 16,
+            [StatType.Damage]: -1
         }
     },
     towerShield0: {
@@ -178,7 +184,7 @@ const shields: { [id in ShieldId]: Shield } = {
         type: ShieldType.Heavy,
         stats: {
             [StatType.BlockChance]: 60,
-            [StatType.BlockPower]: 3,
+            [StatType.BlockPower]: 5,
             [StatType.Accuracy]: -10,
         }
     },
@@ -191,7 +197,7 @@ const shields: { [id in ShieldId]: Shield } = {
         type: ShieldType.Heavy,
         stats: {
             [StatType.BlockChance]: 60,
-            [StatType.BlockPower]: 6,
+            [StatType.BlockPower]: 10,
             [StatType.Accuracy]: -10,
         }
     },
@@ -204,7 +210,7 @@ const shields: { [id in ShieldId]: Shield } = {
         type: ShieldType.Heavy,
         stats: {
             [StatType.BlockChance]: 60,
-            [StatType.BlockPower]: 9,
+            [StatType.BlockPower]: 15,
             [StatType.Accuracy]: -10,
         }
     },
@@ -217,7 +223,7 @@ const shields: { [id in ShieldId]: Shield } = {
         type: ShieldType.Heavy,
         stats: {
             [StatType.BlockChance]: 60,
-            [StatType.BlockPower]: 12,
+            [StatType.BlockPower]: 20,
             [StatType.Accuracy]: -10,
         }
     },
@@ -230,7 +236,7 @@ const shields: { [id in ShieldId]: Shield } = {
         type: ShieldType.Heavy,
         stats: {
             [StatType.BlockChance]: 60,
-            [StatType.BlockPower]: 15,
+            [StatType.BlockPower]: 25,
             [StatType.Accuracy]: -10,
         }
     },
@@ -243,7 +249,7 @@ const shields: { [id in ShieldId]: Shield } = {
         type: ShieldType.Heavy,
         stats: {
             [StatType.BlockChance]: 60,
-            [StatType.BlockPower]: 18,
+            [StatType.BlockPower]: 30,
             [StatType.Accuracy]: -10,
         }
     },
