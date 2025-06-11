@@ -28,7 +28,7 @@ const rings: { [id in RingId]: Ring } = {
         tier: 0,
 
         stats: {
-            [StatType.Accuracy]: 4
+            [StatType.Accuracy]: 5
         }
     },
     accRing1: {
@@ -38,7 +38,7 @@ const rings: { [id in RingId]: Ring } = {
         tier: 3,
 
         stats: {
-            [StatType.Accuracy]: 7
+            [StatType.Accuracy]: 10
         }
     },
     accRing2: {
@@ -48,7 +48,7 @@ const rings: { [id in RingId]: Ring } = {
         tier: 0,
 
         stats: {
-            [StatType.Accuracy]: 10
+            [StatType.Accuracy]: 15
         }
     },
     dmgRing0: {
@@ -188,7 +188,7 @@ const rings: { [id in RingId]: Ring } = {
         tier: 3,
 
         stats: {
-            [StatType.Thorns]: 2
+            [StatType.Thorns]: 3
         }
     },
     thornsRing2: {
@@ -198,7 +198,7 @@ const rings: { [id in RingId]: Ring } = {
         tier: 5,
 
         stats: {
-            [StatType.Thorns]: 3
+            [StatType.Thorns]: 5
         }
     },
     mpHitRing0: {
@@ -208,7 +208,7 @@ const rings: { [id in RingId]: Ring } = {
         tier: 1,
 
         stats: {
-            [StatType.ManaOnHit]: 1
+            [StatType.ManaOnHit]: 3
         }
     },
     mpHitRing1: {
@@ -218,7 +218,7 @@ const rings: { [id in RingId]: Ring } = {
         tier: 3,
 
         stats: {
-            [StatType.ManaOnHit]: 2
+            [StatType.ManaOnHit]: 6
         }
     },
     mpHitRing2: {
@@ -228,7 +228,7 @@ const rings: { [id in RingId]: Ring } = {
         tier: 5,
 
         stats: {
-            [StatType.ManaOnHit]: 3
+            [StatType.ManaOnHit]: 9
         }
     },
     mpRegenRing0: {
