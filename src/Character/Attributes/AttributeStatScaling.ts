@@ -43,7 +43,7 @@ const AttributeStatScaling: {
         [StatType.Accuracy]: 1
     },
     [AttributeType.Constitution]: {
-        [StatType.MaxHealth]: 1,
+        [StatType.MaxHealth]: 0.5,
         [StatType.HealthPercent]: 0.02,
         [StatType.StatusResistance]: 0.2
     },
