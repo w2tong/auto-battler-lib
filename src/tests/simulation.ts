@@ -25,9 +25,18 @@ import { createNpcChars } from '../encounters';
 
 import BanditFighter from '../npc/bandit/BanditFighter';
 import BanditPriest from '../npc/bandit/BanditPriest';
+import BanditRanger from '../npc/bandit/BanditRanger';
+import BanditRogue from '../npc/bandit/BanditRogue';
+import BanditWizard from '../npc/bandit/BanditWizard';
 
 import OrcFighter from '../npc/OrcFighter';
 import OgreFighter from '../npc/OgreFighter';
+import GoblinFighter from '../npc/GoblinFighter';
+import GoblinRogue from '../npc/GoblinRogue';
+import GoblinPriest from '../npc/GoblinPriest';
+import Rat from '../npc/Rat';
+import Zombie from '../npc/Zombie';
+
 
 
 type CharConstructorArgs = {
@@ -344,16 +353,26 @@ function simAndPrint(player: CharConstructorArgs, npcs: SimNPCs, battles: number
 
 // Fighter vs. Orc Fighter
 function fullSim(player: Player, npcs: NPC[], battles: number) {
-    console.log(`${player.name} vs ${npcs.map(npc => npc.name).join(', ')} (${battles} battles)`);
+    console.log(`[${player.name}] vs [${npcs.map(npc => npc.name).join(', ')}] (${battles} battles)`);
     for (const char of Object.values(player.level)) {
         simAndPrint(char, { chars: npcs, level: char.level }, battles);
     }
 }
 
 // fullSim(fighter, [BanditFighter], 1000);
-fullSim(fighter, [BanditPriest], 1000);
+// fullSim(fighter, [BanditPriest], 1000);
+// fullSim(fighter, [BanditRanger], 1000);
+// fullSim(fighter, [BanditRogue], 1000);
+// fullSim(fighter, [BanditWizard], 1000);
+
+// fullSim(fighter, [GoblinFighter, GoblinRogue], 1000);
+// fullSim(fighter, [GoblinFighter, GoblinPriest], 1000);
+// fullSim(fighter, [GoblinPriest, GoblinRogue], 1000);
 
 // fullSim(fighter, [OrcFighter], 1000);
 // fullSim(fighter, [OgreFighter], 1000);
-// Fighter vs. Ogre Fighter
-// simAndPrint(fighter5, { chars: [OgreFighter], level: 5 }, 1000);
+
+// fullSim(fighter, [Rat, Rat], 1000);
+// fullSim(fighter, [Rat, Rat, Rat], 1000);
+// fullSim(fighter, [Zombie], 1000);
+// fullSim(fighter, [Zombie, Zombie], 1000);
