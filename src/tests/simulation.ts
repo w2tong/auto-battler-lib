@@ -148,7 +148,7 @@ const fighter: Player = {
                 [EquipSlot.Head]: heads.helmet0,
                 [EquipSlot.Hands]: hands.ohGloves0,
                 [EquipSlot.Ring1]: rings.accRing0,
-                [EquipSlot.Ring2]: rings.accRing0,
+                [EquipSlot.Ring2]: rings.dmgRing0,
                 [EquipSlot.Potion]: potions.healingPotion1,
                 [EquipSlot.Neck]: necks.strNeck0,
                 [EquipSlot.Waist]: waists.healBelt0
@@ -351,8 +351,9 @@ function fullSim(player: Player, npcs: NPC[], battles: number) {
 }
 
 // fullSim(fighter, [BanditFighter], 1000);
-// fullSim(fighter, [BanditPriest], 1000);
+fullSim(fighter, [BanditPriest], 1000);
+
 // fullSim(fighter, [OrcFighter], 1000);
-fullSim(fighter, [OgreFighter], 1000);
+// fullSim(fighter, [OgreFighter], 1000);
 // Fighter vs. Ogre Fighter
 // simAndPrint(fighter5, { chars: [OgreFighter], level: 5 }, 1000);
