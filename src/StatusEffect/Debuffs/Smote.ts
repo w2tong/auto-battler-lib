@@ -6,8 +6,7 @@ import Attributes from '../../Character/Attributes/Attributes';
 import StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
 
 export default class Smote extends Debuff implements StatsInterface {
-    id = DebuffId.Smote;
-    name = 'Smote';
+    static name = 'Smote';
 
     static baseAccuracy = 10;
     static accuracyPerLvl = 0.5;
@@ -17,6 +16,7 @@ export default class Smote extends Debuff implements StatsInterface {
     static damagePerLvl = 0.2;
     static damagePerWisdom = 0.1;
 
+    id = DebuffId.Smote;
     stats: StatsInterfaceType;
 
     constructor(args: StatusEffectCtorArgs) {

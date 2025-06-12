@@ -6,8 +6,7 @@ import Attributes from '../../Character/Attributes/Attributes';
 import StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
 
 export default class Blessed extends Buff implements StatsInterface {
-    id = BuffId.Blessed;
-    name = 'Blessed';
+    static name = 'Blessed';
 
     static baseAccuracy = 10;
     static accuracyPerLvl = 0.5;
@@ -17,6 +16,7 @@ export default class Blessed extends Buff implements StatsInterface {
     static damagePerLvl = 0.3;
     static damagePerWisdom = 0.3;
 
+    id = BuffId.Blessed;
     stats: StatsInterfaceType;
 
     constructor(args: StatusEffectCtorArgs) {

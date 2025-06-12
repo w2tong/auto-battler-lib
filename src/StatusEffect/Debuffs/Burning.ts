@@ -4,11 +4,11 @@ import DamageTaken from '../interface/DamageTaken';
 import DebuffId from '../types/DebuffId';
 
 export default class Burning extends Debuff implements DamageTaken {
-    id = DebuffId.Burning;
-    name = 'Burning';
-
+    static name = 'Burning';
     static baseDamage = 2;
     static spellPowerRatio = 0.12;
+
+    id = DebuffId.Burning;
 
     calcDamage(): number {
         const spellPowerDamage = this.source.stats.spellPower * Burning.spellPowerRatio;

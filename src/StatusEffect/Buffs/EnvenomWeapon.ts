@@ -4,10 +4,11 @@ import Poisoned from '../Debuffs/Poisoned';
 import BuffId from '../types/BuffId';
 
 export default class EnvenomWeapon extends Buff {
-    id = BuffId.EnvenomWeapon;
-    name = 'Envenom Weapon';
+    static name = 'Envenom Weapon';
 
     static POISONED_STACKS = 4;
+
+    id = BuffId.EnvenomWeapon;
 
     onApply() { }
     onExpire() { }

@@ -4,11 +4,11 @@ import DamageTaken from '../interface/DamageTaken';
 import DebuffId from '../types/DebuffId';
 
 export default class Poisoned extends Debuff implements DamageTaken {
-    id = DebuffId.Poisoned;
-    name = 'Poisoned';
-
+    static name = 'Poisoned';
     static baseDamage = 1;
     static healthDamagePercent = 0.01;
+
+    id = DebuffId.Poisoned;
 
     calcDamage(): number {
         const healthDamage = this.char.currentHealth * Poisoned.healthDamagePercent;

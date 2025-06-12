@@ -5,9 +5,9 @@ import DebuffId from '../types/DebuffId';
 import StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
 
 export default class Bleeding extends Debuff implements RemainingDamage, DamageTaken {
-    id = DebuffId.Bleeding;
-    name = 'Bleeding';
+    static name = 'Bleeding';
 
+    id = DebuffId.Bleeding;
     _remainingDamage: number;
 
     constructor(args: StatusEffectCtorArgs & { remainingDamage: number; }) {

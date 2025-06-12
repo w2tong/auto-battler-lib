@@ -2,10 +2,11 @@ import Buff from '../Buff';
 import BuffId from '../types/BuffId';
 
 export default class Invisible extends Buff {
-    id = BuffId.Invisible;
-    name = 'Invisible';
+    static name = 'Invisible';
 
     static damage = 4;
+
+    id = BuffId.Invisible;
 
     onApply() { }
     onExpire() { }

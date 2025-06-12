@@ -6,8 +6,7 @@ import Attributes from '../../Character/Attributes/Attributes';
 import StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
 
 export default class ShieldWall extends Buff implements StatsInterface {
-    id = BuffId.ShieldWall;
-    name = 'Shield Wall';
+    static name = 'Shield Wall';
 
     static blockChanceBase = 10;
     static blockChancePerLvl = 1;
@@ -17,6 +16,7 @@ export default class ShieldWall extends Buff implements StatsInterface {
     static thornsPerLvl = 1;
     static thornsPerStrength = 0.2;
 
+    id = BuffId.ShieldWall;
     stats: StatsInterfaceType;
 
     constructor(args: StatusEffectCtorArgs) {
