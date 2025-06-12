@@ -9,13 +9,13 @@ export default class Smote extends Debuff implements StatsInterface {
     id = DebuffId.Smote;
     name = 'Smote';
 
-    static baseAccuracy = 4;
+    static baseAccuracy = 10;
     static accuracyPerLvl = 0.5;
-    static accuracyPerWisdom = 0.2;
+    static accuracyPerWisdom = 0.5;
 
-    static baseDamage = 2;
-    static damagePerLvl = 0.5;
-    static damagePerWisdom = 0.2;
+    static baseDamage = 3;
+    static damagePerLvl = 0.2;
+    static damagePerWisdom = 0.1;
 
     stats: StatsInterfaceType;
 

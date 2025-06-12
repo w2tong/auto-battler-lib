@@ -9,13 +9,13 @@ export default class Blessed extends Buff implements StatsInterface {
     id = BuffId.Blessed;
     name = 'Blessed';
 
-    static baseAccuracy = 5;
+    static baseAccuracy = 10;
     static accuracyPerLvl = 0.5;
-    static accuracyPerWisdom = 0.2;
+    static accuracyPerWisdom = 0.5;
 
-    static baseDamage = 4;
-    static damagePerLvl = 1;
-    static damagePerWisdom = 0.5;
+    static baseDamage = 2;
+    static damagePerLvl = 0.3;
+    static damagePerWisdom = 0.3;
 
     stats: StatsInterfaceType;
 
