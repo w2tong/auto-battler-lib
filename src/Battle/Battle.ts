@@ -84,8 +84,13 @@ class Battle {
             char = this.right[index];
             this.rightAlive.delete(index);
         }
+
+        const charOrderIndex = this.turnOrder.findIndex(c => c.char === char);
+        if (charOrderIndex === this._turnIndex) {
+            this._turnIndex--;
+        }
+
         this._turnOrder = this.turnOrder.filter(c => c.char !== char);
-        this._turnIndex--;
     }
 
     startCombat() {
