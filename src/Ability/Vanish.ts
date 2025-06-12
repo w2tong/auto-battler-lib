@@ -6,7 +6,7 @@ import Attributes from '../Character/Attributes/Attributes';
 
 const NAME = 'Vanish';
 const stacksPerLvl = 0.5;
-const stacksPerDex = 0.2;
+const stacksPerDex = 0.4;
 
 const Vanish: Ability = {
     id: AbilityId.Vanish,
