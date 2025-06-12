@@ -24,7 +24,7 @@ const OgreFighter: NPC = {
         [AttributeType.Wisdom]: { base: Attributes.MIN_VALUE },
     },
     stats: {
-        [StatType.HealthPercent]: { base: 0.60 },
+        [StatType.HealthPercent]: { base: 0.45, perLvl: 0.01 },
         [StatType.Dodge]: { base: 5 },
         [StatType.Deflection]: { base: 1, perLvl: 0.2 },
         [StatType.Accuracy]: { base: -15, perLvl: 0.5 },
@@ -42,7 +42,7 @@ const OgreFighter: NPC = {
         9: {
             [EquipSlot.MainHand]: weapons.greatsword2,
             [EquipSlot.Armour]: armour.mailArmour2,
-            [EquipSlot.Potion]: potions.healingPotion1,
+            [EquipSlot.Potion]: potions.healingPotion0,
             [EquipSlot.Waist]: waists.healBelt0,
         },
         13: {
