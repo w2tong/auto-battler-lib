@@ -1,5 +1,6 @@
 import Attributes from '../Character/Attributes/Attributes';
 import AttributeType from '../Character/Attributes/AttributeType';
+import Stats from '../Character/Stats/Stats';
 import StatType from '../Character/Stats/StatType';
 import { EquipSlot } from '../Equipment/Equipment';
 import { weapons } from '../Equipment/Weapon/weapons';
@@ -19,8 +20,8 @@ const Zombie: NPC = {
     stats: {
         [StatType.HealthPercent]: { base: -0.25, perLvl: 0.01 },
         [StatType.Armour]: { base: -20, perLvl: 0.5 },
-        [StatType.Dodge]: { base: 0 },
-        [StatType.Accuracy]: { base: -20 },
+        [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 50, perLvl: Stats.DEFAULT_DODGE_PER_LVL },
+        [StatType.Accuracy]: { base: Stats.DEFAULT_ACCURACY - 20 },
         [StatType.Damage]: { base: 1, perLvl: 0.2 }
     },
     equipment: {

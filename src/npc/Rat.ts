@@ -19,7 +19,7 @@ const Rat: NPC = {
     },
     stats: {
         [StatType.HealthPercent]: { base: -0.75 },
-        [StatType.Dodge]: { base: Stats.DEFAULT_DODGE + 10 },
+        [StatType.Dodge]: { base: Stats.DEFAULT_DODGE + 10, perLvl: Stats.DEFAULT_DODGE_PER_LVL },
     },
     equipment: {
         1: { [EquipSlot.MainHand]: weapons.poisonbite0 },

@@ -2,6 +2,7 @@ import Attributes from '../Character/Attributes/Attributes';
 import AttributeType from '../Character/Attributes/AttributeType';
 import { startingAbility } from '../Character/Classes/classLoadouts';
 import ClassName from '../Character/Classes/ClassName';
+import Stats from '../Character/Stats/Stats';
 import StatType from '../Character/Stats/StatType';
 import { armour } from '../Equipment/Armour';
 import { EquipSlot } from '../Equipment/Equipment';
@@ -30,7 +31,7 @@ const GoblinFighter: NPC = {
     stats: {
         [StatType.HealthPercent]: { base: -0.4 },
         [StatType.DamagePercent]: { base: -0.5 },
-        [StatType.Accuracy]: { base: -5 }
+        [StatType.Accuracy]: { base: Stats.DEFAULT_ACCURACY - 5 }
     },
     equipment: {
         1: {
