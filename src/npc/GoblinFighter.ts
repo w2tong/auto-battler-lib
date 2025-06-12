@@ -1,3 +1,4 @@
+import Attributes from '../Character/Attributes/Attributes';
 import AttributeType from '../Character/Attributes/AttributeType';
 import { startingAbility } from '../Character/Classes/classLoadouts';
 import ClassName from '../Character/Classes/ClassName';
@@ -19,13 +20,17 @@ const GoblinFighter: NPC = {
     name: 'Goblin Fighter',
     className: ClassName.Fighter,
     attributes: {
-        [AttributeType.Strength]: { perLvl: 1 },
+        [AttributeType.Strength]: { base: Attributes.DEFAULT_VALUE + 3, perLvl: 1 },
+        [AttributeType.Dexterity]: { base: Attributes.MIN_VALUE + 3, perLvl: 1 },
         [AttributeType.Perception]: { perLvl: 1 },
-        [AttributeType.Constitution]: { perLvl: 1 },
+        [AttributeType.Constitution]: { base: Attributes.DEFAULT_VALUE + 2, perLvl: 1 },
+        [AttributeType.Intelligence]: { base: Attributes.MIN_VALUE },
+        [AttributeType.Wisdom]: { base: Attributes.MIN_VALUE }
     },
     stats: {
-        [StatType.HealthPercent]: { base: 0.6 },
-        [StatType.DamagePercent]: { base: 0.6 }
+        [StatType.HealthPercent]: { base: -0.4 },
+        [StatType.DamagePercent]: { base: -0.5 },
+        [StatType.Accuracy]: { base: -5 }
     },
     equipment: {
         1: {

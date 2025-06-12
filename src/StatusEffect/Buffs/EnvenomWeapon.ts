@@ -7,7 +7,7 @@ export default class EnvenomWeapon extends Buff {
     id = BuffId.EnvenomWeapon;
     name = 'Envenom Weapon';
 
-    static POISONED_STACKS = 5;
+    static POISONED_STACKS = 4;
 
     onApply() { }
     onExpire() { }
@@ -24,7 +24,6 @@ export default class EnvenomWeapon extends Buff {
             }));
             if (this.stacks <= 0) this.manager.removeBuff(this.id, this.source);
         }
-
     }
     onAttacked() { }
 
