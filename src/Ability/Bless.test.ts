@@ -51,7 +51,7 @@ describe('Bless Description', () => {
     });
     test('With Character', () => {
         expect(Bless.description(char1)).toBe(
-            'Increases Accuracy by 5 and Damage by 4 for 3 turns.'
+            'Increases Accuracy by 10 and Damage by 2 for 3 turns.'
         );
     });
 });

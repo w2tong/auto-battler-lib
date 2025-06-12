@@ -25,7 +25,7 @@ beforeEach(() => {
     new Battle([char], [target]);
 });
 
-// Burning damage (1 + 100 * 0.2) / 2 = 10.5
+// Burning damage: (2 + 100 * 0.12) * (60 - 10 armour = 0.5) = 7
 test('Burning - 0 stacks', () => {
     target.statusEffectManager.add(new Burning({
         char: target,
@@ -46,7 +46,7 @@ test('Burning - 1 stacks', () => {
     }));
 
     target.statusEffectManager.turnEnd();
-    expect(target.currentHealth).toBe(89.5);
+    expect(target.currentHealth).toBe(93); // 100 - 7 = 93
     expect(target.statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(char)]).toBeUndefined();
 });
 
@@ -58,11 +58,11 @@ test('Burning - 2 stacks', () => {
     }));
 
     target.statusEffectManager.turnEnd();
-    expect(target.currentHealth).toBe(89.5);
+    expect(target.currentHealth).toBe(93); // 100 - 7 = 93
     expect(target.statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(char)].stacks).toBe(1);
 
     target.statusEffectManager.turnEnd();
-    expect(target.currentHealth).toBe(79);
+    expect(target.currentHealth).toBe(86); // 93 - 7 = 86
     expect(target.statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(char)]).toBeUndefined();
 });
 
@@ -83,7 +83,7 @@ test('Burning - damagePercent increases burning damage', () => {
     });
     new Battle([char], [target]);
 
-    // Burning damage: (1 + 100 * 0.2) * 2 / 2 = 21
+    // Burning damage: (2 + 100 * 0.12) * 2 * (60 - 10 armour = 0.5) = 14
     target.statusEffectManager.add(new Burning({
         char: target,
         source: char,
@@ -91,7 +91,7 @@ test('Burning - damagePercent increases burning damage', () => {
     }));
 
     target.statusEffectManager.turnEnd();
-    expect(target.currentHealth).toBe(79); // 100 - 21 = 79
+    expect(target.currentHealth).toBe(86); // 100 - 14 = 86
     expect(target.statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(char)]).toBeUndefined();
 });
 
@@ -112,7 +112,7 @@ test('Burning - damagePercent negative reduces burning damage', () => {
     });
     new Battle([char], [target]);
 
-    // Burning damage: (1 + 100 * 0.2) * 0.5 / 2 = 5.25
+    // Burning damage: (2 + 100 * 0.12) * 14 * 0.5 * (60 - 10 armour = 0.5) = 3.5
     target.statusEffectManager.add(new Burning({
         char: target,
         source: char,
@@ -120,6 +120,6 @@ test('Burning - damagePercent negative reduces burning damage', () => {
     }));
 
     target.statusEffectManager.turnEnd();
-    expect(target.currentHealth).toBe(94.75); // 100 - 5.25 = 94.75
+    expect(target.currentHealth).toBe(96.5); // 100 - 3.5 = 96.5
     expect(target.statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(char)]).toBeUndefined();
 });

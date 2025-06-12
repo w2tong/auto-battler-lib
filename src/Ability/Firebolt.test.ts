@@ -48,7 +48,7 @@ describe('Firebolt Damage and Debuff', () => {
     test('Firebolt Hit', () => {
         hitRollSpy.mockReturnValue(true);
         Firebolt.func(char);
-        expect(target.currentHealth).toBe(62);
+        expect(target.currentHealth).toBe(63);
         expect(char.currentMana).toBe(50);
         expect(target.statusEffectManager.debuffs[DebuffId.Burning]![getCharBattleId(char)].stacks).toBe(2);
     });
@@ -79,7 +79,7 @@ describe('Firebolt Description', () => {
     });
     test('Wth Character', () => {
         expect(Firebolt.description(char)).toBe(
-            'Deals 36-40 damage to your target and applies 2 Burning, dealing 21 damage each turn.'
+            'Deals 35-39 damage to your target and applies 2 Burning, dealing 14 damage each turn.'
         );
     });
 });
