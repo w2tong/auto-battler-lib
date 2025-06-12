@@ -10,7 +10,7 @@ const Rat: NPC = {
     id: 'rat',
     name: 'Rat',
     attributes: {
-        [AttributeType.Strength]: { perLvl: 1 },
+        [AttributeType.Strength]: { base: Attributes.MIN_VALUE + 3, perLvl: 1 },
         [AttributeType.Dexterity]: { perLvl: 1 },
         [AttributeType.Perception]: { perLvl: 1 },
         [AttributeType.Constitution]: { base: Attributes.MIN_VALUE + 1 },
@@ -18,10 +18,8 @@ const Rat: NPC = {
         [AttributeType.Wisdom]: { base: Attributes.MIN_VALUE },
     },
     stats: {
-        [StatType.HealthPercent]: { base: -0.6 },
+        [StatType.HealthPercent]: { base: -0.75 },
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE + 10 },
-        [StatType.Accuracy]: { base: -10 },
-        [StatType.Damage]: { base: 0, perLvl: 0.5 }
     },
     equipment: {
         1: { [EquipSlot.MainHand]: weapons.poisonbite0 },
