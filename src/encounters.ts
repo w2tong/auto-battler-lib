@@ -1,21 +1,25 @@
 import { getRandomRange } from './util';
 import Character from './Character/Character';
 import NPC, { NpcEquipmentLevel } from './npc/NPC';
-import Fighter from './npc/bandit/Fighter';
-import Rogue from './npc/bandit/Rogue';
-import Wizard from './npc/bandit/Wizard';
+import LevelRange from './types/LevelRange';
+import BaseAttributes from './Character/Attributes/BaseAttributes';
+import { calculateBaseAttributes } from './npc/util';
+import { EquipmentImport } from './Equipment/Equipment';
+
+import BanditFighter from './npc/bandit/BanditFighter';
+import BanditPriest from './npc/bandit/BanditPriest';
+import BanditRanger from './npc/bandit/BanditRanger';
+import BanditRogue from './npc/bandit/BanditRogue';
+import BanditWizard from './npc/bandit/BanditWizard';
+
 import Rat from './npc/Rat';
 import GoblinFighter from './npc/GoblinFighter';
 import GoblinRogue from './npc/GoblinRogue';
 import OrcFighter from './npc/OrcFighter';
 import Zombie from './npc/Zombie';
 import OgreFighter from './npc/OgreFighter';
-import LevelRange from './types/LevelRange';
-import BaseAttributes from './Character/Attributes/BaseAttributes';
-import { calculateBaseAttributes } from './npc/util';
-import { EquipmentImport } from './Equipment/Equipment';
-import Priest from './npc/bandit/Priest';
-import Ranger from './npc/bandit/Ranger';
+
+
 import GoblinPriest from './npc/GoblinPriest';
 
 type EncounterGroup = NPC[];
@@ -35,11 +39,11 @@ type GroupKey =
 
 const groups: Record<GroupKey, NPC[]> = {
     // Bandits
-    fighter: [Fighter],
-    priest: [Priest],
-    ranger: [Ranger],
-    rogue: [Rogue],
-    wizard: [Wizard],
+    fighter: [BanditFighter],
+    priest: [BanditPriest],
+    ranger: [BanditRanger],
+    rogue: [BanditRogue],
+    wizard: [BanditWizard],
     rat: [Rat],
     // Goblins
     goblinFighterPriest: [GoblinFighter, GoblinPriest],
