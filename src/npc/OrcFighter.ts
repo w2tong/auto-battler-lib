@@ -18,6 +18,7 @@ const OrcFighter: NPC = {
     className: ClassName.Fighter,
     attributes: {
         [AttributeType.Strength]: { base: Attributes.DEFAULT_VALUE + 10, perLvl: 1.5 },
+        [AttributeType.Dexterity]: { perLvl: 0.4 },
         [AttributeType.Perception]: { base: Attributes.MIN_VALUE + 3, perLvl: 1 },
         [AttributeType.Constitution]: { base: Attributes.DEFAULT_VALUE + 10, perLvl: 1 },
         [AttributeType.Intelligence]: { base: Attributes.MIN_VALUE },
@@ -28,7 +29,7 @@ const OrcFighter: NPC = {
         [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 5 },
         [StatType.Armour]: { base: 5 },
         [StatType.Deflection]: { base: 1, perLvl: 0.2 },
-        [StatType.Accuracy]: { base: -5, perLvl: 1 }
+        [StatType.Accuracy]: { base: -5, perLvl: 0.5 }
     },
     equipment: {
         1: {
