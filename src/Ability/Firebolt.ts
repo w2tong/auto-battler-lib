@@ -10,7 +10,7 @@ const MIN_BASE = 1;
 const MIN_PER_LVL = 0.1;
 const MAX_BASE = 4;
 const MAX_PER_LVL = 0.2;
-const SPELLPOWER_RATIO = 0.34;
+const SPELLPOWER_RATIO = 0.33;
 const STACKS = 2;
 
 const Firebolt: Ability = {
@@ -54,7 +54,7 @@ const Firebolt: Ability = {
             }
         }
     },
-    scaling: ['level', StatType.SpellPower],
+    scaling: ['Level', StatType.SpellPower],
     attackType: AttackType.Spell,
 } as const;
 

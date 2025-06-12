@@ -1,4 +1,5 @@
 import EnvenomWeapon from '../Ability/EnvenomWeapon';
+import Attributes from '../Character/Attributes/Attributes';
 import AttributeType from '../Character/Attributes/AttributeType';
 import { startingEquipment } from '../Character/Classes/classLoadouts';
 import ClassName from '../Character/Classes/ClassName';
@@ -19,13 +20,17 @@ const GoblinRogue: NPC = {
     name: 'Goblin Rogue',
     className: ClassName.Rogue,
     attributes: {
-        [AttributeType.Strength]: { perLvl: 1 },
-        [AttributeType.Dexterity]: { perLvl: 1 },
-        [AttributeType.Perception]: { perLvl: 1 }
+        [AttributeType.Strength]: { base: Attributes.MIN_VALUE + 3, perLvl: 1 },
+        [AttributeType.Dexterity]: { base: Attributes.DEFAULT_VALUE + 3, perLvl: 1 },
+        [AttributeType.Perception]: { perLvl: 1 },
+        [AttributeType.Constitution]: { base: Attributes.MIN_VALUE + 2 },
+        [AttributeType.Intelligence]: { base: Attributes.MIN_VALUE },
+        [AttributeType.Wisdom]: { base: Attributes.MIN_VALUE }
     },
     stats: {
-        [StatType.HealthPercent]: { base: 0.6 },
-        [StatType.DamagePercent]: { base: 0.6 }
+        [StatType.HealthPercent]: { base: -0.5 },
+        [StatType.DamagePercent]: { base: -0.5 },
+        [StatType.Accuracy]: { base: -5 }
     },
     equipment: {
         1: startingEquipment[ClassName.Rogue],

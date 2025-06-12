@@ -13,20 +13,24 @@ import { necks } from '../Equipment/Neck';
 import { waists } from '../Equipment/Waist';
 import StatType from '../Character/Stats/StatType';
 import Smite from '../Ability/Smite';
+import Attributes from '../Character/Attributes/Attributes';
 
 const GoblinPriest: NPC = {
     id: 'goblinPriest',
     name: 'Goblin Priest',
     className: ClassName.Priest,
     attributes: {
-        [AttributeType.Strength]: { perLvl: 0.5 },
-        [AttributeType.Perception]: { perLvl: 0.5 },
-        [AttributeType.Constitution]: { perLvl: 1 },
-        [AttributeType.Wisdom]: { perLvl: 1 },
+        [AttributeType.Strength]: { base: Attributes.DEFAULT_VALUE + 2, perLvl: 0.5 },
+        [AttributeType.Dexterity]: { base: Attributes.MIN_VALUE + 2, perLvl: 0.25 },
+        [AttributeType.Perception]: { base: Attributes.MIN_VALUE + 1, perLvl: 0.5 },
+        [AttributeType.Constitution]: { base: Attributes.MIN_VALUE + 2, perLvl: 0.25 },
+        [AttributeType.Intelligence]: { base: Attributes.MIN_VALUE + 1 },
+        [AttributeType.Wisdom]: { base: Attributes.DEFAULT_VALUE + 5, perLvl: 0.5 },
     },
     stats: {
-        [StatType.HealthPercent]: { base: 0.6 },
-        [StatType.DamagePercent]: { base: 0.6 }
+        [StatType.HealthPercent]: { base: -0.5 },
+        [StatType.DamagePercent]: { base: -0.5 },
+        [StatType.Accuracy]: { base: -10 },
     },
     equipment: {
         1: {
@@ -54,7 +58,6 @@ const GoblinPriest: NPC = {
             [EquipSlot.Ring1]: rings.mpCostRing0,
             [EquipSlot.Ring2]: rings.mpRegenRing0,
             [EquipSlot.Potion]: potions.healingPotion1,
-            [EquipSlot.Neck]: necks.wisNeck0,
             [EquipSlot.Waist]: waists.healBelt1
         },
         13: {
@@ -66,7 +69,6 @@ const GoblinPriest: NPC = {
             [EquipSlot.Ring1]: rings.mpCostRing1,
             [EquipSlot.Ring2]: rings.mpRegenRing1,
             [EquipSlot.Potion]: potions.healingPotion2,
-            [EquipSlot.Neck]: necks.wisNeck1,
             [EquipSlot.Waist]: waists.healBelt1
         },
         17: {
@@ -78,7 +80,6 @@ const GoblinPriest: NPC = {
             [EquipSlot.Ring1]: rings.mpCostRing1,
             [EquipSlot.Ring2]: rings.mpRegenRing1,
             [EquipSlot.Potion]: potions.healingPotion3,
-            [EquipSlot.Neck]: necks.wisNeck1,
             [EquipSlot.Waist]: waists.healBelt2
         },
         20: {
@@ -90,7 +91,6 @@ const GoblinPriest: NPC = {
             [EquipSlot.Ring1]: rings.mpCostRing2,
             [EquipSlot.Ring2]: rings.mpRegenRing2,
             [EquipSlot.Potion]: potions.healingPotion4,
-            [EquipSlot.Neck]: necks.wisNeck2,
             [EquipSlot.Waist]: waists.healBelt3
         }
     },

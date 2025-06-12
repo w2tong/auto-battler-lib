@@ -12,16 +12,17 @@ import { hands } from '../../Equipment/Hands';
 import { potions } from '../../Equipment/Potion';
 import { necks } from '../../Equipment/Neck';
 import { waists } from '../../Equipment/Waist';
+import Attributes from '../../Character/Attributes/Attributes';
 
 const Priest: NPC = {
     id: 'priest',
     name: 'Bandit Priest',
     className: ClassName.Priest,
     attributes: {
-        [AttributeType.Strength]: { perLvl: 0.5 },
-        [AttributeType.Perception]: { perLvl: 0.5 },
-        [AttributeType.Constitution]: { perLvl: 1 },
-        [AttributeType.Wisdom]: { perLvl: 1 },
+        [AttributeType.Strength]: { base: Attributes.DEFAULT_VALUE + 3, perLvl: 0.5 },
+        [AttributeType.Perception]: { base: Attributes.DEFAULT_VALUE + 1, perLvl: 0.5 },
+        [AttributeType.Constitution]: { base: Attributes.DEFAULT_VALUE + 2, perLvl: 1 },
+        [AttributeType.Wisdom]: { base: Attributes.DEFAULT_VALUE + 4, perLvl: 1 },
     },
     stats: {},
     equipment: {

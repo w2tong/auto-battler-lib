@@ -12,15 +12,16 @@ import { hands } from '../../Equipment/Hands';
 import { potions } from '../../Equipment/Potion';
 import { necks } from '../../Equipment/Neck';
 import { waists } from '../../Equipment/Waist';
+import Attributes from '../../Character/Attributes/Attributes';
 
 const Fighter: NPC = {
     id: 'fighter',
     name: 'Bandit Fighter',
     className: ClassName.Fighter,
     attributes: {
-        [AttributeType.Strength]: { perLvl: 1 },
-        [AttributeType.Perception]: { perLvl: 1 },
-        [AttributeType.Constitution]: { perLvl: 1 },
+        [AttributeType.Strength]: { base: Attributes.DEFAULT_VALUE + 4, perLvl: 1 },
+        [AttributeType.Perception]: { base: Attributes.DEFAULT_VALUE + 3, perLvl: 1 },
+        [AttributeType.Constitution]: { base: Attributes.DEFAULT_VALUE + 3, perLvl: 1 },
     },
     stats: {},
     equipment: {

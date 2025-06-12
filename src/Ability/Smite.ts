@@ -12,7 +12,7 @@ const MIN_PER_LVL = 0.1;
 const MAX_BASE = 2;
 const MAX_PER_LVL = 0.2;
 const SPELLPOWER_RATIO = 0.5;
-const STACKS = 2;
+const STACKS = 3;
 
 const Smite: Ability = {
     id: AbilityId.Smite,
@@ -63,7 +63,7 @@ const Smite: Ability = {
             }
         }
     },
-    scaling: ['level', AttributeType.Wisdom, StatType.SpellPower],
+    scaling: ['Level', AttributeType.Wisdom, StatType.SpellPower],
     attackType: AttackType.Spell,
 } as const;
 

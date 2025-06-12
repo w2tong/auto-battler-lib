@@ -7,7 +7,7 @@ import Character from './Character';
 import { StatTemplate } from './Stats/StatTemplate';
 import StatType from './Stats/StatType';
 
-const PET_STAT_RATIO = 0.25;
+const PET_STAT_RATIO = 0.5;
 
 enum PetId {
     Wolf = 'Wolf'
@@ -17,8 +17,9 @@ const petTemplates: Record<PetId, { id: NpcId, statTemplate: StatTemplate, abili
     [PetId.Wolf]: {
         id: 'wolf',
         statTemplate: {
-            [StatType.MaxHealth]: { base: 10, perLvl: 2 },
-            [StatType.Damage]: { base: 0, perLvl: 0.2 }
+            [StatType.MaxHealth]: { base: 12, perLvl: 3 },
+            [StatType.Armour]: { base: 10 },
+            [StatType.Damage]: { base: 0, perLvl: 0.25 }
         },
         ability: FerociousBite
     }

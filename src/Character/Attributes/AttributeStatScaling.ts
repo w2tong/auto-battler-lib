@@ -13,6 +13,7 @@ const AttributeStatScaling: {
     },
     [AttributeType.Perception]: {
         [StatType.Accuracy]: number;
+        [StatType.ArmourPenetration]: number;
     },
     [AttributeType.Constitution]: {
         [StatType.MaxHealth]: number,
@@ -36,15 +37,16 @@ const AttributeStatScaling: {
     },
     [AttributeType.Dexterity]: {
         [StatType.CriticalChance]: 0.5,
-        [StatType.Dodge]: 0.5,
+        [StatType.Dodge]: 1,
         [StatType.Initiative]: 0.2
     },
     [AttributeType.Perception]: {
-        [StatType.Accuracy]: 1
+        [StatType.Accuracy]: 1,
+        [StatType.ArmourPenetration]: 1
     },
     [AttributeType.Constitution]: {
-        [StatType.MaxHealth]: 1,
-        [StatType.HealthPercent]: 0.02,
+        [StatType.MaxHealth]: 0.5,
+        [StatType.HealthPercent]: 0.01,
         [StatType.StatusResistance]: 0.2
     },
     [AttributeType.Intelligence]: {

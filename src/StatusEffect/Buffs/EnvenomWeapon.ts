@@ -4,10 +4,11 @@ import Poisoned from '../Debuffs/Poisoned';
 import BuffId from '../types/BuffId';
 
 export default class EnvenomWeapon extends Buff {
-    id = BuffId.EnvenomWeapon;
-    name = 'Envenom Weapon';
+    static name = 'Envenom Weapon';
 
-    static POISONED_STACKS = 2;
+    static POISONED_STACKS = 4;
+
+    id = BuffId.EnvenomWeapon;
 
     onApply() { }
     onExpire() { }
@@ -24,7 +25,6 @@ export default class EnvenomWeapon extends Buff {
             }));
             if (this.stacks <= 0) this.manager.removeBuff(this.id, this.source);
         }
-
     }
     onAttacked() { }
 

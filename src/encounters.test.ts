@@ -1,31 +1,31 @@
 import { describe, it, expect } from '@jest/globals';
 import Character from './Character/Character';
-import Fighter from './npc/bandit/Fighter';
-import Rogue from './npc/bandit/Rogue';
+import BanditFighter from './npc/bandit/BanditFighter';
+import BanditRogue from './npc/bandit/BanditRogue';
 import { createNpcChars, getRandomEncounter } from './encounters';
 import LevelRange from './types/LevelRange';
-import Ranger from './npc/bandit/Ranger';
+import Ranger from './npc/bandit/BanditRanger';
 
 describe('createNpcChars', () => {
     it('creates a single Character from one NPC', () => {
-        const chars = createNpcChars([Fighter], 3);
+        const chars = createNpcChars([BanditFighter], 3);
         expect(chars).toHaveLength(1);
         expect(chars[0]).toBeInstanceOf(Character);
-        expect(chars[0].name).toBe(Fighter.name);
+        expect(chars[0].name).toBe(BanditFighter.name);
         expect(chars[0].level).toBe(3);
     });
 
     it('creates multiple Characters from multiple NPCs', () => {
-        const chars = createNpcChars([Fighter, Rogue], 2);
+        const chars = createNpcChars([BanditFighter, BanditRogue], 2);
         expect(chars).toHaveLength(2);
-        expect(chars[0].name).toBe(Fighter.name);
+        expect(chars[0].name).toBe(BanditFighter.name);
         expect(chars[0].level).toBe(2);
-        expect(chars[1].name).toBe(Rogue.name);
+        expect(chars[1].name).toBe(BanditRogue.name);
         expect(chars[0].level).toBe(2);
     });
 
     it('creates multiple copies of each NPC when count > 1', () => {
-        const chars = createNpcChars([Fighter], 1, 3);
+        const chars = createNpcChars([BanditFighter], 1, 3);
         expect(chars).toHaveLength(3);
         expect(chars[0].name).toBe('Bandit Fighter 1');
         expect(chars[1].name).toBe('Bandit Fighter 2');
@@ -33,7 +33,7 @@ describe('createNpcChars', () => {
     });
 
     it('creates multiple copies for multiple NPCs when count > 1', () => {
-        const chars = createNpcChars([Fighter, Rogue], 1, 2);
+        const chars = createNpcChars([BanditFighter, BanditRogue], 1, 2);
         expect(chars).toHaveLength(4);
         expect(chars[0].name).toBe('Bandit Fighter 1');
         expect(chars[1].name).toBe('Bandit Rogue 1');

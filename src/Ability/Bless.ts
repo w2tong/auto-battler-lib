@@ -32,7 +32,7 @@ const Bless: Ability = {
             stacks: STACKS
         }));
     },
-    scaling: ['level', AttributeType.Wisdom]
+    scaling: ['Level', AttributeType.Wisdom]
 } as const;
 
 export default Bless;

@@ -16,7 +16,7 @@ function calculateBaseAttributes(template: AttributeTemplate, level: number): Ba
 function calculateBaseStats(template: StatTemplate, level: number): BaseStats {
     const stats: BaseStats = {};
     for (const [stat, { base, perLvl }] of Object.entries(template))
-        stats[stat as StatType] = base + (perLvl ? perLvl * (level - 1) : 0);
+        stats[stat as StatType] = (base ?? 0) + (perLvl ? perLvl * (level - 1) : 0);
     return stats;
 }
 

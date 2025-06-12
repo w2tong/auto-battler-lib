@@ -56,7 +56,7 @@ const Frostbolt: Ability = {
             }
         }
     },
-    scaling: ['level', StatType.SpellPower],
+    scaling: ['Level', StatType.SpellPower],
     attackType: AttackType.Spell,
 } as const;
 

@@ -1,3 +1,4 @@
+import Attributes from '../../Character/Attributes/Attributes';
 import AttributeType from '../../Character/Attributes/AttributeType';
 import { startingAbility, startingEquipment } from '../../Character/Classes/classLoadouts';
 import ClassName from '../../Character/Classes/ClassName';
@@ -17,9 +18,10 @@ const Rogue: NPC = {
     name: 'Bandit Rogue',
     className: ClassName.Rogue,
     attributes: {
-        [AttributeType.Strength]: { perLvl: 1 },
-        [AttributeType.Dexterity]: { perLvl: 1 },
-        [AttributeType.Perception]: { perLvl: 1 },
+        [AttributeType.Strength]: { base: Attributes.DEFAULT_VALUE + 3, perLvl: 1 },
+        [AttributeType.Dexterity]: { base: Attributes.DEFAULT_VALUE + 4, perLvl: 1 },
+        [AttributeType.Perception]: { base: Attributes.DEFAULT_VALUE + 2, perLvl: 1 },
+        [AttributeType.Constitution]: { base: Attributes.DEFAULT_VALUE + 1, perLvl: 0.5 },
     },
     stats: {},
     equipment: {
@@ -30,7 +32,7 @@ const Rogue: NPC = {
             [EquipSlot.Armour]: armour.leatherArmour1,
             [EquipSlot.Head]: heads.helmet0,
             [EquipSlot.Hands]: hands.dwGloves0,
-            [EquipSlot.Ring1]: rings.accRing0,
+            [EquipSlot.Ring1]: rings.dmgRing0,
             [EquipSlot.Ring2]: rings.critRing0,
             [EquipSlot.Potion]: potions.healingPotion0,
             [EquipSlot.Neck]: necks.dexNeck0
@@ -41,7 +43,7 @@ const Rogue: NPC = {
             [EquipSlot.Armour]: armour.leatherArmour2,
             [EquipSlot.Head]: heads.helmet0,
             [EquipSlot.Hands]: hands.dwGloves0,
-            [EquipSlot.Ring1]: rings.accRing0,
+            [EquipSlot.Ring1]: rings.dmgRing0,
             [EquipSlot.Ring2]: rings.critRing0,
             [EquipSlot.Potion]: potions.healingPotion1,
             [EquipSlot.Neck]: necks.dexNeck0,
@@ -53,7 +55,7 @@ const Rogue: NPC = {
             [EquipSlot.Armour]: armour.leatherArmour3,
             [EquipSlot.Head]: heads.helmet1,
             [EquipSlot.Hands]: hands.dwGloves1,
-            [EquipSlot.Ring1]: rings.accRing1,
+            [EquipSlot.Ring1]: rings.dmgRing1,
             [EquipSlot.Ring2]: rings.critRing1,
             [EquipSlot.Potion]: potions.healingPotion2,
             [EquipSlot.Neck]: necks.dexNeck1,
@@ -65,7 +67,7 @@ const Rogue: NPC = {
             [EquipSlot.Armour]: armour.leatherArmour4,
             [EquipSlot.Head]: heads.helmet1,
             [EquipSlot.Hands]: hands.dwGloves1,
-            [EquipSlot.Ring1]: rings.accRing1,
+            [EquipSlot.Ring1]: rings.dmgRing1,
             [EquipSlot.Ring2]: rings.critRing1,
             [EquipSlot.Potion]: potions.healingPotion3,
             [EquipSlot.Neck]: necks.dexNeck1,
@@ -77,7 +79,7 @@ const Rogue: NPC = {
             [EquipSlot.Armour]: armour.leatherArmour5,
             [EquipSlot.Head]: heads.helmet2,
             [EquipSlot.Hands]: hands.dwGloves2,
-            [EquipSlot.Ring1]: rings.accRing2,
+            [EquipSlot.Ring1]: rings.dmgRing2,
             [EquipSlot.Ring2]: rings.critRing2,
             [EquipSlot.Potion]: potions.healingPotion4,
             [EquipSlot.Neck]: necks.dexNeck2,

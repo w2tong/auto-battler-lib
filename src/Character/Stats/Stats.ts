@@ -16,7 +16,8 @@ class Stats {
 
     static DEFAULT_MAX_HEALTH = 20;
     static DEFAULT_MAX_HEALTH_PER_LVL = 4;
-    static DEFAULT_DODGE = 40;
+    static DEFAULT_DODGE = 50;
+    static DEFAULT_DODGE_PER_LVL = 0.5;
     static DEFAULT_CRIT_CHANCE = 5;
     static DEFAULT_CRIT_DAMAGE = 1.5;
 
@@ -25,7 +26,7 @@ class Stats {
     static DEFAULT_MANA_REGEN = 5;
 
     static DUAL_WIELD_ACCURACY_PENALTY = -10;
-    static OFF_HAND_ACCURACY_PENALTY = -20;
+    static OFF_HAND_ACCURACY_PENALTY = -10;
 
     armourType: ArmourType;
     weaponStyle: WeaponStyle;
@@ -82,10 +83,11 @@ class Stats {
     constructor({ template, attributes, equipment, level }: { template: StatTemplate, attributes: Attributes, equipment: Equipment, level: number; }) {
 
         this[StatType.MaxHealth].base = Stats.DEFAULT_MAX_HEALTH + Stats.DEFAULT_MAX_HEALTH_PER_LVL * (level - 1);
+        this[StatType.Dodge].base = Stats.DEFAULT_DODGE + Stats.DEFAULT_DODGE_PER_LVL * (level - 1);
 
         // Set stats to template (sets MaxHealth if included in template)
         for (const [stat, { base, perLvl }] of Object.entries(template)) {
-            this[stat as StatType].base = base + (perLvl ? perLvl * (level - 1) : 0);
+            this[stat as StatType].base = (base ?? 0) + (perLvl ? perLvl * (level - 1) : 0);
         }
 
         // Add stats from attributes

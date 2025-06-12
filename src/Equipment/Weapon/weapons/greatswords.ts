@@ -14,7 +14,7 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        damageRange: { min: 5, max: 9, bonus: 0 },
+        damageRange: { min: 4, max: 8, bonus: 0 },
         stats: {
             [StatType.ArmourPenetration]: 10
         }
@@ -27,7 +27,7 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        damageRange: { min: 5, max: 9, bonus: 2 },
+        damageRange: { min: 4, max: 8, bonus: 2 },
         stats: {
             [StatType.ArmourPenetration]: 12
         }
@@ -40,7 +40,7 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        damageRange: { min: 5, max: 9, bonus: 4 },
+        damageRange: { min: 4, max: 8, bonus: 4 },
         stats: {
             [StatType.ArmourPenetration]: 14
         }
@@ -53,7 +53,7 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        damageRange: { min: 5, max: 9, bonus: 6 },
+        damageRange: { min: 4, max: 8, bonus: 6 },
         stats: {
             [StatType.ArmourPenetration]: 16
         }
@@ -66,7 +66,7 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        damageRange: { min: 5, max: 9, bonus: 8 },
+        damageRange: { min: 4, max: 8, bonus: 8 },
         stats: {
             [StatType.ArmourPenetration]: 18
         }
@@ -79,7 +79,7 @@ const greatswords: { [id in GreatswordId]: Weapon } = {
 
         type: WeaponType.Greatsword,
         attackType: AttackType.MeleeWeapon,
-        damageRange: { min: 5, max: 9, bonus: 10 },
+        damageRange: { min: 4, max: 8, bonus: 10 },
         stats: {
             [StatType.ArmourPenetration]: 20
         }

@@ -14,7 +14,8 @@ const DoubleStrike: Ability = {
             char.turnAttack();
             char.turnAttack();
         }
-    }
+    },
+    scaling: ['Weapon Damage']
 } as const;
 
 export default DoubleStrike;

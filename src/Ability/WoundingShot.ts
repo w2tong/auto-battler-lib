@@ -53,6 +53,7 @@ const WoundingShot: Ability = {
         }
     },
     attackType: AttackType.RangedWeapon,
+    scaling: ['Weapon Damage']
 } as const;
 
 export default WoundingShot;

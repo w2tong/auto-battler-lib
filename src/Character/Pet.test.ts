@@ -13,7 +13,7 @@ describe('createPet', () => {
 
         expect(pet.stats).toMatchObject(createTestStats({
             [StatType.Damage]: { base: 0, attribute: 0, bonus: 0 },
-            [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base, attribute: 0, bonus: 0 }
+            [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base!, attribute: 0, bonus: 0 }
         }, char.level));
     });
 
@@ -29,7 +29,7 @@ describe('createPet', () => {
 
         expect(pet.stats).toMatchObject(createTestStats({
             [StatType.Damage]: { base: 0, attribute: 0, bonus: 0 },
-            [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base, attribute: 0, bonus: 0 },
+            [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base!, attribute: 0, bonus: 0 },
             [StatType.Dodge]: { base: Stats.DEFAULT_DODGE, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.Dodge] * (num - Attributes.DEFAULT_VALUE) * PET_STAT_RATIO },
             [StatType.CriticalChance]: { base: Stats.DEFAULT_CRIT_CHANCE, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.CriticalChance] * (num - Attributes.DEFAULT_VALUE) * PET_STAT_RATIO },
             [StatType.Initiative]: { base: 0, attribute: 0, bonus: AttributeStatScaling.Dexterity[StatType.Initiative] * (num - Attributes.DEFAULT_VALUE) * PET_STAT_RATIO }
@@ -47,7 +47,7 @@ describe('createPet', () => {
 
         expect(pet.stats).toMatchObject(createTestStats({
             [StatType.Damage]: { base: 0, attribute: 0, bonus: 0 },
-            [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base, attribute: 0, bonus: 0 },
+            [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base!, attribute: 0, bonus: 0 },
             [StatType.Accuracy]: { base: 0, attribute: 0, bonus: AttributeStatScaling.Perception[StatType.Accuracy] * (num - Attributes.DEFAULT_VALUE) * PET_STAT_RATIO }
         }, char.level));
     });
@@ -63,7 +63,7 @@ describe('createPet', () => {
 
         expect(pet.stats).toMatchObject(createTestStats({
             [StatType.Damage]: { base: 0, attribute: 0, bonus: num * PET_STAT_RATIO },
-            [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base, attribute: 0, bonus: 0 }
+            [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base!, attribute: 0, bonus: 0 }
         }));
     });
 });

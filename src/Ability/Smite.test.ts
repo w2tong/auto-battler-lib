@@ -53,19 +53,19 @@ describe('Smite Damage and Debuff', () => {
         hitRollSpy.mockReturnValue(true);
         Smite.func(char);
         expect(target.currentHealth).toBe(47); // 100 - (2 to 4 + 100 * 0.5 = 53) = 47
-        expect(target.statusEffectManager.debuffs[DebuffId.Smote]![getCharBattleId(char)].stacks).toBe(2);
+        expect(target.statusEffectManager.debuffs[DebuffId.Smote]![getCharBattleId(char)].stacks).toBe(3);
     });
 });
 
 describe('Smite Description', () => {
     test('No Character', () => {
         expect(Smite.description()).toBe(
-            'Deals damage to the target and reduces their Accuracy and Damage for 2 turns.'
+            'Deals damage to the target and reduces their Accuracy and Damage for 3 turns.'
         );
     });
     test('With Character', () => {
         expect(Smite.description(char)).toBe(
-            'Deals 52-54 damage to the target and reduces their Accuracy by 11 and Damage by 9 for 2 turns.'
+            'Deals 52-54 damage to the target and reduces their Accuracy by 20 and Damage by 6 for 3 turns.'
         );
     });
 });

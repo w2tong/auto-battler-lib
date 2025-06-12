@@ -2,8 +2,9 @@ import Debuff from '../Debuff';
 import DebuffId from '../types/DebuffId';
 
 export default class Stunned extends Debuff {
+    static name = 'Stunned';
+
     id = DebuffId.Stunned;
-    name = 'Stunned';
 
     onApply() { }
     onExpire() { }
