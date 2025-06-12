@@ -7,8 +7,8 @@ export default class Burning extends Debuff implements DamageTaken {
     id = DebuffId.Burning;
     name = 'Burning';
 
-    static baseDamage = 1;
-    static spellPowerRatio = 0.2;
+    static baseDamage = 2;
+    static spellPowerRatio = 0.12;
 
     calcDamage(): number {
         const spellPowerDamage = this.source.stats.spellPower * Burning.spellPowerRatio;

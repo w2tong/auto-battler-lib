@@ -1,3 +1,4 @@
+import Attributes from '../../Character/Attributes/Attributes';
 import AttributeType from '../../Character/Attributes/AttributeType';
 import { startingAbility, startingEquipment } from '../../Character/Classes/classLoadouts';
 import ClassName from '../../Character/Classes/ClassName';
@@ -18,10 +19,11 @@ const Wizard: NPC = {
     name: 'Bandit Wizard',
     className: ClassName.Wizard,
     attributes: {
-        [AttributeType.Strength]: { perLvl: 0.5 },
-        [AttributeType.Perception]: { perLvl: 1 },
-        [AttributeType.Intelligence]: { perLvl: 1 },
-        [AttributeType.Wisdom]: { perLvl: 0.5 },
+        [AttributeType.Strength]: { base: Attributes.DEFAULT_VALUE + 2, perLvl: 0.5 },
+        [AttributeType.Perception]: { base: Attributes.DEFAULT_VALUE + 3, perLvl: 1 },
+        [AttributeType.Constitution]: { perLvl: 0.5 },
+        [AttributeType.Intelligence]: { base: Attributes.DEFAULT_VALUE + 4, perLvl: 1 },
+        [AttributeType.Wisdom]: { base: Attributes.DEFAULT_VALUE + 1, perLvl: 0.5 },
     },
     stats: {},
     equipment: {
