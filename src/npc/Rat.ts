@@ -18,8 +18,8 @@ const Rat: NPC = {
         [AttributeType.Wisdom]: { base: Attributes.MIN_VALUE },
     },
     stats: {
-        [StatType.HealthPercent]: { base: 0.4 },
-        [StatType.Dodge]: { base: Stats.DEFAULT_DODGE + 15 },
+        [StatType.HealthPercent]: { base: -0.6 },
+        [StatType.Dodge]: { base: Stats.DEFAULT_DODGE + 10 },
         [StatType.Accuracy]: { base: -10 },
         [StatType.Damage]: { base: 0, perLvl: 0.5 }
     },
