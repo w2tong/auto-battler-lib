@@ -6,6 +6,8 @@ enum LineType {
     // Combat
     Attack = 'Attack',
     Damage = 'Damage',
+    Turn = 'Turn',
+    Death = 'Death',
     // Results
     Loot = 'Loot',
     Exp = 'Exp',
@@ -19,24 +21,6 @@ type BaseLine = {
 interface TextLine extends BaseLine {
     type: LineType.Text;
     text: string;
-}
-
-interface LootLine extends BaseLine {
-    type: LineType.Loot;
-    name: string;
-    itemId: string;
-}
-
-interface ExpLine extends BaseLine {
-    type: LineType.Exp;
-    name: string;
-    exp: number;
-}
-
-interface LevelLine extends BaseLine {
-    type: LineType.LevelUp;
-    name: string;
-    level: number;
 }
 
 interface AttackLine extends BaseLine {
@@ -57,7 +41,35 @@ interface DamageLine extends BaseLine {
     damage: number;
 }
 
-type LogLine = TextLine | LootLine | ExpLine | LevelLine | AttackLine | DamageLine;
+interface TurnLine extends BaseLine {
+    type: LineType.Turn;
+    name: string;
+}
+
+interface DeathLine extends BaseLine {
+    type: LineType.Death;
+    name: string;
+}
+
+interface LootLine extends BaseLine {
+    type: LineType.Loot;
+    name: string;
+    itemId: string;
+}
+
+interface ExpLine extends BaseLine {
+    type: LineType.Exp;
+    name: string;
+    exp: number;
+}
+
+interface LevelLine extends BaseLine {
+    type: LineType.LevelUp;
+    name: string;
+    level: number;
+}
+
+type LogLine = TextLine | AttackLine | DamageLine | TurnLine | DeathLine | LootLine | ExpLine | LevelLine;
 
 class Log {
 
@@ -105,6 +117,20 @@ class Log {
             name,
             source,
             damage
+        });
+    }
+
+    addTurn(name: string) {
+        this.last.push({
+            type: LineType.Turn,
+            name
+        });
+    }
+
+    addDeath(name: string) {
+        this.last.push({
+            type: LineType.Death,
+            name
         });
     }
 

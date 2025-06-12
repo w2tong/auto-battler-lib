@@ -347,7 +347,7 @@ export default class Character {
                 abilityName
             });
             if (targetDead) {
-                this.battle.ref.log.add(`${target.name} died.`);
+                this.battle.ref.log.add(target.name);
             }
         }
 
@@ -412,7 +412,7 @@ export default class Character {
             if (this.isDead()) {
                 dead = true;
                 this.battle.ref.setCharDead(this.battle.side, this.battle.index);
-                if (addToLog) this.battle.ref.log.add(`${this.name} died.`);
+                if (addToLog) this.battle.ref.log.addDeath(this.name);
             }
         }
 

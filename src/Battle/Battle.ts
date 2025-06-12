@@ -131,6 +131,7 @@ class Battle {
             this._turnIndex++;
             if (this.turnIndex >= this.turnOrder.length) this._turnIndex = 0;
             const char = this.turnOrder[this.turnIndex].char;
+            this.log.addTurn(char.name);
             char.doTurn();
 
             return { combatEnded: false };
