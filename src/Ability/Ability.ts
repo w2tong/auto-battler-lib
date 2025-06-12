@@ -9,7 +9,7 @@ interface Ability {
     name: string;
     description: (char?: Character) => string;
     func: (char: Character) => void;
-    scaling?: ReadonlyArray<'level' | AttributeType | StatType>;
+    scaling?: ReadonlyArray<'Level' | 'Weapon Damage' | AttributeType | StatType>;
     attackType?: AttackType;
 }
 

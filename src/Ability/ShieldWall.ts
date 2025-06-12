@@ -28,7 +28,7 @@ const ShieldWall: Ability = {
             stacks: STACKS
         }));
     },
-    scaling: ['level', AttributeType.Strength],
+    scaling: ['Level', AttributeType.Strength],
 } as const;
 
 export default ShieldWall;

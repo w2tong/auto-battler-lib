@@ -49,7 +49,8 @@ const FerociousBite: Ability = {
             }
         }
     },
-    attackType: AttackType.MeleeWeapon
+    attackType: AttackType.MeleeWeapon,
+    scaling: ['Weapon Damage']
 } as const;
 
 export default FerociousBite;

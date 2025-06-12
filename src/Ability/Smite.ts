@@ -63,7 +63,7 @@ const Smite: Ability = {
             }
         }
     },
-    scaling: ['level', AttributeType.Wisdom, StatType.SpellPower],
+    scaling: ['Level', AttributeType.Wisdom, StatType.SpellPower],
     attackType: AttackType.Spell,
 } as const;
 

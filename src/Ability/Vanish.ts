@@ -25,7 +25,7 @@ const Vanish: Ability = {
             stacks
         }));
     },
-    scaling: ['level', AttributeType.Dexterity]
+    scaling: ['Level', AttributeType.Dexterity]
 
 } as const;
 
