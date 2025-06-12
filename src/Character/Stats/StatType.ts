@@ -23,7 +23,7 @@ enum StatType {
     CriticalChance = 'Critical Chance',
     CriticalDamage = 'Critical Damage',
 
-    ArmourPenetration = 'Armour Penetration',
+    ArmourPenetration = 'Penetration',
     DodgeReduction = 'Dodge Reduction',
 
     // Spell
