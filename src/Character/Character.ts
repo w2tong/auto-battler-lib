@@ -357,7 +357,7 @@ export default class Character {
         if (hit && target.stats.getStat(StatType.Thorns) > 0) {
             this.takeDamage({
                 source: `${StatType.Thorns} (${target.name})`,
-                damage: target.stats.getStat(StatType.Thorns),
+                damage: target.stats.getStat(StatType.Thorns) * (1 + target.stats.getStat(StatType.DamagePercent)),
                 armourPenetration: target.stats.armourPenetration
             });
         }
