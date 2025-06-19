@@ -87,7 +87,7 @@ interface ExpLine extends BaseLine {
     exp: number;
 }
 
-interface LevelLine extends BaseLine {
+interface LevelUpLine extends BaseLine {
     type: LineType.LevelUp;
     name: string;
     level: number;
@@ -98,7 +98,7 @@ interface ResultLine extends BaseLine {
     winner: Side;
 }
 
-type LogLine = TextLine | AttackLine | DamageLine | TurnLine | DeathLine | AbilityLine | PotionLine | NoTargetLine | LootLine | ExpLine | LevelLine | ResultLine;
+type LogLine = TextLine | AttackLine | DamageLine | TurnLine | DeathLine | AbilityLine | PotionLine | NoTargetLine | LootLine | ExpLine | LevelUpLine | ResultLine;
 
 class Log {
 
@@ -221,4 +221,4 @@ class Log {
 }
 
 export default Log;
-export { LogLine, LineType };
+export { TextLine, AttackLine, DamageLine, TurnLine, DeathLine, AbilityLine, PotionLine, NoTargetLine, LootLine, ExpLine, LevelUpLine, ResultLine, LogLine, LineType };

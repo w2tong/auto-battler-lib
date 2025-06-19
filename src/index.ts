@@ -80,8 +80,8 @@ export { PetId } from './Character/Pet';
 
 export { Dice, dice, rollDice } from './dice';
 
-import Log, { LogLine, LineType } from './Battle/Log';
-export { Log, LogLine, LineType };
+import Log, { TextLine, AttackLine, DamageLine, TurnLine, DeathLine, AbilityLine, PotionLine, NoTargetLine, LootLine, ExpLine, LevelUpLine, ResultLine, LogLine, LineType } from './Battle/Log';
+export { Log, TextLine, AttackLine, DamageLine, TurnLine, DeathLine, AbilityLine, PotionLine, NoTargetLine, LootLine, ExpLine, LevelUpLine, ResultLine, LogLine, LineType };
 
 export { getRandomEncounter } from './encounters';
 
