@@ -16,7 +16,8 @@ const longswords: { [id in LongswordId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 3, max: 6, bonus: 0 },
         stats: {
-            [StatType.Accuracy]: 5
+            [StatType.Accuracy]: 5,
+            [StatType.ArmourPenetration]: 1
         }
     },
     longsword1: {
@@ -29,7 +30,8 @@ const longswords: { [id in LongswordId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 3, max: 6, bonus: 1 },
         stats: {
-            [StatType.Accuracy]: 7
+            [StatType.Accuracy]: 7,
+            [StatType.ArmourPenetration]: 2
         }
     },
     longsword2: {
@@ -42,7 +44,8 @@ const longswords: { [id in LongswordId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 3, max: 6, bonus: 2 },
         stats: {
-            [StatType.Accuracy]: 9
+            [StatType.Accuracy]: 9,
+            [StatType.ArmourPenetration]: 3
         }
     },
     longsword3: {
@@ -55,7 +58,8 @@ const longswords: { [id in LongswordId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 3, max: 6, bonus: 3 },
         stats: {
-            [StatType.Accuracy]: 11
+            [StatType.Accuracy]: 11,
+            [StatType.ArmourPenetration]: 4
         }
     },
     longsword4: {
@@ -68,7 +72,8 @@ const longswords: { [id in LongswordId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 3, max: 6, bonus: 4 },
         stats: {
-            [StatType.Accuracy]: 13
+            [StatType.Accuracy]: 13,
+            [StatType.ArmourPenetration]: 5
         }
     },
     longsword5: {
@@ -81,7 +86,8 @@ const longswords: { [id in LongswordId]: Weapon } = {
         attackType: AttackType.MeleeWeapon,
         damageRange: { min: 3, max: 6, bonus: 5 },
         stats: {
-            [StatType.Accuracy]: 15
+            [StatType.Accuracy]: 15,
+            [StatType.ArmourPenetration]: 6
         }
     },
 } as const;

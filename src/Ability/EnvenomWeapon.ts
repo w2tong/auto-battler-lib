@@ -11,7 +11,8 @@ const EnvenomWeapon: Ability = {
     name: NAME,
     description: () => `Your next ${STACKS} hits applies ${EnvenomWeaponBuff.POISONED_STACKS} ${Poisoned.name}.`,
     func: (char) => {
-        if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME}.`);
+        if (char.battle) char.battle.ref.log.addAbility(char.name, NAME);
+
         char.useAbilityMana();
         char.statusEffectManager.add(new EnvenomWeaponBuff({
             char,

@@ -19,8 +19,8 @@ export { WeaponId, weapons } from './Equipment/Weapon/weapons';
 import WeaponStyle from './WeaponStyle';
 export { WeaponStyle };
 
-import Battle, { Side } from './Battle/Battle';
-export { Battle, Side };
+import Battle, { Side, TurnRes } from './Battle/Battle';
+export { Battle, Side, TurnRes };
 
 import Character from './Character/Character';
 export { Character };
@@ -80,8 +80,8 @@ export { PetId } from './Character/Pet';
 
 export { Dice, dice, rollDice } from './dice';
 
-import Log, { LogLine, LineType } from './Battle/Log';
-export { Log, LogLine, LineType };
+import Log, { TextLine, AttackLine, DamageLine, TurnLine, DeathLine, AbilityLine, PotionLine, NoTargetLine, LootLine, ExpLine, LevelUpLine, ResultLine, LogLine, LineType } from './Battle/Log';
+export { Log, TextLine, AttackLine, DamageLine, TurnLine, DeathLine, AbilityLine, PotionLine, NoTargetLine, LootLine, ExpLine, LevelUpLine, ResultLine, LogLine, LineType };
 
 export { getRandomEncounter } from './encounters';
 

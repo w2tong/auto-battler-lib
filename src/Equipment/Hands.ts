@@ -27,7 +27,7 @@ const hands: { [id in HandsId]: Hands } = {
 
         weaponStyle: WeaponStyle.DualWield,
         stats: {
-            [StatType.Accuracy]: 5,
+            [StatType.Accuracy]: 10,
         }
     },
     dwGloves1: {
@@ -38,7 +38,7 @@ const hands: { [id in HandsId]: Hands } = {
 
         weaponStyle: WeaponStyle.DualWield,
         stats: {
-            [StatType.Accuracy]: 10,
+            [StatType.Accuracy]: 15,
         }
     },
     dwGloves2: {
@@ -49,7 +49,7 @@ const hands: { [id in HandsId]: Hands } = {
 
         weaponStyle: WeaponStyle.DualWield,
         stats: {
-            [StatType.Accuracy]: 15,
+            [StatType.Accuracy]: 20,
         }
     },
     thGloves0: {
@@ -93,7 +93,7 @@ const hands: { [id in HandsId]: Hands } = {
 
         weaponStyle: WeaponStyle.OneHanded,
         stats: {
-            [StatType.Accuracy]: 3,
+            [StatType.Accuracy]: 4,
             [StatType.Damage]: 1,
         }
     },
@@ -105,7 +105,7 @@ const hands: { [id in HandsId]: Hands } = {
 
         weaponStyle: WeaponStyle.OneHanded,
         stats: {
-            [StatType.Accuracy]: 6,
+            [StatType.Accuracy]: 7,
             [StatType.Damage]: 2,
         }
     },
@@ -117,7 +117,7 @@ const hands: { [id in HandsId]: Hands } = {
 
         weaponStyle: WeaponStyle.OneHanded,
         stats: {
-            [StatType.Accuracy]: 9,
+            [StatType.Accuracy]: 10,
             [StatType.Damage]: 3,
         }
     },

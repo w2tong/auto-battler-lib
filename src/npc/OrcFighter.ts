@@ -26,10 +26,10 @@ const OrcFighter: NPC = {
     },
     stats: {
         [StatType.HealthPercent]: { base: 0.20 },
-        [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 5 },
+        [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 5, perLvl: Stats.DEFAULT_DODGE_PER_LVL },
         [StatType.Armour]: { base: 5 },
         [StatType.Deflection]: { base: 1, perLvl: 0.2 },
-        [StatType.Accuracy]: { base: -5, perLvl: 0.5 }
+        [StatType.Accuracy]: { base: Stats.DEFAULT_ACCURACY - 5, perLvl: 0.5 }
     },
     equipment: {
         1: {

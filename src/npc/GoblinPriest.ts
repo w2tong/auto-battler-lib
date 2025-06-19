@@ -14,6 +14,7 @@ import { waists } from '../Equipment/Waist';
 import StatType from '../Character/Stats/StatType';
 import Smite from '../Ability/Smite';
 import Attributes from '../Character/Attributes/Attributes';
+import Stats from '../Character/Stats/Stats';
 
 const GoblinPriest: NPC = {
     id: 'goblinPriest',
@@ -30,7 +31,7 @@ const GoblinPriest: NPC = {
     stats: {
         [StatType.HealthPercent]: { base: -0.5 },
         [StatType.DamagePercent]: { base: -0.5 },
-        [StatType.Accuracy]: { base: -10 },
+        [StatType.Accuracy]: { base: Stats.DEFAULT_ACCURACY - 10 },
     },
     equipment: {
         1: {

@@ -1,4 +1,5 @@
 import Battle from '../Battle/Battle';
+import { LineType } from '../Battle/Log';
 import Character from '../Character/Character';
 import BuffId from '../StatusEffect/types/BuffId';
 import { createTestCharacter } from '../tests/util';
@@ -31,14 +32,14 @@ describe('Bless Description', () => {
         new Battle([char1, char2], []);
         mathRandomSpy.mockReturnValue(0);
         Bless.func(char1);
-        expect(char1.battle?.ref.log.last[0]).toStrictEqual({ text: 'Char1 casted Bless on Char1.', type: 'Text' });
+        expect(char1.battle?.ref.log.last[0]).toStrictEqual({ type: LineType.Ability, name: 'Char1', ability: Bless.name, target: 'Char1' });
         expect(char1.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char1)].stacks).toBe(3);
     });
     test('Bless - 2 targets, Bless char2', () => {
         new Battle([char1, char2], []);
         mathRandomSpy.mockReturnValue(0.99);
         Bless.func(char1);
-        expect(char1.battle?.ref.log.last[0]).toStrictEqual({ text: 'Char1 casted Bless on Char2.', type: 'Text' });
+        expect(char1.battle?.ref.log.last[0]).toStrictEqual({ type: LineType.Ability, name: 'Char1', ability: Bless.name, target: 'Char2' });
         expect(char2.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(char1)].stacks).toBe(3);
     });
 });

@@ -48,7 +48,7 @@ describe('createPet', () => {
         expect(pet.stats).toMatchObject(createTestStats({
             [StatType.Damage]: { base: 0, attribute: 0, bonus: 0 },
             [StatType.MaxHealth]: { base: petTemplates[PetId.Wolf].statTemplate[StatType.MaxHealth]!.base!, attribute: 0, bonus: 0 },
-            [StatType.Accuracy]: { base: 0, attribute: 0, bonus: AttributeStatScaling.Perception[StatType.Accuracy] * (num - Attributes.DEFAULT_VALUE) * PET_STAT_RATIO }
+            [StatType.Accuracy]: { base: Stats.DEFAULT_ACCURACY, attribute: 0, bonus: AttributeStatScaling.Perception[StatType.Accuracy] * (num - Attributes.DEFAULT_VALUE) * PET_STAT_RATIO }
         }, char.level));
     });
 

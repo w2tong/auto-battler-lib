@@ -547,7 +547,7 @@ describe('accuracy', () => {
                 [EquipSlot.MainHand]: test1HWeapon
             }
         });
-        expect(char.stats.getStat(StatType.Accuracy)).toBe(0);
+        expect(char.stats.getStat(StatType.Accuracy)).toBe(Stats.DEFAULT_ACCURACY);
     });
     test('Two-hand Weapon', () => {
         const char = createTestCharacter({
@@ -555,7 +555,7 @@ describe('accuracy', () => {
                 [EquipSlot.MainHand]: test2HWeapon
             }
         });
-        expect(char.stats.getStat(StatType.Accuracy)).toBe(0);
+        expect(char.stats.getStat(StatType.Accuracy)).toBe(Stats.DEFAULT_ACCURACY);
     });
     test('Dual Wield Weapons', () => {
         const char = createTestCharacter({
@@ -564,7 +564,7 @@ describe('accuracy', () => {
                 [EquipSlot.OffHand]: test1HWeapon
             }
         });
-        expect(char.stats.getStat(StatType.Accuracy)).toBe(Stats.DUAL_WIELD_ACCURACY_PENALTY);
+        expect(char.stats.getStat(StatType.Accuracy)).toBe(Stats.DEFAULT_ACCURACY + Stats.DUAL_WIELD_ACCURACY_PENALTY);
     });
 });
 

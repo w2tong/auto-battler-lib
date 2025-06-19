@@ -11,21 +11,39 @@ import Burning from './Debuffs/Burning';
 import Frozen from './Debuffs/Frozen';
 import Poisoned from './Debuffs/Poisoned';
 import StatusEffectManager from './StatusEffectManager';
+import StatType from '../Character/Stats/StatType';
 
 let source1: Character;
 let source2: Character;
+let source3: Character;
 let statusEffectManager: StatusEffectManager;
 
 beforeEach(() => {
-    source1 = createTestCharacter({});
-    source2 = createTestCharacter({});
+    source1 = createTestCharacter({
+        statTemplate: {
+            [StatType.MaxHealth]: { base: 100 },
+            [StatType.Initiative]: { base: 100 }
+        }
+    });
+    source2 = createTestCharacter({
+        statTemplate: {
+            [StatType.MaxHealth]: { base: 100 },
+            [StatType.Initiative]: { base: 0 }
+        }
+    });
+    source3 = createTestCharacter({
+        statTemplate: {
+            [StatType.MaxHealth]: { base: 100 },
+            [StatType.Initiative]: { base: -100 }
+        }
+    });
 
     statusEffectManager = source1.statusEffectManager;
-    new Battle([source1, source2], []);
+    new Battle([source1, source2], [source3]);
 });
 
 // TODO: update tests to include checks for outgoing(de)buffs
-describe('add', () => {
+describe('add buff', () => {
     describe('stacks', () => {
         test('0 stacks', () => {
             statusEffectManager.add(new Blessed({
@@ -79,7 +97,7 @@ describe('add', () => {
     });
 });
 
-describe('add', () => {
+describe('add debuff', () => {
     describe('stacks', () => {
         test('0 stacks', () => {
             statusEffectManager.add(new Bleeding({
@@ -193,6 +211,23 @@ describe('getBuffStacks', () => {
         }));
         expect(statusEffectManager.getBuffStacks(BuffId.Blessed)).toBe(6);
     });
+});
+
+test('Character status effects should stop after death', () => {
+    statusEffectManager.add(new Bleeding({
+        char: source1,
+        source: source1,
+        stacks: 1,
+        remainingDamage: 100
+    }));
+    statusEffectManager.add(new Bleeding({
+        char: source1,
+        source: source2,
+        stacks: 1,
+        remainingDamage: 100
+    }));
+    statusEffectManager.turnEnd();
+    expect(source1.currentHealth).toBe(0);
 });
 
 /*

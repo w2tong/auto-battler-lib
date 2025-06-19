@@ -5,10 +5,12 @@ import StatType from '../Character/Stats/StatType';
 import { createTestCharacter } from '../tests/util';
 import BuffId from '../StatusEffect/types/BuffId';
 import { getCharBattleId } from '../util';
+import { LineType } from '../Battle/Log';
 
 let char: Character;
 beforeEach(() => {
     char = createTestCharacter({
+        name: 'Shield Waller',
         statTemplate: {
             [StatType.ManaCost]: { base: 50 },
             [StatType.StartingMana]: { base: 100 },
@@ -23,7 +25,7 @@ test('adds 3 stacks of ShieldWall buff, and adds to log', () => {
     ShieldWall.func(char);
     expect(char.currentMana).toBe(50);
     expect(char.statusEffectManager.buffs[BuffId.ShieldWall]![getCharBattleId(char)].stacks).toBe(3);
-    expect(char.battle?.ref.log.last[0]).toEqual({ text: ' used Shield Wall.', type: 'Text' });
+    expect(char.battle?.ref.log.last[0]).toEqual({ type: LineType.Ability, name: 'Shield Waller', ability: ShieldWall.name });
 });
 
 describe('ShieldWall Description', () => {

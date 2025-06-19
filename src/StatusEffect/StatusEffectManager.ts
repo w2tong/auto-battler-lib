@@ -110,35 +110,43 @@ export default class StatusEffectManager {
     }
 
     turnStart() {
-        for (const buffId of Object.values(this.buffs)) {
-            for (const buff of Object.values(buffId)) {
-                buff.onTurnStart();
-            }
-        }
-        for (const debuffId of Object.values(this.debuffs)) {
-            for (const debuff of Object.values(debuffId)) {
-                debuff.onTurnStart();
-            }
-        }
-
         for (const buff of Object.values(this.outgoingBuffs)) buff.onSourceTurnStart(this.char);
         for (const debuff of Object.values(this.outgoingDebuffs)) debuff.onSourceTurnStart(this.char);
+
+        if (!this.char.isDead()) {
+            for (const buffId of Object.values(this.buffs)) {
+                for (const buff of Object.values(buffId)) {
+                    buff.onTurnStart();
+                    if (this.char.isDead()) return;
+                }
+            }
+            for (const debuffId of Object.values(this.debuffs)) {
+                for (const debuff of Object.values(debuffId)) {
+                    debuff.onTurnStart();
+                    if (this.char.isDead()) return;
+                }
+            }
+        }
     }
 
     turnEnd() {
-        for (const buffId of Object.values(this.buffs)) {
-            for (const buff of Object.values(buffId)) {
-                buff.onTurnEnd();
-            }
-        }
-        for (const debuffId of Object.values(this.debuffs)) {
-            for (const debuff of Object.values(debuffId)) {
-                debuff.onTurnEnd();
-            }
-        }
-
         for (const buff of Object.values(this.outgoingBuffs)) buff.onSourceTurnEnd(this.char);
         for (const debuff of Object.values(this.outgoingDebuffs)) debuff.onSourceTurnEnd(this.char);
+
+        if (!this.char.isDead()) {
+            for (const buffId of Object.values(this.buffs)) {
+                for (const buff of Object.values(buffId)) {
+                    buff.onTurnEnd();
+                    if (this.char.isDead()) return;
+                }
+            }
+            for (const debuffId of Object.values(this.debuffs)) {
+                for (const debuff of Object.values(debuffId)) {
+                    debuff.onTurnEnd();
+                    if (this.char.isDead()) return;
+                }
+            }
+        }
     }
 
     onAttack(hit: boolean, target: Character) {

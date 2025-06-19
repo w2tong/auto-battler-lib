@@ -3,6 +3,7 @@ import Attributes from '../Character/Attributes/Attributes';
 import ClassName from '../Character/Classes/ClassName';
 import { startingAbility } from '../Character/Classes/classLoadouts';
 import StatType from '../Character/Stats/StatType';
+import Stats from '../Character/Stats/Stats';
 import { armour } from '../Equipment/Armour';
 import { EquipSlot } from '../Equipment/Equipment';
 import { heads } from '../Equipment/Head';
@@ -25,9 +26,9 @@ const OgreFighter: NPC = {
     },
     stats: {
         [StatType.HealthPercent]: { base: 0.45, perLvl: 0.01 },
-        [StatType.Dodge]: { base: 5 },
+        [StatType.Dodge]: { base: Stats.DEFAULT_DODGE - 35, perLvl: Stats.DEFAULT_DODGE_PER_LVL },
         [StatType.Deflection]: { base: 1, perLvl: 0.2 },
-        [StatType.Accuracy]: { base: -15, perLvl: 0.5 },
+        [StatType.Accuracy]: { base: Stats.DEFAULT_ACCURACY - 15, perLvl: 0.5 },
     },
     equipment: {
         1: {

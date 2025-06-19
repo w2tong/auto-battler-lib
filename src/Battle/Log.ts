@@ -1,4 +1,5 @@
 import HitType from '../types/HitType';
+import { type Side } from './Battle';
 
 enum LineType {
     // Text
@@ -6,10 +7,16 @@ enum LineType {
     // Combat
     Attack = 'Attack',
     Damage = 'Damage',
+    Turn = 'Turn',
+    Death = 'Death',
+    Ability = 'Ability',
+    Potion = 'Potion',
+    NoTarget = 'NoTarget',
     // Results
     Loot = 'Loot',
     Exp = 'Exp',
-    LevelUp = 'Level Up'
+    LevelUp = 'Level Up',
+    Result = 'Result'
 }
 
 type BaseLine = {
@@ -19,24 +26,6 @@ type BaseLine = {
 interface TextLine extends BaseLine {
     type: LineType.Text;
     text: string;
-}
-
-interface LootLine extends BaseLine {
-    type: LineType.Loot;
-    name: string;
-    itemId: string;
-}
-
-interface ExpLine extends BaseLine {
-    type: LineType.Exp;
-    name: string;
-    exp: number;
-}
-
-interface LevelLine extends BaseLine {
-    type: LineType.LevelUp;
-    name: string;
-    level: number;
 }
 
 interface AttackLine extends BaseLine {
@@ -57,7 +46,59 @@ interface DamageLine extends BaseLine {
     damage: number;
 }
 
-type LogLine = TextLine | LootLine | ExpLine | LevelLine | AttackLine | DamageLine;
+interface TurnLine extends BaseLine {
+    type: LineType.Turn;
+    name: string;
+}
+
+interface DeathLine extends BaseLine {
+    type: LineType.Death;
+    name: string;
+}
+
+interface AbilityLine extends BaseLine {
+    type: LineType.Ability;
+    name: string;
+    ability: string;
+    target?: string;
+}
+
+interface PotionLine extends BaseLine {
+    type: LineType.Potion;
+    name: string;
+    potion: string;
+    heal: number;
+}
+
+interface NoTargetLine extends BaseLine {
+    type: LineType.NoTarget;
+    name: string;
+}
+
+interface LootLine extends BaseLine {
+    type: LineType.Loot;
+    name: string;
+    itemId: string;
+}
+
+interface ExpLine extends BaseLine {
+    type: LineType.Exp;
+    name: string;
+    exp: number;
+}
+
+interface LevelUpLine extends BaseLine {
+    type: LineType.LevelUp;
+    name: string;
+    level: number;
+}
+
+interface ResultLine extends BaseLine {
+    type: LineType.Result;
+    winner: Side;
+}
+
+type LogLine = TextLine | AttackLine | DamageLine | TurnLine | DeathLine | AbilityLine | PotionLine | NoTargetLine | LootLine | ExpLine | LevelUpLine | ResultLine;
 
 class Log {
 
@@ -108,6 +149,45 @@ class Log {
         });
     }
 
+    addTurn(name: string) {
+        this.last.push({
+            type: LineType.Turn,
+            name
+        });
+    }
+
+    addDeath(name: string) {
+        this.last.push({
+            type: LineType.Death,
+            name
+        });
+    }
+
+    addAbility(name: string, ability: string, target?: string) {
+        this.last.push({
+            type: LineType.Ability,
+            name,
+            ability,
+            target
+        });
+    }
+
+    addPotion(name: string, potion: string, heal: number) {
+        this.last.push({
+            type: LineType.Potion,
+            name,
+            potion,
+            heal
+        });
+    }
+
+    addNoTarget(name: string) {
+        this.last.push({
+            type: LineType.NoTarget,
+            name
+        });
+    }
+
     addLoot(name: string, itemId: string) {
         this.last.push({
             type: LineType.Loot,
@@ -131,7 +211,14 @@ class Log {
             level
         });
     }
+
+    addResult(winner: Side) {
+        this.last.push({
+            type: LineType.Result,
+            winner
+        });
+    }
 }
 
 export default Log;
-export { LogLine, LineType };
+export { TextLine, AttackLine, DamageLine, TurnLine, DeathLine, AbilityLine, PotionLine, NoTargetLine, LootLine, ExpLine, LevelUpLine, ResultLine, LogLine, LineType };

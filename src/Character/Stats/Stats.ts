@@ -16,8 +16,9 @@ class Stats {
 
     static DEFAULT_MAX_HEALTH = 20;
     static DEFAULT_MAX_HEALTH_PER_LVL = 4;
-    static DEFAULT_DODGE = 50;
+    static DEFAULT_DODGE = 70;
     static DEFAULT_DODGE_PER_LVL = 0.5;
+    static DEFAULT_ACCURACY = 20;
     static DEFAULT_CRIT_CHANCE = 5;
     static DEFAULT_CRIT_DAMAGE = 1.5;
 
@@ -44,7 +45,7 @@ class Stats {
     [StatType.BlockPower]: Stat = { base: 0, attribute: 0, bonus: 0 };
 
     // Accuracy
-    [StatType.Accuracy]: Stat = { base: 0, attribute: 0, bonus: 0 };
+    [StatType.Accuracy]: Stat = { base: Stats.DEFAULT_ACCURACY, attribute: 0, bonus: 0 };
     [StatType.OffHandAccuracy]: Stat = { base: Stats.OFF_HAND_ACCURACY_PENALTY, attribute: 0, bonus: 0 };
     [StatType.MeleeAccuracy]: Stat = { base: 0, attribute: 0, bonus: 0 };
     [StatType.RangedAccuracy]: Stat = { base: 0, attribute: 0, bonus: 0 };

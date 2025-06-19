@@ -372,7 +372,5 @@ function fullSim(player: Player, npcs: NPC[], battles: number) {
 // fullSim(fighter, [OrcFighter], 1000);
 // fullSim(fighter, [OgreFighter], 1000);
 
-// fullSim(fighter, [Rat, Rat], 1000);
 // fullSim(fighter, [Rat, Rat, Rat], 1000);
-// fullSim(fighter, [Zombie], 1000);
 // fullSim(fighter, [Zombie, Zombie], 1000);

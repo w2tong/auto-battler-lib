@@ -21,7 +21,8 @@ const ShieldWall: Ability = {
     },
     func: (char) => {
         char.useAbilityMana();
-        if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME}.`);
+        if (char.battle) char.battle.ref.log.addAbility(char.name, NAME);
+
         char.statusEffectManager.add(new ShieldWallBuff({
             char,
             source: char,

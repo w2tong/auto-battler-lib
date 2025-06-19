@@ -20,8 +20,9 @@ class Battle {
     private _right: Character[] = [];
     private rightAlive: Set<number> = new Set();
 
-    private _turnIndex = -1;
+    private _turnIndex = 0;
     private _turnOrder: { char: Character, init: number; }[] = [];
+    private _aliveTurnOrder: { char: Character, index: number; }[] = [];
 
     private _log: Log;
 
@@ -68,6 +69,9 @@ class Battle {
     get turnOrder() {
         return this._turnOrder;
     }
+    get aliveTurnOrder() {
+        return this._aliveTurnOrder;
+    }
 
     getAliveTargets(side: Side) {
         if (side === Side.Left) return Array.from(this.leftAlive.values()).map(i => this.left[i]);
@@ -85,25 +89,21 @@ class Battle {
             this.rightAlive.delete(index);
         }
 
-        const charOrderIndex = this.turnOrder.findIndex(c => c.char === char);
-        if (charOrderIndex === this._turnIndex) {
-            this._turnIndex--;
-        }
-
-        this._turnOrder = this.turnOrder.filter(c => c.char !== char);
+        this._aliveTurnOrder = this._aliveTurnOrder.filter(c => c.char !== char);
     }
 
     startCombat() {
         // Assign turn order for characters
         for (const char of this.left) {
             const init = rollDice(dice['1d20']) + char.initiative;
-            this.turnOrder.push({ char, init });
+            this._turnOrder.push({ char, init });
         }
         for (const char of this.right) {
             const init = rollDice(dice['1d20']) + char.initiative;
-            this.turnOrder.push({ char, init });
+            this._turnOrder.push({ char, init });
         }
-        this.turnOrder.sort((a, b) => b.init - a.init);
+        this._turnOrder.sort((a, b) => b.init - a.init);
+        this._aliveTurnOrder = this._turnOrder.map((c, i) => { return { char: c.char, index: i }; });
     }
 
     nextTurn(): TurnRes {
@@ -113,25 +113,26 @@ class Battle {
             this.winner = Side.Tie;
             res.combatEnded = true;
             res.winner = Side.Tie;
-            this.log.add('Tie!');
+            this.log.addResult(Side.Tie);
         }
         else if (this.leftAlive.size === 0) {
             this.winner = Side.Right;
             res.combatEnded = true;
             res.winner = Side.Right;
-            this.log.add(`${'Right'} wins!`);
+            this.log.addResult(Side.Right);
         }
         else if (this.rightAlive.size === 0) {
             this.winner = Side.Left;
             res.combatEnded = true;
             res.winner = Side.Left;
-            this.log.add(`${'Left'} wins!`);
+            this.log.addResult(Side.Left);
         }
         else {
-            this._turnIndex++;
-            if (this.turnIndex >= this.turnOrder.length) this._turnIndex = 0;
             const char = this.turnOrder[this.turnIndex].char;
             char.doTurn();
+
+            this._turnIndex++;
+            if (this.turnIndex >= this.turnOrder.length) this._turnIndex = 0;
 
             return { combatEnded: false };
         }

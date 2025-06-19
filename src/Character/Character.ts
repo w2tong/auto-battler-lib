@@ -217,7 +217,8 @@ export default class Character {
             const potionHeal = this.calcPotionHealing(numberRoll(this.equipment.potion.healingRange));
             this.addHealth(potionHeal);
             this.equipment.potion.charges -= 1;
-            if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.equipment.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
+
+            if (this.battle) this.battle.ref.log.addPotion(this.name, this.equipment.potion.name, potionHeal);
         }
     }
 
@@ -228,21 +229,25 @@ export default class Character {
     doTurn(): void {
         this.statusEffectManager.turnStart();
 
-        if (!this.isCrowdControlled()) {
-            if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
-                this.usePotion();
+        if (!this.isDead()) {
+            if (this.battle) this.battle.ref.log.addTurn(this.name);
+            if (!this.isCrowdControlled()) {
+                if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
+                    this.usePotion();
+                }
+
+                this.setTarget();
+                if (this.ability && this.currentMana >= this.stats.getStat(StatType.ManaCost)) {
+                    this.ability.func(this);
+                }
+                else {
+                    this.turnAttack();
+                }
             }
 
-            this.setTarget();
-            if (this.ability && this.currentMana >= this.stats.getStat(StatType.ManaCost)) {
-                this.ability.func(this);
-            }
-            else {
-                this.turnAttack();
-            }
+            this.addMana(this.stats.getStat(StatType.ManaRegen));
         }
 
-        this.addMana(this.stats.getStat(StatType.ManaRegen));
         this.statusEffectManager.turnEnd();
     }
 
@@ -347,7 +352,7 @@ export default class Character {
                 abilityName
             });
             if (targetDead) {
-                this.battle.ref.log.add(`${target.name} died.`);
+                this.battle.ref.log.addDeath(target.name);
             }
         }
 
@@ -357,7 +362,7 @@ export default class Character {
         if (hit && target.stats.getStat(StatType.Thorns) > 0) {
             this.takeDamage({
                 source: `${StatType.Thorns} (${target.name})`,
-                damage: target.stats.getStat(StatType.Thorns),
+                damage: target.stats.getStat(StatType.Thorns) * (1 + target.stats.getStat(StatType.DamagePercent)),
                 armourPenetration: target.stats.armourPenetration
             });
         }
@@ -367,7 +372,7 @@ export default class Character {
 
     turnAttack(): void {
         if (!this.target) {
-            if (this.battle) this.battle.ref.log.add(`${this._name} has no target.`);
+            if (this.battle) this.battle.ref.log.addNoTarget(this._name);
             return;
         }
 
@@ -412,7 +417,7 @@ export default class Character {
             if (this.isDead()) {
                 dead = true;
                 this.battle.ref.setCharDead(this.battle.side, this.battle.index);
-                if (addToLog) this.battle.ref.log.add(`${this.name} died.`);
+                if (addToLog) this.battle.ref.log.addDeath(this.name);
             }
         }
 
