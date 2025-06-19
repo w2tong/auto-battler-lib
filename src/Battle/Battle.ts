@@ -113,19 +113,19 @@ class Battle {
             this.winner = Side.Tie;
             res.combatEnded = true;
             res.winner = Side.Tie;
-            this.log.add('Tie!');
+            this.log.addResult(Side.Tie);
         }
         else if (this.leftAlive.size === 0) {
             this.winner = Side.Right;
             res.combatEnded = true;
             res.winner = Side.Right;
-            this.log.add(`${'Right'} wins!`);
+            this.log.addResult(Side.Right);
         }
         else if (this.rightAlive.size === 0) {
             this.winner = Side.Left;
             res.combatEnded = true;
             res.winner = Side.Left;
-            this.log.add(`${'Left'} wins!`);
+            this.log.addResult(Side.Left);
         }
         else {
             this._turnIndex++;

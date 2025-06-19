@@ -217,7 +217,8 @@ export default class Character {
             const potionHeal = this.calcPotionHealing(numberRoll(this.equipment.potion.healingRange));
             this.addHealth(potionHeal);
             this.equipment.potion.charges -= 1;
-            if (this.battle) this.battle.ref.log.add(`${this.name} used ${this.equipment.potion.name} and healed for ${potionHeal.toLocaleString()}.`);
+
+            if (this.battle) this.battle.ref.log.addPotion(this.name, this.equipment.potion.name, potionHeal);
         }
     }
 
@@ -347,7 +348,7 @@ export default class Character {
                 abilityName
             });
             if (targetDead) {
-                this.battle.ref.log.add(target.name);
+                this.battle.ref.log.addDeath(target.name);
             }
         }
 
@@ -367,7 +368,7 @@ export default class Character {
 
     turnAttack(): void {
         if (!this.target) {
-            if (this.battle) this.battle.ref.log.add(`${this._name} has no target.`);
+            if (this.battle) this.battle.ref.log.addNoTarget(this._name);
             return;
         }
 

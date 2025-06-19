@@ -22,10 +22,12 @@ const Bless: Ability = {
     func: (char) => {
         if (!char.battle) return;
 
-        char.useAbilityMana();
         const targets = char.battle.ref.getAliveTargets(char.battle.side);
         const target = targets[getRandomRange(targets.length)];
-        char.battle.ref.log.add(`${char.name} casted ${NAME} on ${target.name}.`);
+
+        char.battle.ref.log.addAbility(char.name, NAME, target.name);
+
+        char.useAbilityMana();
         target.statusEffectManager.add(new Blessed({
             char: target,
             source: char,

@@ -17,7 +17,8 @@ const Vanish: Ability = {
     },
     func: (char) => {
         char.useAbilityMana();
-        if (char.battle) char.battle.ref.log.add(`${char.name} used ${NAME}.`);
+        if (char.battle) char.battle.ref.log.addAbility(char.name, NAME);
+
         const stacks = 1 + Math.floor(stacksPerLvl * (char.level - 1)) + Math.trunc(stacksPerDex * (char.attributes.dexterity - Attributes.DEFAULT_VALUE));
         char.statusEffectManager.add(new Invisible({
             char,
