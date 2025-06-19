@@ -22,7 +22,7 @@ class Battle {
 
     private _turnIndex = -1;
     private _turnOrder: { char: Character, init: number; }[] = [];
-    private _aliveTurnOrder: Character[] = [];
+    private _aliveTurnOrder: { char: Character, index: number; }[] = [];
 
     private _log: Log;
 
@@ -89,7 +89,7 @@ class Battle {
             this.rightAlive.delete(index);
         }
 
-        this._aliveTurnOrder = this._aliveTurnOrder.filter(c => c !== char);
+        this._aliveTurnOrder = this._aliveTurnOrder.filter(c => c.char !== char);
     }
 
     startCombat() {
@@ -103,7 +103,7 @@ class Battle {
             this._turnOrder.push({ char, init });
         }
         this._turnOrder.sort((a, b) => b.init - a.init);
-        this._aliveTurnOrder = this._turnOrder.map(val => val.char);
+        this._aliveTurnOrder = this._turnOrder.map((c, i) => { return { char: c.char, index: i }; });
     }
 
     nextTurn(): TurnRes {
