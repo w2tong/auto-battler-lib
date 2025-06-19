@@ -373,19 +373,19 @@ describe('aliveTurnOrder', () => {
 
     test('All alive', () => {
         battle.startCombat();
-        expect(battle.aliveTurnOrder).toStrictEqual([char1, char2]);
+        expect(battle.aliveTurnOrder).toStrictEqual([{ char: char1, index: 0 }, { char: char2, index: 1 }]);
     });
 
     test('Char 1 alive', () => {
         battle.startCombat();
         battle.setCharDead(Side.Right, 0);
-        expect(battle.aliveTurnOrder).toStrictEqual([char1]);
+        expect(battle.aliveTurnOrder).toStrictEqual([{ char: char1, index: 0 }]);
     });
 
     test('Char 2 alive', () => {
         battle.startCombat();
         battle.setCharDead(Side.Left, 0);
-        expect(battle.aliveTurnOrder).toStrictEqual([char2]);
+        expect(battle.aliveTurnOrder).toStrictEqual([{ char: char2, index: 1 }]);
     });
 
     test('All dead', () => {
