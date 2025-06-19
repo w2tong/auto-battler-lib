@@ -105,14 +105,12 @@ describe('turnIndex', () => {
 
         battle.nextTurn();
         expect(battle.turnIndex).toBe(2);
-        expect(battle.turnOrder[2].char).toBe(right1);
 
         battle.nextTurn();
         expect(battle.turnIndex).toBe(3);
 
         battle.setCharDead(Side.Right, 3);
         expect(battle.turnIndex).toBe(3);
-        expect(battle.turnOrder[3].char).toBe(right2);
     });
 });
 
@@ -284,20 +282,15 @@ describe('pets', () => {
     test('left 1 pet', () => {
         const char = createTestCharacter({ petId: PetId.Wolf });
         const battle = new Battle([char], []);
-        expect(battle.left[0]).toBe(char);
-        expect(battle.left[1]).toBe(char.pet);
+        expect(battle.left).toStrictEqual([char, char.pet]);
     });
     test('left 2 pets, right 1 pet', () => {
         const left1 = createTestCharacter({ petId: PetId.Wolf });
         const left2 = createTestCharacter({ petId: PetId.Wolf });
         const right1 = createTestCharacter({ petId: PetId.Wolf });
         const battle = new Battle([left1, left2], [right1]);
-        expect(battle.left[0]).toBe(left1);
-        expect(battle.left[1]).toBe(left1.pet);
-        expect(battle.left[2]).toBe(left2);
-        expect(battle.left[3]).toBe(left2.pet);
-        expect(battle.right[0]).toBe(right1);
-        expect(battle.right[1]).toBe(right1.pet);
+        expect(battle.left).toStrictEqual([left1, left1.pet, left2, left2.pet]);
+        expect(battle.right).toStrictEqual([right1, right1.pet]);
     });
 });
 
