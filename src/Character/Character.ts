@@ -229,21 +229,25 @@ export default class Character {
     doTurn(): void {
         this.statusEffectManager.turnStart();
 
-        if (!this.isCrowdControlled()) {
-            if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
-                this.usePotion();
+        if (!this.isDead()) {
+            if (this.battle) this.battle.ref.log.addTurn(this.name);
+            if (!this.isCrowdControlled()) {
+                if (this.equipment.potion && this.equipment.potion.charges > 0 && this.currentHealth <= this.stats.maxHealth / 2) {
+                    this.usePotion();
+                }
+
+                this.setTarget();
+                if (this.ability && this.currentMana >= this.stats.getStat(StatType.ManaCost)) {
+                    this.ability.func(this);
+                }
+                else {
+                    this.turnAttack();
+                }
             }
 
-            this.setTarget();
-            if (this.ability && this.currentMana >= this.stats.getStat(StatType.ManaCost)) {
-                this.ability.func(this);
-            }
-            else {
-                this.turnAttack();
-            }
+            this.addMana(this.stats.getStat(StatType.ManaRegen));
         }
 
-        this.addMana(this.stats.getStat(StatType.ManaRegen));
         this.statusEffectManager.turnEnd();
     }
 

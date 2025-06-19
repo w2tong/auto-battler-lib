@@ -22,6 +22,7 @@ class Battle {
 
     private _turnIndex = -1;
     private _turnOrder: { char: Character, init: number; }[] = [];
+    private _aliveTurnOrder: Character[] = [];
 
     private _log: Log;
 
@@ -68,6 +69,9 @@ class Battle {
     get turnOrder() {
         return this._turnOrder;
     }
+    get aliveTurnOrder() {
+        return this._aliveTurnOrder;
+    }
 
     getAliveTargets(side: Side) {
         if (side === Side.Left) return Array.from(this.leftAlive.values()).map(i => this.left[i]);
@@ -85,25 +89,21 @@ class Battle {
             this.rightAlive.delete(index);
         }
 
-        const charOrderIndex = this.turnOrder.findIndex(c => c.char === char);
-        if (charOrderIndex === this._turnIndex) {
-            this._turnIndex--;
-        }
-
-        this._turnOrder = this.turnOrder.filter(c => c.char !== char);
+        this._aliveTurnOrder = this._aliveTurnOrder.filter(c => c !== char);
     }
 
     startCombat() {
         // Assign turn order for characters
         for (const char of this.left) {
             const init = rollDice(dice['1d20']) + char.initiative;
-            this.turnOrder.push({ char, init });
+            this._turnOrder.push({ char, init });
         }
         for (const char of this.right) {
             const init = rollDice(dice['1d20']) + char.initiative;
-            this.turnOrder.push({ char, init });
+            this._turnOrder.push({ char, init });
         }
-        this.turnOrder.sort((a, b) => b.init - a.init);
+        this._turnOrder.sort((a, b) => b.init - a.init);
+        this._aliveTurnOrder = this._turnOrder.map(val => val.char);
     }
 
     nextTurn(): TurnRes {
@@ -131,7 +131,6 @@ class Battle {
             this._turnIndex++;
             if (this.turnIndex >= this.turnOrder.length) this._turnIndex = 0;
             const char = this.turnOrder[this.turnIndex].char;
-            this.log.addTurn(char.name);
             char.doTurn();
 
             return { combatEnded: false };

@@ -7,6 +7,9 @@ import { ItemType } from '../Equipment/Item';
 import { type Weapon, WeaponType } from '../Equipment/Weapon/Weapon';
 import { createTestCharacter } from '../tests/util';
 import Battle, { Side } from './Battle';
+import Blessed from '../StatusEffect/Buffs/Blessed';
+import BuffId from '../StatusEffect/types/BuffId';
+import { getCharBattleId } from '../util';
 
 const testSword: Weapon = {
     id: 'longsword0',
@@ -82,11 +85,8 @@ describe('turnIndex', () => {
         battle.nextTurn();
         expect(battle.turnIndex).toBe(0);
 
-        battle.setCharDead(Side.Left, 0);
-        expect(battle.turnIndex).toBe(-1);
-
         battle.nextTurn();
-        expect(battle.turnIndex).toBe(-1);
+        expect(battle.turnIndex).toBe(1);
     });
 
     test('4 chars', () => {
@@ -101,18 +101,18 @@ describe('turnIndex', () => {
         expect(battle.turnIndex).toBe(1);
 
         battle.setCharDead(Side.Left, 0);
-        expect(battle.turnIndex).toBe(0);
-
-        battle.nextTurn();
         expect(battle.turnIndex).toBe(1);
-        expect(battle.turnOrder[1].char).toBe(right1);
 
         battle.nextTurn();
         expect(battle.turnIndex).toBe(2);
+        expect(battle.turnOrder[2].char).toBe(right1);
 
-        battle.setCharDead(Side.Right, 1);
-        expect(battle.turnIndex).toBe(1);
-        expect(battle.turnOrder[1].char).toBe(right1);
+        battle.nextTurn();
+        expect(battle.turnIndex).toBe(3);
+
+        battle.setCharDead(Side.Right, 3);
+        expect(battle.turnIndex).toBe(3);
+        expect(battle.turnOrder[3].char).toBe(right2);
     });
 });
 
@@ -298,5 +298,107 @@ describe('pets', () => {
         expect(battle.left[3]).toBe(left2.pet);
         expect(battle.right[0]).toBe(right1);
         expect(battle.right[1]).toBe(right1.pet);
+    });
+});
+
+describe('statusEffect expiration', () => {
+    let source1: Character;
+    let source2: Character;
+    let source3: Character;
+    let battle: Battle;
+
+    beforeEach(() => {
+        source1 = createTestCharacter({
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 },
+                [StatType.Initiative]: { base: 100 }
+            }
+        });
+        source2 = createTestCharacter({
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 },
+                [StatType.Initiative]: { base: 0 }
+            }
+        });
+        source3 = createTestCharacter({
+            statTemplate: {
+                [StatType.MaxHealth]: { base: 100 },
+                [StatType.Initiative]: { base: -100 }
+            }
+        });
+
+        battle = new Battle([source1, source2], [source3]);
+    });
+
+    test('Status Effects expire after source turn', () => {
+        source1.statusEffectManager.add(new Blessed({
+            char: source1,
+            source: source2,
+            stacks: 1
+        }));
+        battle.startCombat();
+        battle.nextTurn();
+        expect(source1.statusEffectManager.buffs[BuffId.Blessed]![getCharBattleId(source2)].stacks).toBe(1);
+        battle.nextTurn();
+        expect(source1.statusEffectManager.buffs[BuffId.Blessed]).toStrictEqual({});
+    });
+    test('Status Effects expire after Source death', () => {
+        source1.statusEffectManager.add(new Blessed({
+            char: source1,
+            source: source2,
+            stacks: 1
+        }));
+        battle.startCombat();
+        source2.takeDamage({ source: '', damage: 100, armourPenetration: Infinity });
+        battle.nextTurn();
+        battle.nextTurn();
+        expect(source1.statusEffectManager.buffs[BuffId.Blessed]).toStrictEqual({});
+    });
+});
+
+describe('aliveTurnOrder', () => {
+    let char1: Character;
+    let char2: Character;
+    let battle: Battle;
+
+    beforeEach(() => {
+        char1 = createTestCharacter({
+            name: 'Char 1',
+            statTemplate: {
+                [StatType.Initiative]: { base: 100 }
+            }
+        });
+        char2 = createTestCharacter({
+            name: 'Char 2',
+            statTemplate: {
+                [StatType.Initiative]: { base: 0 }
+            }
+        });
+
+        battle = new Battle([char1], [char2]);
+    });
+
+    test('All alive', () => {
+        battle.startCombat();
+        expect(battle.aliveTurnOrder).toStrictEqual([char1, char2]);
+    });
+
+    test('Char 1 alive', () => {
+        battle.startCombat();
+        battle.setCharDead(Side.Right, 0);
+        expect(battle.aliveTurnOrder).toStrictEqual([char1]);
+    });
+
+    test('Char 2 alive', () => {
+        battle.startCombat();
+        battle.setCharDead(Side.Left, 0);
+        expect(battle.aliveTurnOrder).toStrictEqual([char2]);
+    });
+
+    test('All dead', () => {
+        battle.startCombat();
+        battle.setCharDead(Side.Left, 0);
+        battle.setCharDead(Side.Right, 0);
+        expect(battle.aliveTurnOrder).toStrictEqual([]);
     });
 });
