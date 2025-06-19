@@ -214,7 +214,20 @@ describe('getBuffStacks', () => {
 });
 
 test('Character status effects should stop after death', () => {
-    expect(1).toBe(1);
+    statusEffectManager.add(new Bleeding({
+        char: source1,
+        source: source1,
+        stacks: 1,
+        remainingDamage: 100
+    }));
+    statusEffectManager.add(new Bleeding({
+        char: source1,
+        source: source2,
+        stacks: 1,
+        remainingDamage: 100
+    }));
+    statusEffectManager.turnEnd();
+    expect(source1.currentHealth).toBe(0);
 });
 
 /*
