@@ -80,13 +80,13 @@ describe('turnIndex', () => {
         battle.startCombat();
 
         expect(battle.turnOrder).toStrictEqual([{ char: left1, init: 12 }, { char: right1, init: 11 }]);
-        expect(battle.turnIndex).toBe(-1);
-
-        battle.nextTurn();
         expect(battle.turnIndex).toBe(0);
 
         battle.nextTurn();
         expect(battle.turnIndex).toBe(1);
+
+        battle.nextTurn();
+        expect(battle.turnIndex).toBe(0);
     });
 
     test('4 chars', () => {
@@ -94,23 +94,23 @@ describe('turnIndex', () => {
         battle.startCombat();
 
         expect(battle.turnOrder).toStrictEqual([{ char: left2, init: 13 }, { char: left1, init: 12 }, { char: right1, init: 11 }, { char: right2, init: 10 }]);
-        expect(battle.turnIndex).toBe(-1);
+        expect(battle.turnIndex).toBe(0);
 
         battle.nextTurn();
         battle.nextTurn();
-        expect(battle.turnIndex).toBe(1);
+        expect(battle.turnIndex).toBe(2);
 
         battle.setCharDead(Side.Left, 0);
-        expect(battle.turnIndex).toBe(1);
-
-        battle.nextTurn();
         expect(battle.turnIndex).toBe(2);
 
         battle.nextTurn();
         expect(battle.turnIndex).toBe(3);
 
+        battle.nextTurn();
+        expect(battle.turnIndex).toBe(0);
+
         battle.setCharDead(Side.Right, 3);
-        expect(battle.turnIndex).toBe(3);
+        expect(battle.turnIndex).toBe(0);
     });
 });
 
