@@ -19,8 +19,8 @@ export { WeaponId, weapons } from './Equipment/Weapon/weapons';
 import WeaponStyle from './WeaponStyle';
 export { WeaponStyle };
 
-import Battle, { Side } from './Battle/Battle';
-export { Battle, Side };
+import Battle, { Side, TurnRes } from './Battle/Battle';
+export { Battle, Side, TurnRes };
 
 import Character from './Character/Character';
 export { Character };
