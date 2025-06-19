@@ -20,7 +20,7 @@ class Battle {
     private _right: Character[] = [];
     private rightAlive: Set<number> = new Set();
 
-    private _turnIndex = -1;
+    private _turnIndex = 0;
     private _turnOrder: { char: Character, init: number; }[] = [];
     private _aliveTurnOrder: { char: Character, index: number; }[] = [];
 
@@ -128,10 +128,11 @@ class Battle {
             this.log.addResult(Side.Left);
         }
         else {
-            this._turnIndex++;
-            if (this.turnIndex >= this.turnOrder.length) this._turnIndex = 0;
             const char = this.turnOrder[this.turnIndex].char;
             char.doTurn();
+
+            this._turnIndex++;
+            if (this.turnIndex >= this.turnOrder.length) this._turnIndex = 0;
 
             return { combatEnded: false };
         }
