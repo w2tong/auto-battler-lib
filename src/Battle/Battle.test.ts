@@ -187,14 +187,10 @@ describe('nextTurn', () => {
         expect(res).toStrictEqual({ combatEnded: false });
         expect(left1.currentHealth).toBeCloseTo(4);
 
-        // left1 attack
-        res = battle.nextTurn();
-        expect(res).toStrictEqual({ combatEnded: false });
-        expect(right1.currentHealth).toBeCloseTo(0);
-
-        // Battle over
+        // left1 attack / left wins
         res = battle.nextTurn();
         expect(res).toStrictEqual({ combatEnded: true, winner: Side.Left });
+        expect(right1.currentHealth).toBeCloseTo(0);
     });
 
     test('Result: Tie', () => {
