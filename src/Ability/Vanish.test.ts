@@ -98,12 +98,12 @@ describe('Vanish Description', () => {
     });
     test('No Character', () => {
         expect(Vanish.description()).toBe(
-            `Gain ${Invisible.name}, causing your next attack to be a sneak attack, dealing ${Invisible.damage} damage per stack.`
+            `Gain ${Invisible.name}, causing your next attack to be a sneak attack, dealing ${Invisible.damage} damage per stack, or ${Invisible.damage * 1.5} if using a two-handed weapon.`
         );
     });
     test('With Character', () => {
         expect(Vanish.description(char)).toBe(
-            `Gain 42 ${Invisible.name}, causing your next attack to be a sneak attack, dealing ${Invisible.damage} damage per stack.`
+            `Gain 42 ${Invisible.name}, causing your next attack to be a sneak attack, dealing ${Invisible.damage} damage per stack, or ${Invisible.damage * 1.5} if using a two-handed weapon.`
         );
     });
 });

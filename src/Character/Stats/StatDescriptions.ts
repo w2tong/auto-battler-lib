@@ -1,8 +1,10 @@
 import ArmourTypeDodgeMultiplier from './ArmourTypeDodgeMultiplier';
+import Stats from './Stats';
 import StatType from './StatType';
 
 // TODO: fix null coalese (change to if shorthand)
 const dodgeDescription: string = Object.entries(ArmourTypeDodgeMultiplier).reduce((str, curr) => str + `\n${curr[0]}: ${curr[1] * 100}%`, '\nThe character\'s dodge is multipled by value of the armour worn.');
+const twoHandedMultiplier = Stats.TWO_HANDED_BONUS * 100;
 
 const StatDescriptions: Record<StatType, (num?: number) => string> = {
     // Doesn't make sense in character sheet
@@ -25,7 +27,7 @@ const StatDescriptions: Record<StatType, (num?: number) => string> = {
     [StatType.SpellAccuracy]: () => 'Affects the chance of spell attacks hitting the target.',
 
     // Damage
-    [StatType.Damage]: (num) => `Increases damage of attacks by ${num}.`,
+    [StatType.Damage]: (num) => `Increases damage of attacks by ${num}. This value is increased by ${twoHandedMultiplier}% if using a two-handed weapon.`,
     [StatType.DamagePercent]: (num) => `Increases all damage dealt by ${num ? `${num}%` : 'a percentage'}.`,
 
     // Critical
@@ -44,7 +46,7 @@ const StatDescriptions: Record<StatType, (num?: number) => string> = {
     [StatType.ManaCost]: () => 'Determines the mana cost of abilities.',
     [StatType.StartingMana]: () => 'The amount of mana that the character has at the start of combat.',
     [StatType.ManaRegen]: (num) => `Gain ${num} mana on turn end.`,
-    [StatType.ManaOnHit]: (num) => `When an attack hits the target, gain ${num} mana.`,
+    [StatType.ManaOnHit]: (num) => `When an attack hits the target, gain ${num} mana. This value is increased by ${twoHandedMultiplier}% if using a two-handed weapon.`,
 
     // Initiative
     [StatType.Initiative]: () => 'Used to determine who acts first in the turn order.',
