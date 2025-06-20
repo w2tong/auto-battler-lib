@@ -278,10 +278,9 @@ export default class Character {
     }
 
     calcDamage({ damage, weaponAttack, spellPowerRatio, invisibleStacks = 0 }: { damage: number, weaponAttack: boolean, spellPowerRatio?: number, invisibleStacks?: number; }): number {
-        const statDamage = this.stats.getStat(StatType.Damage);
         const twoHandedMultiplier = this.stats.getTwoHandedMultiplier();
 
-        const damageBonus = (weaponAttack && statDamage > 0 ? statDamage * twoHandedMultiplier : this.stats.getStat(StatType.Damage));
+        const damageBonus = weaponAttack ? this.stats.damage : this.stats.getStat(StatType.Damage);
         const damagePercent = this.stats.getStat(StatType.DamagePercent);
 
         const spellDamage = spellPowerRatio !== undefined ? this.stats.spellPower * spellPowerRatio : 0;

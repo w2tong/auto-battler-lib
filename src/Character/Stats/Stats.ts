@@ -199,13 +199,12 @@ class Stats {
         return this.getStat(StatType.CriticalDamage);
     }
 
-    // Damage
-    // get damage() {
-    //     const damage = this.getStat(StatType.Damage);
-    //     if (damage < 0) return damage;
-    //     return damage * this.getTwoHandedMultiplier();
+    get damage() {
+        const damage = this.getStat(StatType.Damage);
+        if (damage < 0) return damage;
+        return damage * this.getTwoHandedMultiplier();
+    }
 
-    // }
     // get meleeWeaponDamage() {
     //     const meleeWeaponDamage = this.getStat(StatType.MeleeWeaponDamage);
     //     if (meleeWeaponDamage < 0) return meleeWeaponDamage;

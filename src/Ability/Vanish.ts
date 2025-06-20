@@ -3,6 +3,7 @@ import Ability from './Ability';
 import AbilityId from './AbilityId';
 import AttributeType from '../Character/Attributes/AttributeType';
 import Attributes from '../Character/Attributes/Attributes';
+import Stats from '../Character/Stats/Stats';
 
 const NAME = 'Vanish';
 const stacksPerLvl = 0.5;
@@ -13,7 +14,7 @@ const Vanish: Ability = {
     name: NAME,
     description: (char) => {
         const stacks = char ? 1 + Math.floor(stacksPerLvl * (char.level - 1)) + Math.trunc(stacksPerDex * (char.attributes.dexterity - Attributes.DEFAULT_VALUE)) : null;
-        return `Gain${stacks ? ` ${stacks}` : ''} ${Invisible.name}, causing your next attack to be a sneak attack, dealing ${Invisible.damage} damage per stack.`;
+        return `Gain${stacks ? ` ${stacks}` : ''} ${Invisible.name}, causing your next attack to be a sneak attack, dealing ${Invisible.damage} damage per stack, or ${Invisible.damage * (1 + Stats.TWO_HANDED_BONUS)} if using a two-handed weapon.`;
     },
     func: (char) => {
         char.useAbilityMana();

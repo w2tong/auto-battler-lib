@@ -109,6 +109,13 @@ class Battle {
     nextTurn(): TurnRes {
         this.log.nextTurn();
         const res: TurnRes = { combatEnded: false };
+
+        const char = this.turnOrder[this.turnIndex].char;
+        char.doTurn();
+
+        this._turnIndex++;
+        if (this.turnIndex >= this.turnOrder.length) this._turnIndex = 0;
+
         if (this.leftAlive.size === 0 && this.rightAlive.size === 0) {
             this.winner = Side.Tie;
             res.combatEnded = true;
@@ -126,15 +133,6 @@ class Battle {
             res.combatEnded = true;
             res.winner = Side.Left;
             this.log.addResult(Side.Left);
-        }
-        else {
-            const char = this.turnOrder[this.turnIndex].char;
-            char.doTurn();
-
-            this._turnIndex++;
-            if (this.turnIndex >= this.turnOrder.length) this._turnIndex = 0;
-
-            return { combatEnded: false };
         }
 
         return res;
