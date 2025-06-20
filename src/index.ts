@@ -38,10 +38,11 @@ import AttributeType from './Character/Attributes/AttributeType';
 export { AttributeStatScaling, AttributeType };
 export { STARTING_POINTS, POINTS_PER_LEVEL, LEVEL_CAPS } from './Character/Attributes/PlayerAttributes';
 
+import Stats from './Character/Stats/Stats';
 import ArmourTypeDodgeMultiplier from './Character/Stats/ArmourTypeDodgeMultiplier';
 import StatType from './Character/Stats/StatType';
 import StatDescriptions from './Character/Stats/StatDescriptions';
-export { ArmourTypeDodgeMultiplier, StatType, StatDescriptions };
+export { Stats, ArmourTypeDodgeMultiplier, StatType, StatDescriptions };
 
 import AttackType from './types/AttackType';
 export { AttackType };
