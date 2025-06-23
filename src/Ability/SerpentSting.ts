@@ -4,13 +4,12 @@ import { formatNum } from '../util';
 import AbilityId from './AbilityId';
 import Poisoned from '../StatusEffect/Debuffs/Poisoned';
 
-const NAME = 'Serpent Sting';
 const BONUS_DMG = 0.25;
 const STACKS = 4;
 
 const SerpentSting: Ability = {
     id: AbilityId.SerpentSting,
-    name: NAME,
+    name: 'Serpent Sting',
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
             damageRange: {
@@ -23,7 +22,7 @@ const SerpentSting: Ability = {
         }) : null;
         return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage and applies ${STACKS} ${Poisoned.name}.`;
     },
-    func: (char) => {
+    func: function (char) {
         if (char.target) {
             char.useAbilityMana();
             const mainHand = char.equipment.mainHand;
@@ -38,7 +37,7 @@ const SerpentSting: Ability = {
                 weaponAttack: true,
                 spellPowerRatio: mainHand.spellPowerRatio ? mainHand.spellPowerRatio * (1 + BONUS_DMG) : mainHand.spellPowerRatio,
                 isOffHand: false,
-                abilityName: NAME
+                abilityName: this.name
             });
 
             if (hit) {

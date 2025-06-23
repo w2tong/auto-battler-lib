@@ -4,14 +4,13 @@ import { formatNum } from '../util';
 import Bleeding from '../StatusEffect/Debuffs/Bleeding';
 import AbilityId from './AbilityId';
 
-const NAME = 'Wounding Shot';
 const BONUS_DMG = 0.5;
 const BLEED_STACKS = 3;
 const DMG_PER_TURN = 0.2;
 
 const WoundingShot: Ability = {
     id: AbilityId.WoundingShot,
-    name: NAME,
+    name: 'Wounding Shot',
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
             damageRange: {
@@ -24,7 +23,7 @@ const WoundingShot: Ability = {
         }) : null;
         return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage and applies Bleed dealing ${formatNum(DMG_PER_TURN * BLEED_STACKS * 100)}% of the initial damage dealt over ${BLEED_STACKS} turns.`;
     },
-    func: (char) => {
+    func: function (char) {
         if (char.target) {
             char.useAbilityMana();
             const mainHand = char.equipment.mainHand;
@@ -39,7 +38,7 @@ const WoundingShot: Ability = {
                 weaponAttack: true,
                 spellPowerRatio: mainHand.spellPowerRatio ? mainHand.spellPowerRatio * (1 + BONUS_DMG) : mainHand.spellPowerRatio,
                 isOffHand: false,
-                abilityName: NAME
+                abilityName: this.name
             });
 
             if (hit) {

@@ -6,7 +6,6 @@ import StatType from '../Character/Stats/StatType';
 import Frozen from '../StatusEffect/Debuffs/Frozen';
 import { dice, rollDice } from '../dice';
 
-const NAME = 'Frostbolt';
 const MIN_BASE = 1;
 const MIN_PER_LVL = 0.1;
 const MAX_BASE = 2;
@@ -17,7 +16,7 @@ const FROZEN_CHANCE = 50;
 
 const Frostbolt: Ability = {
     id: AbilityId.Frostbolt,
-    name: NAME,
+    name: 'Frostbolt',
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
             damageRange: {
@@ -30,7 +29,7 @@ const Frostbolt: Ability = {
         }) : null;
         return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage to your target, with a ${FROZEN_CHANCE}% chance of applying 1 ${Frozen.name}, preventing them from acting for 1 turn.`;
     },
-    func: (char) => {
+    func: function (char) {
         if (char.target) {
             char.useAbilityMana();
             const { hit } = char.attack({
@@ -44,7 +43,7 @@ const Frostbolt: Ability = {
                 weaponAttack: false,
                 spellPowerRatio: SPELLPOWER_RATIO,
                 isOffHand: false,
-                abilityName: NAME
+                abilityName: this.name
             });
 
             if (hit && rollDice(dice['1d100']) <= FROZEN_CHANCE) {

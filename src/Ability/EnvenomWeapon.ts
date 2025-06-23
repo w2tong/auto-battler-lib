@@ -3,15 +3,14 @@ import Ability from './Ability';
 import AbilityId from './AbilityId';
 import EnvenomWeaponBuff from '../StatusEffect/Buffs/EnvenomWeapon';
 
-const NAME = 'Envenom Weapon';
 const STACKS = 3;
 
 const EnvenomWeapon: Ability = {
     id: AbilityId.EnvenomWeapon,
-    name: NAME,
+    name: 'Envenom Weapon',
     description: () => `Your next ${STACKS} hits applies ${EnvenomWeaponBuff.POISONED_STACKS} ${Poisoned.name}.`,
-    func: (char) => {
-        if (char.battle) char.battle.ref.log.addAbility(char.name, NAME);
+    func: function (char) {
+        if (char.battle) char.battle.ref.log.addAbility(char.name, this.name);
 
         char.useAbilityMana();
         char.statusEffectManager.add(new EnvenomWeaponBuff({
