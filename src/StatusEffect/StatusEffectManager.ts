@@ -66,17 +66,18 @@ export default class StatusEffectManager {
     }
 
     add(statusEffect: StatusEffect) {
-        if (statusEffect.type === 'Buff') {
+        if (statusEffect instanceof Buff) {
             this.addStatusEffect(
-                statusEffect as Buff,
+                statusEffect,
                 this._buffs,
-                (id, char, ref) => statusEffect.source.statusEffectManager.addOutgoingBuff(id as BuffId, char, ref)
+                (id, char, ref) => statusEffect.source.statusEffectManager.addOutgoingBuff(id, char, ref)
             );
-        } else if (statusEffect.type === 'Debuff') {
+        }
+        else if (statusEffect instanceof Debuff) {
             this.addStatusEffect(
-                statusEffect as Debuff,
+                statusEffect,
                 this._debuffs,
-                (id, char, ref) => statusEffect.source.statusEffectManager.addOutgoingDebuff(id as DebuffId, char, ref)
+                (id, char, ref) => statusEffect.source.statusEffectManager.addOutgoingDebuff(id, char, ref)
             );
         }
     }
