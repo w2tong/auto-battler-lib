@@ -39,18 +39,18 @@ export type CharacterConstructor = {
 
 export default class Character {
 
-    private _name: string;
-    private _level: number;
+    readonly name: string;
+    readonly level: number;
 
-    private _className: ClassName | null;
-    private _npcId: NpcId | null;
+    readonly _className: ClassName | null;
+    readonly _npcId: NpcId | null;
 
     // Equipment
-    private _equipment: Equipment;
+    readonly equipment: Equipment;
 
     // Attributes and Stats
-    private _attributes: Attributes;
-    private _stats: Stats;
+    readonly attributes: Attributes;
+    readonly stats: Stats;
     private _currentHealth: number;
     private _currentMana: number;
 
@@ -58,36 +58,36 @@ export default class Character {
     private _ability: Ability | null;
 
     // Buffs/Debuffs
-    private _statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
+    readonly statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
 
     // Pet
-    private _pet: Character | null;
+    readonly pet: Character | null;
 
     // Battle Info
     private _target: Character | null = null;
     private _battle: { ref: Battle, side: Side, index: number; } | null = null;
 
     constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, npcId, options = {} }: CharacterConstructor) {
-        this._name = name;
-        this._level = level;
+        this.name = name;
+        this.level = level;
         this._className = className ?? null;
         this._npcId = npcId ?? null;
 
-        this._equipment = new Equipment(equipment);
+        this.equipment = new Equipment(equipment);
 
         // Attributes
-        this._attributes = new Attributes(attributes, this._equipment);
+        this.attributes = new Attributes(attributes, this.equipment);
         if (className) {
             for (const [attr, val] of Object.entries(classes[className].attributes)) {
-                this._attributes.addBonus(attr as AttributeType, val);
+                this.attributes.addBonus(attr as AttributeType, val);
             }
         }
 
         // Stats
-        this._stats = new Stats({
+        this.stats = new Stats({
             template: statTemplate,
             attributes: this.attributes,
-            equipment: this._equipment,
+            equipment: this.equipment,
             level
         });
 
@@ -95,7 +95,7 @@ export default class Character {
         this._currentHealth = options.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
 
-        this._pet = petId ? createPet(this, petId) : null;
+        this.pet = petId ? createPet(this, petId) : null;
 
         if (this.equipment.potion) {
             this.equipment.potion.charges += this.stats.getStat(StatType.PotionCharges);
@@ -108,34 +108,6 @@ export default class Character {
             side,
             index
         };
-    }
-
-    get name() {
-        return this._name;
-    }
-
-    get level() {
-        return this._level;
-    }
-
-    get className() {
-        return this._className;
-    }
-
-    get npcId() {
-        return this._npcId;
-    }
-
-    get attributes() {
-        return this._attributes;
-    }
-
-    get stats() {
-        return this._stats;
-    }
-
-    get equipment() {
-        return this._equipment;
     }
 
     get currentHealth() {
@@ -160,14 +132,6 @@ export default class Character {
 
     get battle() {
         return this._battle;
-    }
-
-    get statusEffectManager() {
-        return this._statusEffectManager;
-    }
-
-    get pet() {
-        return this._pet;
     }
 
     get ability(): Ability | null {
@@ -368,7 +332,7 @@ export default class Character {
 
     turnAttack(): void {
         if (!this.target) {
-            if (this.battle) this.battle.ref.log.addNoTarget(this._name);
+            if (this.battle) this.battle.ref.log.addNoTarget(this.name);
             return;
         }
 
