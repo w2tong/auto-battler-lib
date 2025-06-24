@@ -1,6 +1,6 @@
-import Ability from './Ability';
-import { formatNum } from '../util';
+import type Ability from './Ability';
 import AbilityId from './AbilityId';
+import { formatNum } from '../util';
 import ShieldWallBuff from '../StatusEffect/Buffs/ShieldWall';
 import AttributeType from '../Character/Attributes/AttributeType';
 

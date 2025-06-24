@@ -1,10 +1,10 @@
-import Character from '../Character/Character';
+import type Character from '../Character/Character';
 import { getOutgoingStatusEffectId, getCharBattleId } from '../util';
 import Buff from './Buff';
 import Debuff from './Debuff';
-import StatusEffect from './StatusEffect';
-import BuffId from './types/BuffId';
-import DebuffId from './types/DebuffId';
+import type StatusEffect from './StatusEffect';
+import type BuffId from './types/BuffId';
+import type DebuffId from './types/DebuffId';
 
 export default class StatusEffectManager {
     private readonly char: Character;

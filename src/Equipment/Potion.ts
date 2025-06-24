@@ -1,6 +1,6 @@
-import { Item, ItemType } from './Item';
-import Character from '../Character/Character';
-import NumberRange from '../NumberRange';
+import { type Item, ItemType } from './Item';
+import type Character from '../Character/Character';
+import type NumberRange from '../NumberRange';
 
 interface Potion extends Item {
     id: PotionId;

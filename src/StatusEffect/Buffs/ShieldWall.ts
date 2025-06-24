@@ -3,7 +3,7 @@ import Buff from '../Buff';
 import BuffId from '../types/BuffId';
 import StatsInterface, { StatsInterfaceType } from '../interface/StatsInterface';
 import Attributes from '../../Character/Attributes/Attributes';
-import StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
+import type StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
 
 export default class ShieldWall extends Buff implements StatsInterface {
     static name = 'Shield Wall';

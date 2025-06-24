@@ -1,6 +1,6 @@
-import Invisible from '../StatusEffect/Buffs/Invisible';
-import Ability from './Ability';
+import type Ability from './Ability';
 import AbilityId from './AbilityId';
+import Invisible from '../StatusEffect/Buffs/Invisible';
 import AttributeType from '../Character/Attributes/AttributeType';
 import Attributes from '../Character/Attributes/Attributes';
 import Stats from '../Character/Stats/Stats';

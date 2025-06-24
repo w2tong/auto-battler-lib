@@ -1,8 +1,8 @@
+import type Ability from './Ability';
+import AbilityId from './AbilityId';
 import AttackType from '../types/AttackType';
-import Ability from './Ability';
 import Burning from '../StatusEffect/Debuffs/Burning';
 import { formatNum } from '../util';
-import AbilityId from './AbilityId';
 import StatType from '../Character/Stats/StatType';
 
 const MIN_BASE = 1;

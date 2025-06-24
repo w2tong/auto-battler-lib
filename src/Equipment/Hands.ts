@@ -1,6 +1,6 @@
 import StatType from '../Character/Stats/StatType';
 import WeaponStyle from '../WeaponStyle';
-import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
+import { type Item, type ItemAttributes, type ItemStats, ItemType } from './Item';
 
 interface Hands extends Item {
     id: HandsId;

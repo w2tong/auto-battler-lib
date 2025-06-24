@@ -1,4 +1,4 @@
-import Ability from './Ability';
+import type Ability from './Ability';
 import AbilityId from './AbilityId';
 
 import Bless from './Bless';

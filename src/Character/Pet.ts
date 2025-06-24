@@ -1,10 +1,10 @@
-import Ability from '../Ability/Ability';
+import type Ability from '../Ability/Ability';
 import FerociousBite from '../Ability/FerociousBite';
 import { EquipSlot } from '../Equipment/Equipment';
 import { weapons } from '../Equipment/Weapon/weapons';
-import { NpcId } from '../npc/NPC';
+import { type NpcId } from '../npc/NPC';
 import Character from './Character';
-import { StatTemplate } from './Stats/StatTemplate';
+import { type StatTemplate } from './Stats/StatTemplate';
 import StatType from './Stats/StatType';
 
 const PET_STAT_RATIO = 0.5;

@@ -1,14 +1,14 @@
-import { Neck, NeckId, necks } from './Neck';
-import { Armour, ArmourId, armour } from './Armour';
-import { Waist, WaistId, waists } from './Waist';
-import { Hands, HandsId, hands } from './Hands';
-import { Head, HeadId, heads } from './Head';
-import { ItemId, ItemType } from './Item';
-import { Potion, PotionId, potions } from './Potion';
-import { Ring, RingId, rings } from './Ring';
-import { Shield, ShieldId, shields } from './Shield';
-import { Weapon, WeaponTypeProperties } from './Weapon/Weapon';
-import { WeaponId, weapons } from './Weapon/weapons';
+import { type ItemId, ItemType } from './Item';
+import { type Neck, type NeckId, necks } from './Neck';
+import { type Armour, type ArmourId, armour } from './Armour';
+import { type Waist, type WaistId, waists } from './Waist';
+import { type Hands, type HandsId, hands } from './Hands';
+import { type Head, type HeadId, heads } from './Head';
+import { type Potion, type PotionId, potions } from './Potion';
+import { type Ring, type RingId, rings } from './Ring';
+import { type Shield, type ShieldId, shields } from './Shield';
+import { type Weapon, WeaponTypeProperties } from './Weapon/Weapon';
+import { type WeaponId, weapons } from './Weapon/weapons';
 
 type Equip = Weapon | Shield | Armour | Head | Hands | Ring | Potion | Waist | Neck;
 const equips: { [key in ItemId]: Equip; } = { ...weapons, ...shields, ...armour, ...heads, ...hands, ...rings, ...potions, ...waists, ...necks } as const;

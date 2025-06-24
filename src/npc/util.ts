@@ -1,10 +1,10 @@
 import Attributes from '../Character/Attributes/Attributes';
-import AttributeTemplate from '../Character/Attributes/AttributeTemplate';
-import AttributeType from '../Character/Attributes/AttributeType';
-import BaseAttributes from '../Character/Attributes/BaseAttributes';
-import BaseStats from '../Character/Stats/BaseStats';
-import { StatTemplate } from '../Character/Stats/StatTemplate';
-import StatType from '../Character/Stats/StatType';
+import type AttributeTemplate from '../Character/Attributes/AttributeTemplate';
+import type AttributeType from '../Character/Attributes/AttributeType';
+import type BaseAttributes from '../Character/Attributes/BaseAttributes';
+import type BaseStats from '../Character/Stats/BaseStats';
+import type { StatTemplate } from '../Character/Stats/StatTemplate';
+import type StatType from '../Character/Stats/StatType';
 
 function calculateBaseAttributes(template: AttributeTemplate, level: number): BaseAttributes {
     const attributes: BaseAttributes = {};

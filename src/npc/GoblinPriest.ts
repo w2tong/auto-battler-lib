@@ -1,5 +1,5 @@
+import type NPC from './NPC';
 import AttributeType from '../Character/Attributes/AttributeType';
-import NPC from './NPC';
 import ClassName from '../Character/Classes/ClassName';
 import { armour } from '../Equipment/Armour';
 import { EquipSlot } from '../Equipment/Equipment';

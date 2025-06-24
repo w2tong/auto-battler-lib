@@ -1,8 +1,8 @@
 import Debuff from '../Debuff';
-import DamageTaken from '../interface/DamageTaken';
-import RemainingDamage from '../interface/RemainingDamage';
+import type DamageTaken from '../interface/DamageTaken';
+import type RemainingDamage from '../interface/RemainingDamage';
 import DebuffId from '../types/DebuffId';
-import StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
+import type StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
 
 export default class Bleeding extends Debuff implements RemainingDamage, DamageTaken {
     static name = 'Bleeding';

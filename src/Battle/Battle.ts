@@ -1,4 +1,4 @@
-import Character from '../Character/Character';
+import type Character from '../Character/Character';
 import Log from './Log';
 import { rollDice, dice } from '../dice';
 

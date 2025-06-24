@@ -1,26 +1,26 @@
 import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle/Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
-import { Equipment, EquipmentImport } from '../Equipment/Equipment';
+import { Equipment, type EquipmentImport } from '../Equipment/Equipment';
 import HitType from '../types/HitType';
 import { dice, rollDice } from '../dice';
 import Stats from './Stats/Stats';
 import NumberRange, { numberRoll } from '../NumberRange';
-import Ability from '../Ability/Ability';
-import { StatTemplate } from './Stats/StatTemplate';
+import type Ability from '../Ability/Ability';
+import { type StatTemplate } from './Stats/StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
 import classes from './Classes/classes';
 import ClassName from './Classes/ClassName';
 import BuffId from '../StatusEffect/types/BuffId';
+import DebuffId from '../StatusEffect/types/DebuffId';
 import StatType from './Stats/StatType';
 import Attributes from './Attributes/Attributes';
-import BaseAttributes from './Attributes/BaseAttributes';
-import AttackType from '../types/AttackType';
+import type BaseAttributes from './Attributes/BaseAttributes';
+import type AttackType from '../types/AttackType';
 import { type Weapon } from '../Equipment/Weapon/Weapon';
-import { createPet, PetId } from './Pet';
-import AttributeType from './Attributes/AttributeType';
-import { NpcId } from '../npc/NPC';
-import DebuffId from '../StatusEffect/types/DebuffId';
+import { createPet, type PetId } from './Pet';
+import type AttributeType from './Attributes/AttributeType';
+import { type NpcId } from '../npc/NPC';
 
 export type CharacterConstructor = {
     name: string;

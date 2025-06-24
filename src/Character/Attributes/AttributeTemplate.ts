@@ -1,4 +1,4 @@
-import AttributeType from './AttributeType';
+import type AttributeType from './AttributeType';
 
 type AttributeTemplate = { [attr in AttributeType]?: { base?: number, perLvl?: number; } };
 

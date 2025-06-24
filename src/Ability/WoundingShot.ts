@@ -1,8 +1,8 @@
+import type Ability from './Ability';
+import AbilityId from './AbilityId';
 import AttackType from '../types/AttackType';
-import Ability from './Ability';
 import { formatNum } from '../util';
 import Bleeding from '../StatusEffect/Debuffs/Bleeding';
-import AbilityId from './AbilityId';
 
 const BONUS_DMG = 0.5;
 const BLEED_STACKS = 3;

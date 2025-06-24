@@ -1,7 +1,7 @@
 import SerpentSting from '../../Ability/SerpentSting';
 import WoundingShot from '../../Ability/WoundingShot';
 import AttributeType from '../Attributes/AttributeType';
-import Class from './Class';
+import type Class from './Class';
 
 const Ranger: Class = {
     name: 'Ranger',

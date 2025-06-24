@@ -1,7 +1,7 @@
-import AttackType from '../types/AttackType';
-import Ability from './Ability';
-import { formatNum } from '../util';
+import type Ability from './Ability';
 import AbilityId from './AbilityId';
+import AttackType from '../types/AttackType';
+import { formatNum } from '../util';
 import Poisoned from '../StatusEffect/Debuffs/Poisoned';
 
 const BONUS_DMG = 0.25;

@@ -1,4 +1,4 @@
-import LevelRange from '../../types/LevelRange';
+import type LevelRange from '../../types/LevelRange';
 
 const STARTING_POINTS = 10;
 const POINTS_PER_LEVEL = 3;

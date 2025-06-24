@@ -1,7 +1,7 @@
 import Bless from '../../Ability/Bless';
 import Smite from '../../Ability/Smite';
 import AttributeType from '../Attributes/AttributeType';
-import Class from './Class';
+import type Class from './Class';
 
 const Priest: Class = {
     name: 'Priest',

@@ -1,9 +1,9 @@
-import Character from '../Character/Character';
-import BuffId from './types/BuffId';
-import DebuffId from './types/DebuffId';
-import StatusEffectManager from './StatusEffectManager';
-import StatusEffectCtorArgs from './types/StatusEffectCtorArgs';
-import StatusEffectType from './types/StatusEffectType';
+import type Character from '../Character/Character';
+import type BuffId from './types/BuffId';
+import type DebuffId from './types/DebuffId';
+import type StatusEffectManager from './StatusEffectManager';
+import type StatusEffectCtorArgs from './types/StatusEffectCtorArgs';
+import type StatusEffectType from './types/StatusEffectType';
 
 abstract class StatusEffect {
     abstract readonly id: BuffId | DebuffId;

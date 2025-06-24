@@ -1,7 +1,7 @@
 import EnvenomWeapon from '../../Ability/EnvenomWeapon';
 import Vanish from '../../Ability/Vanish';
 import AttributeType from '../Attributes/AttributeType';
-import Class from './Class';
+import type Class from './Class';
 
 const Rogue: Class = {
     name: 'Rogue',

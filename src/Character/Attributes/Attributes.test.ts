@@ -2,7 +2,7 @@ import { EquipSlot } from '../../Equipment/Equipment';
 import { necks } from '../../Equipment/Neck';
 import { quarterstaffs } from '../../Equipment/Weapon/weapons/quarterstaffs';
 import { createTestCharacter } from '../../tests/util';
-import Character from '../Character';
+import type Character from '../Character';
 import AttributeType from './AttributeType';
 
 let char: Character;

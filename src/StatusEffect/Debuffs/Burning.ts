@@ -1,6 +1,6 @@
 import StatType from '../../Character/Stats/StatType';
 import Debuff from '../Debuff';
-import DamageTaken from '../interface/DamageTaken';
+import type DamageTaken from '../interface/DamageTaken';
 import DebuffId from '../types/DebuffId';
 
 export default class Burning extends Debuff implements DamageTaken {

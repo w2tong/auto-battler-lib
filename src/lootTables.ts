@@ -1,13 +1,13 @@
-import { ArmourId } from './Equipment/Armour';
-import { HandsId } from './Equipment/Hands';
-import { HeadId } from './Equipment/Head';
-import { ShieldId } from './Equipment/Shield';
-import { WeaponId } from './Equipment/Weapon/weapons';
-import { RingId } from './Equipment/Ring';
-import { PotionId } from './Equipment/Potion';
-import { WaistId } from './Equipment/Waist';
-import LevelRange from './types/LevelRange';
-import { NeckId } from './Equipment/Neck';
+import type { ArmourId } from './Equipment/Armour';
+import type { HandsId } from './Equipment/Hands';
+import type { HeadId } from './Equipment/Head';
+import type { ShieldId } from './Equipment/Shield';
+import type { WeaponId } from './Equipment/Weapon/weapons';
+import type { RingId } from './Equipment/Ring';
+import type { PotionId } from './Equipment/Potion';
+import type { WaistId } from './Equipment/Waist';
+import type { NeckId } from './Equipment/Neck';
+import type LevelRange from './types/LevelRange';
 type LootTable = (WeaponId | ShieldId | HeadId | ArmourId | HandsId | RingId | PotionId | WaistId | NeckId)[];
 
 const lootTiers: { [tier: number]: LootTable; } = {

@@ -1,4 +1,4 @@
-import Ability from './Ability';
+import type Ability from './Ability';
 import Blessed from '../StatusEffect/Buffs/Blessed';
 import { formatNum, getRandomRange } from '../util';
 import AbilityId from './AbilityId';

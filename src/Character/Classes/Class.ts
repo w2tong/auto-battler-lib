@@ -1,6 +1,6 @@
-import Ability from '../../Ability/Ability';
-import BaseAttributes from '../Attributes/BaseAttributes';
-import BaseStats from '../Stats/BaseStats';
+import type Ability from '../../Ability/Ability';
+import type BaseAttributes from '../Attributes/BaseAttributes';
+import type BaseStats from '../Stats/BaseStats';
 
 type Class = {
     name: string;

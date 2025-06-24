@@ -1,10 +1,11 @@
 import { getRandomRange } from './util';
 import Character from './Character/Character';
-import NPC, { NpcEquipmentLevel } from './npc/NPC';
-import LevelRange from './types/LevelRange';
-import BaseAttributes from './Character/Attributes/BaseAttributes';
+import type NPC from './npc/NPC';
+import type { NpcEquipmentLevel } from './npc/NPC';
+import type LevelRange from './types/LevelRange';
+import type BaseAttributes from './Character/Attributes/BaseAttributes';
 import { calculateBaseAttributes } from './npc/util';
-import { EquipmentImport } from './Equipment/Equipment';
+import type { EquipmentImport } from './Equipment/Equipment';
 
 import BanditFighter from './npc/bandit/BanditFighter';
 import BanditPriest from './npc/bandit/BanditPriest';
@@ -15,12 +16,10 @@ import BanditWizard from './npc/bandit/BanditWizard';
 import Rat from './npc/Rat';
 import GoblinFighter from './npc/GoblinFighter';
 import GoblinRogue from './npc/GoblinRogue';
+import GoblinPriest from './npc/GoblinPriest';
 import OrcFighter from './npc/OrcFighter';
 import Zombie from './npc/Zombie';
 import OgreFighter from './npc/OgreFighter';
-
-
-import GoblinPriest from './npc/GoblinPriest';
 
 type EncounterGroup = NPC[];
 type GroupKey =

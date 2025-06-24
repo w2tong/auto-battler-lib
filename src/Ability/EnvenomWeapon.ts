@@ -1,6 +1,6 @@
-import Poisoned from '../StatusEffect/Debuffs/Poisoned';
-import Ability from './Ability';
+import type Ability from './Ability';
 import AbilityId from './AbilityId';
+import Poisoned from '../StatusEffect/Debuffs/Poisoned';
 import EnvenomWeaponBuff from '../StatusEffect/Buffs/EnvenomWeapon';
 
 const STACKS = 3;
