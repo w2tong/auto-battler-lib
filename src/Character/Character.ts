@@ -22,9 +22,22 @@ import AttributeType from './Attributes/AttributeType';
 import { NpcId } from '../npc/NPC';
 import DebuffId from '../StatusEffect/types/DebuffId';
 
-// Crit chance, crit dmg, Accuracy, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
+export type CharacterConstructor = {
+    name: string;
+    level: number;
+    className?: ClassName;
+    attributes: BaseAttributes;
+    statTemplate: StatTemplate;
+    equipment: EquipmentImport;
+    ability?: Ability;
+    petId?: PetId;
+    npcId?: NpcId;
+    options?: {
+        currHealthPc?: number;
+    };
+};
+
 export default class Character {
-    private userId?: string;
 
     private _name: string;
     private _level: number;
@@ -54,7 +67,7 @@ export default class Character {
     private _target: Character | null = null;
     private _battle: { ref: Battle, side: Side, index: number; } | null = null;
 
-    constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, npcId, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, petId?: PetId, npcId?: NpcId, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
+    constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, npcId, options = {} }: CharacterConstructor) {
         this._name = name;
         this._level = level;
         this._className = className ?? null;
@@ -79,7 +92,7 @@ export default class Character {
         });
 
         this._ability = ability ?? null;
-        this._currentHealth = options?.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
+        this._currentHealth = options.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
 
         this._pet = petId ? createPet(this, petId) : null;
@@ -87,8 +100,6 @@ export default class Character {
         if (this.equipment.potion) {
             this.equipment.potion.charges += this.stats.getStat(StatType.PotionCharges);
         }
-
-        if (options?.userId) this.userId = options.userId;
     }
 
     setBattle(ref: Battle, side: Side, index: number) {
@@ -164,21 +175,7 @@ export default class Character {
     }
 
     set ability(ability: Ability | null) {
-        this.ability = ability;
-    }
-
-    getName(): string {
-        let name = this.name;
-        if (this.userId) name += ` (${this.userId})`;
-        return name;
-    }
-
-    getHealthString(): string {
-        return `${Math.round(this.currentHealth)}/${this.stats.maxHealth}`;
-    }
-
-    getManaString(): string {
-        return `${this.currentMana}/${this.stats.getStat(StatType.ManaCost)}`;
+        this._ability = ability;
     }
 
     setTarget(): void {

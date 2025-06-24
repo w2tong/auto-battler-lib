@@ -25,8 +25,7 @@ function formatNum(num: number, multiplier = 1): number {
     return Number((num * multiplier).toFixed(1));
 }
 
-function createPlayerChar({ userId, name, level, className, attributes, statTemplate, equipment, ability }: { userId: string, name: string, level: LevelRange, className: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability: Ability; }): Character {
-    // TODO: use class to calculate stuff
+function createPlayerChar({ name, level, className, attributes, statTemplate, equipment, ability }: { name: string, level: LevelRange, className: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability: Ability; }): Character {
     return new Character({
         name,
         level,
@@ -34,10 +33,7 @@ function createPlayerChar({ userId, name, level, className, attributes, statTemp
         attributes,
         statTemplate,
         equipment,
-        ability,
-        options: {
-            userId
-        }
+        ability
     });
 }
 
