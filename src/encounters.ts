@@ -58,7 +58,7 @@ const groups: Record<GroupKey, NPC[]> = {
 const banditGroup: { group: EncounterGroup; }[] = [
     { group: groups.fighter },
     { group: groups.priest },
-    { group: groups.rogue },
+    { group: groups.ranger },
     { group: groups.rogue },
     { group: groups.wizard },
 ];
