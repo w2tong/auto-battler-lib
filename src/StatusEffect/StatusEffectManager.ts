@@ -7,7 +7,7 @@ import BuffId from './types/BuffId';
 import DebuffId from './types/DebuffId';
 
 export default class StatusEffectManager {
-    private char: Character;
+    private readonly char: Character;
     private _buffs: { [id in BuffId]?: { [key: string]: Buff; } } = {};
     private _debuffs: { [id in DebuffId]?: { [key: string]: Debuff; } } = {};
 
@@ -28,20 +28,16 @@ export default class StatusEffectManager {
 
     getBuffStacks(id: BuffId) {
         let count = 0;
-        if (this.buffs[id]) {
-            for (const buff of Object.values(this.buffs[id]!)) {
-                count += buff.stacks;
-            }
+        for (const buff of Object.values(this.buffs[id] ?? {})) {
+            count += buff.stacks;
         }
         return count;
     }
 
     getDebuffStacks(id: DebuffId) {
         let count = 0;
-        if (this.debuffs[id]) {
-            for (const debuff of Object.values(this.debuffs[id]!)) {
-                count += debuff.stacks;
-            }
+        for (const debuff of Object.values(this.debuffs[id] ?? {})) {
+            count += debuff.stacks;
         }
         return count;
     }
@@ -83,17 +79,24 @@ export default class StatusEffectManager {
     }
 
     removeBuff(id: BuffId, source: Character) {
+        const buffs = this.buffs[id];
         const sourceId = getCharBattleId(source);
-        this.buffs[id]![sourceId].onExpire();
-        delete this.buffs[id]![sourceId];
-        source.statusEffectManager.removeOutgoingBuff(id, this.char);
+        if (buffs && buffs[sourceId]) {
+            buffs[sourceId].onExpire();
+            delete buffs[sourceId];
+            source.statusEffectManager.removeOutgoingBuff(id, this.char);
+        }
+
     }
 
     removeDebuff(id: DebuffId, source: Character) {
+        const debuffs = this.debuffs[id];
         const sourceId = getCharBattleId(source);
-        this.debuffs[id]![sourceId].onExpire();
-        delete this.debuffs[id]![sourceId];
-        source.statusEffectManager.removeOutgoingDebuff(id, this.char);
+        if (debuffs && debuffs[sourceId]) {
+            debuffs[sourceId].onExpire();
+            delete debuffs[sourceId];
+            source.statusEffectManager.removeOutgoingDebuff(id, this.char);
+        }
     }
 
     addOutgoingBuff(id: BuffId, char: Character, ref: Buff) {
@@ -110,23 +113,31 @@ export default class StatusEffectManager {
         delete this.outgoingDebuffs[getOutgoingStatusEffectId(id, char)];
     }
 
+    /**
+     * Helper to iterate over all buffs and debuffs and apply a callback.
+     */
+    private forEachEffect<T>(effectMap: { [id: string]: { [key: string]: T; } | undefined; }, fn: (effect: T) => boolean | void) {
+        for (const idMap of Object.values(effectMap)) {
+            if (!idMap) continue;
+            for (const effect of Object.values(idMap)) {
+                if (fn(effect)) return; // allow early return if callback returns true
+            }
+        }
+    }
+
     turnStart() {
         for (const buff of Object.values(this.outgoingBuffs)) buff.onSourceTurnStart(this.char);
         for (const debuff of Object.values(this.outgoingDebuffs)) debuff.onSourceTurnStart(this.char);
 
         if (!this.char.isDead()) {
-            for (const buffId of Object.values(this.buffs)) {
-                for (const buff of Object.values(buffId)) {
-                    buff.onTurnStart();
-                    if (this.char.isDead()) return;
-                }
-            }
-            for (const debuffId of Object.values(this.debuffs)) {
-                for (const debuff of Object.values(debuffId)) {
-                    debuff.onTurnStart();
-                    if (this.char.isDead()) return;
-                }
-            }
+            this.forEachEffect(this.buffs, (buff) => {
+                buff.onTurnStart();
+                if (this.char.isDead()) return true;
+            });
+            this.forEachEffect(this.debuffs, (debuff) => {
+                debuff.onTurnStart();
+                if (this.char.isDead()) return true;
+            });
         }
     }
 
@@ -135,31 +146,19 @@ export default class StatusEffectManager {
         for (const debuff of Object.values(this.outgoingDebuffs)) debuff.onSourceTurnEnd(this.char);
 
         if (!this.char.isDead()) {
-            for (const buffId of Object.values(this.buffs)) {
-                for (const buff of Object.values(buffId)) {
-                    buff.onTurnEnd();
-                    if (this.char.isDead()) return;
-                }
-            }
-            for (const debuffId of Object.values(this.debuffs)) {
-                for (const debuff of Object.values(debuffId)) {
-                    debuff.onTurnEnd();
-                    if (this.char.isDead()) return;
-                }
-            }
+            this.forEachEffect(this.buffs, (buff) => {
+                buff.onTurnEnd();
+                if (this.char.isDead()) return true;
+            });
+            this.forEachEffect(this.debuffs, (debuff) => {
+                debuff.onTurnEnd();
+                if (this.char.isDead()) return true;
+            });
         }
     }
 
     onAttack(hit: boolean, target: Character) {
-        for (const buffId of Object.values(this.buffs)) {
-            for (const buff of Object.values(buffId)) {
-                buff.onAttack(hit, target);
-            }
-        }
-        for (const debuffId of Object.values(this.debuffs)) {
-            for (const debuff of Object.values(debuffId)) {
-                debuff.onAttack(hit, target);
-            }
-        }
+        this.forEachEffect(this.buffs, (buff) => buff.onAttack(hit, target));
+        this.forEachEffect(this.debuffs, (debuff) => debuff.onAttack(hit, target));
     }
 }
