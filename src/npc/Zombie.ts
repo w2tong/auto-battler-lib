@@ -1,10 +1,10 @@
+import type NPC from './NPC';
 import Attributes from '../Character/Attributes/Attributes';
 import AttributeType from '../Character/Attributes/AttributeType';
 import Stats from '../Character/Stats/Stats';
 import StatType from '../Character/Stats/StatType';
 import { EquipSlot } from '../Equipment/Equipment';
 import { weapons } from '../Equipment/Weapon/weapons';
-import NPC from './NPC';
 
 const Zombie: NPC = {
     id: 'zombie',

@@ -1,17 +1,16 @@
+import type Ability from './Ability';
+import AbilityId from './AbilityId';
 import AttackType from '../types/AttackType';
-import Ability from './Ability';
 import { formatNum } from '../util';
 import Bleeding from '../StatusEffect/Debuffs/Bleeding';
-import AbilityId from './AbilityId';
 
-const NAME = 'Ferocious Bite';
 const BONUS_DMG = 0.25;
 const BLEED_STACKS = 2;
 const DMG_PER_TURN = 0.15;
 
 const FerociousBite: Ability = {
     id: AbilityId.FerociousBite,
-    name: NAME,
+    name: 'Ferocious Bite',
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
             damageRange: {
@@ -23,7 +22,7 @@ const FerociousBite: Ability = {
         }) : null;
         return `Deals ${damageRange ? `${formatNum(damageRange.min)} - ${formatNum(damageRange.max)} ` : ''}damage and applies Bleed dealing ${formatNum(DMG_PER_TURN * BLEED_STACKS * 100)}% of the damage dealt over ${BLEED_STACKS} turns.`;
     },
-    func: (char) => {
+    func: function (char) {
         if (char.target) {
             char.useAbilityMana();
             const { hit, damageDone } = char.attack({
@@ -36,7 +35,7 @@ const FerociousBite: Ability = {
                 },
                 weaponAttack: true,
                 isOffHand: false,
-                abilityName: NAME
+                abilityName: this.name
             });
 
             if (hit) {

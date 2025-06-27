@@ -1,9 +1,10 @@
 import StatType from '../../Character/Stats/StatType';
 import Buff from '../Buff';
 import BuffId from '../types/BuffId';
-import StatsInterface, { StatsInterfaceType } from '../interface/StatsInterface';
+import type StatsInterface from '../interface/StatsInterface';
+import type { StatsInterfaceType } from '../interface/StatsInterface';
 import Attributes from '../../Character/Attributes/Attributes';
-import StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
+import type StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
 
 export default class Blessed extends Buff implements StatsInterface {
     static name = 'Blessed';

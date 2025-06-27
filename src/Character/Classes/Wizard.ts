@@ -1,7 +1,7 @@
 import Firebolt from '../../Ability/Firebolt';
 import Frostbolt from '../../Ability/Frostbolt';
 import AttributeType from '../Attributes/AttributeType';
-import Class from './Class';
+import type Class from './Class';
 
 const Wizard: Class = {
     name: 'Wizard',

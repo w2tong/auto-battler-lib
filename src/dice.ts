@@ -1,7 +1,7 @@
-type Dice = { num: number, sides: number }
+type Dice = { num: number, sides: number; };
 
 type DiceRoll = '1d2' | '1d3' | '1d4' | '1d6' | '1d8' | '1d10' | '1d12' | '1d20' | '1d100'
-    | '2d6'
+    | '2d6';
 const dice: { [key in DiceRoll]: Dice } = {
     // 1 die
     '1d2': { num: 1, sides: 2 },
@@ -25,4 +25,4 @@ function rollDice(dice: Dice): number {
     return sum;
 }
 
-export { Dice, dice, rollDice };
+export { type Dice, dice, rollDice };

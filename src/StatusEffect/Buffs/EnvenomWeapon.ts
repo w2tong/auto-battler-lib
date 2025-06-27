@@ -1,4 +1,4 @@
-import Character from '../../Character/Character';
+import type Character from '../../Character/Character';
 import Buff from '../Buff';
 import Poisoned from '../Debuffs/Poisoned';
 import BuffId from '../types/BuffId';

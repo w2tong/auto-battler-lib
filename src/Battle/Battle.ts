@@ -1,4 +1,4 @@
-import Character from '../Character/Character';
+import type Character from '../Character/Character';
 import Log from './Log';
 import { rollDice, dice } from '../dice';
 
@@ -8,25 +8,20 @@ enum Side {
     Tie = 'Tie'
 }
 
-type TurnRes = {
-    combatEnded: boolean;
-    winner?: Side;
-};
+type TurnRes = { combatEnded: false; } | { combatEnded: true, winner: Side; };
 
 class Battle {
-    private _left: Character[] = [];
+    private readonly _left: Character[] = [];
     private leftAlive: Set<number> = new Set();
 
-    private _right: Character[] = [];
+    private readonly _right: Character[] = [];
     private rightAlive: Set<number> = new Set();
 
     private _turnIndex = 0;
-    private _turnOrder: { char: Character, init: number; }[] = [];
+    private readonly _turnOrder: { char: Character, init: number; }[] = [];
     private _aliveTurnOrder: { char: Character, index: number; }[] = [];
 
-    private _log: Log;
-
-    private winner?: Side;
+    private readonly _log: Log;
 
     constructor(left: Character[], right: Character[]) {
         this._left = this.getCharsWithPets(left);
@@ -74,21 +69,28 @@ class Battle {
     }
 
     getAliveTargets(side: Side) {
-        if (side === Side.Left) return Array.from(this.leftAlive.values()).map(i => this.left[i]);
-        return Array.from(this.rightAlive.values()).map(i => this.right[i]);
+        const alive = side === Side.Left ? this.leftAlive : this.rightAlive;
+        const chars = side === Side.Left ? this.left : this.right;
+        const result: Character[] = [];
+        for (const i of alive) {
+            result.push(chars[i]);
+        }
+        return result;
     }
 
     setCharDead(side: Side, index: number) {
-        let char: Character;
+        if (side === Side.Tie) return;
+        let char: Character | null = null;
         if (side === Side.Left) {
             char = this.left[index];
             this.leftAlive.delete(index);
         }
-        else {
+        else if (side === Side.Right) {
             char = this.right[index];
             this.rightAlive.delete(index);
         }
 
+        if (char === null) return;
         this._aliveTurnOrder = this._aliveTurnOrder.filter(c => c.char !== char);
     }
 
@@ -108,7 +110,7 @@ class Battle {
 
     nextTurn(): TurnRes {
         this.log.nextTurn();
-        const res: TurnRes = { combatEnded: false };
+        let res: TurnRes = { combatEnded: false };
 
         const char = this.turnOrder[this.turnIndex].char;
         char.doTurn();
@@ -117,21 +119,15 @@ class Battle {
         if (this.turnIndex >= this.turnOrder.length) this._turnIndex = 0;
 
         if (this.leftAlive.size === 0 && this.rightAlive.size === 0) {
-            this.winner = Side.Tie;
-            res.combatEnded = true;
-            res.winner = Side.Tie;
+            res = { combatEnded: true, winner: Side.Tie };
             this.log.addResult(Side.Tie);
         }
         else if (this.leftAlive.size === 0) {
-            this.winner = Side.Right;
-            res.combatEnded = true;
-            res.winner = Side.Right;
+            res = { combatEnded: true, winner: Side.Right };
             this.log.addResult(Side.Right);
         }
         else if (this.rightAlive.size === 0) {
-            this.winner = Side.Left;
-            res.combatEnded = true;
-            res.winner = Side.Left;
+            res = { combatEnded: true, winner: Side.Left };
             this.log.addResult(Side.Left);
         }
 

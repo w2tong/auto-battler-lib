@@ -1,11 +1,11 @@
-import Ability from '../../Ability/Ability';
+import type Ability from '../../Ability/Ability';
 import Bless from '../../Ability/Bless';
 import DoubleStrike from '../../Ability/DoubleStrike';
 import Firebolt from '../../Ability/Firebolt';
 import Vanish from '../../Ability/Vanish';
 import WoundingShot from '../../Ability/WoundingShot';
 import { armour } from '../../Equipment/Armour';
-import { EquipmentImport, EquipSlot } from '../../Equipment/Equipment';
+import { type EquipmentImport, EquipSlot } from '../../Equipment/Equipment';
 import { shields } from '../../Equipment/Shield';
 import { weapons } from '../../Equipment/Weapon/weapons';
 import ClassName from './ClassName';

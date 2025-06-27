@@ -1,3 +1,4 @@
+import type NPC from './NPC';
 import AttributeType from '../Character/Attributes/AttributeType';
 import Attributes from '../Character/Attributes/Attributes';
 import ClassName from '../Character/Classes/ClassName';
@@ -10,7 +11,6 @@ import { heads } from '../Equipment/Head';
 import { potions } from '../Equipment/Potion';
 import { waists } from '../Equipment/Waist';
 import { weapons } from '../Equipment/Weapon/weapons';
-import NPC from './NPC';
 
 const OrcFighter: NPC = {
     id: 'orcFighter',

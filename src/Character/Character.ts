@@ -1,43 +1,56 @@
 import { getRandomRange } from '../util';
 import Battle, { Side } from '../Battle/Battle';
 import StatusEffectManager from '../StatusEffect/StatusEffectManager';
-import { Equipment, EquipmentImport } from '../Equipment/Equipment';
+import { Equipment, type EquipmentImport } from '../Equipment/Equipment';
 import HitType from '../types/HitType';
 import { dice, rollDice } from '../dice';
 import Stats from './Stats/Stats';
 import NumberRange, { numberRoll } from '../NumberRange';
-import Ability from '../Ability/Ability';
-import { StatTemplate } from './Stats/StatTemplate';
+import type Ability from '../Ability/Ability';
+import { type StatTemplate } from './Stats/StatTemplate';
 import Invisible from '../StatusEffect/Buffs/Invisible';
 import classes from './Classes/classes';
 import ClassName from './Classes/ClassName';
 import BuffId from '../StatusEffect/types/BuffId';
+import DebuffId from '../StatusEffect/types/DebuffId';
 import StatType from './Stats/StatType';
 import Attributes from './Attributes/Attributes';
-import BaseAttributes from './Attributes/BaseAttributes';
-import AttackType from '../types/AttackType';
+import type BaseAttributes from './Attributes/BaseAttributes';
+import type AttackType from '../types/AttackType';
 import { type Weapon } from '../Equipment/Weapon/Weapon';
-import { createPet, PetId } from './Pet';
-import AttributeType from './Attributes/AttributeType';
-import { NpcId } from '../npc/NPC';
-import DebuffId from '../StatusEffect/types/DebuffId';
+import { createPet, type PetId } from './Pet';
+import type AttributeType from './Attributes/AttributeType';
+import { type NpcId } from '../npc/NPC';
 
-// Crit chance, crit dmg, Accuracy, dodge chance, mana regen, mana on hit (one-hand vs two-hand)
+export type CharacterConstructor = {
+    name: string;
+    level: number;
+    className?: ClassName;
+    attributes: BaseAttributes;
+    statTemplate: StatTemplate;
+    equipment: EquipmentImport;
+    ability?: Ability;
+    petId?: PetId;
+    npcId?: NpcId;
+    options?: {
+        currHealthPc?: number;
+    };
+};
+
 export default class Character {
-    private userId?: string;
 
-    private _name: string;
-    private _level: number;
+    readonly name: string;
+    readonly level: number;
 
-    private _className: ClassName | null;
-    private _npcId: NpcId | null;
+    readonly className: ClassName | null;
+    readonly npcId: NpcId | null;
 
     // Equipment
-    private _equipment: Equipment;
+    readonly equipment: Equipment;
 
     // Attributes and Stats
-    private _attributes: Attributes;
-    private _stats: Stats;
+    readonly attributes: Attributes;
+    readonly stats: Stats;
     private _currentHealth: number;
     private _currentMana: number;
 
@@ -45,50 +58,48 @@ export default class Character {
     private _ability: Ability | null;
 
     // Buffs/Debuffs
-    private _statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
+    readonly statusEffectManager: StatusEffectManager = new StatusEffectManager(this);
 
     // Pet
-    private _pet: Character | null;
+    readonly pet: Character | null;
 
     // Battle Info
     private _target: Character | null = null;
     private _battle: { ref: Battle, side: Side, index: number; } | null = null;
 
-    constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, npcId, options }: { name: string, level: number, className?: ClassName, attributes: BaseAttributes, statTemplate: StatTemplate, equipment: EquipmentImport, ability?: Ability, petId?: PetId, npcId?: NpcId, options?: { userId?: string, currHealthPc?: number, currManaPc?: number; }; }) {
-        this._name = name;
-        this._level = level;
-        this._className = className ?? null;
-        this._npcId = npcId ?? null;
+    constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, npcId, options = {} }: CharacterConstructor) {
+        this.name = name;
+        this.level = level;
+        this.className = className ?? null;
+        this.npcId = npcId ?? null;
 
-        this._equipment = new Equipment(equipment);
+        this.equipment = new Equipment(equipment);
 
         // Attributes
-        this._attributes = new Attributes(attributes, this._equipment);
+        this.attributes = new Attributes(attributes, this.equipment);
         if (className) {
             for (const [attr, val] of Object.entries(classes[className].attributes)) {
-                this._attributes.addBonus(attr as AttributeType, val);
+                this.attributes.addBonus(attr as AttributeType, val);
             }
         }
 
         // Stats
-        this._stats = new Stats({
+        this.stats = new Stats({
             template: statTemplate,
             attributes: this.attributes,
-            equipment: this._equipment,
+            equipment: this.equipment,
             level
         });
 
         this._ability = ability ?? null;
-        this._currentHealth = options?.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
+        this._currentHealth = options.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
         this._currentMana = this.stats.getStat(StatType.StartingMana);
 
-        this._pet = petId ? createPet(this, petId) : null;
+        this.pet = petId ? createPet(this, petId) : null;
 
         if (this.equipment.potion) {
             this.equipment.potion.charges += this.stats.getStat(StatType.PotionCharges);
         }
-
-        if (options?.userId) this.userId = options.userId;
     }
 
     setBattle(ref: Battle, side: Side, index: number) {
@@ -97,34 +108,6 @@ export default class Character {
             side,
             index
         };
-    }
-
-    get name() {
-        return this._name;
-    }
-
-    get level() {
-        return this._level;
-    }
-
-    get className() {
-        return this._className;
-    }
-
-    get npcId() {
-        return this._npcId;
-    }
-
-    get attributes() {
-        return this._attributes;
-    }
-
-    get stats() {
-        return this._stats;
-    }
-
-    get equipment() {
-        return this._equipment;
     }
 
     get currentHealth() {
@@ -151,34 +134,12 @@ export default class Character {
         return this._battle;
     }
 
-    get statusEffectManager() {
-        return this._statusEffectManager;
-    }
-
-    get pet() {
-        return this._pet;
-    }
-
     get ability(): Ability | null {
         return this._ability;
     }
 
     set ability(ability: Ability | null) {
-        this.ability = ability;
-    }
-
-    getName(): string {
-        let name = this.name;
-        if (this.userId) name += ` (${this.userId})`;
-        return name;
-    }
-
-    getHealthString(): string {
-        return `${Math.round(this.currentHealth)}/${this.stats.maxHealth}`;
-    }
-
-    getManaString(): string {
-        return `${this.currentMana}/${this.stats.getStat(StatType.ManaCost)}`;
+        this._ability = ability;
     }
 
     setTarget(): void {
@@ -371,7 +332,7 @@ export default class Character {
 
     turnAttack(): void {
         if (!this.target) {
-            if (this.battle) this.battle.ref.log.addNoTarget(this._name);
+            if (this.battle) this.battle.ref.log.addNoTarget(this.name);
             return;
         }
 

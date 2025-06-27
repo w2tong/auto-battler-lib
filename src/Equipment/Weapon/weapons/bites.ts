@@ -1,5 +1,5 @@
 import AttackType from '../../../types/AttackType';
-import Character from '../../../Character/Character';
+import type Character from '../../../Character/Character';
 import { ItemType } from '../../Item';
 import { type Weapon, WeaponType } from '../Weapon';
 import Poisoned from '../../../StatusEffect/Debuffs/Poisoned';

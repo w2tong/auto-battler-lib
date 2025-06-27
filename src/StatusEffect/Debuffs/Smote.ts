@@ -1,9 +1,10 @@
 import StatType from '../../Character/Stats/StatType';
 import Debuff from '../Debuff';
 import DebuffId from '../types/DebuffId';
-import StatsInterface, { StatsInterfaceType } from '../interface/StatsInterface';
+import type StatsInterface from '../interface/StatsInterface';
+import type { StatsInterfaceType } from '../interface/StatsInterface';
 import Attributes from '../../Character/Attributes/Attributes';
-import StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
+import type StatusEffectCtorArgs from '../types/StatusEffectCtorArgs';
 
 export default class Smote extends Debuff implements StatsInterface {
     static name = 'Smote';

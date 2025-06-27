@@ -1,8 +1,8 @@
-import { Equipment } from '../../Equipment/Equipment';
-import { ItemAttributes } from '../../Equipment/Item';
-import Attribute from './Attribute';
+import { type Equipment } from '../../Equipment/Equipment';
+import { type ItemAttributes } from '../../Equipment/Item';
+import type Attribute from './Attribute';
 import AttributeType from './AttributeType';
-import BaseAttributes from './BaseAttributes';
+import type BaseAttributes from './BaseAttributes';
 
 function calcTotalAttribute(attribute: Attribute) {
     return attribute.base + attribute.bonus;

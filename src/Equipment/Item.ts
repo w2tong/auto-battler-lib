@@ -1,14 +1,14 @@
-import AttributeType from '../Character/Attributes/AttributeType';
-import StatType from '../Character/Stats/StatType';
-import { ArmourId } from './Armour';
-import { HandsId } from './Hands';
-import { HeadId } from './Head';
-import { NeckId } from './Neck';
-import { PotionId } from './Potion';
-import { RingId } from './Ring';
-import { ShieldId } from './Shield';
-import { WaistId } from './Waist';
-import { WeaponId } from './Weapon/Weapon';
+import type AttributeType from '../Character/Attributes/AttributeType';
+import type StatType from '../Character/Stats/StatType';
+import { type ArmourId } from './Armour';
+import { type HandsId } from './Hands';
+import { type HeadId } from './Head';
+import { type NeckId } from './Neck';
+import { type PotionId } from './Potion';
+import { type RingId } from './Ring';
+import { type ShieldId } from './Shield';
+import { type WaistId } from './Waist';
+import { type WeaponId } from './Weapon/Weapon';
 
 enum ItemType {
     Weapon = 'Weapon',

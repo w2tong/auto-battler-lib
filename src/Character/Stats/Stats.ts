@@ -1,14 +1,14 @@
 import AttackType from '../../types/AttackType';
 import { ArmourType } from '../../Equipment/Armour';
-import { Equipment } from '../../Equipment/Equipment';
-import { ItemStats } from '../../Equipment/Item';
+import { type Equipment } from '../../Equipment/Equipment';
+import { type ItemStats } from '../../Equipment/Item';
 import WeaponStyle, { getWeaponStyle } from '../../WeaponStyle';
 import Attributes from '../Attributes/Attributes';
 import AttributeStatScaling from '../Attributes/AttributeStatScaling';
-import AttributeType from '../Attributes/AttributeType';
+import type AttributeType from '../Attributes/AttributeType';
 import ArmourTypeDodgeMultiplier from './ArmourTypeDodgeMultiplier';
-import Stat from './Stat';
-import { StatTemplate } from './StatTemplate';
+import type Stat from './Stat';
+import { type StatTemplate } from './StatTemplate';
 import StatType from './StatType';
 
 class Stats {

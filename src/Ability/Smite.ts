@@ -1,12 +1,11 @@
-import AttackType from '../types/AttackType';
-import Ability from './Ability';
-import { formatNum } from '../util';
+import type Ability from './Ability';
 import AbilityId from './AbilityId';
+import AttackType from '../types/AttackType';
+import { formatNum } from '../util';
 import StatType from '../Character/Stats/StatType';
 import Smote from '../StatusEffect/Debuffs/Smote';
 import AttributeType from '../Character/Attributes/AttributeType';
 
-const NAME = 'Smite';
 const MIN_BASE = 1;
 const MIN_PER_LVL = 0.1;
 const MAX_BASE = 2;
@@ -16,7 +15,7 @@ const STACKS = 3;
 
 const Smite: Ability = {
     id: AbilityId.Smite,
-    name: NAME,
+    name: 'Smite',
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
             damageRange: {
@@ -37,7 +36,7 @@ const Smite: Ability = {
 
         return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage to the target and reduces their Accuracy${accuracy ? ` by ${formatNum(-accuracy)}` : ''} and Damage${damage ? ` by ${formatNum(-damage)}` : ''} for ${STACKS} turns.`;
     },
-    func: (char) => {
+    func: function (char) {
         if (char.target) {
             char.useAbilityMana();
             const { hit } = char.attack({
@@ -51,7 +50,7 @@ const Smite: Ability = {
                 weaponAttack: false,
                 spellPowerRatio: SPELLPOWER_RATIO,
                 isOffHand: false,
-                abilityName: NAME
+                abilityName: this.name
             });
 
             if (hit) {

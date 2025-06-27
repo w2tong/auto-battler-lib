@@ -1,4 +1,4 @@
-import HitType from '../types/HitType';
+import type HitType from '../types/HitType';
 import { type Side } from './Battle';
 
 enum LineType {

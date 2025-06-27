@@ -1,3 +1,4 @@
+import type NPC from '../NPC';
 import Attributes from '../../Character/Attributes/Attributes';
 import AttributeType from '../../Character/Attributes/AttributeType';
 import { startingAbility, startingEquipment } from '../../Character/Classes/classLoadouts';
@@ -12,7 +13,6 @@ import { rings } from '../../Equipment/Ring';
 import { shields } from '../../Equipment/Shield';
 import { waists } from '../../Equipment/Waist';
 import { weapons } from '../../Equipment/Weapon/weapons';
-import NPC from '../NPC';
 
 const Wizard: NPC = {
     id: 'wizard',

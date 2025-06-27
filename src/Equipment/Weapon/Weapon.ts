@@ -1,16 +1,16 @@
-import AttackType from '../../types/AttackType';
-import Character from '../../Character/Character';
-import NumberRange from '../../NumberRange';
-import { Item, ItemType, ItemAttributes, ItemStats } from '../Item';
-import { BiteId } from './weapons/bites';
-import { BowId } from './weapons/bows';
-import { DaggerId } from './weapons/daggers';
-import { GreatswordId } from './weapons/greatswords';
-import { LongswordId } from './weapons/longswords';
-import { MaceId } from './weapons/maces';
-import { QuarterstaffId } from './weapons/quarterstaffs';
-import { UnarmedId } from './weapons/unarmed';
-import { WandId } from './weapons/wands';
+import type AttackType from '../../types/AttackType';
+import type Character from '../../Character/Character';
+import type NumberRange from '../../NumberRange';
+import type { Item, ItemType, ItemAttributes, ItemStats } from '../Item';
+import type { BiteId } from './weapons/bites';
+import type { BowId } from './weapons/bows';
+import type { DaggerId } from './weapons/daggers';
+import type { GreatswordId } from './weapons/greatswords';
+import type { LongswordId } from './weapons/longswords';
+import type { MaceId } from './weapons/maces';
+import type { QuarterstaffId } from './weapons/quarterstaffs';
+import type { UnarmedId } from './weapons/unarmed';
+import type { WandId } from './weapons/wands';
 
 type WeaponId = UnarmedId | LongswordId | GreatswordId | DaggerId | QuarterstaffId | WandId | BiteId | MaceId | BowId;
 

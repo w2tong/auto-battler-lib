@@ -1,15 +1,14 @@
-import Ability from './Ability';
-import { formatNum } from '../util';
+import type Ability from './Ability';
 import AbilityId from './AbilityId';
+import { formatNum } from '../util';
 import ShieldWallBuff from '../StatusEffect/Buffs/ShieldWall';
 import AttributeType from '../Character/Attributes/AttributeType';
 
-const NAME = 'Shield Wall';
 const STACKS = 3;
 
 const ShieldWall: Ability = {
     id: AbilityId.ShieldWall,
-    name: NAME,
+    name: 'Shield Wall',
     description: (char) => {
         let blockChance = null;
         let thorns = null;
@@ -19,9 +18,9 @@ const ShieldWall: Ability = {
         }
         return `Increases Block Chance${blockChance ? ` by ${formatNum(blockChance)}%` : ''} and Thorns${thorns ? ` by ${formatNum(thorns)}` : ''} for ${STACKS} turns.`;
     },
-    func: (char) => {
+    func: function (char) {
         char.useAbilityMana();
-        if (char.battle) char.battle.ref.log.addAbility(char.name, NAME);
+        if (char.battle) char.battle.ref.log.addAbility(char.name, this.name);
 
         char.statusEffectManager.add(new ShieldWallBuff({
             char,

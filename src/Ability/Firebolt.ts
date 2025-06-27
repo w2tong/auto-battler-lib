@@ -1,11 +1,10 @@
+import type Ability from './Ability';
+import AbilityId from './AbilityId';
 import AttackType from '../types/AttackType';
-import Ability from './Ability';
 import Burning from '../StatusEffect/Debuffs/Burning';
 import { formatNum } from '../util';
-import AbilityId from './AbilityId';
 import StatType from '../Character/Stats/StatType';
 
-const NAME = 'Firebolt';
 const MIN_BASE = 1;
 const MIN_PER_LVL = 0.1;
 const MAX_BASE = 4;
@@ -15,7 +14,7 @@ const STACKS = 2;
 
 const Firebolt: Ability = {
     id: AbilityId.Firebolt,
-    name: NAME,
+    name: 'Firebolt',
     description: (char) => {
         const damageRange = char ? char.calcDamageRange({
             damageRange: {
@@ -28,7 +27,7 @@ const Firebolt: Ability = {
         }) : null;
         return `Deals ${damageRange ? `${formatNum(damageRange.min)}-${formatNum(damageRange.max)} ` : ''}damage to your target and applies ${STACKS} ${Burning.name}, dealing${char ? ` ${formatNum(Burning.baseDamage + char.stats.spellPower * Burning.spellPowerRatio)}` : ''} damage each turn.`;
     },
-    func: (char) => {
+    func: function (char) {
         if (char.target) {
             char.useAbilityMana();
             const { hit } = char.attack({
@@ -42,7 +41,7 @@ const Firebolt: Ability = {
                 weaponAttack: false,
                 spellPowerRatio: SPELLPOWER_RATIO,
                 isOffHand: false,
-                abilityName: NAME
+                abilityName: this.name
             });
 
             if (hit) {

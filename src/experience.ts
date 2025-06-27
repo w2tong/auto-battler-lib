@@ -1,4 +1,4 @@
-import LevelRange from './types/LevelRange';
+import type LevelRange from './types/LevelRange';
 
 const levelExp: Record<LevelRange, number> = {
     1: 100,

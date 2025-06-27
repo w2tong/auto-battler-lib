@@ -1,6 +1,6 @@
 import StatusEffect from './StatusEffect';
-import BuffId from './types/BuffId';
-import StatusEffectType from './types/StatusEffectType';
+import type BuffId from './types/BuffId';
+import type StatusEffectType from './types/StatusEffectType';
 
 export default abstract class Buff extends StatusEffect {
     abstract readonly id: BuffId;

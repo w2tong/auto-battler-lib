@@ -1,5 +1,5 @@
 import StatType from '../Character/Stats/StatType';
-import { Item, ItemAttributes, ItemStats, ItemType } from './Item';
+import { type Item, type ItemAttributes, type ItemStats, ItemType } from './Item';
 
 interface Waist extends Item {
     id: WaistId;

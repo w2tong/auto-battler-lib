@@ -77,7 +77,7 @@ import Smote from './StatusEffect/Debuffs/Smote';
 import Stunned from './StatusEffect/Debuffs/Stunned';
 export { Bleeding, Burning, Frozen, Poisoned, Smote, Stunned };
 
-export { PetId } from './Character/Pet';
+export { PetId, PET_STAT_RATIO } from './Character/Pet';
 
 export { Dice, dice, rollDice } from './dice';
 
