@@ -51,8 +51,8 @@ export default class Character {
     // Attributes and Stats
     readonly attributes: Attributes;
     readonly stats: Stats;
-    private _currentHealth: number;
-    private _currentMana: number;
+    currentHealth: number;
+    currentMana: number;
 
     // Ability
     private _ability: Ability | null;
@@ -92,8 +92,8 @@ export default class Character {
         });
 
         this._ability = ability ?? null;
-        this._currentHealth = options.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
-        this._currentMana = this.stats.getStat(StatType.StartingMana);
+        this.currentHealth = options.currHealthPc !== undefined ? Math.ceil(this.stats.maxHealth * options.currHealthPc) : this.stats.maxHealth;
+        this.currentMana = this.stats.getStat(StatType.StartingMana);
 
         this.pet = petId ? createPet(this, petId) : null;
 
@@ -108,14 +108,6 @@ export default class Character {
             side,
             index
         };
-    }
-
-    get currentHealth() {
-        return this._currentHealth;
-    }
-
-    get currentMana() {
-        return this._currentMana;
     }
 
     get initiative() {
@@ -184,7 +176,7 @@ export default class Character {
     }
 
     useAbilityMana(): void {
-        this._currentMana -= Math.max(this.stats.getStat(StatType.ManaCost), 0);
+        this.currentMana -= Math.max(this.stats.getStat(StatType.ManaCost), 0);
     }
 
     doTurn(): void {
@@ -367,7 +359,7 @@ export default class Character {
 
         if (damageTaken > 0) {
             damageTaken = this.calcDamageTaken(damageTaken, armourPenetration);
-            this._currentHealth -= damageTaken;
+            this.currentHealth -= damageTaken;
         }
 
         if (this.battle) {
@@ -385,11 +377,11 @@ export default class Character {
     }
 
     addMana(mana: number): void {
-        this._currentMana += Math.max(mana, 0);
+        this.currentMana += Math.max(mana, 0);
     }
 
     addHealth(health: number): void {
-        this._currentHealth = Math.min(this.currentHealth + Math.max(health, 0), this.stats.maxHealth);
+        this.currentHealth = Math.min(this.currentHealth + Math.max(health, 0), this.stats.maxHealth);
     }
 
     isDead(): boolean {

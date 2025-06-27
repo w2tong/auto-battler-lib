@@ -44,6 +44,10 @@ function createPet(char: Character, petId: PetId): Character {
         pet.stats[stat].bonus += (char.stats[stat].attribute + char.stats[stat].bonus) * PET_STAT_RATIO;
     }
 
+    // Update current health/mana after inheriting stats
+    pet.currentHealth = pet.stats.maxHealth;
+    pet.currentMana = pet.stats.getStat(StatType.StartingMana);
+
     return pet;
 }
 
