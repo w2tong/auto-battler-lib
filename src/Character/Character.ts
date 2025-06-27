@@ -42,8 +42,8 @@ export default class Character {
     readonly name: string;
     readonly level: number;
 
-    readonly _className: ClassName | null;
-    readonly _npcId: NpcId | null;
+    readonly className: ClassName | null;
+    readonly npcId: NpcId | null;
 
     // Equipment
     readonly equipment: Equipment;
@@ -70,8 +70,8 @@ export default class Character {
     constructor({ name, level, className, attributes, statTemplate, equipment, ability, petId, npcId, options = {} }: CharacterConstructor) {
         this.name = name;
         this.level = level;
-        this._className = className ?? null;
-        this._npcId = npcId ?? null;
+        this.className = className ?? null;
+        this.npcId = npcId ?? null;
 
         this.equipment = new Equipment(equipment);
 
